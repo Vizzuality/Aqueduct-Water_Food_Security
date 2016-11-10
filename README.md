@@ -6,46 +6,21 @@ By using this tool, you will be able to see how different crops and production u
 
 For the different indicators, this tool is using the IFPRI IMPACT Model: https://www.ifpri.org/program/impact-model
 
-## Requirements:
-
-
 ## Installation
 
+Requirements:
 
-### Using Docker (recommended)
+* NodeJs 6.0+ [How to install](https://nodejs.org/download/)
 
-Very useful for **development**, it ensures everybody have the same environment. Also you can test production environment.
-You can install Docker from [here](https://www.docker.com).
+Install dependencies:
 
-Building docker container:
+	npm install
 
-```bash
-docker-compose build
-```
+## Usage
 
-Runing container:
+To run the server:
 
-```bash
-docker-compose up
-```
-
-Maybe, first time you will need run these tasks:
-
-```bash
-docker-compose run web rake db:create
-docker-compose run web rake db:migrate
-```
-
-## Running
-
-## Development
-
-## Test
-
-## CartoDB integration
-
-This project requires a [CartoDB](https://cartodb.com/) account to be configured in the .env files
-In your CartoDB account, you should add [these custom functions](extra/cartodb_queries.sql)
+	npm start
 
 ## Contributing
 
