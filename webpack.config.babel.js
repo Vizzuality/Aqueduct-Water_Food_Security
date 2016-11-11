@@ -7,7 +7,7 @@ const config = {
   context: path.join(__dirname, 'src'),
 
   entry: [
-    './app.js'
+    './app.jsx'
   ],
 
   output: {
@@ -18,6 +18,9 @@ const config = {
   module: {
     loaders: [
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
+
+      { test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/ },
+
       {
         test: /\.css$/,
         loader: 'style-loader!css-loader'
@@ -25,7 +28,7 @@ const config = {
       {
         test: /\.(scss|sass)$/,
         loader: 'style-loader!css-loader!sass-loader!postcss-loader'
-      },
+      }
       // {test: /\.otf$/, loader: 'file-loader?name=fonts/[name].[ext]'},
       // {test: /\.(png|jpg|gif|svg)$/,
       // loader: 'url-loader?prefix=image/&limit=5000&context=./src/images'}
