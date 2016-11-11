@@ -20,7 +20,7 @@ class PostPage extends React.Component {
 PostPage.propTypes = {
   // STATE
   posts: React.PropTypes.object,
-  params: React.PropTypes.shape,
+  params: React.PropTypes.object,
 
   // ACTIONS
   getPost: React.PropTypes.func

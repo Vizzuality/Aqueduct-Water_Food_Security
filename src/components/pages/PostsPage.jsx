@@ -9,7 +9,6 @@ class PostsPage extends React.Component {
   }
 
   render() {
-    console.log(this.props.posts);
     return (
       <div>
         {this.props.posts.postsLoading && 'loading...'}

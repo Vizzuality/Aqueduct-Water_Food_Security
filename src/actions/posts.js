@@ -31,13 +31,11 @@ export function getPosts() {
     return fetch(`${API_ROOT_URL}/posts`)
       .then(response => response.json())
       .then((response) => {
-        console.log(response);
         dispatch(executeAction(GET_POSTS_LOADING, false));
         dispatch(executeAction(GET_POSTS_SUCCESS, response));
         dispatch(executeAction(GET_POSTS_LOADING, false));
       })
       .catch((error) => {
-        console.log(error);
         dispatch(executeAction(GET_POSTS_LOADING, false));
         dispatch(executeAction(GET_POSTS_FAILURE, error));
       });
