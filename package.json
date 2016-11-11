@@ -1,5 +1,5 @@
 {
-  "name": "half-earth",
+  "name": "aqueduct",
   "version": "1.0.0",
   "description": "TODO: write a description",
   "main": "webpack.config.js",
@@ -9,36 +9,50 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Vizzuality/half-earth.git"
+    "url": "git+https://github.com/Vizzuality/Aqueduct-Water_Food_Security.git"
   },
-  "author": "David Inga <david.inga@vizzuality.com>",
+  "author": "Miguel Barrenechea <miguel.barrenechea@vizzuality.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Vizzuality/half-earth/issues"
+    "url": "https://github.com/Vizzuality/Aqueduct-Water_Food_Security/issues"
   },
-  "homepage": "http://vizzuality.github.io/half-earth/",
-  "dependencies": {
-    "autoprefixer": "^6.5.1",
-    "babel-core": "^6.18.2",
-    "babel-loader": "^6.2.7",
-    "babel-preset-es2015": "^6.18.0",
-    "css-loader": "^0.25.0",
-    "d3": "^4.3.0",
-    "d3-geo-projection": "^1.1.1",
+  "homepage": "http://vizzuality.github.io/Aqueduct-Water_Food_Security/",
+  "devDependencies": {
+    "babel-polyfill": "^6.13.0",
+    "chai": "^3.5.0",
     "eslint": "^3.9.1",
     "eslint-config-airbnb": "^12.0.0",
     "eslint-plugin-import": "^2.1.0",
     "eslint-plugin-jsx-a11y": "latest",
     "eslint-plugin-react": "^6.5.0",
+    "mocha": "^3.0.0"
+  },
+  "dependencies": {
+    "babel-core": "^6.18.2",
+    "babel-loader": "^6.2.7",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-2": "^6.11.0",
+    "css-loader": "^0.25.0",
+    "eslint-plugin-import": "^1.16.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
     "html-webpack-plugin": "^2.24.1",
     "jscs": "^3.0.7",
     "node-sass": "^3.11.1",
     "normalize.css": "^5.0.0",
     "postcss-loader": "^1.1.0",
+    "react": "^15.0.2",
+    "react-addons-css-transition-group": "^15.2.1",
+    "react-dom": "^15.0.2",
+    "react-redux": "^4.4.5",
+    "react-router": "^2.5.2",
+    "react-router-redux": "^4.0.5",
+    "react-router-scroll": "^0.2.0",
+    "react-sortable-hoc": "0.0.7",
+    "redux": "^3.5.2",
+    "redux-thunk": "^2.1.0",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
-    "topojson": "^2.0.0",
-    "topojson-client": "^2.1.0",
     "webpack": "^1.13.3",
     "webpack-dev-server": "^1.16.2"
   }
