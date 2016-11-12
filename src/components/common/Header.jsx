@@ -57,6 +57,29 @@ class Header extends React.Component {
           </ul>
         </nav>
 
+        <div className={`c-header-submenu ${this.state.active === 'tools' && '-active'}`}>
+          <a className="item -active" href="#outside">
+            <svg className="c-icon -big"><use xlinkHref="#icon-plus" /></svg>
+            <span>Flood Risk Analyzer</span>
+          </a>
+          <a className="item" href="#outside">
+            <svg className="c-icon -big"><use xlinkHref="#icon-plus" /></svg>
+            <span>Risk Atlas</span>
+          </a>
+          <a className="item" href="#outside">
+            <svg className="c-icon -big"><use xlinkHref="#icon-plus" /></svg>
+            <span>Country basin risk profiles and Rankings</span>
+          </a>
+          <a className="item" href="#outside">
+            <svg className="c-icon -big"><use xlinkHref="#icon-plus" /></svg>
+            <span>Supply Chain Water Risk Assesment</span>
+          </a>
+          <a className="item" href="#outside">
+            <svg className="c-icon -big"><use xlinkHref="#icon-plus" /></svg>
+            <span>Water and Food Security Analyzer</span>
+          </a>
+        </div>
+
       </header>
     );
   }
