@@ -1,6 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router';
 
+// Components
+import HeaderTools from './HeaderTools';
+import HeaderSearch from './HeaderSearch';
+
+
 class Header extends React.Component {
 
   constructor(props) {
@@ -30,6 +35,7 @@ class Header extends React.Component {
     return (
       <header className="c-header">
         <nav>
+          {/* LEFT MENU */}
           <ul className="list">
             <li>
               <button data-active="tools" className={`c-header-button ${this.state.active === 'tools' && '-active'}`} onClick={this.onClickBtnAction}>
@@ -39,14 +45,17 @@ class Header extends React.Component {
             </li>
           </ul>
 
+          {/* LOGO */}
           <h1 className="c-header-logo">
             <Link to="/">Logo</Link>
           </h1>
 
+          {/* RIGHT MENU */}
           <ul className="list">
             <li>
+              <HeaderSearch active={this.state.active === 'search'} />
               <button data-active="search" className={`c-header-button ${this.state.active === 'search' && '-active'}`} onClick={this.onClickBtnAction}>
-                <svg className="c-icon"><use xlinkHref="#icon-search" /></svg>
+                <svg className="c-icon"><use xlinkHref={`${this.state.active === 'search' ? '#icon-cross' : '#icon-search'}`} /></svg>
               </button>
             </li>
             <li>
@@ -57,29 +66,7 @@ class Header extends React.Component {
           </ul>
         </nav>
 
-        <div className={`c-header-submenu ${this.state.active === 'tools' && '-active'}`}>
-          <a className="item -active" href="#outside">
-            <svg className="c-icon -big"><use xlinkHref="#icon-plus" /></svg>
-            <span>Flood Risk Analyzer</span>
-          </a>
-          <a className="item" href="#outside">
-            <svg className="c-icon -big"><use xlinkHref="#icon-plus" /></svg>
-            <span>Risk Atlas</span>
-          </a>
-          <a className="item" href="#outside">
-            <svg className="c-icon -big"><use xlinkHref="#icon-plus" /></svg>
-            <span>Country basin risk profiles and Rankings</span>
-          </a>
-          <a className="item" href="#outside">
-            <svg className="c-icon -big"><use xlinkHref="#icon-plus" /></svg>
-            <span>Supply Chain Water Risk Assesment</span>
-          </a>
-          <a className="item" href="#outside">
-            <svg className="c-icon -big"><use xlinkHref="#icon-plus" /></svg>
-            <span>Water and Food Security Analyzer</span>
-          </a>
-        </div>
-
+        <HeaderTools active={this.state.active === 'tools'} />
       </header>
     );
   }

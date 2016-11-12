@@ -24,9 +24,12 @@
     "no-console": ["error", {
       "allow": ["warn", "error", "info"]
     }],
+    no-return-assign: 0,
     "comma-dangle": ["error", "never"],
     "max-len": 0,
     "forbid-prop-types": [0, { "forbid": [''] }],
-    "prefer-stateless-function": [0, { "ignorePureComponents": true }]
+    "prefer-stateless-function": [0, { "ignorePureComponents": true }],
+    "no-unused-expressions": ["error", { "allowShortCircuit": true, "allowTernary": true }],
+    "arrow-body-style": ["error", "as-needed"]
   }
 }

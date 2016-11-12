@@ -1,6 +1,7 @@
 .c-icon {
   width: 20px;
   height: 20px;
+  flex-shrink: 0;
 
   &.-small {
     width: 14px;
