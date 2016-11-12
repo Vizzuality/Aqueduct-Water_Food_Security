@@ -45,6 +45,7 @@
     fill: $color-primary;
     font-size: 14px;
     font-weight: 700;
+    transition: all .16s ease-in-out;
 
     > * {
       margin: 0 8px 0 0;
@@ -53,6 +54,10 @@
 
     &:hover { background: darken(white, 5%); }
     &:active { background: darken(white, 10%);}
-    &.-active { background: darken(white, 25%); }
+    &.-active {
+      background: $color-primary;
+      color: white;
+      fill: white;
+    }
   }
 }
