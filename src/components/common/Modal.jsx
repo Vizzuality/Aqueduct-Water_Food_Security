@@ -8,14 +8,27 @@ class Modal extends React.Component {
     super(props);
 
     this.state = {
-      active: false,
-      className: props.className
+      active: false
     };
 
     // BINDINGS
     this.onClickClose = this.onClickClose.bind(this);
   }
 
+  /**
+   * LIFECYCLE
+   * - componentWillReceiveProps:
+   *     The Modal will receive some props to set the style, the active method, etc
+   *     Then, we will set the state of the modal
+   * - shouldComponentUpdate
+   *     Sometimes we will receive props but we still don't want to render anything
+   *     That's why we check the active state in first instance
+   *     We need to be sure that the targetModal is not created yet, we don't want more than one modal at a time
+   * - componentWillUpdate
+   *     Render the child content
+   * - componentDidUpdate
+   *     add some css classes to show the modal and to give it some style
+   */
   componentWillReceiveProps(nextProps) {
     this.setState({
       active: nextProps.active,
@@ -33,7 +46,6 @@ class Modal extends React.Component {
       }
       return true;
     }
-    // Set this.modalTarget to null to remove the modal child
     this.modalTarget = null;
     return false;
   }
