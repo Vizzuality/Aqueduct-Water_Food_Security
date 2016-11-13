@@ -50,11 +50,6 @@ class Modal extends React.Component {
     }, 10);
   }
 
-  componentWillUnmount() {
-    ReactDOM.unmountComponentAtNode(this.modalTarget);
-    document.body.removeChild(this.modalTarget);
-  }
-
   // UI EVENTS
   onClickClose() {
     this.setState({
