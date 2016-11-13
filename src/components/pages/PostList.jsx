@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
 import Modal from '../common/Modal';
 
 class PostList extends React.Component {
@@ -15,11 +14,13 @@ class PostList extends React.Component {
   }
 
   onClickListItem(e) {
+    const id = e.currentTarget.dataset.id;
     this.setState({
-      active: parseInt(e.currentTarget.dataset.key, 0)
+      active: parseInt(id, 0)
     });
 
-    // this.state.active != null && this.props.getPost(this.state.active);
+    // Get current post
+    this.props.getPost(id);
   }
 
   /**
@@ -34,26 +35,30 @@ class PostList extends React.Component {
 
   render() {
     const active = this.state.active;
+    const detail = this.props.posts.postsDetail;
     return (
       <ul className="c-list">
         {this.props.posts.postsList.map((post, i) => {
           return (
             <li
               key={i}
-              data-key={i}
+              data-id={post.id}
               onClick={this.onClickListItem}
             >
               {post.title}
 
               {/* Example of another Modal */}
-              {(active === i) ?
+              {(active === post.id) ?
                 <Modal
-                  active={active === i}
+                  active={active === post.id}
                   onCloseModal={this.onCloseModal}
                 >
                   <div>
-                    <h2 style={{ textTransform: 'uppercase' }}>{post.title}</h2>
-                    <h3>{post.id}</h3>
+                    <h2 style={{ textTransform: 'uppercase' }}>{detail.title}</h2>
+                    <h3>{detail.id}</h3>
+                    <div>
+                      {detail.body}
+                    </div>
                   </div>
                 </Modal>
               : null }
@@ -70,7 +75,7 @@ PostList.propTypes = {
   posts: React.PropTypes.object,
 
   // ACTIONS
-  // getPost: React.PropTypes.func
+  getPost: React.PropTypes.func
 };
 
 
