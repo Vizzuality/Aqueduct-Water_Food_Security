@@ -80,32 +80,34 @@ class Header extends React.Component {
 
         <HeaderTools active={this.state.active === 'tools'} />
 
-        <Modal
-          className="-menu"
-          active={this.state.active === 'menu'}
-          onCloseModal={this.onCloseModal}
-        >
-          <div className="c-modal-menu">
-            <ul>
-              <li>
-                <LinkCustom to="/how-to">How to.</LinkCustom>
-              </li>
-              <li>
-                <LinkCustom to="/resource-library">Resource Library.</LinkCustom>
-              </li>
-              <li>
-                <LinkCustom to="/about">About us.</LinkCustom>
-              </li>
-              <li>
-                <LinkCustom to="/get-involved">Get involved.</LinkCustom>
-              </li>
-            </ul>
-            <div className="info">
-              <span>Don’t Know how to use Aqueduct tools?</span>
-              <span>Check out our Video tutorials.</span>
+        {(this.state.active === 'menu') ?
+          <Modal
+            className="-menu"
+            active={this.state.active === 'menu'}
+            onCloseModal={this.onCloseModal}
+          >
+            <div className="c-modal-menu">
+              <ul>
+                <li>
+                  <LinkCustom to="/how-to">How to.</LinkCustom>
+                </li>
+                <li>
+                  <LinkCustom to="/resource-library">Resource Library.</LinkCustom>
+                </li>
+                <li>
+                  <LinkCustom to="/about">About us.</LinkCustom>
+                </li>
+                <li>
+                  <LinkCustom to="/get-involved">Get involved.</LinkCustom>
+                </li>
+              </ul>
+              <div className="info">
+                <span>Don’t Know how to use Aqueduct tools?</span>
+                <span>Check out our Video tutorials.</span>
+              </div>
             </div>
-          </div>
-        </Modal>
+          </Modal>
+        : null}
       </header>
     );
   }

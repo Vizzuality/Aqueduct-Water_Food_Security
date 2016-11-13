@@ -8,7 +8,8 @@ class Modal extends React.Component {
     super(props);
 
     this.state = {
-      active: false
+      active: this.props.active,
+      className: this.props.className
     };
 
     // BINDINGS
@@ -17,49 +18,38 @@ class Modal extends React.Component {
 
   /**
    * LIFECYCLE
-   * - componentWillReceiveProps:
-   *     The Modal will receive some props to set the style, the active method, etc
-   *     Then, we will set the state of the modal
-   * - shouldComponentUpdate
-   *     Sometimes we will receive props but we still don't want to render anything
-   *     That's why we check the active state in first instance
-   *     We need to be sure that the targetModal is not created yet, we don't want more than one modal at a time
-   * - componentWillUpdate
-   *     Render the child content
-   * - componentDidUpdate
-   *     add some css classes to show the modal and to give it some style
+   * - Be sure that you will handle your component on an if statement
+   * - componentWillMount:
+   *     Render a div where we are going to add the content
+   * - componentDidMount:
+   *     Render the content of this view with their children
+   * - componentWillUnmount
+   *     Remove it from the DOM
    */
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      active: nextProps.active,
-      className: nextProps.className
-    });
+
+  componentWillMount() {
+    const className = (this.state.className) ? this.state.className : '';
+
+    this.modalTarget = document.createElement('div');
+    this.modalTarget.id = '#modal';
+    this.modalTarget.className = `c-modal ${className}`;
+    document.body.appendChild(this.modalTarget);
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextState.active) {
-      if (!this.modalTarget) {
-        this.modalTarget = document.createElement('div');
-        this.modalTarget.id = '#modal';
-        this.modalTarget.className = 'c-modal';
-        document.body.appendChild(this.modalTarget);
-      }
-      return true;
-    }
-    this.modalTarget = null;
-    return false;
-  }
-
-  componentWillUpdate() {
+  componentDidMount() {
     this._render();
-  }
 
-  componentDidUpdate() {
+    // The timeout is for having an animation
     setTimeout(() => {
       const active = (this.state.active) ? '-active' : '';
-      const className = (this.state.className) ? this.state.className : '';
-      this.modalTarget.className = `c-modal ${active} ${className}`;
-    }, 10);
+      this.modalTarget.className += ` ${active}`;
+    }, 50);
+  }
+
+  componentWillUnmount() {
+    ReactDOM.unmountComponentAtNode(this.modalTarget);
+    document.body.removeChild(this.modalTarget);
+    this.modalTarget = null;
   }
 
   // UI EVENTS
@@ -73,9 +63,6 @@ class Modal extends React.Component {
     // Set this function on your Component declaration
     // if you want to handle the close in your child Component
     this.props.onCloseModal && this.props.onCloseModal();
-
-    ReactDOM.unmountComponentAtNode(this.modalTarget);
-    document.body.removeChild(this.modalTarget);
   }
 
   _render() {
@@ -110,6 +97,7 @@ class Modal extends React.Component {
 
 Modal.propTypes = {
   // GLOBAL
+  active: React.PropTypes.bool,
   className: React.PropTypes.string,
   children: React.PropTypes.element,
 

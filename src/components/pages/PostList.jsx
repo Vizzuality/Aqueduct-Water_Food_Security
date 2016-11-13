@@ -18,6 +18,8 @@ class PostList extends React.Component {
     this.setState({
       active: parseInt(e.currentTarget.dataset.key, 0)
     });
+
+    // this.state.active != null && this.props.getPost(this.state.active);
   }
 
   /**
@@ -44,16 +46,17 @@ class PostList extends React.Component {
               {post.title}
 
               {/* Example of another Modal */}
-              <Modal
-                active={active === i}
-                onCloseModal={this.onCloseModal}
-              >
-                <div>
-                  <h2 style={{ textTransform: 'uppercase' }}>{post.title}</h2>
-                  <h3>{post.id}</h3>
-                </div>
-              </Modal>
-
+              {(active === i) ?
+                <Modal
+                  active={active === i}
+                  onCloseModal={this.onCloseModal}
+                >
+                  <div>
+                    <h2 style={{ textTransform: 'uppercase' }}>{post.title}</h2>
+                    <h3>{post.id}</h3>
+                  </div>
+                </Modal>
+              : null }
             </li>
           );
         })}
@@ -64,7 +67,10 @@ class PostList extends React.Component {
 
 PostList.propTypes = {
   // STATE
-  posts: React.PropTypes.object
+  posts: React.PropTypes.object,
+
+  // ACTIONS
+  // getPost: React.PropTypes.func
 };
 
 
