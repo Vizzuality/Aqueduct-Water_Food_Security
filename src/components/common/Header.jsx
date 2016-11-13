@@ -4,7 +4,8 @@ import { Link } from 'react-router';
 // Components
 import HeaderTools from './HeaderTools';
 import HeaderSearch from './HeaderSearch';
-
+import Modal from './Modal';
+import LinkCustom from './LinkCustom';
 
 class Header extends React.Component {
 
@@ -17,6 +18,7 @@ class Header extends React.Component {
 
     // Set bindings
     this.onClickBtnAction = this.onClickBtnAction.bind(this);
+    this.onCloseModal = this.onCloseModal.bind(this);
   }
 
   /**
@@ -28,6 +30,16 @@ class Header extends React.Component {
 
     this.setState({
       active: (current !== this.state.active) ? current : ''
+    });
+  }
+
+  /**
+   * CHILDREN EVENTS
+   * - onCloseModal
+  */
+  onCloseModal() {
+    this.setState({
+      active: ''
     });
   }
 
@@ -67,9 +79,40 @@ class Header extends React.Component {
         </nav>
 
         <HeaderTools active={this.state.active === 'tools'} />
+
+        <Modal
+          className="-menu"
+          active={this.state.active === 'menu'}
+          onCloseModal={this.onCloseModal}
+        >
+          <div className="c-modal-menu">
+            <ul>
+              <li>
+                <LinkCustom to="/how-to">How to.</LinkCustom>
+              </li>
+              <li>
+                <LinkCustom to="/resource-library">Resource Library.</LinkCustom>
+              </li>
+              <li>
+                <LinkCustom to="/about">About us.</LinkCustom>
+              </li>
+              <li>
+                <LinkCustom to="/get-involved">Get involved.</LinkCustom>
+              </li>
+            </ul>
+            <div className="info">
+              <span>Don’t Know how to use Aqueduct tools?</span>
+              <span>Check out our Video tutorials.</span>
+            </div>
+          </div>
+        </Modal>
       </header>
     );
   }
 }
+
+Header.contextTypes = {
+  router: React.PropTypes.object
+};
 
 export default Header;
