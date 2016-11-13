@@ -16,7 +16,11 @@ class LinkCustom extends React.Component {
 
   render() {
     return (
-      <a href={this.props.to} onClick={this.onClickNavigate}>{this.props.children}</a>
+      <a
+        href={this.props.to}
+        onClick={this.onClickNavigate}>
+        {this.props.children}
+      </a>
     );
   }
 }
