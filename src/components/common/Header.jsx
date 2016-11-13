@@ -34,7 +34,7 @@ class Header extends React.Component {
   }
 
   /**
-   * CHILDREN EVENTS
+   * MODAL EVENTS
    * - onCloseModal
   */
   onCloseModal() {
@@ -82,8 +82,8 @@ class Header extends React.Component {
 
         {(this.state.active === 'menu') ?
           <Modal
+            isActive={this.state.active === 'menu'}
             className="-menu"
-            active={this.state.active === 'menu'}
             onCloseModal={this.onCloseModal}
           >
             <div className="c-modal-menu">
@@ -112,9 +112,5 @@ class Header extends React.Component {
     );
   }
 }
-
-Header.contextTypes = {
-  router: React.PropTypes.object
-};
 
 export default Header;

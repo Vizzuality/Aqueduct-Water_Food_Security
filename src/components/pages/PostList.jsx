@@ -13,6 +13,10 @@ class PostList extends React.Component {
     this.onCloseModal = this.onCloseModal.bind(this);
   }
 
+  /**
+   * UI EVENTS
+   * - onClickListItem
+  */
   onClickListItem(e) {
     const id = e.currentTarget.dataset.id;
     this.setState({
@@ -24,7 +28,7 @@ class PostList extends React.Component {
   }
 
   /**
-   * CHILDREN EVENTS
+   * MODAL EVENTS
    * - onCloseModal
   */
   onCloseModal() {
@@ -35,7 +39,9 @@ class PostList extends React.Component {
 
   render() {
     const active = this.state.active;
-    const detail = this.props.posts.postsDetail;
+    const detail = this.props.posts.postsDetail[active];
+    const loading = this.props.posts.postLoading;
+
     return (
       <ul className="c-list">
         {this.props.posts.postsList.map((post, i) => {
@@ -50,16 +56,19 @@ class PostList extends React.Component {
               {/* Example of another Modal */}
               {(active === post.id) ?
                 <Modal
-                  active={active === post.id}
+                  isActive={active === post.id}
+                  isLoading={loading}
                   onCloseModal={this.onCloseModal}
                 >
-                  <div>
-                    <h2 style={{ textTransform: 'uppercase' }}>{detail.title}</h2>
-                    <h3>{detail.id}</h3>
+                  {(detail) ?
                     <div>
-                      {detail.body}
+                      <h2 style={{ textTransform: 'uppercase' }}>{detail.title}</h2>
+                      <h3>{detail.id}</h3>
+                      <div>
+                        {detail.body}
+                      </div>
                     </div>
-                  </div>
+                  : null}
                 </Modal>
               : null }
             </li>

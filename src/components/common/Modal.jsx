@@ -8,7 +8,7 @@ class Modal extends React.Component {
     super(props);
 
     this.state = {
-      active: this.props.active,
+      active: !!props.isActive,
       className: this.props.className
     };
 
@@ -70,6 +70,8 @@ class Modal extends React.Component {
   }
 
   _render() {
+    const loading = (this.props.isLoading) ? '-loading' : '';
+
     ReactDOM.render(
       <Provider store={store}>
         <div>
@@ -78,7 +80,7 @@ class Modal extends React.Component {
               <svg className="c-icon -big"><use xlinkHref="#icon-cross" /></svg>
             </button>
 
-            <div id="modal-loader" className="c-spinner">
+            <div className={`c-spinner ${loading}`}>
               <div className="spinner-box">
                 <div className="icon" />
               </div>
@@ -101,9 +103,12 @@ class Modal extends React.Component {
 
 Modal.propTypes = {
   // GLOBAL
-  active: React.PropTypes.bool,
-  className: React.PropTypes.string,
   children: React.PropTypes.element,
+  className: React.PropTypes.string,
+
+  // CUSTOM
+  isActive: React.PropTypes.bool,
+  isLoading: React.PropTypes.bool,
 
   // Triggers
   onCloseModal: React.PropTypes.func
