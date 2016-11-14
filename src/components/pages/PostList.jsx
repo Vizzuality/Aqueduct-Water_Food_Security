@@ -11,10 +11,11 @@ class PostList extends React.Component {
       tooltip: null
     };
 
+    // BINDINS
     this.onClickListItem = this.onClickListItem.bind(this);
-    this.onMouseOverListItem = this.onMouseOverListItem.bind(this);
-    this.onMouseLeaveListItem = this.onMouseLeaveListItem.bind(this);
-    this.onMouseMoveListItem = this.onMouseMoveListItem.bind(this);
+    this.onMouseOverBtnInfo = this.onMouseOverBtnInfo.bind(this);
+    this.onMouseLeaveBtnInfo = this.onMouseLeaveBtnInfo.bind(this);
+    this.onMouseMoveBtnInfo = this.onMouseMoveBtnInfo.bind(this);
 
     this.onCloseModal = this.onCloseModal.bind(this);
     this.onCloseTooltip = this.onCloseTooltip.bind(this);
@@ -37,7 +38,7 @@ class PostList extends React.Component {
     this.props.getPost(id);
   }
 
-  onMouseOverListItem(e) {
+  onMouseOverBtnInfo(e) {
     const id = e.currentTarget.dataset.id;
     this.setState({
       tooltip: parseInt(id, 0),
@@ -46,11 +47,11 @@ class PostList extends React.Component {
     });
   }
 
-  onMouseLeaveListItem() {
+  onMouseLeaveBtnInfo() {
     this.setState({ tooltip: null });
   }
 
-  onMouseMoveListItem(e) {
+  onMouseMoveBtnInfo(e) {
     this.setState({
       clientX: e.clientX,
       clientY: e.clientY
@@ -86,11 +87,17 @@ class PostList extends React.Component {
               key={i}
               data-id={post.id}
               onClick={this.onClickListItem}
-              onMouseOver={this.onMouseOverListItem}
-              onMouseLeave={this.onMouseLeaveListItem}
-              onMouseMove={this.onMouseMoveListItem}
             >
               {post.title}
+
+              <button
+                data-id={post.id}
+                onMouseOver={this.onMouseOverBtnInfo}
+                onMouseLeave={this.onMouseLeaveBtnInfo}
+                onMouseMove={this.onMouseMoveBtnInfo}
+              >
+                <svg className="c-icon -small"><use xlinkHref="#icon-check" /></svg>
+              </button>
 
               {/* Example of Tooltip */}
               {(tooltip === post.id) ?
