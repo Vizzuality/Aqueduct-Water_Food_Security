@@ -41,15 +41,12 @@ class Tooltip extends React.Component {
 
     const active = (this.state.active) ? '-active' : '';
     this.tooltipTarget.className += ` ${active}`;
-
-    this.tooltipTarget.style.top = `${this.props.clientY}px`;
-    this.tooltipTarget.style.left = `${this.props.clientX}px`;
+    this._setPosition();
   }
 
   componentWillUpdate() {
     this._render();
-    this.tooltipTarget.style.top = `${this.props.clientY}px`;
-    this.tooltipTarget.style.left = `${this.props.clientX}px`;
+    this._setPosition();
   }
 
   componentWillUnmount() {
@@ -71,21 +68,31 @@ class Tooltip extends React.Component {
     this.props.onCloseTooltip && this.props.onCloseTooltip();
   }
 
+  _setPosition() {
+    const width = this.tooltipTarget.clientWidth;
+    const heigth = this.tooltipTarget.clientHeight;
+
+    const x = (this.props.clientX < width/2) ? width/2 : this.props.clientX;
+    const y = (this.props.clientY < heigth) ? heigth : this.props.clientY;
+    this.tooltipTarget.style.top = `${y}px`;
+    this.tooltipTarget.style.left = `${x}px`;
+  }
+
   _render() {
     const loading = (this.props.isLoading) ? '-loading' : '';
 
     ReactDOM.render(
       <Provider store={store}>
         <div className="tooltip-container">
-          <button className="tooltip-close" onClick={this.onClickClose}>
+          {/* <button className="tooltip-close" onClick={this.onClickClose}>
             <svg className="c-icon"><use xlinkHref="#icon-cross" /></svg>
-          </button>
+          </button> */}
 
-          <div className={`c-spinner ${loading}`}>
+          {/* <div className={`c-spinner ${loading}`}>
             <div className="spinner-box">
               <div className="icon" />
             </div>
-          </div>
+          </div> */}
 
           <div className="tooltip-content">
             {this.props.children}

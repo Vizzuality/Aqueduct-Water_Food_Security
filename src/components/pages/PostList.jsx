@@ -102,8 +102,7 @@ class PostList extends React.Component {
                   onCloseTooltip={this.onCloseTooltip}
                 >
                   <div>
-                    <h2 style={{ textTransform: 'uppercase' }}>{post.title}</h2>
-                    <h3>{post.id}</h3>
+                    <p style={{ textTransform: 'uppercase' }}>{post.title}</p>
                   </div>
                 </Tooltip>
               : null }
