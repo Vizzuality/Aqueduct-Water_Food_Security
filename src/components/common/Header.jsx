@@ -89,6 +89,9 @@ class Header extends React.Component {
             <div className="c-modal-menu">
               <ul>
                 <li>
+                  <LinkCustom to="/">Home.</LinkCustom>
+                </li>
+                <li>
                   <LinkCustom to="/how-to">How to.</LinkCustom>
                 </li>
                 <li>

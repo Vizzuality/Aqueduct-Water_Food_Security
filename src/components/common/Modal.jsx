@@ -77,7 +77,7 @@ class Modal extends React.Component {
         <div>
           <div className="modal-container">
             <button className="modal-close" onClick={this.onClickClose}>
-              <svg className="c-icon -big"><use xlinkHref="#icon-cross" /></svg>
+              <svg className="c-icon"><use xlinkHref="#icon-cross" /></svg>
             </button>
 
             <div className={`c-spinner ${loading}`}>
