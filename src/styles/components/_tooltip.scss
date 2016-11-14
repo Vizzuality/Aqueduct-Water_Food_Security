@@ -1,0 +1,11 @@
+.c-tooltip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 200px;
+  height: 200px;
+  transform: translate(-50%,-100%);
+  background: $color-primary;
+  pointer-events: none;
+}

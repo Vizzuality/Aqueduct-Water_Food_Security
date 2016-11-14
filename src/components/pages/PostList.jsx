@@ -1,21 +1,31 @@
 import React from 'react';
 import Modal from '../common/Modal';
+import Tooltip from '../common/Tooltip';
 
 class PostList extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      active: null
+      active: null,
+      tooltip: null
     };
 
     this.onClickListItem = this.onClickListItem.bind(this);
+    this.onMouseOverListItem = this.onMouseOverListItem.bind(this);
+    this.onMouseLeaveListItem = this.onMouseLeaveListItem.bind(this);
+    this.onMouseMoveListItem = this.onMouseMoveListItem.bind(this);
+
     this.onCloseModal = this.onCloseModal.bind(this);
+    this.onCloseTooltip = this.onCloseTooltip.bind(this);
   }
 
   /**
    * UI EVENTS
    * - onClickListItem
+   * - onMouseOverListItem
+   * - onMouseLeaveListItem
+   * - onMouseMoveListItem
   */
   onClickListItem(e) {
     const id = e.currentTarget.dataset.id;
@@ -27,18 +37,44 @@ class PostList extends React.Component {
     this.props.getPost(id);
   }
 
+  onMouseOverListItem(e) {
+    const id = e.currentTarget.dataset.id;
+    this.setState({
+      tooltip: parseInt(id, 0),
+      clientX: e.clientX,
+      clientY: e.clientY
+    });
+  }
+
+  onMouseLeaveListItem() {
+    this.setState({ tooltip: null });
+  }
+
+  onMouseMoveListItem(e) {
+    this.setState({
+      clientX: e.clientX,
+      clientY: e.clientY
+    });
+  }
+
   /**
    * MODAL EVENTS
    * - onCloseModal
   */
   onCloseModal() {
-    this.setState({
-      active: null
-    });
+    this.setState({ active: null });
+  }
+
+  /**
+   * TOOLTIP EVENTS
+   * - onCloseModal
+  */
+  onCloseTooltip() {
+    this.setState({ tooltip: null });
   }
 
   render() {
-    const active = this.state.active;
+    const { active, tooltip, clientX, clientY } = this.state;
     const detail = this.props.posts.postsDetail[active];
     const loading = this.props.posts.postLoading;
 
@@ -50,8 +86,28 @@ class PostList extends React.Component {
               key={i}
               data-id={post.id}
               onClick={this.onClickListItem}
+              onMouseOver={this.onMouseOverListItem}
+              onMouseLeave={this.onMouseLeaveListItem}
+              onMouseMove={this.onMouseMoveListItem}
             >
               {post.title}
+
+              {/* Example of Tooltip */}
+              {(tooltip === post.id) ?
+                <Tooltip
+                  isActive={tooltip === post.id}
+                  isLoading={loading}
+                  clientX={clientX}
+                  clientY={clientY}
+                  onCloseTooltip={this.onCloseTooltip}
+                >
+                  <div>
+                    <h2 style={{ textTransform: 'uppercase' }}>{post.title}</h2>
+                    <h3>{post.id}</h3>
+                  </div>
+                </Tooltip>
+              : null }
+
 
               {/* Example of another Modal */}
               {(active === post.id) ?
