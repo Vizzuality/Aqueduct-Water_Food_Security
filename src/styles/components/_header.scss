@@ -27,10 +27,13 @@
 
   // LOGO
   .c-header-logo {
-    text-indent: -9999px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%,0);
+    text-indent: -9999px;
 
     a {
       display: block;
@@ -38,6 +41,8 @@
       height: 60px;
       // TODO: change the background to an url
       background: #000;
+      background: url('/src/images/logo.png') center no-repeat;
+      background-size: contain;
     }
   }
 

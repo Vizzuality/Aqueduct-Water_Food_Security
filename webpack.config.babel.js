@@ -28,10 +28,12 @@ const config = {
       {
         test: /\.(scss|sass)$/,
         loader: 'style-loader!css-loader!sass-loader!postcss-loader'
-      }
+      },
       // {test: /\.otf$/, loader: 'file-loader?name=fonts/[name].[ext]'},
-      // {test: /\.(png|jpg|gif|svg)$/,
-      // loader: 'url-loader?prefix=image/&limit=5000&context=./src/images'}
+      {
+        test: /\.(png|jpg|gif|svg)$/,
+        loader: 'url-loader?prefix=image/&limit=5000&context=./src/images'
+      }
     ]
   },
 
