@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 import { IndexRoute, Router, Route } from 'react-router';
 
 // Components
-import App from './containers/pages/App';
-import PostsPage from './containers/pages/PostsPage';
-
+import App from 'containers/pages/App';
+import PostsPage from 'containers/pages/PostsPage';
 
 
 const Routes = ({ history }) => (
@@ -14,6 +13,9 @@ const Routes = ({ history }) => (
   >
     <Route path="/" component={App}>
       <IndexRoute component={PostsPage} />
+      <Route path="posts">
+        <IndexRoute component={PostsPage} />
+      </Route>
     </Route>
   </Router>
 );

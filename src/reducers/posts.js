@@ -5,7 +5,7 @@ import {
   GET_POST_LOADING,
   GET_POST_SUCCESS,
   GET_POST_FAILURE
-} from '../actions/posts';
+} from 'actions/posts';
 
 const initialState = {
   postsLoading: true,

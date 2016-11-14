@@ -1,6 +1,6 @@
 import React from 'react';
 
-import PostList from '../../containers/pages/PostList';
+import PostList from 'containers/pages/PostList';
 
 class PostsPage extends React.Component {
 

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
-import PostsPage from '../../components/pages/PostsPage';
+import PostsPage from 'components/pages/PostsPage';
 
-import { getPosts } from '../../actions/posts';
+import { getPosts } from 'actions/posts';
 
 const mapStateToProps = state => ({
   posts: state.posts

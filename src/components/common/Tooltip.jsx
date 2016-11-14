@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { store } from '../../app';
+import { store } from '../../main';
 
 class Tooltip extends React.Component {
   constructor(props) {

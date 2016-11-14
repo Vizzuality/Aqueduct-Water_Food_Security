@@ -1,24 +1,28 @@
+/* eslint camelcase:0 */
+require('dotenv').config({ silent: true });
+
+process.env.BROWSERSLIST_CONFIG = 'browserslist';
+
+const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
+
+const rootPath = process.cwd();
 
 const config = {
 
-  context: path.join(__dirname, 'src'),
-
   entry: [
-    './app.jsx'
+    path.join(rootPath, 'src/main.jsx')
   ],
 
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js'
+    path: path.join(rootPath, 'dist/'),
+    filename: '[name]-[hash].js',
+    publicPath: '/'
   },
 
   module: {
     loaders: [
-      { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
-
       { test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/ },
 
       {
@@ -29,7 +33,10 @@ const config = {
         test: /\.(scss|sass)$/,
         loader: 'style-loader!css-loader!sass-loader!postcss-loader'
       },
-      // {test: /\.otf$/, loader: 'file-loader?name=fonts/[name].[ext]'},
+      {
+        test: /\.(eot|ttf|woff2|woff)$/,
+        loader: 'url-loader?prefix=fonts/&context=./src/fonts'
+      },
       {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'url-loader?prefix=image/&limit=5000&context=./src/images'
@@ -38,12 +45,23 @@ const config = {
   },
 
   resolve: {
+    root: [
+      rootPath
+    ],
+    alias: {
+      actions: 'src/actions',
+      reducers: 'src/reducers',
+      components: 'src/components',
+      containers: 'src/containers',
+      constants: 'src/constants',
+      fonts: 'src/fonts'
+    },
     extensions: ['', '.js', '.jsx', 'css', '.scss']
   },
 
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'index.html',
+      template: 'src/index.html',
       inject: 'body',
       filename: 'index.html'
     }),

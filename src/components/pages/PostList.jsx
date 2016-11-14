@@ -1,6 +1,6 @@
 import React from 'react';
-import Modal from '../common/Modal';
-import Tooltip from '../common/Tooltip';
+import Modal from 'components/common/Modal';
+import Tooltip from 'components/common/Tooltip';
 
 class PostList extends React.Component {
   constructor(props) {

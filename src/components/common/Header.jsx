@@ -15,7 +15,6 @@ class Header extends React.Component {
 
     // Set bindings
     this.onClickBtnAction = this.onClickBtnAction.bind(this);
-    this.onCloseModal = this.onCloseModal.bind(this);
   }
 
   /**
@@ -27,16 +26,6 @@ class Header extends React.Component {
 
     this.setState({
       active: (current !== this.state.active) ? current : ''
-    });
-  }
-
-  /**
-   * MODAL EVENTS
-   * - onCloseModal
-  */
-  onCloseModal() {
-    this.setState({
-      active: ''
     });
   }
 
