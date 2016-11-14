@@ -4,7 +4,7 @@
   "description": "TODO: write a description",
   "main": "webpack.config.js",
   "scripts": {
-    "start": "./node_modules/.bin/webpack-dev-server --progress --colors",
+    "start": "./node_modules/.bin/webpack-dev-server --progress --colors --inline --hot",
     "test": "./node_modules/.bin/eslint . && ./node_modules/.bin/jscs ."
   },
   "repository": {

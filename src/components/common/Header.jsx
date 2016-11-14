@@ -3,9 +3,6 @@ import { Link } from 'react-router';
 
 // Components
 import HeaderTools from './HeaderTools';
-import HeaderSearch from './HeaderSearch';
-import Modal from './Modal';
-import LinkCustom from './LinkCustom';
 
 class Header extends React.Component {
 
@@ -47,16 +44,6 @@ class Header extends React.Component {
     return (
       <header className="c-header">
         <nav>
-          {/* LEFT MENU */}
-          <ul className="list">
-            <li>
-              <button data-active="tools" className={`c-header-button ${this.state.active === 'tools' && '-active'}`} onClick={this.onClickBtnAction}>
-                <svg className="c-icon"><use xlinkHref="#icon-grid" /></svg>
-                <span>Tools</span>
-              </button>
-            </li>
-          </ul>
-
           {/* LOGO */}
           <h1 className="c-header-logo">
             <Link to="/">Logo</Link>
@@ -65,52 +52,31 @@ class Header extends React.Component {
           {/* RIGHT MENU */}
           <ul className="list">
             <li>
-              <HeaderSearch active={this.state.active === 'search'} />
-              <button data-active="search" className={`c-header-button ${this.state.active === 'search' && '-active'}`} onClick={this.onClickBtnAction}>
-                <svg className="c-icon"><use xlinkHref={`${this.state.active === 'search' ? '#icon-cross' : '#icon-search'}`} /></svg>
+              <button data-active="tools" className={`c-header-button ${this.state.active === 'tools' && '-active'}`} onClick={this.onClickBtnAction}>
+                <span>Tools</span>
               </button>
             </li>
             <li>
-              <button data-active="menu" className={`c-header-button ${this.state.active === 'menu' && '-active'}`} onClick={this.onClickBtnAction}>
-                <svg className="c-icon"><use xlinkHref="#icon-menu" /></svg>
-              </button>
+              <Link className="c-header-button" to="/how-to">How to</Link>
+            </li>
+            <li>
+              <Link className="c-header-button" to="/resource-library">Resource Library</Link>
+            </li>
+            <li>
+              <Link className="c-header-button" to="/about">About us</Link>
+            </li>
+            <li>
+              <Link className="c-header-button" to="/get-involved">Get involved</Link>
+            </li>
+            <li>
+              <Link className="c-header-button" to="/search">
+                <svg className="c-icon"><use xlinkHref="#icon-search" /></svg>
+              </Link>
             </li>
           </ul>
         </nav>
 
         <HeaderTools active={this.state.active === 'tools'} />
-
-        {(this.state.active === 'menu') ?
-          <Modal
-            isActive={this.state.active === 'menu'}
-            className="-menu"
-            onCloseModal={this.onCloseModal}
-          >
-            <div className="c-modal-menu">
-              <ul>
-                <li>
-                  <LinkCustom to="/">Home.</LinkCustom>
-                </li>
-                <li>
-                  <LinkCustom to="/how-to">How to.</LinkCustom>
-                </li>
-                <li>
-                  <LinkCustom to="/resource-library">Resource Library.</LinkCustom>
-                </li>
-                <li>
-                  <LinkCustom to="/about">About us.</LinkCustom>
-                </li>
-                <li>
-                  <LinkCustom to="/get-involved">Get involved.</LinkCustom>
-                </li>
-              </ul>
-              <div className="info">
-                <span>Don’t Know how to use Aqueduct tools?</span>
-                <span>Check out our Video tutorials.</span>
-              </div>
-            </div>
-          </Modal>
-        : null}
       </header>
     );
   }
