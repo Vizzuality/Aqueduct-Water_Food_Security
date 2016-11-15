@@ -1,6 +1,12 @@
+html, body {
+  height: 100%;
+}
+
 body {
+  background: #EEE;
   font-family: 'Roboto';
   font-size: 14px;
+  min-height: 100%;
   -webkit-font-smoothing: antialiased;
 }
 

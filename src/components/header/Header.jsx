@@ -13,7 +13,7 @@ class Header extends React.Component {
       active: ''
     };
 
-    // Set bindings
+    // BINDINGS
     this.onClickBtnAction = this.onClickBtnAction.bind(this);
   }
 
@@ -31,7 +31,7 @@ class Header extends React.Component {
 
   render() {
     return (
-      <header className="c-header">
+      <header className="l-header c-header">
         <nav>
           {/* LOGO */}
           <h1 className="c-header-logo">

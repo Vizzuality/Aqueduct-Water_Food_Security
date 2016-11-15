@@ -21,6 +21,10 @@ const config = {
     publicPath: '/'
   },
 
+  externals: {
+    leaflet: 'L'
+  },
+
   module: {
     loaders: [
       { test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/ },

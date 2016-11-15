@@ -55,5 +55,5 @@ render(
     {/* Tell the Router to use our enhanced history */}
     <Routes history={history} />
   </Provider>,
-  document.getElementById('app')
+  document.getElementById('main')
 );
