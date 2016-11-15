@@ -5,7 +5,7 @@ import {
   GET_POST_LOADING,
   GET_POST_SUCCESS,
   GET_POST_FAILURE
-} from '../actions/posts';
+} from 'actions/posts';
 
 const initialState = {
   postsLoading: true,
@@ -26,7 +26,10 @@ export default function (state = initialState, action) {
     case GET_POST_LOADING:
       return Object.assign({}, state, { postLoading: action.payload });
     case GET_POST_SUCCESS:
-      return Object.assign({}, state, { postsDetail: action.payload });
+      const postsDetail = state.postsDetail;
+      postsDetail[action.payload.id] = action.payload;
+
+      return Object.assign({}, state, { postsDetail });
     case GET_POST_FAILURE:
       return Object.assign({}, state, { postError: action.payload });
 

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
-import PostPage from '../../components/pages/PostPage';
+import PostList from 'components/pages/PostList';
 
-import { getPost } from '../../actions/posts';
+import { getPost } from 'actions/posts';
 
 const mapStateToProps = state => ({
   posts: state.posts
@@ -9,4 +9,4 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   getPost
-})(PostPage);
+})(PostList);
