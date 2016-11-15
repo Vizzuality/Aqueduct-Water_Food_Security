@@ -72,14 +72,14 @@ class Tooltip extends React.Component {
     const width = this.tooltipTarget.clientWidth;
     const heigth = this.tooltipTarget.clientHeight;
 
-    const x = (this.props.clientX < width/2) ? width/2 : this.props.clientX;
+    const x = (this.props.clientX < width / 2) ? width / 2 : this.props.clientX;
     const y = (this.props.clientY < heigth) ? heigth : this.props.clientY;
     this.tooltipTarget.style.top = `${y}px`;
     this.tooltipTarget.style.left = `${x}px`;
   }
 
   _render() {
-    const loading = (this.props.isLoading) ? '-loading' : '';
+    // const loading = (this.props.isLoading) ? '-loading' : '';
 
     ReactDOM.render(
       <Provider store={store}>
