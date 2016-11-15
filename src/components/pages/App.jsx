@@ -5,7 +5,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="l-main">
+      <div className="l-app">
         <Header />
         {this.props.children}
       </div>
