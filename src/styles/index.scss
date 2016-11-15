@@ -10,12 +10,13 @@
 @import "layouts/main";
 
 /* COMPONENTS */
-@import "components/header";
 @import "components/btn";
+@import "components/filters";
+@import "components/header";
 @import "components/icons";
 @import "components/map";
 @import "components/modal";
-@import "components/modal-menu";
+@import "components/select";
 @import "components/sidebar";
 @import "components/spinner";
 @import "components/tooltip";

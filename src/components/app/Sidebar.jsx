@@ -1,12 +1,15 @@
 import React from 'react';
 
+// Components
+import Filters from 'components/app/Filters';
+
 class Sidebar extends React.Component {
 
   constructor(props) {
     super(props);
 
     // BINDINGS
-    this.onClickToggle = this.onClickToggle.bind(this);
+    this.triggerToggle = this.triggerToggle.bind(this);
 
     this.state = {
       opened: true
@@ -15,9 +18,9 @@ class Sidebar extends React.Component {
 
   /**
    * UI EVENTS
-   * - onClickToggle
+   * - triggerToggle
   */
-  onClickToggle() {
+  triggerToggle() {
     this.setState({
       opened: !this.state.opened
     });
@@ -28,12 +31,13 @@ class Sidebar extends React.Component {
     return (
       <div className={`l-sidebar c-sidebar ${openedClass}`}>
         {/* Toggle button */}
-        <div className={`btn-toggle ${openedClass}`} onClick={this.onClickToggle}>
+        <div className={`btn-toggle ${openedClass}`} onClick={this.triggerToggle}>
           <svg className="c-icon -big"><use xlinkHref="#icon-cross" /></svg>
         </div>
 
-        {/* SidebarConfig */}
-
+        {/* Filters */}
+        <Filters />
+        
         {/* WidgetList */}
       </div>
     );

@@ -51,7 +51,7 @@
     align-items: center;
     flex-shrink: 0;
     height: 60px;
-    padding: 0 $space-2;
+    padding: 0 ($space-1 * 2);
     background: white;
     color: $color-primary;
     fill: $color-primary;
@@ -100,7 +100,7 @@
       width: 20%;
       list-style: none;
       display: block;
-      padding: $space-2;
+      padding: ($space-1 * 2);
       color: $color-primary;
       border-right: 1px solid rgba(white,.5);
 

@@ -1,0 +1,17 @@
+.c-filters {
+  padding: ($space-1 * 7) ($space-1 * 7);
+
+
+  .c-filter-box {
+    // padding: 0 ($space-1 * 7) 0 0;
+    > * {
+      margin: 0 0 10px;
+      &:last-child { margin: 0;}
+    }
+
+    h2 {
+      font-weight: 300;
+      font-size: $font-size-medium;
+    }
+  }
+}
