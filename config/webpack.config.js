@@ -35,11 +35,11 @@ const config = {
       },
       {
         test: /\.(eot|ttf|woff2|woff)$/,
-        loader: 'url-loader?prefix=fonts/&context=./src/fonts'
+        loader: 'url-loader?prefix=fonts/&context=/src/fonts'
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
-        loader: 'url-loader?prefix=image/&limit=5000&context=./src/images'
+        loader: 'url-loader?prefix=image/&limit=5000&context=/src/images'
       }
     ]
   },

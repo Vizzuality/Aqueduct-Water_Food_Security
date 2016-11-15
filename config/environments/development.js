@@ -11,7 +11,7 @@ const config = require('../webpack.config.js');
 
 const indexPath = path.join(process.cwd(), 'dist/index.html');
 
-module.exports = function (app) {
+module.exports = (app) => {
   const compiler = webpack(config);
   const middleware = webpackMiddleware(compiler, {
     publicPath: config.output.publicPath,

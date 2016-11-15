@@ -4,7 +4,7 @@ import { IndexRoute, Router, Route } from 'react-router';
 
 // Components
 import App from 'containers/pages/App';
-import PostsPage from 'containers/pages/PostsPage';
+import AppPage from 'containers/pages/AppPage';
 
 
 const Routes = ({ history }) => (
@@ -12,9 +12,9 @@ const Routes = ({ history }) => (
     history={history}
   >
     <Route path="/" component={App}>
-      <IndexRoute component={PostsPage} />
+      <IndexRoute component={AppPage} />
       <Route path="posts">
-        <IndexRoute component={PostsPage} />
+        <IndexRoute component={AppPage} />
       </Route>
     </Route>
   </Router>
