@@ -27,9 +27,14 @@ class Sidebar extends React.Component {
     const openedClass = (this.state.opened) ? '-opened' : '';
     return (
       <div className={`l-sidebar c-sidebar ${openedClass}`}>
-        <div className={`btn-toggle c-btn-icon -primary ${openedClass}`} onClick={this.onClickToggle}>
+        {/* Toggle button */}
+        <div className={`btn-toggle ${openedClass}`} onClick={this.onClickToggle}>
           <svg className="c-icon -big"><use xlinkHref="#icon-cross" /></svg>
         </div>
+
+        {/* SidebarConfig */}
+
+        {/* WidgetList */}
       </div>
     );
   }
