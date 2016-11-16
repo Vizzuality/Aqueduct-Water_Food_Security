@@ -5,6 +5,8 @@ $border-radius-select: 0;
 $color-select: #FFF;
 $color-focus-select: #DDD;
 $color-isopen-select: $color-tertiary;
+$height-select: 40px;
+$color-error-select: $color-error;
 
 .Select {
   position: relative;
@@ -32,7 +34,6 @@ $color-isopen-select: $color-tertiary;
 }
 .Select-control {
   background-color: $backgroud-color-select;
-  border-color: #d9d9d9 #ccc #b3b3b3;
   border-radius: $border-radius-select;
   border: 1px solid $border-color-select;
   color: $color-select;
@@ -40,7 +41,7 @@ $color-isopen-select: $color-tertiary;
   display: table;
   border-spacing: 0;
   border-collapse: separate;
-  height: 36px;
+  height: $height-select;
   outline: none;
   overflow: hidden;
   position: relative;
@@ -75,7 +76,7 @@ $color-isopen-select: $color-tertiary;
   bottom: 0;
   color: $color-select;
   left: 0;
-  line-height: 34px;
+  line-height: $height-select - 2;
   padding-left: 10px;
   padding-right: 10px;
   position: absolute;
@@ -104,7 +105,7 @@ $color-isopen-select: $color-tertiary;
   text-decoration: underline;
 }
 .Select-input {
-  height: 34px;
+  height: $height-select - 2;
   padding-left: 10px;
   padding-right: 10px;
   vertical-align: middle;
@@ -122,7 +123,7 @@ $color-isopen-select: $color-tertiary;
   outline: none;
   line-height: 14px;
   /* For IE 8 compatibility */
-  padding: 8px 0 12px;
+  padding: 11px 0 11px;
   /* For IE 8 compatibility */
   -webkit-appearance: none;
 }
@@ -170,12 +171,12 @@ $color-isopen-select: $color-tertiary;
   width: 17px;
 }
 .Select-clear-zone:hover {
-  color: #D0021B;
+  color: #d25766;
 }
 .Select-clear {
   display: inline-block;
   font-size: 18px;
-  line-height: 1;
+  line-height: $height-select - 2;
 }
 .Select--multi .Select-clear-zone {
   width: 17px;
@@ -253,10 +254,6 @@ $color-isopen-select: $color-tertiary;
   cursor: pointer;
   display: block;
   padding: 8px 10px;
-}
-.Select-option:last-child {
-  border-bottom-right-radius: 4px;
-  border-bottom-left-radius: 4px;
 }
 .Select-option.is-selected {
   background-color: #f5faff;
