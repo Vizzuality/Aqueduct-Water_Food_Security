@@ -1,16 +1,14 @@
 import React from 'react';
-import Select from 'react-select';
+import { SimpleSelect } from 'react-selectize';
 import RadioGroup from 'components/common/RadioGroup';
 
 const options = [
-  { value: 'one', label: 'One' },
-  { value: 'two', label: 'Two' },
-  { value: 'three', label: 'Three' },
-  { value: 'four', label: 'Four' },
-  { value: 'five', label: 'Five' }
+  { value: 'one', label: 'La madre de los textos. Porque me gusta que cuando me lean entiendan perfectamente quien soy' },
+  { value: 'two', label: 'Country' },
+  { value: 'three', label: 'Sub-Catchment' }
 ];
 
-const predictionItems = [
+const predictionOptions = [
   { value: 'optimistic', label: 'Optimistic View' },
   { value: 'pesimistic', label: 'Pesimistic View' }
 ];
@@ -47,43 +45,51 @@ class Filters extends React.Component {
   render() {
     return (
       <div className="c-filters">
-        <div className="row collapse">
-          <div className="column small-12 medium-6">
-            <div className="c-filter-box">
-              <h2>Explore water risk</h2>
-              <Select
-                name="scope"
-                value={this.state.scope}
-                options={options}
-                onChange={selected => this.triggerChange(selected, 'scope')}
-              />
-              <Select
-                name="layers"
-                value={this.state.layers}
-                options={options}
-                onChange={selected => this.triggerChange(selected, 'layers')}
-              />
-              <Select
-                name="crop"
-                value={this.state.crop}
-                options={options}
-                onChange={selected => this.triggerChange(selected, 'crop')}
-              />
-            </div>
-          </div>
-          <div className="column small-12 medium-5 medium-offset-1">
-            <div className="c-filter-box">
-              <h2>Baseline</h2>
-              <div>
-                <RadioGroup
-                  name="prediction"
-                  defaultValue={this.state.prediction}
-                  items={predictionItems}
-                  onChange={selected => this.triggerChange(selected, 'prediction')}
-                />
-              </div>
-            </div>
-          </div>
+        <div className="c-filter-box">
+          <SimpleSelect
+            name="scope"
+            placeholder="Select a contry"
+            options={options}
+            onValueChange={selected => this.triggerChange(selected, 'scope')}
+            tether
+          />
+        </div>
+        <div className="c-filter-box">
+          <SimpleSelect
+            name="layers"
+            placeholder="Select a layer"
+            options={options}
+            onValueChange={selected => this.triggerChange(selected, 'scope')}
+            // onOpenChange={() => { debugger;}}
+            tether
+          />
+        </div>
+        <div className="c-filter-box">
+          <SimpleSelect
+            name="crop"
+            placeholder="Select a crop"
+            options={options}
+            onValueChange={selected => this.triggerChange(selected, 'crop')}
+            tether
+          />
+        </div>
+        <div className="c-filter-box">
+          <SimpleSelect
+            name="prediction"
+            placeholder="Select a prediction"
+            options={predictionOptions}
+            onValueChange={selected => this.triggerChange(selected, 'prediction')}
+            tether
+          />
+        </div>
+        <div className="c-filter-box">
+          <SimpleSelect
+            name="baseline"
+            placeholder="Select a baseline"
+            options={options}
+            onValueChange={selected => this.triggerChange(selected, 'baseline')}
+            tether
+          />
         </div>
       </div>
     );

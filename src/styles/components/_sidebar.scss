@@ -1,5 +1,5 @@
 .c-sidebar {
-  background: $color-secondary;
+  background: $color-gray;
   color: white;
   transform: translate(calc(-100% + 60px),0);
   transition: all $animation-time-2 $ease-in-out-sine;
@@ -18,15 +18,18 @@
     width: 60px;
     height: 100%;
     fill: $color-primary;
-    padding: ($space-1 * 2) 0;
     cursor: pointer;
+
+    svg {
+      margin: $space-1 0 0;
+    }
 
     &:hover {
       fill: darken($color-primary, 5%);
     }
 
     &.-opened {
-      height: auto;
+      height: 50px;
     }
   }
 }
