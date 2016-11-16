@@ -2,6 +2,7 @@ import React from 'react';
 
 // Components
 import Filters from 'components/app/Filters';
+import WidgetList from 'components/app/WidgetList';
 
 class Sidebar extends React.Component {
 
@@ -31,14 +32,17 @@ class Sidebar extends React.Component {
     return (
       <div className={`l-sidebar c-sidebar ${openedClass}`}>
         {/* Toggle button */}
-        <div className={`btn-toggle ${openedClass}`} onClick={this.triggerToggle}>
+        <div className={`l-sidebar-toggle btn-toggle ${openedClass}`} onClick={this.triggerToggle}>
           <svg className="c-icon -big"><use xlinkHref="#icon-cross" /></svg>
         </div>
 
         {/* Filters */}
         <Filters />
-        
-        {/* WidgetList */}
+
+        <div className="l-sidebar-content">
+          {/* WidgetList */}
+          <WidgetList />
+        </div>
       </div>
     );
   }

@@ -1,6 +1,5 @@
 import React from 'react';
 import { SimpleSelect } from 'react-selectize';
-import RadioGroup from 'components/common/RadioGroup';
 
 const options = [
   { value: 'one', label: 'La madre de los textos. Porque me gusta que cuando me lean entiendan perfectamente quien soy' },
@@ -44,7 +43,7 @@ class Filters extends React.Component {
 
   render() {
     return (
-      <div className="c-filters">
+      <div className="l-filters c-filters">
         <div className="c-filter-box">
           <SimpleSelect
             name="scope"
