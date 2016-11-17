@@ -6,11 +6,15 @@
   padding: ($space-1 * 4) ($space-1 * 2) 0;
 
   .widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
     margin: 0 0 ($space-1 * 2);
 
     h2 {
       font-size: $font-size-default;
-      color: $color-tertiary;
+      color: $color-widgets;
+      max-width: 50%;
     }
   }
 
@@ -18,5 +22,24 @@
     height: 250px;
     background: white;
     box-shadow: 0 1px 0 0 #dbdfe5;
+  }
+}
+
+
+.c-widget-buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  > * {
+    margin: 0 0 0 $space-1;
+    list-style: none;
+  }
+
+  .widget-button {
+    fill: $color-widgets;
+    &:hover {
+      fill: darken($color-widgets, 25%);
+    }
   }
 }

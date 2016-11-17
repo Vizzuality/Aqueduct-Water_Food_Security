@@ -31,7 +31,10 @@ class Sidebar extends React.Component {
     const openedClass = (this.state.opened) ? '-opened' : '';
     return (
       <div className={`l-sidebar c-sidebar ${openedClass}`}>
-        {/* Toggle button */}
+        {/*
+          Toggle button
+          - I'm using a div instead of a button because I don't want that browser's styles interfere with them
+        */}
         <div className={`l-sidebar-toggle btn-toggle ${openedClass}`} onClick={this.triggerToggle}>
           <svg className="c-icon -big"><use xlinkHref="#icon-cross" /></svg>
         </div>
