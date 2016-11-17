@@ -2,7 +2,7 @@ import React from 'react';
 
 // Components
 import Filters from 'components/app/Filters';
-import WidgetList from 'components/app/WidgetList';
+import WidgetList from 'components/widgets/WidgetList';
 
 class Sidebar extends React.Component {
 
