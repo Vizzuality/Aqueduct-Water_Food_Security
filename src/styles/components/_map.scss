@@ -1,0 +1,56 @@
+.c-map {
+  height: 100%;
+}
+
+
+/*
+  Leaflet overiding styles
+*/
+
+.leaflet-bar {
+  box-shadow: none;
+  a {
+    display: inline-block;
+    background-color: transparent;
+    padding: 15px 30px;
+    width: auto;
+    height: auto;
+    line-height: 0;
+    color: $color-white;
+    border: 0;
+    border-left: 1px solid $color-white;
+    transition: background-color linear .3s;
+
+    &.leaflet-disabled {
+      background-color: transparent;
+      color: $color-white;
+    }
+
+    &:hover {
+      background-color: $color-primary;
+      color: white;
+      border-bottom: 0;
+      width: auto;
+      height: auto;
+      line-height: 0;
+      display: inline-block;;
+    }
+
+    &:first-child {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+
+    &:last-child {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+}
+
+.leaflet-right .leaflet-control {
+  margin-right: $zoom-margin-right;
+}
+.leaflet-top .leaflet-control {
+  margin-top: $zoom-margin-top;
+}

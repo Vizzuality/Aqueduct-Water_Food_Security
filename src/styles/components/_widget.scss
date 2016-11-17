@@ -1,0 +1,22 @@
+.c-widget-list {
+  padding: 0 ($space-1 * 2) ($space-1 * 4);
+}
+
+.c-widget {
+  padding: ($space-1 * 4) ($space-1 * 2) 0;
+
+  .widget-header {
+    margin: 0 0 ($space-1 * 2);
+
+    h2 {
+      font-size: $font-size-default;
+      color: $color-tertiary;
+    }
+  }
+
+  .widget-content {
+    height: 250px;
+    background: white;
+    box-shadow: 0 1px 0 0 #dbdfe5;
+  }
+}

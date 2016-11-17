@@ -27,7 +27,7 @@ const reducer = combineReducers({
  * @type {Object}
  */
 const middlewareRouter = routerMiddleware(browserHistory);
-const store = createStore(
+export const store = createStore(
   reducer,
   compose(
     /* The router middleware MUST be before thunk otherwise the URL changes
@@ -35,7 +35,7 @@ const store = createStore(
     applyMiddleware(middlewareRouter, thunk),
     /* Redux dev tool, install chrome extension in
      * https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en */
-    process.env.NODE_ENV === 'development' && typeof window === 'object' &&
+    typeof window === 'object' &&
       typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : f => f
   )
 );
@@ -45,7 +45,7 @@ const store = createStore(
  * @info(https://github.com/reactjs/react-router/tree/master/docs)
  * @type {Object}
  */
-const history = syncHistoryWithStore(browserHistory, store);
+export const history = syncHistoryWithStore(browserHistory, store);
 
 // Google Analytics
 // process.env.NODE_ENV === 'production' && ReactGA.initialize(process.env.GA);
@@ -55,5 +55,5 @@ render(
     {/* Tell the Router to use our enhanced history */}
     <Routes history={history} />
   </Provider>,
-  document.getElementById('app')
+  document.getElementById('main')
 );
