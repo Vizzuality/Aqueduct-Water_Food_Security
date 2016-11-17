@@ -20,10 +20,25 @@ class Map extends React.Component {
     this.tileLayer = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png')
                       .addTo(this.map)
                       .setZIndex(0);
+    // Listen to leaflet events
+    this.addMapEventListeners();
   }
 
   componentWillUnmount() {
     this.map.remove();
+  }
+
+  getMapParams() {
+    return {
+      zoom: this.map.getZoom()
+    };
+  }
+
+  addMapEventListeners() {
+    function onZoomend() {
+      this.props.setMapParams(this.getMapParams());
+    }
+    this.map.on('zoomend', onZoomend.bind(this));
   }
 
   render() {
@@ -36,6 +51,7 @@ class Map extends React.Component {
 }
 
 Map.propTypes = {
+  setMapParams: React.PropTypes.func
 };
 
 export default Map;
