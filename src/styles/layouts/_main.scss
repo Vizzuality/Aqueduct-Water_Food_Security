@@ -24,10 +24,30 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 50%;
   height: 100%;
-  overflow: auto;
+  width: 50%;
   z-index: 2;
+
+  .l-filters {
+    position: relative;
+    z-index: 1;
+  }
+
+  .l-sidebar-toggle {
+    position: absolute;
+    z-index: 2;
+  }
+
+  .l-sidebar-content {
+    position: absolute;
+    overflow: auto;
+    height: 100%;
+    width: 100%;
+    border-top: 50px solid transparent;
+    top: 0;
+    left: 0;
+    z-index: 0;
+  }
 }
 
 
