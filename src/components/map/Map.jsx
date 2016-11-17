@@ -25,20 +25,37 @@ class Map extends React.Component {
   }
 
   componentWillUnmount() {
+    this.map.off('zoomend');
+    this.map.off('dragend');
     this.map.remove();
   }
 
+  getLatLng() {
+    const latLng = this.map.getCenter();
+    latLng.lat = latLng.lat.toFixed(2);
+    latLng.lng = latLng.lng.toFixed(2);
+
+    return latLng;
+  }
+
   getMapParams() {
-    return {
+    const latLng = this.getLatLng();
+    const params = {
       zoom: this.map.getZoom()
     };
+
+    if (latLng) {
+      params.latLng = latLng;
+    }
+    return params;
   }
 
   addMapEventListeners() {
-    function onZoomend() {
+    function mapChangeHandler() {
       this.props.setMapParams(this.getMapParams());
     }
-    this.map.on('zoomend', onZoomend.bind(this));
+    this.map.on('zoomend', mapChangeHandler.bind(this));
+    this.map.on('dragend', mapChangeHandler.bind(this));
   }
 
   render() {
