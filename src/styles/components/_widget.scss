@@ -19,7 +19,7 @@
   }
 
   .widget-content {
-    height: 250px;
+    min-height: 200px;
     background: white;
     box-shadow: 0 1px 0 0 #dbdfe5;
   }
@@ -32,14 +32,25 @@
   align-items: center;
 
   > * {
-    margin: 0 0 0 $space-1;
+    display: flex;
     list-style: none;
+    margin: 0 0 0 $space-1;
   }
 
   .widget-button {
-    fill: $color-widgets;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    svg {
+      fill: $color-widgets;
+      display: block;
+    }
+
     &:hover {
-      fill: darken($color-widgets, 25%);
+      svg {
+        fill: darken($color-widgets, 25%);
+      }
     }
   }
 }

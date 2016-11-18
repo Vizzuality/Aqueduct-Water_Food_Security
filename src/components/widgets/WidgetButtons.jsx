@@ -6,6 +6,8 @@ class WidgetButtons extends React.Component {
     super(props);
 
     this.state = {
+      shareable: true,
+      downloadable: true
     };
 
     // BINDINGS
@@ -20,16 +22,21 @@ class WidgetButtons extends React.Component {
   render() {
     return (
       <ul className="c-widget-buttons">
-        <li>
-          <button data-action="share" className="widget-button" onClick={this.triggerAction}>
-            <svg className="c-icon"><use xlinkHref="#icon-cross" /></svg>
-          </button>
-        </li>
-        <li>
-          <button data-action="download" className="widget-button" onClick={this.triggerAction}>
-            <svg className="c-icon"><use xlinkHref="#icon-menu" /></svg>
-          </button>
-        </li>
+        {(this.state.shareable) ?
+          <li>
+            <button data-action="share" className="widget-button" onClick={this.triggerAction}>
+              <svg className="c-icon"><use xlinkHref="#icon-cross" /></svg>
+            </button>
+          </li>
+        : null}
+
+        {(this.state.downloadable) ?
+          <li>
+            <button data-action="download" className="widget-button" onClick={this.triggerAction}>
+              <svg className="c-icon"><use xlinkHref="#icon-menu" /></svg>
+            </button>
+          </li>
+        : null}
       </ul>
     );
   }

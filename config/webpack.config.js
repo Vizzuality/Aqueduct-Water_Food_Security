@@ -38,6 +38,10 @@ const config = {
         loader: 'style-loader!css-loader!sass-loader!postcss-loader'
       },
       {
+        test: /\.json$/,
+        loader: 'json'
+      },
+      {
         test: /\.(eot|ttf|woff2|woff)$/,
         loader: 'url-loader?prefix=fonts/&context=/src/fonts'
       },
@@ -58,9 +62,10 @@ const config = {
       components: 'src/components',
       containers: 'src/containers',
       constants: 'src/constants',
-      fonts: 'src/fonts'
+      fonts: 'src/fonts',
+      data: 'src/data'
     },
-    extensions: ['', '.js', '.jsx', 'css', '.scss']
+    extensions: ['', '.js', '.jsx', '.json', 'css', '.scss']
   },
 
   plugins: [
@@ -72,7 +77,11 @@ const config = {
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
-    new webpack.DefinePlugin({})
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+      }
+    })
   ]
 
 };

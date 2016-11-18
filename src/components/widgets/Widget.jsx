@@ -1,5 +1,6 @@
 import React from 'react';
 import WidgetButtons from 'components/widgets/WidgetButtons';
+import WidgetChart from 'components/widgets/WidgetChart';
 
 class Widget extends React.Component {
 
@@ -27,7 +28,7 @@ class Widget extends React.Component {
           </header>
           <div className="widget-content">
             {/* WidgetLegend */}
-            {/* WidgetGraph */}
+            <WidgetChart />
             {/* WidgetBaseline */}
           </div>
         </div>
