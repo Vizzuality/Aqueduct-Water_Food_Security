@@ -6,13 +6,15 @@ import { IndexRoute, Router, Route } from 'react-router';
 import App from 'containers/pages/App';
 import AppPage from 'containers/pages/AppPage';
 
+// Routing actions
+import { updateParams } from 'actions/route';
 
 const Routes = ({ history }) => (
   <Router
     history={history}
   >
-    <Route path="/" component={App}>
-      <IndexRoute component={AppPage} />
+    <Route path="/(:lat)(/:lng)(/:zoom)" component={App}>
+      <IndexRoute component={AppPage} onEnter={updateParams} />
       <Route path="posts">
         <IndexRoute component={AppPage} />
       </Route>

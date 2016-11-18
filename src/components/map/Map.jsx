@@ -7,13 +7,19 @@ import L from 'leaflet';
 class Map extends React.Component {
 
   componentDidMount() {
+    // Build map settings from router params
+    const mapSettings = {
+      zoom: this.props.map.zoom !== undefined ? +this.props.map.zoom : 3,
+      lat: this.props.map.latLng.lat !== undefined ? +this.props.map.latLng.lat : 52,
+      lng: this.props.map.latLng.lng !== undefined ? +this.props.map.latLng.lng : 7
+    };
+
     this.map = L.map('map', {
       minZoom: 2,
-      zoom: 3,
-      center: [52, 7],
+      zoom: mapSettings.zoom,
+      center: [mapSettings.lat, mapSettings.lng],
       detectRetina: true
     });
-
     this.map.attributionControl.addAttribution('&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>');
     this.map.zoomControl.setPosition('topright');
     this.map.scrollWheelZoom.disable();
@@ -68,7 +74,8 @@ class Map extends React.Component {
 }
 
 Map.propTypes = {
-  setMapParams: React.PropTypes.func
+  setMapParams: React.PropTypes.func,
+  map: React.PropTypes.object
 };
 
 export default Map;
