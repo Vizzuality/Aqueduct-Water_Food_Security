@@ -1,1 +1,1 @@
-export const MAP_UPDATE_PAN = 'MAP_UPDATE_PAN';
+export const SET_MAP_PARAMS = 'SET_MAP_PARAMS';
