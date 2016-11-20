@@ -20,7 +20,9 @@
       "transform": [{"type": "sort","by": ["x"]}],
       "format": {"type": "json","property": "data"}
     },
-    {"name": "axis","values": [{"x": "Years","y": "cfs"}]},
+    {
+      "name": "axis","values": [{"x": "Years","y": "cfs"}]
+    },
     {
       "name": "legend",
       "values": [
@@ -47,7 +49,7 @@
       "name": "y",
       "nice": true,
       "type": "linear",
-      "zero": false,
+      "zero": true,
       "range": "height",
       "domain": {
         "fields": [
@@ -74,11 +76,13 @@
       "ticks": 5,
       "properties": {
         "axis": {
-          "stroke": {"value": "#3B4F63"},
-          "opacity": {"value": 0.5},
-          "strokeWidth": {"value": 0}
+          "stroke": {"value": "#000"},
+          "strokeWidth": {"value": 1},
+          "strokeOpacity": {"value": 0.1}
         },
-        "ticks": {"strokeWidth": {"value": 0.1}},
+        "ticks": {
+          "strokeWidth": {"value": 0.1}
+        },
         "labels": {
           "text": {"scale": "xlabels"},
           "dy": {"value": 5},
@@ -95,12 +99,13 @@
       "type": "y",
       "layer": "back",
       "scale": "y",
-      "ticks": 10,
+      "ticks": 4,
       "format": "f",
       "properties": {
         "axis": {
-          "stroke": {"value": "#333"},
-          "strokeWidth": {"value": 0}
+          "stroke": {"value": "#000"},
+          "strokeWidth": {"value": 1},
+          "strokeOpacity": {"value": 0.1}
         },
         "grid": {
           "stroke": {"value": "#000"},
@@ -213,11 +218,9 @@
   "legends": [
     {
       "fill": "color",
-      "title": "Sauk river",
-      "offset": 20,
       "properties": {
         "legend": {
-          "fill": {"value": "#efefef"},
+          "fill": {"value": "#FFF"},
           "fillOpacity": {"value": 0.8},
           "width": {"value": 100},
           "height": {"value": 70},
@@ -231,11 +234,6 @@
             "mult": 0.05,
             "offset": -30
           }
-        },
-        "title": {
-          "fontSize": {"value": 12},
-          "dy": {"value": -2},
-          "dx": {"value": 0}
         },
         "labels": {
           "fontSize": {"value": 10},
