@@ -30,13 +30,13 @@ class WidgetButtons extends React.Component {
           </li>
         }
 
-        {(this.state.downloadable) ?
+        {(this.state.downloadable) &&
           <li>
             <button data-action="download" className="widget-button" onClick={this.triggerAction}>
               <svg className="c-icon"><use xlinkHref="#icon-menu" /></svg>
             </button>
           </li>
-        : null}
+        }
       </ul>
     );
   }

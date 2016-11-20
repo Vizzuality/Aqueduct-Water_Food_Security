@@ -1,0 +1,38 @@
+[
+  {
+    "title": "Widget 1",
+    "subtitle": "Subtitle widget 1",
+    "size": "large-12",
+    "buttons": {
+      "shareable": true,
+      "downloadable": true
+    },
+    "data": [{},{},{}],
+
+    "graph": {
+      "type": "line",
+      "x_axis": {},
+      "y_axis": {},
+      "legend": "?",
+      "baseline": "?"
+    }
+  },
+  {
+    "title": "Widget 2",
+    "subtitle": "Subtitle widget 2",
+    "size": "large-6",
+    "buttons": {
+      "shareable": true,
+      "downloadable": true
+    },
+    "data": [{},{},{}],
+
+    "graph": {
+      "type": "line",
+      "x_axis": {},
+      "y_axis": {},
+      "legend": "?",
+      "baseline": "?"
+    }
+  }
+]

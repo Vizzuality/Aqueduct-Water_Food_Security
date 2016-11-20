@@ -53,8 +53,8 @@ class VegaChart extends React.Component {
   }
 
   setSize() {
-    this.width = this.chartContainer.offsetWidth;
-    this.height = this.chartContainer.offsetHeight;
+    this.width = this.chart.offsetWidth;
+    this.height = this.chart.offsetHeight;
   }
 
   parseVega() {
@@ -78,7 +78,7 @@ class VegaChart extends React.Component {
 
   render() {
     return (
-      <div ref={(c) => { this.chartContainer = c; }} className="c-chart">
+      <div className="c-chart">
         <div ref={(c) => { this.chart = c; }} className="chart" />
       </div>
     );

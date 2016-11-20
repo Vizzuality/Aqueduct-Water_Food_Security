@@ -1,21 +1,32 @@
 {
-  "width": 400,
-  "height": 200,
-  "padding": {"top": 24, "left": 24, "bottom": 24, "right": 24},
+  "name": "Snow dominant",
+  "padding": {"top": 30,"left": 28,"right": 5,"bottom": 30},
   "data": [
     {
-      "name": "table",
+      "name": "line1",
+      "url": "http://api.resourcewatch.org/query/6a18cd92-acd3-4107-b855-95fa2af24473?sql=select numeric_m as x, historical as y, month as z from index_6a18cd92acd34107b85595fa2af24473 where streamflow='Sauk' order by numeric_m ASC",
+      "transform": [{"type": "sort","by": ["x"]}],
+      "format": {"type": "json","property": "data"}
+    },
+    {
+      "name": "line2",
+      "url": "http://api.resourcewatch.org/query/6a18cd92-acd3-4107-b855-95fa2af24473?sql=select numeric_m as x, A1B_2040s as y, month as z from index_6a18cd92acd34107b85595fa2af24473 where streamflow='Sauk' order by numeric_m ASC",
+      "transform": [{"type": "sort","by": ["x"]}],
+      "format": {"type": "json","property": "data"}
+    },
+    {
+      "name": "line3",
+      "url": "http://api.resourcewatch.org/query/6a18cd92-acd3-4107-b855-95fa2af24473?sql=select numeric_m as x, A1B_2080s as y, month as z from index_6a18cd92acd34107b85595fa2af24473 where streamflow='Sauk' order by numeric_m ASC",
+      "transform": [{"type": "sort","by": ["x"]}],
+      "format": {"type": "json","property": "data"}
+    },
+    {"name": "axis","values": [{"x": "Years","y": "cfs"}]},
+    {
+      "name": "legend",
       "values": [
-        {"x": 1,  "y": 28}, {"x": 2,  "y": 55},
-        {"x": 3,  "y": 43}, {"x": 4,  "y": 91},
-        {"x": 5,  "y": 81}, {"x": 6,  "y": 53},
-        {"x": 7,  "y": 19}, {"x": 8,  "y": 87},
-        {"x": 9,  "y": 52}, {"x": 10, "y": 48},
-        {"x": 11, "y": 24}, {"x": 12, "y": 49},
-        {"x": 13, "y": 87}, {"x": 14, "y": 66},
-        {"x": 15, "y": 17}, {"x": 16, "y": 27},
-        {"x": 17, "y": 68}, {"x": 18, "y": 16},
-        {"x": 19, "y": 49}, {"x": 20, "y": 15}
+        {"cat": "Historical"},
+        {"cat": "A1B_2040s"},
+        {"cat": "A1B_2080s"}
       ]
     }
   ],
@@ -24,35 +35,214 @@
       "name": "x",
       "type": "ordinal",
       "range": "width",
-      "domain": {"data": "table", "field": "x"}
+      "domain": {"fields": [{"data": "line1","field": "x"}]}
+    },
+    {
+      "name": "xlabels",
+      "type": "ordinal",
+      "domain": {"fields": [{"data": "line1","field": "x"}]},
+      "range": {"fields": [{"data": "line1","field": "z"}]}
     },
     {
       "name": "y",
+      "nice": true,
       "type": "linear",
+      "zero": false,
       "range": "height",
-      "domain": {"data": "table", "field": "y"},
-      "nice": true
+      "domain": {
+        "fields": [
+          {"data": "line1","field": "y"},
+          {"data": "line2","field": "y"},
+          {"data": "line3","field": "y"}
+        ]
+      }
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "zero": false,
+      "points": true,
+      "range": ["#111","#fff000","#c34545"],
+      "domain": {"fields": [{"data": "legend","field": "cat"}]}
     }
   ],
   "axes": [
+    {
+      "name": "lbl",
+      "type": "x",
+      "scale": "x",
+      "ticks": 5,
+      "properties": {
+        "axis": {
+          "stroke": {"value": "#3B4F63"},
+          "opacity": {"value": 0.5},
+          "strokeWidth": {"value": 0}
+        },
+        "ticks": {"strokeWidth": {"value": 0.1}},
+        "labels": {
+          "text": {"scale": "xlabels"},
+          "dy": {"value": 5},
+          "fill": {"value": "#3B4F63"},
+          "font": {"value": "\"Montserrat\", sans-serif"},
+          "opacity": {"value": 0.5},
+          "fontSize": {"value": 10},
+          "fontWeight": {"value": 300}
+        }
+      }
+    },
+    {
+      "grid": true,
+      "type": "y",
+      "layer": "back",
+      "scale": "y",
+      "ticks": 10,
+      "format": "f",
+      "properties": {
+        "axis": {
+          "stroke": {"value": "#333"},
+          "strokeWidth": {"value": 0}
+        },
+        "grid": {
+          "stroke": {"value": "#000"},
+          "strokeWidth": {"value": 1},
+          "strokeOpacity": {"value": 0.1}
+        },
+        "ticks": {"stroke": {"value": "steelblue"}},
+        "labels": {
+          "fill": {"value": "#3B4F63"},
+          "opacity": {"value": 0.5},
+          "fontSize": {"value": 9},
+          "fontWeight": {"value": 100},
+          "baseline": {"value": "middle"},
+          "dx": {"value": 5}
+        },
+        "majorTicks": {"strokeWidth": {"value": 0}}
+      }
+    }
   ],
   "marks": [
     {
-      "type": "rect",
-      "from": {"data": "table"},
+      "from": {"data": "line1"},
+      "type": "line",
       "properties": {
         "enter": {
-          "x": {"scale": "x", "field": "x"},
-          "width": {"scale": "x", "band": true, "offset": -1},
-          "y": {"scale": "y", "field": "y"},
-          "y2": {"scale": "y", "value": 0}
-        },
-        "update": {
-          "fill": {"value": "steelblue"}
-        },
-        "hover": {
-          "fill": {"value": "red"}
+          "x": {"field": "x","scale": "x"},
+          "y": {"field": "y","scale": "y"},
+          "stroke": {"value": "#111"},
+          "strokeWidth": {"value": 2}
         }
+      }
+    },
+    {
+      "from": {"data": "line2"},
+      "type": "line",
+      "properties": {
+        "enter": {
+          "x": {"field": "x","scale": "x"},
+          "y": {"field": "y","scale": "y"},
+          "stroke": {"value": "#fff000"},
+          "strokeWidth": {"value": 1.5},
+          "strokeDash": {"value": [3,2]}
+        }
+      }
+    },
+    {
+      "from": {"data": "line3"},
+      "type": "line",
+      "properties": {
+        "enter": {
+          "x": {"field": "x","scale": "x"},
+          "y": {"field": "y","scale": "y"},
+          "stroke": {"value": "#c34545"},
+          "strokeWidth": {"value": 1.5},
+          "strokeDash": {"value": [3,2]}
+        }
+      }
+    },
+    {
+      "from": {"data": "axis"},
+      "type": "text",
+      "properties": {
+        "enter": {
+          "x": 0,
+          "y": 0,
+          "dx": {"value": -25},
+          "dy": {"value": -10},
+          "fill": {"value": "#3B4F63"},
+          "font": {"value": "\"Montserrat\", sans-serif"},
+          "text": {"template": "{{datum.y | upper}}"},
+          "align": {"value": "left"},
+          "opacity": {"value": 0.5},
+          "fontSize": {"value": 10},
+          "fontWeight": {"value": 700}
+        }
+      }
+    },
+    {
+      "from": {"data": "axis"},
+      "type": "text",
+      "properties": {
+        "enter": {
+          "x": 0,
+          "y": {"mult": 1,"field": {"group": "height"}},
+          "dx": {"value": 470},
+          "dy": {"value": 10},
+          "fill": {"value": "#3B4F63"},
+          "font": {"value": "\"Montserrat\", sans-serif"},
+          "text": {"template": "{{datum.x | upper}}"},
+          "align": {"value": "left"},
+          "opacity": {"value": 0.5},
+          "fontSize": {"value": 10},
+          "fontWeight": {"value": 700}
+        }
+      }
+    },
+    {
+      "name": "point",
+      "type": "symbol",
+      "from": {"data": "legends"},
+      "properties": {
+        "enter": {
+          "fill": {"scale": "color","field": "cat"},
+          "fillOpacity": {"value": 0.5},
+          "size": {"value": 36}
+        }
+      }
+    }
+  ],
+  "legends": [
+    {
+      "fill": "color",
+      "title": "Sauk river",
+      "offset": 20,
+      "properties": {
+        "legend": {
+          "fill": {"value": "#efefef"},
+          "fillOpacity": {"value": 0.8},
+          "width": {"value": 100},
+          "height": {"value": 70},
+          "x": {
+            "field": {"group": "width"},
+            "mult": 0.8,
+            "offset": 0
+          },
+          "y": {
+            "field": {"group": "height"},
+            "mult": 0.05,
+            "offset": -30
+          }
+        },
+        "title": {
+          "fontSize": {"value": 12},
+          "dy": {"value": -2},
+          "dx": {"value": 0}
+        },
+        "labels": {
+          "fontSize": {"value": 10},
+          "fill": {"value": "#9BA2AA"},
+          "text": {"template": "{{datum.data|truncate:15}}"}
+        },
+        "symbols": {"stroke": {"value": "transparent"}}
       }
     }
   ]
