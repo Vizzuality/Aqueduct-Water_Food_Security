@@ -6,17 +6,51 @@
   padding: ($space-1 * 4) ($space-1 * 2) 0;
 
   .widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
     margin: 0 0 ($space-1 * 2);
 
     h2 {
       font-size: $font-size-default;
-      color: $color-tertiary;
+      color: $color-widgets;
+      max-width: 50%;
     }
   }
 
   .widget-content {
-    height: 250px;
+    min-height: 200px;
     background: white;
     box-shadow: 0 1px 0 0 #dbdfe5;
+  }
+}
+
+
+.c-widget-buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  > * {
+    display: flex;
+    list-style: none;
+    margin: 0 0 0 $space-1;
+  }
+
+  .widget-button {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    svg {
+      fill: $color-widgets;
+      display: block;
+    }
+
+    &:hover {
+      svg {
+        fill: darken($color-widgets, 25%);
+      }
+    }
   }
 }

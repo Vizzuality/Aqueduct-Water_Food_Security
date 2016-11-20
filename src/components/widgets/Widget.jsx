@@ -1,12 +1,21 @@
 import React from 'react';
+import WidgetButtons from 'components/widgets/WidgetButtons';
+import WidgetChart from 'components/widgets/WidgetChart';
 
-class WidgetList extends React.Component {
+class Widget extends React.Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
     };
+
+    // BINDINGS
+    this.triggerAction = this.triggerAction.bind(this);
+  }
+
+  triggerAction(action) {
+    console.info(action);
   }
 
   render() {
@@ -15,12 +24,11 @@ class WidgetList extends React.Component {
         <div>
           <header className="widget-header">
             <h2>Agricultural Exposure to Water Stress</h2>
-            {/* WidgetHeader */}
-            {/* WidgetButtons */}
+            <WidgetButtons triggerAction={this.triggerAction} />
           </header>
           <div className="widget-content">
             {/* WidgetLegend */}
-            {/* WidgetGraph */}
+            <WidgetChart />
             {/* WidgetBaseline */}
           </div>
         </div>
@@ -29,8 +37,8 @@ class WidgetList extends React.Component {
   }
 }
 
-WidgetList.propTypes = {
+Widget.propTypes = {
 };
 
 
-export default WidgetList;
+export default Widget;

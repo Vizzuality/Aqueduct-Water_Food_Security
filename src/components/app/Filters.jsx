@@ -43,7 +43,7 @@ class Filters extends React.Component {
 
   render() {
     return (
-      <div className="l-filters c-filters">
+      <div className="c-filters">
         <div className="c-filter-box">
           <SimpleSelect
             name="scope"
