@@ -16,5 +16,4 @@ class AppPage extends React.Component {
 AppPage.propTypes = {
 };
 
-
 export default AppPage;

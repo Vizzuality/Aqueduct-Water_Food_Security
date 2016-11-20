@@ -40,6 +40,11 @@ export const store = createStore(
   )
 );
 
+// Export dispatch funcion for dispatching actions outside connect
+export function dispatch(action) {
+  store.dispatch(action);
+}
+
 /**
  * HTML5 History API managed by React Router module
  * @info(https://github.com/reactjs/react-router/tree/master/docs)

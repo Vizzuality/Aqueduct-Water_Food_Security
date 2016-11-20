@@ -1,1 +1,8 @@
-export const SET_MAP_PARAMS = 'SET_MAP_PARAMS';
+export const MAP_CONFIG = {
+  zoom: 2,
+  minXoom: 2,
+  latLng: {
+    lat: 52,
+    lng: 7
+  }
+};
