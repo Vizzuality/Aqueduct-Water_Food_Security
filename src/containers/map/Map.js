@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import Map from 'components/map/Map';
-import { panMaps } from 'actions/maps';
-import { updateURL } from 'actions/links';
+import { setMapLocation } from 'actions/map';
+import { setMapUrl } from 'actions/url';
 
 const mapStateToProps = ({ map }) => ({
   map
@@ -9,8 +9,8 @@ const mapStateToProps = ({ map }) => ({
 
 const mapDispatchToProps = dispatch => ({
   setMapParams: (params) => {
-    dispatch(panMaps(params));
-    dispatch(updateURL());
+    dispatch(setMapLocation(params));
+    dispatch(setMapUrl());
   }
 });
 
