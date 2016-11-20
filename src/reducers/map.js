@@ -1,17 +1,17 @@
-import { MAP_UPDATE_PAN } from 'constants/map';
+import { SET_MAP_LOCATION } from 'actions/map';
 
 // TODO: complete map initial state
 const initialState = {
-  zoom: 3,
+  zoom: 2,
   latLng: {
-    lat: 0,
-    lng: 0
+    lat: 52,
+    lng: 7
   }
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case MAP_UPDATE_PAN:
+    case SET_MAP_LOCATION:
       return Object.assign({}, state, {
         zoom: action.payload.zoom,
         latLng: {

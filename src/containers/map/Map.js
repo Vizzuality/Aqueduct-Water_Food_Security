@@ -1,11 +1,17 @@
 import { connect } from 'react-redux';
 import Map from 'components/map/Map';
-import { panMaps } from 'actions/maps';
+import { setMapLocation } from 'actions/map';
+import { setMapUrl } from 'actions/url';
+
+const mapStateToProps = ({ map }) => ({
+  map
+});
 
 const mapDispatchToProps = dispatch => ({
   setMapParams: (params) => {
-    dispatch(panMaps(params));
+    dispatch(setMapLocation(params));
+    dispatch(setMapUrl());
   }
 });
 
-export default connect(null, mapDispatchToProps)(Map);
+export default connect(mapStateToProps, mapDispatchToProps)(Map);

@@ -53,6 +53,7 @@ const config = {
       rootPath
     ],
     alias: {
+      main: 'src/main',
       actions: 'src/actions',
       reducers: 'src/reducers',
       components: 'src/components',
