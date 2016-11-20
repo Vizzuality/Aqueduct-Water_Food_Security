@@ -22,13 +22,13 @@ class WidgetButtons extends React.Component {
   render() {
     return (
       <ul className="c-widget-buttons">
-        {(this.state.shareable) ?
+        {(this.state.shareable) &&
           <li>
             <button data-action="share" className="widget-button" onClick={this.triggerAction}>
               <svg className="c-icon"><use xlinkHref="#icon-cross" /></svg>
             </button>
           </li>
-        : null}
+        }
 
         {(this.state.downloadable) ?
           <li>

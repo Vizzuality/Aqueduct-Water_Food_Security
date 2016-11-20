@@ -1,6 +1,6 @@
 import React from 'react';
 import vega from 'vega';
-import jsonExample from 'data/widget-chart-example';
+import isEqual from 'lodash/isEqual';
 
 class VegaChart extends React.Component {
 
@@ -13,9 +13,13 @@ class VegaChart extends React.Component {
     this.renderChart();
   }
 
+  shouldComponentUpdate(nextProps) {
+    return !isEqual(nextProps.data, this.props.data);
+  }
+
   componentDidUpdate() {
     // We should check if the data has changed
-    // this.renderChart();
+    this.renderChart();
   }
 
   componentWillUnmount() {
@@ -25,7 +29,7 @@ class VegaChart extends React.Component {
   getData() {
     // const { data } = this.props;
     // let dataObj = {};
-    const dataObj = jsonExample;
+    const dataObj = this.props.data;
 
     //
     // if (typeof data === 'object') {
@@ -82,14 +86,8 @@ class VegaChart extends React.Component {
 }
 
 VegaChart.propTypes = {
-  // /**
-  //  * Define the chart data
-  //  */
-  // data: React.PropTypes.any.isRequired,
-  // /**
-  //  * Remove the min-height in component
-  //  */
-  // small: React.PropTypes.bool
+  // Define the chart data
+  data: React.PropTypes.any.isRequired
 };
 
 export default VegaChart;
