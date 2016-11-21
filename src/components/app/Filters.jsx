@@ -1,11 +1,18 @@
 import React from 'react';
 import RadioGroup from 'components/common/RadioGroup';
+import Switch from 'components/common/Switch';
 
 const predictionOptions = [
   { value: 'optimistic', label: 'Optimistic View' },
   { value: 'pesimistic', label: 'Pesimistic View' },
   { value: 'business', label: 'Business as usual' }
 ];
+
+const layerTypeOptions = [
+  { value: 'food', label: 'Food' },
+  { value: 'water', label: 'Water' }
+];
+
 
 class Filters extends React.Component {
 
@@ -14,7 +21,7 @@ class Filters extends React.Component {
 
     this.state = {
       scope: null,
-      layers: null,
+      layerType: null,
       crop: null,
       prediction: 'optimistic'
     };
@@ -45,6 +52,13 @@ class Filters extends React.Component {
           className="-inline"
           onChange={selected => this.triggerChange(selected, 'prediction')}
         />
+
+        <Switch
+          value={this.state.layerType || 'food'}
+          items={layerTypeOptions}
+          onChange={selected => this.triggerChange(selected, 'layerType')}
+        />
+
       </div>
     );
   }
