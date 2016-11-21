@@ -1,4 +1,11 @@
 import { connect } from 'react-redux';
 import Sidebar from 'components/app/Sidebar';
+import { getWidgets } from 'actions/widgets';
 
-export default connect(null, null)(Sidebar);
+const mapStateToProps = state => ({
+  widgets: state.widgets
+});
+
+export default connect(mapStateToProps, {
+  getWidgets
+})(Sidebar);

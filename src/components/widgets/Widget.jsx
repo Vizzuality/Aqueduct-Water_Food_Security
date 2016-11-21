@@ -19,11 +19,15 @@ class Widget extends React.Component {
   }
 
   render() {
+    const { title, subtitle } = this.props.widget;
     return (
       <div className="c-widget">
         <div>
           <header className="widget-header">
-            <h2>Agricultural Exposure to Water Stress</h2>
+            <div className="widget-titles">
+              <h2>{title}</h2>
+              <h3>{subtitle}</h3>
+            </div>
             <WidgetButtons triggerAction={this.triggerAction} />
           </header>
           <div className="widget-content">
@@ -38,6 +42,7 @@ class Widget extends React.Component {
 }
 
 Widget.propTypes = {
+  widget: React.PropTypes.object
 };
 
 

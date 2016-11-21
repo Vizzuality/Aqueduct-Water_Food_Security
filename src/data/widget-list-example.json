@@ -1,8 +1,8 @@
 [
   {
-    "title": "Widget 1",
+    "title": "Water Stress change",
     "subtitle": "Subtitle widget 1",
-    "size": "large-12",
+    "size": "small-12 large-12",
     "buttons": {
       "shareable": true,
       "downloadable": true
@@ -18,9 +18,81 @@
     }
   },
   {
-    "title": "Widget 2",
-    "subtitle": "Subtitle widget 2",
-    "size": "large-6",
+    "title": "Agricultural Exposure to Water Stress",
+    "subtitle": "",
+    "size": "small-12 large-6",
+    "buttons": {
+      "shareable": true,
+      "downloadable": true
+    },
+    "data": [{},{},{}],
+
+    "graph": {
+      "type": "line",
+      "x_axis": {},
+      "y_axis": {},
+      "legend": "?",
+      "baseline": "?"
+    }
+  },
+  {
+    "title": "Agricultural Exposure to High Seasonal Variability",
+    "subtitle": "",
+    "size": "small-12 large-6",
+    "buttons": {
+      "shareable": false,
+      "downloadable": true
+    },
+    "data": [{},{},{}],
+
+    "graph": {
+      "type": "line",
+      "x_axis": {},
+      "y_axis": {},
+      "legend": "?",
+      "baseline": "?"
+    }
+  },
+  {
+    "title": "Water Stress change",
+    "subtitle": "Subtitle widget 1",
+    "size": "small-12 large-12",
+    "buttons": {
+      "shareable": true,
+      "downloadable": true
+    },
+    "data": [{},{},{}],
+
+    "graph": {
+      "type": "line",
+      "x_axis": {},
+      "y_axis": {},
+      "legend": "?",
+      "baseline": "?"
+    }
+  },
+  {
+    "title": "Agricultural Exposure to Water Stress",
+    "subtitle": "",
+    "size": "small-12 large-6",
+    "buttons": {
+      "shareable": true,
+      "downloadable": true
+    },
+    "data": [{},{},{}],
+
+    "graph": {
+      "type": "line",
+      "x_axis": {},
+      "y_axis": {},
+      "legend": "?",
+      "baseline": "?"
+    }
+  },
+  {
+    "title": "Agricultural Exposure to High Seasonal Variability",
+    "subtitle": "",
+    "size": "small-12 large-6",
     "buttons": {
       "shareable": true,
       "downloadable": true

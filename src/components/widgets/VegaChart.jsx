@@ -1,5 +1,6 @@
 import React from 'react';
 import vega from 'vega';
+import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';
 
 class VegaChart extends React.Component {
@@ -8,7 +9,7 @@ class VegaChart extends React.Component {
     this.resizeEvent = () => {
       this.handleResize();
     };
-    window.addEventListener('resize', this.resizeEvent);
+    window.addEventListener('resize', debounce(this.resizeEvent, 100));
 
     this.renderChart();
   }
