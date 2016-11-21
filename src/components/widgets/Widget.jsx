@@ -19,7 +19,7 @@ class Widget extends React.Component {
   }
 
   render() {
-    const { title, subtitle } = this.props.widget;
+    const { title, subtitle, buttons } = this.props.widget;
     return (
       <div className="c-widget">
         <div>
@@ -28,7 +28,7 @@ class Widget extends React.Component {
               <h2>{title}</h2>
               <h3>{subtitle}</h3>
             </div>
-            <WidgetButtons triggerAction={this.triggerAction} />
+            <WidgetButtons buttons={buttons} triggerAction={this.triggerAction} />
           </header>
           <div className="widget-content">
             {/* WidgetLegend */}
