@@ -23,7 +23,7 @@
     "size": "small-12 large-6",
     "buttons": {
       "shareable": true,
-      "downloadable": true
+      "downloadable": false
     },
     "data": [{},{},{}],
 

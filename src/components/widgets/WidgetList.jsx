@@ -14,7 +14,7 @@ class WidgetList extends React.Component {
   render() {
     return (
       <div className="c-widget-list">
-        <Spinner isLoading={this.props.widgets.widgetsLoading} />
+        {this.props.widgets.widgetsLoading && <Spinner isLoading={this.props.widgets.widgetsLoading} />}
         <div className="row collapse">
           {this.props.widgets.widgetsList.map((widget, i) => {
             return (
