@@ -5,11 +5,6 @@ class WidgetButtons extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      shareable: true,
-      downloadable: true
-    };
-
     // BINDINGS
     this.triggerAction = this.triggerAction.bind(this);
   }
@@ -20,9 +15,10 @@ class WidgetButtons extends React.Component {
   }
 
   render() {
+    const { shareable, downloadable } = this.props.buttons;
     return (
       <ul className="c-widget-buttons">
-        {(this.state.shareable) &&
+        {(shareable) &&
           <li>
             <button data-action="share" className="widget-button" onClick={this.triggerAction}>
               <svg className="c-icon"><use xlinkHref="#icon-cross" /></svg>
@@ -30,7 +26,7 @@ class WidgetButtons extends React.Component {
           </li>
         }
 
-        {(this.state.downloadable) &&
+        {(downloadable) &&
           <li>
             <button data-action="download" className="widget-button" onClick={this.triggerAction}>
               <svg className="c-icon"><use xlinkHref="#icon-menu" /></svg>
@@ -43,6 +39,8 @@ class WidgetButtons extends React.Component {
 }
 
 WidgetButtons.propTypes = {
+  // PROPS
+  buttons: React.PropTypes.object,
   triggerAction: React.PropTypes.func
 };
 
