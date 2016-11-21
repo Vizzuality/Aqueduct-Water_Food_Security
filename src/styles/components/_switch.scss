@@ -12,7 +12,7 @@
   }
 
   .switch-label {
-    font-weight: 500;
+    font-weight: 400;
     color: white;
 
     &:hover {
@@ -20,7 +20,7 @@
     }
 
     &.-selected {
-      color: $color-alternative;
+      font-weight: 700;
     }
   }
 
