@@ -1,6 +1,6 @@
 .l-main {
-  max-width: $main-max-width;
-  margin: 0 auto;
+  // max-width: $main-max-width;
+  // margin: 0 auto;
   background: white;
   box-shadow: 0 0 5px rgba(black, 0.1);
 }
@@ -27,6 +27,7 @@
   height: 100%;
   width: 50%;
   z-index: 2;
+  max-width: $max-width-sidebar;
 
   .l-filters {
     position: relative;

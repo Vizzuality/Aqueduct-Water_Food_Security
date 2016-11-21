@@ -17,6 +17,10 @@ class Sidebar extends React.Component {
     };
   }
 
+  componentWillMount() {
+    this.props.getWidgets();
+  }
+
   /**
    * UI EVENTS
    * - triggerToggle
@@ -47,7 +51,7 @@ class Sidebar extends React.Component {
 
         {/* Widget List */}
         <div className="l-sidebar-content">
-          <WidgetList />
+          <WidgetList widgets={this.props.widgets} />
         </div>
       </div>
     );
@@ -55,6 +59,11 @@ class Sidebar extends React.Component {
 }
 
 Sidebar.propTypes = {
+  // STORE
+  widgets: React.PropTypes.object,
+
+  // ACTIONS
+  getWidgets: React.PropTypes.func
 };
 
 

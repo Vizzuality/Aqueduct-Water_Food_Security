@@ -1,8 +1,14 @@
 .c-widget-list {
   padding: 0 ($space-1 * 2) ($space-1 * 4);
+
+  .column {
+    display: flex;
+    align-items: flex-end;
+  }
 }
 
 .c-widget {
+  width: 100%;
   padding: ($space-1 * 4) ($space-1 * 2) 0;
 
   .widget-header {
@@ -11,10 +17,29 @@
     align-items: flex-end;
     margin: 0 0 ($space-1 * 2);
 
+    .widget-titles {
+      max-width: calc(100% - 60px);
+      > * {
+        margin: 5px 0 0;
+        &:first-child {
+          margin: 0;
+        }
+      }
+    }
+
     h2 {
       font-size: $font-size-default;
       color: $color-widgets;
-      max-width: 50%;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    h3 {
+      font-size: $font-size-extra-small;
+      color: $color-widgets;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 500;
     }
   }
 
@@ -35,6 +60,10 @@
     display: flex;
     list-style: none;
     margin: 0 0 0 $space-1;
+
+    &:first-child {
+      margin: 0;
+    }
   }
 
   .widget-button {
