@@ -21,9 +21,9 @@ class Map extends React.Component {
       center: [mapParams.lat, mapParams.lng],
       detectRetina: true
     });
+
     this.map.attributionControl.addAttribution('&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>');
     this.map.zoomControl.setPosition('topright');
-    this.map.scrollWheelZoom.disable();
     this.tileLayer = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}')
                       .addTo(this.map)
                       .setZIndex(0);
@@ -51,6 +51,7 @@ class Map extends React.Component {
   // MAP LISTENERS
   addMapEventListeners() {
     function mapChangeHandler() {
+      // Dispatch the action to set the params
       this.props.setMapParams(this.getMapParams());
     }
     this.map.on('zoomend', mapChangeHandler.bind(this));

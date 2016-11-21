@@ -14,9 +14,6 @@ class Radio extends React.Component {
    * - onChange
   */
   onChange(e) {
-    this.setState({
-      value: e.currentTarget.value
-    });
     this.props.onChange(e.currentTarget.value);
   }
 
@@ -48,11 +45,5 @@ Radio.propTypes = {
   selected: React.PropTypes.string,
   onChange: React.PropTypes.func
 };
-
-// name={name}
-// value={item.value}
-// selected={selected}
-// label={item.label}
-// onChange={newSelected => this.onChange(newSelected)}
 
 export default Radio;
