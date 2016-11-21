@@ -1,5 +1,6 @@
 export { default as posts } from './posts';
 export { default as map } from './map';
+export { default as widgets } from './widgets';
 // export { default as datasets } from './datasets';
 // export { default as modal } from './modal';
 // export { default as links } from './links';
