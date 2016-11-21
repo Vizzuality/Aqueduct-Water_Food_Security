@@ -61,8 +61,18 @@
 .c-radio-box {
   > * {
     margin: 0 0 10px;
-    &:last-child {
+    &:last-child {
       margin: 0;
+    }
+  }
+
+  &.-inline {
+    display: flex;
+    > * {
+      margin: 0 ($space-1 * 3) 0 0;
+      &:last-child {
+        margin: 0;
+      }
     }
   }
 }
