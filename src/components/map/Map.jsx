@@ -8,17 +8,10 @@ import { MAP_CONFIG } from 'constants/map';
 class Map extends React.Component {
 
   componentDidMount() {
-    // Build map settings from router params
-    const mapParams = {
-      zoom: this.props.map.zoom !== undefined ? +this.props.map.zoom : MAP_CONFIG.zoom,
-      lat: this.props.map.latLng.lat !== undefined ? +this.props.map.latLng.lat : MAP_CONFIG.latLng.lat,
-      lng: this.props.map.latLng.lng !== undefined ? +this.props.map.latLng.lng : MAP_CONFIG.latLng.lng
-    };
-
     this.map = L.map('map', {
       minZoom: MAP_CONFIG.minZoom,
-      zoom: mapParams.zoom,
-      center: [mapParams.lat, mapParams.lng],
+      zoom: this.props.map.zoom,
+      center: [this.props.map.latLng.lat, this.props.map.latLng.lng],
       detectRetina: true
     });
 
@@ -30,6 +23,8 @@ class Map extends React.Component {
 
     // Listen to leaflet events
     this.addMapEventListeners();
+    // Set map params on route loading
+    this.props.setMapParams(this.getMapParams());
   }
 
   componentWillUnmount() {
