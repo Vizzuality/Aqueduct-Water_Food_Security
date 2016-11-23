@@ -1,11 +1,12 @@
 import { connect } from 'react-redux';
 import Sidebar from 'components/app/Sidebar';
-import { getWidgets } from 'actions/widgets';
+import { getDatasets } from 'actions/datasets';
 
-const mapStateToProps = state => ({
-  widgets: state.widgets
+const mapStateToProps = ({ widgets, datasets }) => ({
+  widgets,
+  datasets
 });
 
 export default connect(mapStateToProps, {
-  getWidgets
+  getDatasets
 })(Sidebar);

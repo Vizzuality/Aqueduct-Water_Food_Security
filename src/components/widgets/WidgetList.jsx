@@ -2,7 +2,7 @@ import React from 'react';
 import Widget from 'components/widgets/Widget';
 import Spinner from 'components/common/Spinner';
 
-class WidgetList extends React.Component {
+export default class WidgetList extends React.Component {
 
   constructor(props) {
     super(props);
@@ -11,19 +11,33 @@ class WidgetList extends React.Component {
     };
   }
 
+  // Return a array of Widget components
+  getWidgets() {
+    const widgetList = [];
+    let widget;
+    this.props.datasets.list.forEach((dataset, index) => {
+      if (dataset.widget.length) {
+        widget = dataset.widget[0].attributes;
+        // Vega type widget doesn't have 'type' property
+        if (!Object.prototype.hasOwnProperty.call(widget.widgetConfig, 'type')) {
+          widgetList.push(
+            <div key={index} className={'column small-12'}>
+              <Widget widget={widget} />
+            </div>
+          );
+        }
+      }
+    });
+    return widgetList;
+  }
+
   render() {
+    const widgetList = this.getWidgets();
     return (
       <div className="c-widget-list">
-        {this.props.widgets.widgetsLoading && <Spinner isLoading={this.props.widgets.widgetsLoading} />}
-        <div className="row collapse">
-          {this.props.widgets.widgetsList.map((widget, i) => {
-            return (
-              <div key={i} className={`column ${widget.size}`}>
-                <Widget widget={widget} />
-              </div>
-            );
-          })}
-        </div>
+        {this.props.datasets.waitingForFetch ? <Spinner isLoading={this.props.datasets.waitingForFetch} /> :
+          <div className="row collapse">{widgetList}</div>
+        }
       </div>
     );
   }
@@ -31,8 +45,5 @@ class WidgetList extends React.Component {
 
 WidgetList.propTypes = {
   // PROPS
-  widgets: React.PropTypes.object
+  datasets: React.PropTypes.object
 };
-
-
-export default WidgetList;

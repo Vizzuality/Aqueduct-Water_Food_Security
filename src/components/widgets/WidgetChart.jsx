@@ -1,7 +1,7 @@
 import React from 'react';
 import VegaChart from 'components/widgets/VegaChart';
 
-import jsonExample from 'data/widget-chart-example';
+// import jsonExample from 'data/widget-chart-example';
 
 class WidgetChart extends React.Component {
 
@@ -9,7 +9,6 @@ class WidgetChart extends React.Component {
     super(props);
 
     this.state = {
-      data: jsonExample
     };
   }
 
@@ -28,12 +27,13 @@ class WidgetChart extends React.Component {
     // }
     // return null;
     return (
-      <VegaChart data={this.state.data} />
+      <VegaChart data={this.props.config} />
     );
   }
 }
 
 WidgetChart.propTypes = {
+  config: React.PropTypes.object
   // /**
   //  * Define the slug of the widget
   //  */

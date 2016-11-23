@@ -15,24 +15,23 @@ class Widget extends React.Component {
   }
 
   triggerAction(action) {
-    console.info(action);
+    console.info(action, this.props.widget);
   }
 
   render() {
-    const { title, subtitle, buttons } = this.props.widget;
+    const { name, widgetConfig } = this.props.widget;
     return (
       <div className="c-widget">
         <div>
           <header className="widget-header">
             <div className="widget-titles">
-              <h2>{title}</h2>
-              <h3>{subtitle}</h3>
+              <h2>{name}</h2>
             </div>
-            <WidgetButtons buttons={buttons} triggerAction={this.triggerAction} />
+            <WidgetButtons triggerAction={this.triggerAction} />
           </header>
           <div className="widget-content">
             {/* WidgetLegend */}
-            <WidgetChart />
+            <WidgetChart config={widgetConfig} />
             {/* WidgetBaseline */}
           </div>
         </div>
