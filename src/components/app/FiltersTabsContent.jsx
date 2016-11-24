@@ -2,6 +2,7 @@ import React from 'react';
 
 import RadioGroup from 'components/common/RadioGroup';
 import Switch from 'components/common/Switch';
+import FiltersLayers from 'components/app/FiltersLayers';
 
 const predictionOptions = [
   { value: 'optimistic', label: 'Optimistic' },
@@ -40,7 +41,7 @@ class Filters extends React.Component {
     const currentFilters = this.props.filters[this.props.filters.current];
     return (
       <div className="c-filters-tabs-content">
-        <div className="section">
+        <div className="filters-section">
           <Switch
             selected={currentFilters.layerType}
             items={layerTypeOptions}
@@ -55,9 +56,13 @@ class Filters extends React.Component {
             onChange={selected => this.triggerChange(selected, 'prediction')}
           />
         </div>
-        {/* <div className="section">
-
-        </div> */}
+        <div className="filters-section">
+          <FiltersLayers
+            filters={this.props.filters}
+            datasets={this.props.datasets}
+            onChange={selected => this.triggerChange(selected, 'datasetsIds')}
+          />
+        </div>
       </div>
     );
   }
@@ -65,6 +70,7 @@ class Filters extends React.Component {
 
 Filters.propTypes = {
   filters: React.PropTypes.object,
+  datasets: React.PropTypes.object,
   triggerChange: React.PropTypes.func
 };
 

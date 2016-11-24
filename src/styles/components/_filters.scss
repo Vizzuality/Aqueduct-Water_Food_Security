@@ -63,10 +63,43 @@
 }
 
 .c-filters-tabs-content {
-  > .section {
+  .filters-section {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: $space-1 * 2;
+    padding: ($space-1 * 3) ($space-1 * 2) 0;
+
+    &:last-child {
+      padding: ($space-1 * 3) ($space-1 * 2);
+    }
+  }
+}
+
+
+.c-filters-layers {
+  font-weight: 700;
+  > ul {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin: -$space-1 0 0;
+
+    > li {
+      list-style: none;
+      background: $color-tertiary;
+      color: $color-deactivate;
+      padding: 1px $space-1 * 2;
+      border-radius: 18px;
+      cursor: pointer;
+      margin: $space-1 $space-1 0 0;
+
+      &:hover {
+        color: lighten($color-deactivate, 12.5%);
+      }
+
+      &.-active {
+        color: $color-white;
+      }
+    }
   }
 }

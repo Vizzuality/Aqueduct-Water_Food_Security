@@ -24,7 +24,7 @@ class Filters extends React.Component {
     return (
       <div className="c-filters">
         <FiltersTabs triggerChangeScope={this.triggerChangeScope} scope={this.props.filters.current} />
-        <FiltersTabsContent triggerChange={this.triggerChange} filters={this.props.filters} />
+        <FiltersTabsContent triggerChange={this.triggerChange} filters={this.props.filters} datasets={this.props.datasets} />
       </div>
     );
   }
@@ -33,6 +33,7 @@ class Filters extends React.Component {
 Filters.propTypes = {
   // STORE
   filters: React.PropTypes.object,
+  datasets: React.PropTypes.object,
 
   // ACTIONS
   setFilters: React.PropTypes.func,
