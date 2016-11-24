@@ -4,7 +4,7 @@ import React from 'react';
 import Filters from 'components/app/Filters';
 import WidgetList from 'components/widgets/WidgetList';
 
-class Sidebar extends React.Component {
+export default class Sidebar extends React.Component {
 
   constructor(props) {
     super(props);
@@ -18,7 +18,7 @@ class Sidebar extends React.Component {
   }
 
   componentWillMount() {
-    this.props.getWidgets();
+    this.props.getDatasets();
   }
 
   /**
@@ -32,6 +32,7 @@ class Sidebar extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     const openedClass = (this.state.opened) ? '-opened' : '';
 
     return (
@@ -51,7 +52,7 @@ class Sidebar extends React.Component {
 
         {/* Widget List */}
         <div className="l-sidebar-content">
-          <WidgetList widgets={this.props.widgets} />
+          <WidgetList datasets={this.props.datasets} datasetsActive={this.props.datasetsActive}/>
         </div>
       </div>
     );
@@ -60,11 +61,9 @@ class Sidebar extends React.Component {
 
 Sidebar.propTypes = {
   // STORE
-  widgets: React.PropTypes.object,
-
+  datasets: React.PropTypes.object,
+  // SELECTOR
+  datasetsActive: React.PropTypes.object,
   // ACTIONS
-  getWidgets: React.PropTypes.func
+  getDatasets: React.PropTypes.func
 };
-
-
-export default Sidebar;

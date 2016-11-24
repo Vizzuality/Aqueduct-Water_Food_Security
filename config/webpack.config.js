@@ -57,14 +57,15 @@ const config = {
       rootPath
     ],
     alias: {
-      main: 'src/main',
       actions: 'src/actions',
-      reducers: 'src/reducers',
       components: 'src/components',
-      containers: 'src/containers',
       constants: 'src/constants',
+      containers: 'src/containers',
+      data: 'src/data',
       fonts: 'src/fonts',
-      data: 'src/data'
+      main: 'src/main',
+      reducers: 'src/reducers',
+      selectors: 'src/selectors'
     },
     extensions: ['', '.js', '.jsx', '.json', 'css', '.scss']
   },
@@ -81,6 +82,9 @@ const config = {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+      },
+      config: {
+        apiUrl: JSON.stringify(process.env.API_URL)
       }
     })
   ]
