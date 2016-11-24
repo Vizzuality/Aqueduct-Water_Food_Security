@@ -1,4 +1,6 @@
 import React from 'react';
+import FiltersTabs from 'components/app/FiltersTabs';
+
 import RadioGroup from 'components/common/RadioGroup';
 import Switch from 'components/common/Switch';
 
@@ -19,15 +21,9 @@ class Filters extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      scope: null,
-      layerType: null,
-      crop: null,
-      prediction: 'optimistic'
-    };
-
     // BINDINGS
     this.triggerChange = this.triggerChange.bind(this);
+    this.triggerChangeScope = this.triggerChangeScope.bind(this);
   }
 
   /**
@@ -42,10 +38,15 @@ class Filters extends React.Component {
     });
   }
 
+  triggerChangeScope(scope) {
+    this.props.setCurrentFilter(scope);
+  }
+
   render() {
     return (
       <div className="c-filters">
-        <RadioGroup
+        <FiltersTabs triggerChangeScope={this.triggerChangeScope} scope={this.props.filters.current} />
+        {/* <RadioGroup
           name="prediction"
           defaultValue="optimistic"
           items={predictionOptions}
@@ -57,7 +58,7 @@ class Filters extends React.Component {
           value={this.state.layerType || 'food'}
           items={layerTypeOptions}
           onChange={selected => this.triggerChange(selected, 'layerType')}
-        />
+        /> */}
 
       </div>
     );
@@ -65,6 +66,11 @@ class Filters extends React.Component {
 }
 
 Filters.propTypes = {
+  // STORE
+  filters: React.PropTypes.object,
+
+  // ACTIONS
+  setCurrentFilter: React.PropTypes.func
 };
 
 

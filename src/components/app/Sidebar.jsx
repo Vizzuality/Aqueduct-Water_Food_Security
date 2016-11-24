@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import Filters from 'components/app/Filters';
+import Filters from 'containers/app/Filters';
 import WidgetList from 'components/widgets/WidgetList';
 
 export default class Sidebar extends React.Component {

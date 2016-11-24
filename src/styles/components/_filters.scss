@@ -2,7 +2,63 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 $space-sidebar 0 ($space-1 * 2);
   background: $color-secondary;
   min-height: $space-sidebar;
+}
+
+
+.c-filters-tabs {
+  width: 100%;
+  min-height: $space-sidebar;
+  padding: 0 $space-sidebar 0 ($space-1 * 2);
+  background: $color-tertiary;
+
+  > ul {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    > li {
+      list-style: none;
+      font-size: $font-size-default;
+      color: $color-deactivate;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.9px;
+      padding: 0 ($space-1 * 2);
+      line-height: $space-sidebar - 2;
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+
+      &:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 3px;
+        background: $color-primary;
+        transform: translate(-50%,0);
+        transition: all $animation-time $ease-in-out-sine;
+      }
+
+      &:hover {
+        background: darken($color-tertiary, 5%);
+      }
+
+      &:active {
+        background: darken($color-tertiary, 10%);
+      }
+
+      &.-active {
+        color: $color-white;
+        background: $color-tertiary;
+
+        &:after {
+          width: 100%;
+        }
+      }
+    }
+  }
 }
