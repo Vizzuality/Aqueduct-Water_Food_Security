@@ -4,8 +4,8 @@ import RadioGroup from 'components/common/RadioGroup';
 import Switch from 'components/common/Switch';
 
 const predictionOptions = [
-  { value: 'optimistic', label: 'Optimistic View' },
-  { value: 'pesimistic', label: 'Pesimistic View' },
+  { value: 'optimistic', label: 'Optimistic' },
+  { value: 'pesimistic', label: 'Pesimistic' },
   { value: 'business', label: 'Business as usual' }
 ];
 
