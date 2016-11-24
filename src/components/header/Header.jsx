@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import Icon from 'components/ui/Icon';
 
 // Components
 import HeaderTools from './HeaderTools';
@@ -59,7 +60,7 @@ class Header extends React.Component {
             </li>
             <li>
               <Link className="c-header-button" to="/search">
-                <svg className="c-icon"><use xlinkHref="#icon-search" /></svg>
+                <Icon name="icon-search" />
               </Link>
             </li>
           </ul>

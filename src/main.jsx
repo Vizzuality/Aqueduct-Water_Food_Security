@@ -5,6 +5,8 @@ import { Provider } from 'react-redux';
 import { browserHistory } from 'react-router';
 import thunk from 'redux-thunk';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
+import Modal from 'containers/ui/Modal';
+import ModalSample from 'containers/ui/ModalSample';
 
 import * as reducers from './reducers';
 import Routes from './routes';
@@ -57,8 +59,12 @@ export const history = syncHistoryWithStore(browserHistory, store);
 
 render(
   <Provider store={store}>
-    {/* Tell the Router to use our enhanced history */}
-    <Routes history={history} />
+    <div>
+      {/* Tell the Router to use our enhanced history */}
+      <Routes history={history} />
+      <ModalSample />
+      <Modal />
+    </div>
   </Provider>,
   document.getElementById('main')
 );
