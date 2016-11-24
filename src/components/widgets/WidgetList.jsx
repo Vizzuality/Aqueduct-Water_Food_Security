@@ -15,7 +15,7 @@ export default class WidgetList extends React.Component {
   getWidgets() {
     const widgetList = [];
     let widget;
-    this.props.datasets.list.forEach((dataset, index) => {
+    this.props.datasetsActive.list.forEach((dataset, index) => {
       if (dataset.widget.length) {
         widget = dataset.widget[0].attributes;
         // Vega type widget doesn't have 'type' property
@@ -44,6 +44,8 @@ export default class WidgetList extends React.Component {
 }
 
 WidgetList.propTypes = {
-  // PROPS
-  datasets: React.PropTypes.object
+  // STORE
+  datasets: React.PropTypes.object,
+  // SELECTOR
+  datasetsActive: React.PropTypes.object
 };

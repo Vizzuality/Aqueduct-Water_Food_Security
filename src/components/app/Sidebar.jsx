@@ -32,6 +32,7 @@ export default class Sidebar extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     const openedClass = (this.state.opened) ? '-opened' : '';
 
     return (
@@ -51,7 +52,7 @@ export default class Sidebar extends React.Component {
 
         {/* Widget List */}
         <div className="l-sidebar-content">
-          <WidgetList datasets={this.props.datasets} />
+          <WidgetList datasets={this.props.datasets} datasetsActive={this.props.datasetsActive}/>
         </div>
       </div>
     );
@@ -61,7 +62,8 @@ export default class Sidebar extends React.Component {
 Sidebar.propTypes = {
   // STORE
   datasets: React.PropTypes.object,
-
+  // SELECTOR
+  datasetsActive: React.PropTypes.object,
   // ACTIONS
   getDatasets: React.PropTypes.func
 };
