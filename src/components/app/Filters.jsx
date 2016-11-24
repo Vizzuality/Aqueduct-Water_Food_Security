@@ -12,9 +12,8 @@ class Filters extends React.Component {
     this.triggerChangeScope = this.triggerChangeScope.bind(this);
   }
 
-  triggerChange(currentFilters) {
-    console.log(currentFilters);
-    // this.props.setFilters();
+  triggerChange(newFilters) {
+    this.props.setFilters(newFilters);
   }
 
   triggerChangeScope(scope) {

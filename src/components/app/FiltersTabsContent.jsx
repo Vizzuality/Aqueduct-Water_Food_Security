@@ -29,8 +29,11 @@ class Filters extends React.Component {
    * - triggerChange
    */
   triggerChange(selected, name) {
-    console.log(selected, name);
-    // this.props.triggerChange();
+    const newFilters = Object.assign({}, this.props.filters[this.props.filters.current], {
+      [name]: selected.value
+    });
+
+    this.props.triggerChange(newFilters);
   }
 
   render() {
@@ -39,22 +42,22 @@ class Filters extends React.Component {
       <div className="c-filters-tabs-content">
         <div className="section">
           <Switch
-            value={currentFilters.layerType || 'food'}
+            selected={currentFilters.layerType}
             items={layerTypeOptions}
             onChange={selected => this.triggerChange(selected, 'layerType')}
           />
 
           <RadioGroup
             name="prediction"
-            defaultValue={currentFilters.prediction}
+            selected={currentFilters.prediction}
             items={predictionOptions}
             className="-inline"
             onChange={selected => this.triggerChange(selected, 'prediction')}
           />
         </div>
-        <div className="section">
-          
-        </div>
+        {/* <div className="section">
+
+        </div> */}
       </div>
     );
   }

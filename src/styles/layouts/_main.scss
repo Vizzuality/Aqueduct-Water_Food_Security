@@ -40,11 +40,10 @@
   }
 
   .l-sidebar-content {
-    position: absolute;
+    position: relative;
     overflow: auto;
     height: 100%;
     width: 100%;
-    border-top: 50px solid transparent;
     top: 0;
     left: 0;
     z-index: 0;
