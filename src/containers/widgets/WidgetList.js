@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Sidebar from 'components/app/Sidebar';
+import WidgetList from 'components/widgets/WidgetList';
 import { getDatasets } from 'actions/datasets';
 import getActiveDatasets from 'selectors/datasets_active';
 
@@ -10,4 +10,4 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   getDatasets
-})(Sidebar);
+})(WidgetList);

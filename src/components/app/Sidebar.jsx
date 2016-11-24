@@ -2,7 +2,7 @@ import React from 'react';
 
 // Components
 import Filters from 'containers/app/Filters';
-import WidgetList from 'components/widgets/WidgetList';
+import WidgetList from 'containers/widgets/WidgetList';
 
 export default class Sidebar extends React.Component {
 
@@ -17,10 +17,6 @@ export default class Sidebar extends React.Component {
     };
   }
 
-  componentWillMount() {
-    this.props.getDatasets();
-  }
-
   /**
    * UI EVENTS
    * - triggerToggle
@@ -32,7 +28,6 @@ export default class Sidebar extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     const openedClass = (this.state.opened) ? '-opened' : '';
 
     return (
@@ -52,7 +47,7 @@ export default class Sidebar extends React.Component {
 
         {/* Widget List */}
         <div className="l-sidebar-content">
-          <WidgetList datasets={this.props.datasets} datasetsActive={this.props.datasetsActive}/>
+          <WidgetList />
         </div>
       </div>
     );
@@ -60,10 +55,4 @@ export default class Sidebar extends React.Component {
 }
 
 Sidebar.propTypes = {
-  // STORE
-  datasets: React.PropTypes.object,
-  // SELECTOR
-  datasetsActive: React.PropTypes.object,
-  // ACTIONS
-  getDatasets: React.PropTypes.func
 };
