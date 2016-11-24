@@ -1,7 +1,7 @@
 import 'whatwg-fetch';
 import {
   GET_DATASETS_SUCCESS,
-  GET_DATASETS_FAILURE,
+  GET_DATASETS_ERROR,
   GET_DATASETS_LOADING
 }
 from 'constants/datasets';
@@ -34,7 +34,7 @@ export function getDatasets() {
     .catch((err) => {
       // Fetch from server ko -> Dispatch error
       dispatch({
-        type: GET_DATASETS_FAILURE,
+        type: GET_DATASETS_ERROR,
         payload: err.message
       });
     });

@@ -1,8 +1,6 @@
 import React from 'react';
 import VegaChart from 'components/widgets/VegaChart';
 
-// import jsonExample from 'data/widget-chart-example';
-
 class WidgetChart extends React.Component {
 
   constructor(props) {
