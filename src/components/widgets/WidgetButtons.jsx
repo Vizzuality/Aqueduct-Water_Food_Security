@@ -15,24 +15,19 @@ class WidgetButtons extends React.Component {
   }
 
   render() {
-    const { shareable, downloadable } = this.props.buttons;
     return (
       <ul className="c-widget-buttons">
-        {(shareable) &&
-          <li>
-            <button data-action="share" className="widget-button" onClick={this.triggerAction}>
-              <svg className="c-icon"><use xlinkHref="#icon-cross" /></svg>
-            </button>
-          </li>
-        }
+        <li>
+          <button data-action="share" className="widget-button" onClick={this.triggerAction}>
+            <svg className="c-icon"><use xlinkHref="#icon-cross" /></svg>
+          </button>
+        </li>
 
-        {(downloadable) &&
-          <li>
-            <button data-action="download" className="widget-button" onClick={this.triggerAction}>
-              <svg className="c-icon"><use xlinkHref="#icon-menu" /></svg>
-            </button>
-          </li>
-        }
+        <li>
+          <button data-action="download" className="widget-button" onClick={this.triggerAction}>
+            <svg className="c-icon"><use xlinkHref="#icon-menu" /></svg>
+          </button>
+        </li>
       </ul>
     );
   }
@@ -40,7 +35,6 @@ class WidgetButtons extends React.Component {
 
 WidgetButtons.propTypes = {
   // PROPS
-  buttons: React.PropTypes.object,
   triggerAction: React.PropTypes.func
 };
 
