@@ -1,4 +1,5 @@
 import React from 'react';
+import Icon from 'components/ui/Icon';
 
 // Components
 import Filters from 'containers/app/Filters';
@@ -37,7 +38,7 @@ export default class Sidebar extends React.Component {
           - I'm using a div instead of a button because I don't want that browser's styles interfere with it
         */}
         <div className={`l-sidebar-toggle btn-toggle ${openedClass}`} onClick={this.triggerToggle}>
-          <svg className="c-icon -medium"><use xlinkHref="#icon-arrow-left" /></svg>
+          <Icon className="-medium" name="icon-arrow-left" />
         </div>
 
         {/* Filters */}
