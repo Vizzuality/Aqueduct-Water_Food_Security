@@ -40,7 +40,9 @@ export default class WidgetList extends React.Component {
     return (
       <div className="c-widget-list">
         {this.props.datasets.loading ? <Spinner isLoading={this.props.datasets.loading} /> :
-          <div className="row collapse">{widgetList}</div>
+          <div className="row collapse">
+            {widgetList}
+          </div>
         }
       </div>
     );
