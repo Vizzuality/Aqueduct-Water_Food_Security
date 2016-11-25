@@ -2,12 +2,12 @@
 import { dispatch } from 'main';
 import { setMapLocation } from 'actions/map';
 
-export function updateMapParams({ params }, replace, done) {
+export function updateMapParams({ location }, replace, done) {
   const config = {
-    zoom: +params.zoom,
+    zoom: +location.query.zoom,
     latLng: {
-      lat: +params.lat,
-      lng: +params.lng
+      lat: +location.query.lat,
+      lng: +location.query.lng
     }
   };
   dispatch(setMapLocation(config));

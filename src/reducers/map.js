@@ -13,10 +13,10 @@ export default function (state = initialState, action) {
   switch (action.type) {
     case SET_MAP_LOCATION:
       return Object.assign({}, state, {
-        zoom: action.payload.zoom !== undefined ? action.payload.zoom : state.zoom,
+        zoom: isNaN(action.payload.zoom) ? state.zoom : action.payload.zoom,
         latLng: {
-          lat: action.payload.latLng.lat !== undefined ? action.payload.latLng.lat : state.latLng.lat,
-          lng: action.payload.latLng.lng !== undefined ? action.payload.latLng.lng : state.latLng.lng
+          lat: isNaN(action.payload.latLng.lat) ? state.latLng.lat : action.payload.latLng.lat,
+          lng: isNaN(action.payload.latLng.lng) ? state.latLng.lng : action.payload.latLng.lng
         }
       });
     default:
