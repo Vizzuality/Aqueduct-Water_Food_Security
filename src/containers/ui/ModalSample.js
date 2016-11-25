@@ -1,11 +1,9 @@
 import { connect } from 'react-redux';
 import ModalSample from 'components/ui/ModalSample';
-import { openModal, closeModal, setModalChildren, modalLoading, modalReady } from 'actions/modal';
+import { toggleModal, setModalChildren, modalLoading } from 'actions/modal';
 
 export default connect(null, {
-  openModal,
-  closeModal,
+  toggleModal,
   setModalChildren,
-  modalLoading,
-  modalReady
+  modalLoading
 })(ModalSample);

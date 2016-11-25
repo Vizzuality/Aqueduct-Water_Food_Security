@@ -7,11 +7,11 @@ export default class Modal extends React.Component {
   componentWillReceiveProps({ modal }) {
     const self = this;
     function escKeyPressListener(evt) {
-      return evt.keyCode === 27 && self.props.closeModal();
+      return evt.keyCode === 27 && self.props.toggleModal(false);
     }
-    // if closed property has changed
-    if (this.props.modal.closed !== modal.closed) {
-      document[modal.closed ? 'removeEventListener' : 'addEventListener']('keydown', escKeyPressListener);
+    // if opened property has changed
+    if (this.props.modal.opened !== modal.opened) {
+      document[modal.opened ? 'addEventListener' : 'removeEventListener']('keydown', escKeyPressListener);
     }
   }
   getContent() {
@@ -19,9 +19,9 @@ export default class Modal extends React.Component {
   }
   render() {
     return (
-      <section className={`c-modal ${this.props.modal.closed ? '-hidden' : ''}`}>
+      <section className={`c-modal ${this.props.modal.opened ? '' : '-hidden'}`}>
         <div className="modal-container">
-          <button className="modal-close" onClick={this.props.closeModal}>
+          <button className="modal-close" onClick={() => this.props.toggleModal(false)}>
             <Icon name="icon-cross" />
           </button>
           <div className="modal-content">
@@ -38,5 +38,5 @@ Modal.propTypes = {
   // STORE
   modal: React.PropTypes.object,
   // ACTIONS
-  closeModal: React.PropTypes.func
+  toggleModal: React.PropTypes.func
 };

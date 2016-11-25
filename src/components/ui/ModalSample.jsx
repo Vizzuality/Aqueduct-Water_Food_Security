@@ -10,18 +10,20 @@ export default class ModalSample extends React.Component {
   }
 
   showModal() {
-    this.props.openModal({
+    this.props.toggleModal(true, {
       children: ModalSample,
       childrenProps: {
         name: 'PERET'
       }
     });
-    this.props.modalLoading();
-    setTimeout(this.props.modalReady, 3000);
+    this.props.modalLoading(true);
+    setTimeout(() => {
+      return this.props.modalLoading(false);
+    }, 500);
   }
 
   hideModal() {
-    this.props.closeModal();
+    this.props.toggleModal(false);
   }
 
   render() {
@@ -37,9 +39,7 @@ export default class ModalSample extends React.Component {
 
 ModalSample.propTypes = {
   // STORE
-  openModal: React.PropTypes.func,
-  closeModal: React.PropTypes.func,
+  toggleModal: React.PropTypes.func,
   modalLoading: React.PropTypes.func,
-  modalReady: React.PropTypes.func,
   name: React.PropTypes.string
 };
