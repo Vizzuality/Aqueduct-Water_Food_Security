@@ -1,4 +1,5 @@
 import React from 'react';
+import Icon from 'components/ui/Icon';
 
 // Components
 import Filters from 'components/app/Filters';
@@ -32,7 +33,6 @@ export default class Sidebar extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     const openedClass = (this.state.opened) ? '-opened' : '';
 
     return (
@@ -42,7 +42,7 @@ export default class Sidebar extends React.Component {
           - I'm using a div instead of a button because I don't want that browser's styles interfere with it
         */}
         <div className={`l-sidebar-toggle btn-toggle ${openedClass}`} onClick={this.triggerToggle}>
-          <svg className="c-icon -medium"><use xlinkHref="#icon-arrow-left" /></svg>
+          <Icon className="-medium" name="icon-arrow-left" />
         </div>
 
         {/* Filters */}
@@ -52,7 +52,7 @@ export default class Sidebar extends React.Component {
 
         {/* Widget List */}
         <div className="l-sidebar-content">
-          <WidgetList datasets={this.props.datasets} datasetsActive={this.props.datasetsActive}/>
+          <WidgetList datasets={this.props.datasets} datasetsActive={this.props.datasetsActive} />
         </div>
       </div>
     );

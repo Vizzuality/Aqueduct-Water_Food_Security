@@ -1,4 +1,5 @@
 import React from 'react';
+import Icon from 'components/ui/Icon';
 
 class WidgetButtons extends React.Component {
 
@@ -19,13 +20,13 @@ class WidgetButtons extends React.Component {
       <ul className="c-widget-buttons">
         <li>
           <button data-action="share" className="widget-button" onClick={this.triggerAction}>
-            <svg className="c-icon"><use xlinkHref="#icon-cross" /></svg>
+            <Icon name="icon-cross" />
           </button>
         </li>
 
         <li>
           <button data-action="download" className="widget-button" onClick={this.triggerAction}>
-            <svg className="c-icon"><use xlinkHref="#icon-menu" /></svg>
+            <Icon name="icon-menu" />
           </button>
         </li>
       </ul>

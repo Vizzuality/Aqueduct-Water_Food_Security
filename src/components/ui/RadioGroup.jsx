@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Radio from 'components/common/Radio';
+import Radio from 'components/ui/Radio';
 
 class RadioGroup extends React.Component {
 
