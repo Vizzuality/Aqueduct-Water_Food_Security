@@ -10,10 +10,8 @@ import AppPage from 'containers/pages/AppPage';
 import { updateMapParams } from 'actions/route';
 
 const Routes = ({ history }) => (
-  <Router
-    history={history}
-  >
-    <Route path="/(:zoom)(/:lat)(/:lng)" component={App}>
+  <Router history={history}>
+    <Route path="/" component={App}>
       <IndexRoute component={AppPage} onEnter={updateMapParams} />
       <Route path="posts">
         <IndexRoute component={AppPage} />
