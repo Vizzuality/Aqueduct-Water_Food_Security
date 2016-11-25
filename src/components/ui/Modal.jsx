@@ -28,7 +28,7 @@ export default class Modal extends React.Component {
             {this.props.modal.loading ? <Spinner isLoading /> : this.getContent()}
           </div>
         </div>
-        <area className="modal-backdrop" />
+        <area className="modal-backdrop" onClick={() => this.props.toggleModal(false)} />
       </section>
     );
   }
