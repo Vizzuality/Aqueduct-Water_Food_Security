@@ -6,8 +6,8 @@ export function setMapUrl() {
     const locationDescriptor = {
       pathname: '/',
       query: {
-        lat: params.latLng.lat,
-        lng: params.latLng.lng,
+        lat: params.latLng.lat.toFixed(2),
+        lng: params.latLng.lng.toFixed(2),
         zoom: params.zoom
       }
     };
