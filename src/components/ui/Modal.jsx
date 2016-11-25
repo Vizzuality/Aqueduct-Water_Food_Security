@@ -7,6 +7,7 @@ export default class Modal extends React.Component {
   componentWillReceiveProps({ modal }) {
     const self = this;
     function escKeyPressListener(evt) {
+      document.removeEventListener('keydown', escKeyPressListener);
       return evt.keyCode === 27 && self.props.toggleModal(false);
     }
     // if opened property has changed
