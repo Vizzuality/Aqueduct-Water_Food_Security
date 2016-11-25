@@ -1,6 +1,6 @@
 import React from 'react';
-import RadioGroup from 'components/common/RadioGroup';
-import Switch from 'components/common/Switch';
+import RadioGroup from 'components/ui/RadioGroup';
+import Switch from 'components/ui/Switch';
 
 const predictionOptions = [
   { value: 'optimistic', label: 'Optimistic View' },

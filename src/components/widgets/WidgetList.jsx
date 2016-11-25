@@ -1,6 +1,6 @@
 import React from 'react';
 import Widget from 'components/widgets/Widget';
-import Spinner from 'components/common/Spinner';
+import Spinner from 'components/ui/Spinner';
 
 export default class WidgetList extends React.Component {
 
