@@ -38,9 +38,20 @@ class Filters extends React.Component {
   }
 
   render() {
+    const current = this.props.filters.current;
     const currentFilters = this.props.filters[this.props.filters.current];
     return (
       <div className="c-filters-tabs-content">
+        {(current === 'country') ?
+          <div className="filters-section">
+            Select a country
+          </div>
+        : null }
+        {(current === 'subcatchment') ?
+          <div className="filters-section">
+            Select a subcatchment
+          </div>
+        : null }
         <div className="filters-section">
           <Switch
             selected={currentFilters.layerType}
