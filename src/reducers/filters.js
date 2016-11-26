@@ -1,4 +1,4 @@
-import { SET_FILTERS, SET_CURRENT_FILTER } from 'actions/filters';
+import { SET_FILTERS, SET_TOTAL_FILTERS, SET_CURRENT_FILTER } from 'actions/filters';
 
 const initialState = {
   current: 'global',
@@ -25,6 +25,9 @@ export default function (state = initialState, action) {
       return Object.assign({}, state, {
         [state.current]: action.payload
       });
+
+    case SET_TOTAL_FILTERS:
+      return Object.assign({}, state, action.payload);
 
     case SET_CURRENT_FILTER:
       return Object.assign({}, state, {

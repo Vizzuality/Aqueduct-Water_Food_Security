@@ -1,15 +1,5 @@
 import React from 'react';
 
-const layersOptions = [
-  { id: 'all-crops', label: 'All values' },
-  { id: 'rice', label: 'Rice' },
-  { id: 'cocoa', label: 'Cocoa' },
-  { id: 'maize', label: 'Maize' },
-  { id: 'coffee', label: 'Coffee' },
-  { id: 'cotton', label: 'Cotton' },
-  { id: 'oats', label: 'Oats' }
-];
-
 class FiltersLayers extends React.Component {
   constructor(props) {
     super(props);
