@@ -12,7 +12,7 @@ export function onEnterAppPage({ location }, replace, done) {
     }
   };
 
-  const filters = JSON.parse(atob(location.query.filters));
+  const filters = location.query.filters ? JSON.parse(atob(location.query.filters)) : null;
 
   dispatch(setMapLocation(map));
   dispatch(setTotalFilters(filters));
