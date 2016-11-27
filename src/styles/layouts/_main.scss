@@ -28,10 +28,13 @@
   width: 50%;
   z-index: 2;
   max-width: $max-width-sidebar;
+  display: flex;
+  flex-direction: column;
 
   .l-filters {
     position: relative;
     z-index: 1;
+    width: 100%;
   }
 
   .l-sidebar-toggle {
@@ -42,7 +45,6 @@
   .l-sidebar-content {
     position: relative;
     overflow: auto;
-    height: 100%;
     width: 100%;
     top: 0;
     left: 0;

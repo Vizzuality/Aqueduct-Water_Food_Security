@@ -62,7 +62,6 @@ render(
     <div>
       {/* Tell the Router to use our enhanced history */}
       <Routes history={history} />
-      <ModalSample />
       <Modal />
     </div>
   </Provider>,
