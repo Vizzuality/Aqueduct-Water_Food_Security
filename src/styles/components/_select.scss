@@ -1,0 +1,127 @@
+// Override React selectize styles
+.react-selectize {
+  &.open {
+
+  }
+}
+.simple-select {
+  &.react-selectize {
+    &.default {
+      &.root-node {
+        &.open {
+          &:after {
+            position: absolute;
+            z-index: 99;
+            content: '';
+            margin-left: 20px;
+            margin-top: 8px;
+            display: block;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid $color-white;
+          }
+          .react-selectize-control {
+            background-color: $color-secondary;
+          }
+        }
+        &:not(.open) {
+          .react-selectize-control {
+            background-color: transparent;
+            background-image: none;
+            color: $color-white;
+          }
+        }
+      }
+    }
+  }
+}
+
+.react-selectize {
+  &.default {
+    font-family: $font-family-roboto;
+    font-size: 16px;
+    &.root-node {
+      &.open {
+        .react-selectize-control {
+          .react-selectize-placeholder {
+            display: none;
+          }
+          .react-selectize-toggle-button {
+            path {
+              fill: $color-white;
+            }
+          }
+        }
+      }
+      .react-selectize-control {
+        border: 0;
+        border-bottom: 2px solid $color-deactivate;
+        border-radius: 0;
+        padding: 0;
+        .react-selectize-search-field-and-selected-values {
+          padding-left: 10px;
+          .resizable-input {
+            color: $color-white;
+          }
+        }
+        .react-selectize-placeholder {
+          color: $color-white;
+          text-indent: 0;
+          font-family: $font-family-roboto;
+          font-size: 16px;
+        }
+        .react-selectize-toggle-button {
+          path {
+            fill: $color-white;
+          }
+        }
+      }
+    }
+  }
+  .dropdown-menu {
+    margin-top: 10px;
+    max-height: 435px;
+    .option-wrapper {
+      background: $color-white;
+    }
+    &.default {
+      margin-top: 15px;
+      background: transparent;
+      .no-results-found {
+        background-color: $color-white;
+      }
+      &:not(.fliped) {
+        border-color: transparent;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        box-shadow: 0 -2px 4px 0 rgba(33, 62, 118, 0.09), 0 2px 4px 0 rgba(33, 62, 118, 0.09);
+      }
+      .option-wrapper {
+        .simple-option {
+          color: $color-secondary;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+  &.dropdown-menu {
+    &.default {
+      .no-results-found {
+        color: $color-secondary !important;
+      }
+    }
+  }
+}
+
+.react-selectize {
+  .dropdown-menu.default {
+    .no-results-found {
+      box-shadow: 0 -2px 4px 0 rgba(33, 62, 118, 0.09), 0 2px 4px 0 rgba(33, 62, 118, 0.09);
+      font-family: $font-family-roboto;
+      font-size: 16px;
+      font-weight: 500;
+    }
+  }
+}
