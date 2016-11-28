@@ -27,6 +27,11 @@ class Map extends React.Component {
     this.props.setMapParams(this.getMapParams());
   }
 
+  // TODO: update with real check
+  shouldComponentUpdate() {
+    return false;
+  }
+
   componentWillUnmount() {
     // Remember to remove the listeners before removing the map
     // or they will stay in memory

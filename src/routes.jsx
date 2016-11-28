@@ -7,14 +7,12 @@ import App from 'containers/pages/App';
 import AppPage from 'containers/pages/AppPage';
 
 // Routing actions
-import { updateMapParams } from 'actions/route';
+import { onEnterAppPage } from 'actions/route';
 
 const Routes = ({ history }) => (
-  <Router
-    history={history}
-  >
-    <Route path="/(:zoom)(/:lat)(/:lng)" component={App}>
-      <IndexRoute component={AppPage} onEnter={updateMapParams} />
+  <Router history={history}>
+    <Route path="/" component={App}>
+      <IndexRoute component={AppPage} onEnter={onEnterAppPage} />
       <Route path="posts">
         <IndexRoute component={AppPage} />
       </Route>

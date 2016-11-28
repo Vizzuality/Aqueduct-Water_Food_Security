@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import Map from 'components/map/Map';
 import { setMapLocation } from 'actions/map';
-import { setMapUrl } from 'actions/url';
+import { updateUrl } from 'actions/url';
 
 const mapStateToProps = ({ map }) => ({
   map
@@ -10,7 +10,7 @@ const mapStateToProps = ({ map }) => ({
 const mapDispatchToProps = dispatch => ({
   setMapParams: (params) => {
     dispatch(setMapLocation(params));
-    dispatch(setMapUrl());
+    dispatch(updateUrl());
   }
 });
 

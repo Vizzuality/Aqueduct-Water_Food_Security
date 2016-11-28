@@ -7,10 +7,6 @@ class RadioGroup extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      selected: props.defaultValue
-    };
-
     // BINDINGS
     this.onChange = this.onChange.bind(this);
   }
@@ -20,18 +16,13 @@ class RadioGroup extends React.Component {
    * - onChange
   */
   onChange(newSelected) {
-    this.setState({
-      selected: newSelected
-    });
-
     // Send object
     const selectedObj = this.props.items.find(item => item.value === newSelected);
     this.props.onChange(selectedObj);
   }
 
   render() {
-    const { name, items } = this.props;
-    const { selected } = this.state;
+    const { name, items, selected } = this.props;
 
     return (
       <div className={`c-radio-box ${this.props.className}`}>
@@ -52,7 +43,7 @@ class RadioGroup extends React.Component {
 
 RadioGroup.propTypes = {
   name: React.PropTypes.string,
-  defaultValue: React.PropTypes.string,
+  selected: React.PropTypes.string,
   className: React.PropTypes.string,
   items: React.PropTypes.array,
   onChange: React.PropTypes.func

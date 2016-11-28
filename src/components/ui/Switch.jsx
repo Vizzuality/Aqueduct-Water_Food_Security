@@ -21,20 +21,20 @@ class Switch extends React.Component {
     this.props.onChange(selectedObj);
   }
 
-  onToggle(e) {
+  onToggle() {
     // Send object
-    const selectedObj = this.props.items.find(item => item.value !== this.props.value);
+    const selectedObj = this.props.items.find(item => item.value !== this.props.selected);
     this.props.onChange(selectedObj);
   }
 
   render() {
-    const { value, items } = this.props;
-    const position = (value === items[0].value) ? '-left' : '-right';
+    const { selected, items } = this.props;
+    const position = (selected === items[0].value) ? '-left' : '-right';
 
     return (
       <div className="c-switch">
         <span
-          className={`switch-label ${(value === items[0].value) ? '-selected' : ''}`}
+          className={`switch-label ${(selected === items[0].value) ? '-selected' : ''}`}
           data-value={items[0].value}
           onClick={this.onChange}
         >
@@ -49,7 +49,7 @@ class Switch extends React.Component {
         </span>
 
         <span
-          className={`switch-label ${(value === items[1].value) ? '-selected' : ''}`}
+          className={`switch-label ${(selected === items[1].value) ? '-selected' : ''}`}
           data-value={items[1].value}
           onClick={this.onChange}
         >
@@ -61,7 +61,7 @@ class Switch extends React.Component {
 }
 
 Switch.propTypes = {
-  value: React.PropTypes.string,
+  selected: React.PropTypes.string,
   items: React.PropTypes.array.isRequired, // It should be an array of 2 elements
   onChange: React.PropTypes.func
 };

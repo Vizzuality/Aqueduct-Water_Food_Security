@@ -11,6 +11,10 @@ export default class WidgetList extends React.Component {
     };
   }
 
+  componentWillMount() {
+    this.props.getDatasets();
+  }
+
   // Return a array of Widget components
   getWidgets() {
     const widgetList = [];
@@ -36,7 +40,9 @@ export default class WidgetList extends React.Component {
     return (
       <div className="c-widget-list">
         {this.props.datasets.loading ? <Spinner isLoading={this.props.datasets.loading} /> :
-          <div className="row collapse">{widgetList}</div>
+          <div className="row collapse">
+            {widgetList}
+          </div>
         }
       </div>
     );
@@ -47,5 +53,7 @@ WidgetList.propTypes = {
   // STORE
   datasets: React.PropTypes.object,
   // SELECTOR
-  datasetsActive: React.PropTypes.object
+  datasetsActive: React.PropTypes.object,
+  // ACTIONS
+  getDatasets: React.PropTypes.func
 };
