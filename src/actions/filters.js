@@ -1,5 +1,6 @@
 export const SET_FILTERS = 'SET_FILTERS';
-export const SET_CURRENT_FILTER = 'SET_CURRENT_FILTER';
+export const SET_TOTAL_FILTERS = 'SET_TOTAL_FILTERS';
+export const SET_SCOPE_FILTER = 'SET_SCOPE_FILTER';
 
 export function setFilters(filters) {
   return {
@@ -8,9 +9,16 @@ export function setFilters(filters) {
   };
 }
 
-export function setCurrentFilter(current) {
+export function setTotalFilters(filters) {
   return {
-    type: SET_CURRENT_FILTER,
-    payload: current
+    type: SET_TOTAL_FILTERS,
+    payload: filters
+  };
+}
+
+export function setScopeFilter(scope) {
+  return {
+    type: SET_SCOPE_FILTER,
+    payload: scope
   };
 }

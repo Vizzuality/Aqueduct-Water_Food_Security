@@ -1,8 +1,105 @@
 .c-filters {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 $space-sidebar 0 ($space-1 * 2);
   background: $color-secondary;
+}
+
+
+.c-filters-tabs {
+  width: 100%;
   min-height: $space-sidebar;
+  padding: 0 $space-sidebar 0 ($space-1 * 2);
+  background: $color-tertiary;
+
+  > ul {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    > li {
+      list-style: none;
+      font-size: $font-size-default;
+      color: $color-deactivate;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.9px;
+      margin: 0 ($space-1 * 3) 0 0;
+      line-height: $space-sidebar;
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+
+      &:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 3px;
+        background: $color-primary;
+        transform: translate(-50%,0);
+        transition: all $animation-time $ease-in-out-sine;
+      }
+
+      &:last-child {
+        margin: 0;
+      }
+
+      &:hover {
+        color: lighten($color-deactivate, 10%);
+      }
+
+      &:active {
+        color: lighten($color-deactivate, 20%);
+      }
+
+      &.-active {
+        color: $color-white;
+
+        &:after {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+.c-filters-tabs-content {
+  .filters-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: ($space-1 * 3) ($space-1 * 2) 0;
+
+    &:last-child {
+      padding: ($space-1 * 3) ($space-1 * 2);
+    }
+  }
+}
+
+
+.c-filters-layers {
+  font-weight: 700;
+  > ul {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin: -$space-1 0 0;
+
+    > li {
+      list-style: none;
+      background: $color-tertiary;
+      color: $color-deactivate;
+      padding: 1px $space-1 * 2;
+      border-radius: 18px;
+      cursor: pointer;
+      margin: $space-1 $space-1 0 0;
+
+      &:hover {
+        color: lighten($color-deactivate, 12.5%);
+      }
+
+      &.-active {
+        color: $color-white;
+      }
+    }
+  }
 }

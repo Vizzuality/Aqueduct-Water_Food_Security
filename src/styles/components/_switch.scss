@@ -12,15 +12,15 @@
   }
 
   .switch-label {
-    font-weight: 400;
-    color: white;
+    font-weight: 700;
+    color: $color-deactivate;
 
     &:hover {
-      color: lighten($color-alternative, 25%);
+      color: lighten($color-deactivate, 12.5%);
     }
 
     &.-selected {
-      font-weight: 700;
+      color: white;
     }
   }
 

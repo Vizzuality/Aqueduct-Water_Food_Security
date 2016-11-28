@@ -1,5 +1,5 @@
 import React from 'react';
-import Sidebar from 'containers/app/Sidebar';
+import Sidebar from 'components/app/Sidebar';
 import Map from 'containers/map/Map';
 
 class AppPage extends React.Component {

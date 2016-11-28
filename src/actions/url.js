@@ -1,14 +1,15 @@
 import { push } from 'react-router-redux';
 
-export function setMapUrl() {
+export function updateUrl() {
   return (dispatch, state) => {
-    const params = state().map;
+    const { map, filters } = state();
     const locationDescriptor = {
       pathname: '/',
       query: {
-        lat: params.latLng.lat.toFixed(2),
-        lng: params.latLng.lng.toFixed(2),
-        zoom: params.zoom
+        lat: map.latLng.lat.toFixed(2),
+        lng: map.latLng.lng.toFixed(2),
+        zoom: map.zoom,
+        filters: btoa(JSON.stringify(filters))
       }
     };
     dispatch(push(locationDescriptor));
