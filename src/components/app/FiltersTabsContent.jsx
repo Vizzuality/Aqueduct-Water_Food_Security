@@ -33,7 +33,7 @@ class Filters extends React.Component {
    * - triggerChange
    */
   onCountriesSelectChange(val) {
-    console.info(this, val);
+    this.triggerChange(val, 'iso');
   }
   triggerChange(selected, name) {
     const newFilters = Object.assign({}, this.props.filters[this.props.filters.scope], {
