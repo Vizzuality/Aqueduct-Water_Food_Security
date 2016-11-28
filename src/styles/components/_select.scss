@@ -61,14 +61,14 @@
         border-radius: 0;
         padding: 0;
         .react-selectize-search-field-and-selected-values {
-          padding-left: 10px;
+          padding-left: 0;
           .resizable-input {
             color: $color-white;
           }
         }
         .react-selectize-placeholder {
           color: $color-white;
-          text-indent: 0;
+          text-indent: 2px;
           font-family: $font-family-roboto;
           font-size: 16px;
         }
