@@ -6,7 +6,9 @@ import { browserHistory } from 'react-router';
 import thunk from 'redux-thunk';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
 import Modal from 'containers/ui/Modal';
+import Tooltip from 'containers/ui/Tooltip';
 import ModalSample from 'containers/ui/ModalSample';
+import TooltipSample from 'containers/ui/TooltipSample';
 
 import * as reducers from './reducers';
 import Routes from './routes';
@@ -62,7 +64,10 @@ render(
     <div>
       {/* Tell the Router to use our enhanced history */}
       <Routes history={history} />
+      <ModalSample />
+      <TooltipSample />
       <Modal />
+      <Tooltip />
     </div>
   </Provider>,
   document.getElementById('main')
