@@ -10,7 +10,7 @@ class FiltersLayers extends React.Component {
 
   getLayers() {
     const widgetList = [];
-    const currentFilters = this.props.filters[this.props.filters.current];
+    const currentFilters = this.props.filters[this.props.filters.scope];
     let widget;
     let activeClass;
     this.props.datasets.list.forEach((dataset, index) => {

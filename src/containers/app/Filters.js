@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Filters from 'components/app/Filters';
-import { setFilters, setCurrentFilter } from 'actions/filters';
+import { setFilters, setScopeFilter } from 'actions/filters';
 import { updateUrl } from 'actions/url';
 
 const mapStateToProps = ({ filters, datasets }) => ({
@@ -14,8 +14,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(updateUrl());
   },
 
-  setCurrentFilter: (params) => {
-    dispatch(setCurrentFilter(params));
+  setScopeFilter: (params) => {
+    dispatch(setScopeFilter(params));
     dispatch(updateUrl());
   }
 

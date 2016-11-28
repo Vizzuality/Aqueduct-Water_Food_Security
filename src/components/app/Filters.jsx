@@ -17,13 +17,13 @@ class Filters extends React.Component {
   }
 
   triggerChangeScope(scope) {
-    this.props.setCurrentFilter(scope);
+    this.props.setScopeFilter(scope);
   }
 
   render() {
     return (
       <div className="c-filters">
-        <FiltersTabs triggerChangeScope={this.triggerChangeScope} scope={this.props.filters.current} />
+        <FiltersTabs triggerChangeScope={this.triggerChangeScope} scope={this.props.filters.scope} />
         <FiltersTabsContent triggerChange={this.triggerChange} filters={this.props.filters} datasets={this.props.datasets} />
       </div>
     );
@@ -37,7 +37,7 @@ Filters.propTypes = {
 
   // ACTIONS
   setFilters: React.PropTypes.func,
-  setCurrentFilter: React.PropTypes.func
+  setScopeFilter: React.PropTypes.func
 };
 
 

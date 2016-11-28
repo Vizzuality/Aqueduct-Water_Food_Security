@@ -30,7 +30,7 @@ class Filters extends React.Component {
    * - triggerChange
    */
   triggerChange(selected, name) {
-    const newFilters = Object.assign({}, this.props.filters[this.props.filters.current], {
+    const newFilters = Object.assign({}, this.props.filters[this.props.filters.scope], {
       [name]: selected.value
     });
 
@@ -38,8 +38,8 @@ class Filters extends React.Component {
   }
 
   render() {
-    const current = this.props.filters.current;
-    const currentFilters = this.props.filters[this.props.filters.current];
+    const current = this.props.filters.scope;
+    const currentFilters = this.props.filters[this.props.filters.scope];
     return (
       <div className="c-filters-tabs-content">
         {(current === 'country') ?
