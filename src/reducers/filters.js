@@ -3,14 +3,15 @@ import { SET_FILTERS, SET_TOTAL_FILTERS, SET_SCOPE_FILTER } from 'actions/filter
 const initialState = {
   scope: 'global',
   global: {
-    datasetsIds: ['4e6fbd04-253d-4fae-929e-0dbc8e106c86', '06c44f9a-aae7-401e-874c-de13b7764959'],
+    datasetsIds: ['62520fd2-2dfb-4a13-840b-35ac88fc7aa4'],
     layerType: 'food',
     prediction: 'optimistic'
   },
   country: {
     datasetsIds: ['4e6fbd04-253d-4fae-929e-0dbc8e106c86'],
     layerType: 'water',
-    prediction: 'optimistic'
+    prediction: 'optimistic',
+    iso: null
   },
   subcatchment: {
     datasetsIds: ['06c44f9a-aae7-401e-874c-de13b7764959'],

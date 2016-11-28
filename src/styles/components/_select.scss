@@ -8,6 +8,9 @@
   &.react-selectize {
     &.default {
       &.root-node {
+        color: $color-white;
+        font-weight: 700;
+
         &.open {
           &:after {
             position: absolute;
@@ -30,7 +33,6 @@
           .react-selectize-control {
             background-color: transparent;
             background-image: none;
-            color: $color-white;
           }
         }
       }
@@ -55,15 +57,24 @@
           }
         }
       }
+
+      .simple-value {
+        margin: 0;
+      }
+
       .react-selectize-control {
         border: 0;
-        border-bottom: 2px solid $color-deactivate;
+        border-bottom: 2px solid rgba(255,255,255,.3);
         border-radius: 0;
         padding: 0;
         .react-selectize-search-field-and-selected-values {
           padding-left: 0;
           .resizable-input {
             color: $color-white;
+            margin: 1px 0;
+            position: absolute;
+            top: 0;
+            left: 0;
           }
         }
         .react-selectize-placeholder {
@@ -75,6 +86,11 @@
         .react-selectize-toggle-button {
           path {
             fill: $color-white;
+          }
+        }
+        .react-selectize-reset-button {
+          path {
+            stroke: $color-white;
           }
         }
       }
@@ -101,7 +117,7 @@
       .option-wrapper {
         .simple-option {
           color: $color-secondary;
-          font-weight: 500;
+          font-weight: 700;
         }
       }
     }
@@ -121,7 +137,7 @@
       box-shadow: 0 -2px 4px 0 rgba(33, 62, 118, 0.09), 0 2px 4px 0 rgba(33, 62, 118, 0.09);
       font-family: $font-family-roboto;
       font-size: 16px;
-      font-weight: 500;
+      font-weight: 700;
     }
   }
 }

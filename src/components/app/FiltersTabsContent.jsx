@@ -25,16 +25,13 @@ class Filters extends React.Component {
 
     // BINDINGS
     this.triggerChange = this.triggerChange.bind(this);
-    this.onCountriesSelectChange = this.onCountriesSelectChange.bind(this);
   }
 
   /**
    * UI EVENTS
    * - triggerChange
    */
-  onCountriesSelectChange(val) {
-    this.triggerChange(val, 'iso');
-  }
+
   triggerChange(selected, name) {
     const newFilters = Object.assign({}, this.props.filters[this.props.filters.scope], {
       [name]: selected.value
@@ -44,21 +41,29 @@ class Filters extends React.Component {
   }
 
   render() {
+    // Filters
     const current = this.props.filters.scope;
     const currentFilters = this.props.filters[this.props.filters.scope];
+
     // Parse countries json and sort it
-    const selectValues = countries.features.map((item) => {
+    const countryOptions = countries.features.map((item) => {
       return { value: item.id, label: item.properties.name };
     }).sort((a, b) => {
       return a.label > b.label ? 1 : -1;
     });
+
+    const countrySelected = countryOptions.find(x => x.value === currentFilters.iso);
+
     return (
       <div className="c-filters-tabs-content">
         {(current === 'country') ?
           <div className="filters-section">
             <SimpleSelect
-              options={selectValues}
-              onValueChange={this.onCountriesSelectChange}
+              options={countryOptions}
+              value={countrySelected}
+              onValueChange={(selected) => {
+                this.triggerChange(selected || { value: null }, 'iso')}
+              }
               placeholder="Select a Country"
             />
           </div>
