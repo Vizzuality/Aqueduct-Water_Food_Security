@@ -66,9 +66,7 @@ class Map extends React.Component {
   // RENDER
   render() {
     return (
-      <div className="l-map -fullscreen">
-        <div id={'map'} className="c-map" />
-      </div>
+      <div id={'map'} className="c-map" />
     );
   }
 }
