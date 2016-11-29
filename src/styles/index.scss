@@ -9,6 +9,9 @@
 /* LAYOUTS */
 @import "layouts/main";
 
+/* External components */
+@import '../../node_modules/react-selectize/themes/index.css';
+
 /* COMPONENTS */
 @import "components/btn";
 @import "components/chart";
@@ -23,3 +26,4 @@
 @import "components/switch";
 @import "components/tooltip";
 @import "components/widget";
+@import "components/select";

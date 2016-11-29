@@ -3,6 +3,8 @@ import React from 'react';
 import RadioGroup from 'components/ui/RadioGroup';
 import Switch from 'components/ui/Switch';
 import FiltersLayers from 'components/app/FiltersLayers';
+import { SimpleSelect } from 'react-selectize';
+import countries from 'data/countries.json';
 
 const predictionOptions = [
   { value: 'optimistic', label: 'Optimistic' },
@@ -29,6 +31,7 @@ class Filters extends React.Component {
    * UI EVENTS
    * - triggerChange
    */
+
   triggerChange(selected, name) {
     const newFilters = Object.assign({}, this.props.filters[this.props.filters.scope], {
       [name]: selected.value
@@ -38,13 +41,31 @@ class Filters extends React.Component {
   }
 
   render() {
+    // Filters
     const current = this.props.filters.scope;
     const currentFilters = this.props.filters[this.props.filters.scope];
+
+    // Parse countries json and sort it
+    const countryOptions = countries.features.map((item) => {
+      return { value: item.id, label: item.properties.name };
+    }).sort((a, b) => {
+      return a.label > b.label ? 1 : -1;
+    });
+
+    const countrySelected = countryOptions.find(x => x.value === currentFilters.iso);
+
     return (
       <div className="c-filters-tabs-content">
         {(current === 'country') ?
           <div className="filters-section">
-            Select a country
+            <SimpleSelect
+              options={countryOptions}
+              value={countrySelected}
+              onValueChange={(selected) => {
+                this.triggerChange(selected || { value: null }, 'iso')}
+              }
+              placeholder="Select a Country"
+            />
           </div>
         : null }
         {(current === 'subcatchment') ?
