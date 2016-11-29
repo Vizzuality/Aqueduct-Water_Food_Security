@@ -4,7 +4,7 @@ import {
   TOOLTIP_LOADING,
   TOOLTIP_SET_CHILDREN_PROPS,
   TOOLTIP_SET_POSITION,
-  TOOLTIP_FLOLLOW_TOGGLE
+  TOOLTIP_FOLLOW_TOGGLE
 }
 from 'constants/ui';
 
@@ -32,7 +32,7 @@ export default function (state = initialState, action) {
       return Object.assign({}, state, { childrenProps: action.payload });
     case TOOLTIP_SET_POSITION:
       return Object.assign({}, state, { position: { x: action.payload.x, y: action.payload.y } });
-    case TOOLTIP_FLOLLOW_TOGGLE:
+    case TOOLTIP_FOLLOW_TOGGLE:
       return Object.assign({}, state, { follow: action.payload });
     default:
       return state;

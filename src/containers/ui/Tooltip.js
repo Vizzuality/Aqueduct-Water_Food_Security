@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Tooltip from 'components/ui/Tooltip';
-import { toggleTooltip, tooltipSetPosition } from 'actions/tooltip';
+import { toggleTooltip, setTooltipPosition } from 'actions/tooltip';
 
 const mapStateToProps = ({ tooltip }) => ({
   tooltip
@@ -8,5 +8,5 @@ const mapStateToProps = ({ tooltip }) => ({
 
 export default connect(mapStateToProps, {
   toggleTooltip,
-  tooltipSetPosition
+  setTooltipPosition
 })(Tooltip);

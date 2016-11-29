@@ -4,7 +4,7 @@ import {
   TOOLTIP_LOADING,
   TOOLTIP_SET_CHILDREN_PROPS,
   TOOLTIP_SET_POSITION,
-  TOOLTIP_FLOLLOW_TOGGLE
+  TOOLTIP_FOLLOW_TOGGLE
 }
 from 'constants/ui';
 
@@ -25,7 +25,7 @@ export function toggleTooltip(opened, opts = {}) {
         dispatch({ type: TOOLTIP_SET_POSITION, payload: { x: opts.position.x, y: opts.position.y } });
       }
       if (opts.follow) {
-        dispatch({ type: TOOLTIP_FLOLLOW_TOGGLE, payload: true });
+        dispatch({ type: TOOLTIP_FOLLOW_TOGGLE, payload: true });
         // User has to move the mouse to receive the position
         document.addEventListener('mousemove', function onMouseMove({ clientX, clientY }) {
           dispatch({ type: TOOLTIP_SET_POSITION, payload: { x: clientX, y: clientY } });
@@ -34,7 +34,7 @@ export function toggleTooltip(opened, opts = {}) {
       }
     }
     if (!opened) {
-      dispatch({ type: TOOLTIP_FLOLLOW_TOGGLE, payload: false });
+      dispatch({ type: TOOLTIP_FOLLOW_TOGGLE, payload: false });
     }
     dispatch({ type: TOOLTIP_TOGGLE, payload: opened });
   };
@@ -44,6 +44,6 @@ export function tooltipLoading(loading) {
   return dispatch => dispatch({ type: TOOLTIP_LOADING, payload: loading });
 }
 
-export function tooltipSetPosition({ x, y }) {
+export function setTooltipPosition({ x, y }) {
   return dispatch => dispatch({ type: TOOLTIP_SET_POSITION, payload: { x, y } });
 }

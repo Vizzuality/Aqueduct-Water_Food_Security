@@ -22,7 +22,7 @@ export default class Tooltip extends React.Component {
   }
 
   onMouseMove({ clientX, clientY }) {
-    this.props.tooltipSetPosition({ x: clientX, y: clientY });
+    this.props.setTooltipPosition({ x: clientX, y: clientY });
     this.clientX = clientX;
     this.clientY = clientY;
   }
@@ -58,5 +58,5 @@ export default class Tooltip extends React.Component {
 Tooltip.propTypes = {
   // STORE
   tooltip: React.PropTypes.object,
-  tooltipSetPosition: React.PropTypes.func
+  setTooltipPosition: React.PropTypes.func
 };
