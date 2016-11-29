@@ -8,7 +8,11 @@ export default class CompareList extends React.Component {
   getItems() {
     const items = [];
     for (let i = 0; i < this.props.items; i += 1) {
-      items.push(<CompareItem key={i} country={this.props.countries[i]} />);
+      items.push(
+        <div key={i} className="small-6">
+          <CompareItem country={this.props.countries[i]} />
+        </div>
+      );
     }
     return items;
   }
@@ -20,7 +24,9 @@ export default class CompareList extends React.Component {
           <span>Back</span>
         </div>
         <div className="comparelist-content">
-          {this.getItems()}
+          <div className="row expanded">
+            {this.getItems()}
+          </div>
         </div>
       </div>
     );

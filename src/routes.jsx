@@ -14,9 +14,6 @@ const Routes = ({ history }) => (
   <Router history={history}>
     <Route path="/" component={App}>
       <IndexRoute component={AppPage} onEnter={onEnterAppPage} />
-      <Route path="posts">
-        <IndexRoute component={AppPage} />
-      </Route>
       <Route path="compare">
         <IndexRoute component={ComparePage} onEnter={onEnterComparePage} />
       </Route>
