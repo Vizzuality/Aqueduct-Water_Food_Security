@@ -4,7 +4,7 @@
   "description": "TODO: write a description",
   "main": "server.js",
   "scripts": {
-    "build": "NODE_ENV=production ./node_modules/.bin/webpack --colors --progress",
+    "build": "NODE_ENV=production ./node_modules/.bin/webpack --config ./config/webpack.config.js",
     "postinstall": "npm run build",
     "test": "./node_modules/.bin/eslint . && ./node_modules/.bin/jscs ."
   },
@@ -49,7 +49,7 @@
     "lodash": "^4.17.2",
     "morgan": "^1.7.0",
     "node-gyp": "^3.4.0",
-    "node-sass": "^3.11.1",
+    "node-sass": "^3.13.0",
     "normalize.css": "^5.0.0",
     "postcss-loader": "^1.1.0",
     "pretty-error": "^2.0.2",
