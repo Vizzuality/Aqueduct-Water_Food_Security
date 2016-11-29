@@ -7,7 +7,9 @@ class AppPage extends React.Component {
     return (
       <div className="l-content -fullscreen">
         <Sidebar />
-        <Map />
+        <div className="l-map -fullscreen">
+          <Map />
+        </div>
       </div>
     );
   }

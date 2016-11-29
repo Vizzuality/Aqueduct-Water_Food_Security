@@ -2,6 +2,7 @@
 import { dispatch } from 'main';
 import { setMapLocation } from 'actions/map';
 import { setTotalFilters } from 'actions/filters';
+import { setCompareCountries } from 'actions/compare';
 
 export function onEnterAppPage({ location }, replace, done) {
   const map = {
@@ -16,5 +17,11 @@ export function onEnterAppPage({ location }, replace, done) {
 
   dispatch(setMapLocation(map));
   dispatch(setTotalFilters(filters));
+  done();
+}
+
+export function onEnterComparePage({ location }, replace, done) {
+  const countries = location.query.countries ? location.query.countries.split(',') : [];
+  dispatch(setCompareCountries(countries));
   done();
 }

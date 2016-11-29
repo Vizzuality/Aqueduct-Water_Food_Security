@@ -5,9 +5,10 @@ import { IndexRoute, Router, Route } from 'react-router';
 // Components
 import App from 'containers/pages/App';
 import AppPage from 'containers/pages/AppPage';
+import ComparePage from 'containers/pages/ComparePage';
 
 // Routing actions
-import { onEnterAppPage } from 'actions/route';
+import { onEnterAppPage, onEnterComparePage } from 'actions/route';
 
 const Routes = ({ history }) => (
   <Router history={history}>
@@ -15,6 +16,9 @@ const Routes = ({ history }) => (
       <IndexRoute component={AppPage} onEnter={onEnterAppPage} />
       <Route path="posts">
         <IndexRoute component={AppPage} />
+      </Route>
+      <Route path="compare">
+        <IndexRoute component={ComparePage} onEnter={onEnterComparePage} />
       </Route>
     </Route>
   </Router>
