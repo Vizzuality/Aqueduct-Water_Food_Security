@@ -1,14 +1,13 @@
 import React from 'react';
-import Header from '../common/Header';
+import Header from 'components/header/Header';
 
 class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="l-app">
         <Header />
         {this.props.children}
-        <div>Footer</div>
       </div>
     );
   }

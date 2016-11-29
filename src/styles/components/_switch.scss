@@ -1,0 +1,48 @@
+.c-switch {
+  display: flex;
+
+  > * {
+    display: block;
+    margin: 0 0 0 5px;
+    cursor: pointer;
+
+    &:first-child {
+      margin: 0;
+    }
+  }
+
+  .switch-label {
+    font-weight: 700;
+    color: $color-deactivate;
+
+    &:hover {
+      color: lighten($color-deactivate, 12.5%);
+    }
+
+    &.-selected {
+      color: white;
+    }
+  }
+
+  .switch-element {
+    width: 40px;
+    height: 20px;
+    border-radius: 20px;
+    background: $color-tertiary;
+
+    span {
+      display: block;
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: $color-alternative;
+      border-radius: 50%;
+      margin: 2px;
+      transition: transform $animation-time $ease-in-out-sine;
+    }
+
+    // Switch position
+    &.-left > span { transform: translate(0,0); }
+    &.-right > span { transform: translate(20px,0); }
+  }
+}

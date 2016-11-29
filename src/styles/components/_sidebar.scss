@@ -1,0 +1,54 @@
+.c-sidebar {
+  background: $color-gray;
+  color: white;
+  transform: translate(calc(-100% + #{$space-sidebar}),0);
+  transition: all $animation-time-2 $ease-in-out-sine;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.25) inset;
+
+  &.-opened {
+    transform: translate(0,0);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  }
+
+
+  // Toggle button
+  .btn-toggle {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: $space-sidebar;
+    height: 100%;
+    fill: $color-primary;
+    cursor: pointer;
+    background: rgba($color-secondary, .4);
+    transition: background $animation-time-2 $ease-in-out-sine;
+
+    svg {
+      margin: 13px 0 0;
+      transform: rotate(180deg);
+      transition: all $animation-time $ease-in-out-sine,
+                  transform $animation-time-2 $ease-in-out-sine $animation-time;
+
+    }
+
+    &:hover {
+      // background: rgba($color-secondary, .8);
+      svg {
+        fill: darken($color-primary, 10%);
+      }
+    }
+
+    &.-opened {
+      height: $space-sidebar;
+      background: rgba($color-secondary, 0);
+      box-shadow: none;
+
+      svg {
+        transform: rotate(0deg);
+      }
+    }
+  }
+}

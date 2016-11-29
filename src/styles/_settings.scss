@@ -1,0 +1,58 @@
+// Max widths
+$max-width-main: 1280px;
+$max-width-sidebar: 700px;
+
+// Colors
+$color-primary: #03a1de;
+$color-secondary: #3559a1;
+$color-tertiary: #294d94;
+$color-alternative: #fbbc22;
+$color-error: #d25766;
+$color-gray: #eff3f8;
+$color-widgets: #4a596a; // Bad name
+$color-white: white;
+$color-deactivate: #a6c3ff;
+
+// Font families
+$font-family-roboto: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+// Fonts sizes
+$font-size-extra-small:   10px;
+$font-size-small:   12px;
+$font-size-default: 14px;
+$font-size-medium:  20px;
+
+// Grays
+$gray-3: #333;
+$gray-5: #555;
+$gray-7: #777;
+$gray-9: #999;
+
+// Borders
+$border-color-1: #eee;
+
+// Margins & Paddings
+$space-1: 8px;
+$space-sidebar: 50px;
+
+// Modal
+$modal-max-width: 750px;
+
+// Times
+$animation-time: .16s;
+$animation-time-2: .24s;
+$animation-time-3: .5s;
+$animation-time-4: .75s;
+
+// Eases
+$ease-in-cubic: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+$ease-out-cubic: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+$ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1.000);
+
+$ease-in-sine: cubic-bezier(0.470, 0.000, 0.745, 0.715);
+$ease-out-sine: cubic-bezier(0.390, 0.575, 0.565, 1.000);
+$ease-in-out-sine: cubic-bezier(0.445, 0.050, 0.550, 0.950);
+
+// Leaflet
+$zoom-margin-top: 10px;
+$zoom-margin-right: 10px;
