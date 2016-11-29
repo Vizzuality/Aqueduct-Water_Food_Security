@@ -2,22 +2,35 @@ import React from 'react';
 import Spinner from 'components/ui/Spinner';
 
 export default class Tooltip extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    // Bindings
+    this.onMouseMove = this.onMouseMove.bind(this);
+  }
+
   componentWillReceiveProps({ tooltip }) {
-    const self = this;
-    function onMouseMove({ clientX, clientY }) {
-      self.props.tooltipSetPosition({ x: clientX, y: clientY });
-      self.clientX = clientX;
-      self.clientY = clientY;
-    }
     if (tooltip.follow && tooltip.follow !== this.props.tooltip.follow) {
-      document.addEventListener('mousemove', onMouseMove);
-    } else {
-      document.removeEventListener('mousemove', onMouseMove);
+      document.addEventListener('mousemove', this.onMouseMove);
+    }
+    const stopFollowing = tooltip.follow === false && tooltip.follow !== this.props.tooltip.follow;
+    const isEmpty = !tooltip.opened && tooltip.opened !== this.props.tooltip.opened;
+    if (stopFollowing || isEmpty) {
+      document.removeEventListener('mousemove', this.onMouseMove);
     }
   }
+
+  onMouseMove({ clientX, clientY }) {
+    this.props.tooltipSetPosition({ x: clientX, y: clientY });
+    this.clientX = clientX;
+    this.clientY = clientY;
+  }
+
   getContent() {
     return this.props.tooltip.children ? <this.props.tooltip.children {...this.props.tooltip.childrenProps} /> : null;
   }
+
   getStyles() {
     const topPos = this.props.tooltip.position.y;
     const bottomPos = this.props.tooltip.position.x;
@@ -29,6 +42,7 @@ export default class Tooltip extends React.Component {
       left: `${bottomPos}px`
     };
   }
+
   render() {
     return (
       <div ref={(node) => { this.el = node; }} className={`c-tooltip ${this.props.tooltip.opened ? '' : '-hidden'}`} style={this.getStyles()}>
@@ -43,5 +57,6 @@ export default class Tooltip extends React.Component {
 
 Tooltip.propTypes = {
   // STORE
-  tooltip: React.PropTypes.object
+  tooltip: React.PropTypes.object,
+  tooltipSetPosition: React.PropTypes.func
 };

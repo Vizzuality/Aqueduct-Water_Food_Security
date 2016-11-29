@@ -26,11 +26,15 @@ export function toggleTooltip(opened, opts = {}) {
       }
       if (opts.follow) {
         dispatch({ type: TOOLTIP_FLOLLOW_TOGGLE, payload: true });
+        // User has to move the mouse to receive the position
         document.addEventListener('mousemove', function onMouseMove({ clientX, clientY }) {
           dispatch({ type: TOOLTIP_SET_POSITION, payload: { x: clientX, y: clientY } });
           document.removeEventListener('mousemove', onMouseMove);
         });
       }
+    }
+    if (!opened) {
+      dispatch({ type: TOOLTIP_FLOLLOW_TOGGLE, payload: false });
     }
     dispatch({ type: TOOLTIP_TOGGLE, payload: opened });
   };
