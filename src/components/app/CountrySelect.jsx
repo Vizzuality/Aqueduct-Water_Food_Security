@@ -4,8 +4,6 @@ import { SimpleSelect } from 'react-selectize';
 export default function CountrySelect(props) {
   const countryList = props.countries.list.map((item) => {
     return { value: item.id, label: item.properties.name };
-  }).sort((a, b) => {
-    return a.label > b.label ? 1 : -1;
   });
 
   let parsedProps = {
