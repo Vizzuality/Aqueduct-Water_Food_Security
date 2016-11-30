@@ -8,10 +8,8 @@ export default function CountrySelect(props) {
     return a.label > b.label ? 1 : -1;
   });
 
-
-  const parsedProps = {
+  let parsedProps = {
     options: countryList,
-    onValueChange: props.onValueChange,
     placeholder: 'Select a Country'
   };
 
@@ -24,6 +22,8 @@ export default function CountrySelect(props) {
     parsedProps.defaultValue = { value: defaultValueCountry.id, label: defaultValueCountry.properties.name };
   }
 
+  // Include all other SimpleSelect props
+  parsedProps = Object.assign({}, props, parsedProps);
 
   return <SimpleSelect {...parsedProps} />;
 }
@@ -31,6 +31,5 @@ export default function CountrySelect(props) {
 CountrySelect.propTypes = {
   defaultValue: React.PropTypes.string,
   value: React.PropTypes.string,
-  countries: React.PropTypes.object,
-  onValueChange: React.PropTypes.func
+  countries: React.PropTypes.object
 };
