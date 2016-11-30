@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import CompareItem from 'components/compare/CompareItem';
+import CompareItem from 'containers/compare/CompareItem';
 
 export default class CompareList extends React.Component {
 
@@ -10,7 +10,7 @@ export default class CompareList extends React.Component {
     for (let i = 0; i < this.props.items; i += 1) {
       items.push(
         <div key={i} className="small-6">
-          <CompareItem country={this.props.countries[i]} />
+          <CompareItem country={this.props.countries[i]} index={i} />
         </div>
       );
     }

@@ -3,6 +3,10 @@ import Header from 'components/header/Header';
 
 class App extends React.Component {
 
+  componentWillMount() {
+    this.props.getCountries();
+  }
+
   render() {
     return (
       <div className="l-app">
@@ -14,7 +18,8 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  children: React.PropTypes.object
+  children: React.PropTypes.object,
+  getCountries: React.PropTypes.func
 };
 
 

@@ -1,8 +1,8 @@
 import {
-  COMPARE_SET_COUNTRIES
+   COMPARE_SET_COUNTRY
 }
 from 'constants/compare';
 
-export function setCompareCountries(countries) {
-  return dispatch => dispatch({ type: COMPARE_SET_COUNTRIES, payload: countries });
+export function setCompareCountry(country) {
+  return dispatch => dispatch({ type: COMPARE_SET_COUNTRY, payload: country });
 }

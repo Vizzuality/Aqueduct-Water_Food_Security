@@ -3,8 +3,7 @@ import React from 'react';
 import RadioGroup from 'components/ui/RadioGroup';
 import Switch from 'components/ui/Switch';
 import FiltersLayers from 'components/app/FiltersLayers';
-import CountriesSelect from 'components/app/CountriesSelect';
-import countryList from 'data/countries';
+import CountrySelect from 'containers/app/CountrySelect';
 
 const predictionOptions = [
   { value: 'optimistic', label: 'Optimistic' },
@@ -44,15 +43,12 @@ class Filters extends React.Component {
     const current = this.props.filters.scope;
     const currentFilters = this.props.filters[this.props.filters.scope];
 
-    // Select default value
-    const countrySelected = countryList.find(x => x.value === currentFilters.iso);
-
     return (
       <div className="c-filters-tabs-content">
         {(current === 'country') ?
           <div className="filters-section">
-            <CountriesSelect
-              value={countrySelected}
+            <CountrySelect
+              value={currentFilters.iso}
               onValueChange={(selected) => {
                 this.triggerChange(selected || { value: null }, 'iso');
               }}
@@ -92,6 +88,7 @@ class Filters extends React.Component {
 }
 
 Filters.propTypes = {
+  countries: React.PropTypes.object,
   filters: React.PropTypes.object,
   datasets: React.PropTypes.object,
   triggerChange: React.PropTypes.func
