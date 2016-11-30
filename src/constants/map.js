@@ -4,5 +4,6 @@ export const MAP_CONFIG = {
   latLng: {
     lat: 52,
     lng: 7
-  }
+  },
+  zoomControl: true
 };

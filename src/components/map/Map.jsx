@@ -8,23 +8,36 @@ import { MAP_CONFIG } from 'constants/map';
 class Map extends React.Component {
 
   componentDidMount() {
-    this.map = L.map('map', {
+    this.map = L.map(this.mapNode, {
       minZoom: MAP_CONFIG.minZoom,
-      zoom: this.props.map.zoom,
-      center: [this.props.map.latLng.lat, this.props.map.latLng.lng],
+      zoom: this.props.mapConfig.zoom,
+      zoomControl: isNaN(this.props.mapConfig.zoomControl) ? MAP_CONFIG.zoomControl : this.props.mapConfig.zoomControl,
+      center: [this.props.mapConfig.latLng.lat, this.props.mapConfig.latLng.lng],
       detectRetina: true
     });
 
+    if (this.props.mapConfig.fitOn) {
+      this.fitMap(this.props.mapConfig.fitOn);
+    }
+
     this.map.attributionControl.addAttribution('&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>');
-    this.map.zoomControl.setPosition('topright');
+    this.map.zoomControl && this.map.zoomControl.setPosition('topright');
     this.tileLayer = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}')
                       .addTo(this.map)
                       .setZIndex(0);
 
-    // Listen to leaflet events
-    this.addMapEventListeners();
-    // Set map params on route loading
-    this.props.setMapParams(this.getMapParams());
+    if (this.props.setMapParams) {
+      // Listen to leaflet events
+      this.addMapEventListeners();
+      // Set map params on route loading
+      this.props.setMapParams(this.getMapParams());
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (JSON.stringify(this.props.mapConfig.fitOn) !== JSON.stringify(nextProps.mapConfig.fitOn)) {
+      this.fitMap(nextProps.mapConfig.fitOn);
+    }
   }
 
   // TODO: update with real check
@@ -35,9 +48,10 @@ class Map extends React.Component {
   componentWillUnmount() {
     // Remember to remove the listeners before removing the map
     // or they will stay in memory
-    this.removeMapEventListeners();
+    this.props.setMapParams && this.removeMapEventListeners();
     this.map.remove();
   }
+
 
   // GETTERS
   getMapParams() {
@@ -46,6 +60,11 @@ class Map extends React.Component {
       latLng: this.map.getCenter()
     };
     return params;
+  }
+
+  fitMap(geoJson) {
+    const geojsonLayer = L.geoJson(geoJson);
+    this.map.fitBounds(geojsonLayer.getBounds());
   }
 
   // MAP LISTENERS
@@ -66,14 +85,14 @@ class Map extends React.Component {
   // RENDER
   render() {
     return (
-      <div id={'map'} className="c-map" />
+      <div ref={(node) => { this.mapNode = node; }} className="c-map" />
     );
   }
 }
 
 Map.propTypes = {
   // STORE
-  map: React.PropTypes.object,
+  mapConfig: React.PropTypes.object,
   // ACTIONS
   setMapParams: React.PropTypes.func
 };
