@@ -1,6 +1,6 @@
 import React from 'react';
-import CountrySelect from 'containers/app/CountrySelect';
-import Map from 'containers/map/CompareMap';
+import CountrySelect from 'containers/countries/CountrySelect';
+import Map from 'components/map/Map';
 
 export default class CompareItem extends React.Component {
 

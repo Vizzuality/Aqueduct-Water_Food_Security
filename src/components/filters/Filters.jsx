@@ -1,6 +1,6 @@
 import React from 'react';
-import FiltersTabs from 'components/app/FiltersTabs';
-import FiltersTabsContent from 'components/app/FiltersTabsContent';
+import FiltersTabs from 'components/filters/FiltersTabs';
+import FiltersTabsContent from 'components/filters/FiltersTabsContent';
 
 class Filters extends React.Component {
 

@@ -2,7 +2,7 @@ import React from 'react';
 import Icon from 'components/ui/Icon';
 
 // Components
-import Filters from 'containers/app/Filters';
+import Filters from 'containers/filters/Filters';
 import WidgetList from 'containers/widgets/WidgetList';
 
 export default class Sidebar extends React.Component {

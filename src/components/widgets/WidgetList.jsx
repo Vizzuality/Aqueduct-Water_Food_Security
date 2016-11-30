@@ -11,10 +11,6 @@ export default class WidgetList extends React.Component {
     };
   }
 
-  componentWillMount() {
-    this.props.getDatasets();
-  }
-
   // Return a array of Widget components
   getWidgets() {
     const widgetList = [];

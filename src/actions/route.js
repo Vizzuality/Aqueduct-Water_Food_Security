@@ -4,7 +4,7 @@ import { setMapLocation } from 'actions/map';
 import { setTotalFilters } from 'actions/filters';
 import { setCompareCountry } from 'actions/compare';
 
-export function onEnterAppPage({ location }, replace, done) {
+export function onEnterMapPage({ location }, replace, done) {
   const map = {
     zoom: +location.query.zoom,
     latLng: {

@@ -4,6 +4,7 @@ import Header from 'components/header/Header';
 class App extends React.Component {
 
   componentWillMount() {
+    this.props.getDatasets();
     this.props.getCountries();
   }
 
@@ -19,7 +20,8 @@ class App extends React.Component {
 
 App.propTypes = {
   children: React.PropTypes.object,
-  getCountries: React.PropTypes.func
+  getCountries: React.PropTypes.func,
+  getDatasets: React.PropTypes.func
 };
 
 
