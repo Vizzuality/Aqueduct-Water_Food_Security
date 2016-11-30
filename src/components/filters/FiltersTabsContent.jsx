@@ -2,8 +2,8 @@ import React from 'react';
 
 import RadioGroup from 'components/ui/RadioGroup';
 import Switch from 'components/ui/Switch';
-import FiltersLayers from 'components/app/FiltersLayers';
-import CountrySelect from 'containers/app/CountrySelect';
+import FiltersLayers from 'components/filters/FiltersLayers';
+import CountrySelect from 'containers/countries/CountrySelect';
 
 const predictionOptions = [
   { value: 'optimistic', label: 'Optimistic' },

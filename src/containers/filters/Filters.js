@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Filters from 'components/app/Filters';
+import Filters from 'components/filters/Filters';
 import { setFilters, setScopeFilter } from 'actions/filters';
 import { updateMapUrl } from 'actions/url';
 
