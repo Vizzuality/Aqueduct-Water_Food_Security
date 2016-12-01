@@ -4,7 +4,8 @@ import {
 from 'constants/compare';
 
 const initialState = {
-  countries: []
+  countries: [],
+  datasets: []
 };
 
 export default function (state = initialState, action) {

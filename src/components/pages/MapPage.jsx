@@ -2,20 +2,18 @@ import React from 'react';
 import Sidebar from 'components/ui/Sidebar';
 import Map from 'containers/map/Map';
 
-class AppPage extends React.Component {
+class MapPage extends React.Component {
   render() {
     return (
-      <div className="l-content -fullscreen">
+      <div className="l-map -fullscreen">
         <Sidebar />
-        <div className="l-map -fullscreen">
-          <Map />
-        </div>
+        <Map />
       </div>
     );
   }
 }
 
-AppPage.propTypes = {
+MapPage.propTypes = {
 };
 
-export default AppPage;
+export default MapPage;

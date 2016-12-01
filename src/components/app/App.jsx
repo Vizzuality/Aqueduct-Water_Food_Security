@@ -1,7 +1,9 @@
 import React from 'react';
 import Header from 'components/header/Header';
+import Modal from 'containers/ui/Modal';
+import Tooltip from 'containers/ui/Tooltip';
 
-class App extends React.Component {
+export default class App extends React.Component {
 
   componentWillMount() {
     this.props.getDatasets();
@@ -12,7 +14,11 @@ class App extends React.Component {
     return (
       <div className="l-app">
         <Header />
-        {this.props.children}
+        <main role="main" className="l-main l-content">
+          {this.props.children}
+        </main>
+        <Modal />
+        <Tooltip />
       </div>
     );
   }
@@ -23,6 +29,3 @@ App.propTypes = {
   getCountries: React.PropTypes.func,
   getDatasets: React.PropTypes.func
 };
-
-
-export default App;
