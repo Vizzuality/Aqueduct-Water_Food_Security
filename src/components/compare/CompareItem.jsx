@@ -1,5 +1,6 @@
 import React from 'react';
 import CountrySelect from 'containers/countries/CountrySelect';
+import WidgetList from 'components/widgets/WidgetList';
 import Map from 'components/map/Map';
 
 export default class CompareItem extends React.Component {
@@ -36,7 +37,7 @@ export default class CompareItem extends React.Component {
           {this.props.country ? <Map mapConfig={mapConfig} /> : this.getEmptyPlaceholder()}
         </section>
         <section className="compareitem-widgets">
-          <h2>Widgets</h2>
+          <WidgetList datasets={this.props.datasets} datasetsActive={this.props.datasets} />
         </section>
       </div>
     );
@@ -47,5 +48,6 @@ CompareItem.propTypes = {
   countries: React.PropTypes.object,
   country: React.PropTypes.string,
   setCompareCountry: React.PropTypes.func,
-  index: React.PropTypes.number
+  index: React.PropTypes.number,
+  datasets: React.PropTypes.object
 };

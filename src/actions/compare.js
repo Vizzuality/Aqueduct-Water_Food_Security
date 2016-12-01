@@ -1,5 +1,6 @@
 import {
-   COMPARE_SET_COUNTRY
+   COMPARE_SET_COUNTRY,
+   COMPARE_SET_DATASETS
 }
 from 'constants/compare';
 

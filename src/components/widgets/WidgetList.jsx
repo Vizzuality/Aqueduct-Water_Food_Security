@@ -49,7 +49,5 @@ WidgetList.propTypes = {
   // STORE
   datasets: React.PropTypes.object,
   // SELECTOR
-  datasetsActive: React.PropTypes.object,
-  // ACTIONS
-  getDatasets: React.PropTypes.func
+  datasetsActive: React.PropTypes.object
 };
