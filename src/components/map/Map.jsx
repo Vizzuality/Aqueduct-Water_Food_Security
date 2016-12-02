@@ -4,6 +4,7 @@
 import React from 'react';
 import L from 'leaflet';
 import { MAP_CONFIG } from 'constants/map';
+import LayerManager from 'utils/interfaces/LayerManager';
 
 class Map extends React.Component {
 
@@ -19,6 +20,8 @@ class Map extends React.Component {
     if (this.props.mapConfig.fitOn) {
       this.fitMap(this.props.mapConfig.fitOn);
     }
+
+    this.layerManager = new LayerManager(this.map /* , onLayerAddedOK, onLayerAddedKO */);
 
     this.map.attributionControl.addAttribution('&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>');
     this.map.zoomControl && this.map.zoomControl.setPosition('topright');
