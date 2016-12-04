@@ -99,6 +99,7 @@
   .dropdown-menu {
     margin-top: 10px;
     max-height: 435px;
+    z-index: 9999;
     .option-wrapper {
       background: $color-white;
     }

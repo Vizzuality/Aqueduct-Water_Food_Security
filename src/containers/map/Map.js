@@ -1,16 +1,16 @@
 import { connect } from 'react-redux';
 import Map from 'components/map/Map';
 import { setMapLocation } from 'actions/map';
-import { updateUrl } from 'actions/url';
+import { updateMapUrl } from 'actions/url';
 
 const mapStateToProps = ({ map }) => ({
-  map
+  mapConfig: map
 });
 
 const mapDispatchToProps = dispatch => ({
   setMapParams: (params) => {
     dispatch(setMapLocation(params));
-    dispatch(updateUrl());
+    dispatch(updateMapUrl());
   }
 });
 

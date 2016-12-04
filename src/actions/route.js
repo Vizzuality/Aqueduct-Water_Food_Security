@@ -2,8 +2,9 @@
 import { dispatch } from 'main';
 import { setMapLocation } from 'actions/map';
 import { setTotalFilters } from 'actions/filters';
+import { setCompareCountry } from 'actions/compare';
 
-export function onEnterAppPage({ location }, replace, done) {
+export function onEnterMapPage({ location }, replace, done) {
   const map = {
     zoom: +location.query.zoom,
     latLng: {
@@ -16,5 +17,13 @@ export function onEnterAppPage({ location }, replace, done) {
 
   dispatch(setMapLocation(map));
   dispatch(setTotalFilters(filters));
+  done();
+}
+
+export function onEnterComparePage({ location }, replace, done) {
+  const countries = location.query.countries ? location.query.countries.split(',') : [];
+  countries.forEach((c, i) => {
+    dispatch(setCompareCountry({ iso: c, index: i }));
+  });
   done();
 }

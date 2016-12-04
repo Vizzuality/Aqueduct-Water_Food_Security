@@ -11,10 +11,6 @@ export default class WidgetList extends React.Component {
     };
   }
 
-  componentWillMount() {
-    this.props.getDatasets();
-  }
-
   // Return a array of Widget components
   getWidgets() {
     const widgetList = [];
@@ -53,7 +49,5 @@ WidgetList.propTypes = {
   // STORE
   datasets: React.PropTypes.object,
   // SELECTOR
-  datasetsActive: React.PropTypes.object,
-  // ACTIONS
-  getDatasets: React.PropTypes.func
+  datasetsActive: React.PropTypes.object
 };

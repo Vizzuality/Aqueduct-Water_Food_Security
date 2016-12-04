@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
-import Filters from 'components/app/Filters';
+import Filters from 'components/filters/Filters';
 import { setFilters, setScopeFilter } from 'actions/filters';
-import { updateUrl } from 'actions/url';
+import { updateMapUrl } from 'actions/url';
 
 const mapStateToProps = ({ filters, datasets }) => ({
   filters,
@@ -11,12 +11,12 @@ const mapStateToProps = ({ filters, datasets }) => ({
 const mapDispatchToProps = dispatch => ({
   setFilters: (params) => {
     dispatch(setFilters(params));
-    dispatch(updateUrl());
+    dispatch(updateMapUrl());
   },
 
   setScopeFilter: (params) => {
     dispatch(setScopeFilter(params));
-    dispatch(updateUrl());
+    dispatch(updateMapUrl());
   }
 
 });

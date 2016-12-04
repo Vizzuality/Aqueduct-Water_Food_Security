@@ -32,8 +32,8 @@ class Header extends React.Component {
 
   render() {
     return (
-      <header className="l-header c-header">
-        <nav>
+      <header role="banner" className="l-header c-header">
+        <nav role="navigation">
           {/* LOGO */}
           <h1 className="c-header-logo">
             <Link to="/">Logo</Link>

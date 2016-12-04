@@ -2,7 +2,7 @@ import React from 'react';
 import Icon from 'components/ui/Icon';
 
 // Components
-import Filters from 'containers/app/Filters';
+import Filters from 'containers/filters/Filters';
 import WidgetList from 'containers/widgets/WidgetList';
 
 export default class Sidebar extends React.Component {
@@ -32,7 +32,7 @@ export default class Sidebar extends React.Component {
     const openedClass = (this.state.opened) ? '-opened' : '';
 
     return (
-      <div className={`l-sidebar c-sidebar ${openedClass}`}>
+      <aside className={`l-sidebar c-sidebar ${openedClass}`}>
         {/*
           Toggle button
           - I'm using a div instead of a button because I don't want that browser's styles interfere with it
@@ -50,7 +50,7 @@ export default class Sidebar extends React.Component {
         <div className="l-sidebar-content">
           <WidgetList />
         </div>
-      </div>
+      </aside>
     );
   }
 }
