@@ -1,0 +1,7 @@
+.c-accordion {
+  &.-closed {
+    .accordion-content {
+      display: none; 
+    }
+  }
+}
