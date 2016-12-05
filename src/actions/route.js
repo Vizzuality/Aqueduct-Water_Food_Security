@@ -13,10 +13,10 @@ export function onEnterMapPage({ location }, replace, done) {
     }
   };
 
-  const filters = location.query.filters ? JSON.parse(atob(location.query.filters)) : null;
+  // const filters = location.query.filters ? JSON.parse(atob(location.query.filters)) : null;
 
   dispatch(setMapLocation(map));
-  dispatch(setTotalFilters(filters));
+  // dispatch(setTotalFilters(filters));
   done();
 }
 

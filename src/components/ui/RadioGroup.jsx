@@ -26,6 +26,7 @@ class RadioGroup extends React.Component {
 
     return (
       <div className={`c-radio-box ${this.props.className}`}>
+        {this.props.title && <span className="radio-box-title">{this.props.title}</span>}
         {items.map((item, i) => {
           return (<Radio
             key={i}
@@ -43,6 +44,7 @@ class RadioGroup extends React.Component {
 
 RadioGroup.propTypes = {
   name: React.PropTypes.string,
+  title: React.PropTypes.string,
   selected: React.PropTypes.string,
   className: React.PropTypes.string,
   items: React.PropTypes.array,

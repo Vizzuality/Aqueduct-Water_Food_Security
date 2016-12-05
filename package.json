@@ -36,6 +36,7 @@
     "babel-preset-stage-2": "^6.11.0",
     "body-parser": "^1.15.2",
     "canvas": "^1.6.2",
+    "classnames": "^2.2.5",
     "css-loader": "^0.25.0",
     "dotenv": "^2.0.0",
     "eslint-import-resolver-webpack": "^0.7.0",

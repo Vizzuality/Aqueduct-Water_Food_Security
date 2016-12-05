@@ -7,12 +7,15 @@ const filters = state => state.filters;
 
 // Create a function to compare the current active datatasets and the current datasetsIds
 const getActiveDatasets = (_datasets, _filters) => {
-  const filtersActive = _filters[_filters.scope];
-  const listActive = _datasets.list.filter(
-    l => filtersActive.datasetsIds.indexOf(l.id) !== -1
-  );
+  // const filtersActive = _filters[_filters.scope];
+  // const listActive = _datasets.list.filter(
+  //   l => filtersActive.datasetsIds.indexOf(l.id) !== -1
+  // );
+  // return {
+  //   list: listActive
+  // };
   return {
-    list: listActive
+    list: []
   };
 };
 

@@ -1,0 +1,10 @@
+.c-segmented-ui {
+  display: flex;
+  list-style-type: none;
+}
+.segmented-ui-item {
+  flex-grow: 1;
+  &.-active {
+    background-color: red;
+  }
+}

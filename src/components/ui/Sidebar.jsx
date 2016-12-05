@@ -1,10 +1,6 @@
 import React from 'react';
 import Icon from 'components/ui/Icon';
 
-// Components
-import Filters from 'containers/filters/Filters';
-import WidgetList from 'containers/widgets/WidgetList';
-
 export default class Sidebar extends React.Component {
 
   constructor(props) {
@@ -41,14 +37,8 @@ export default class Sidebar extends React.Component {
           <Icon className="-medium" name="icon-arrow-left" />
         </div>
 
-        {/* Filters */}
-        <div className="l-filters">
-          <Filters />
-        </div>
-
-        {/* Widget List */}
-        <div className="l-sidebar-content">
-          <WidgetList />
+        <div className="sidebar-content">
+          {this.props.children}
         </div>
       </aside>
     );
@@ -56,4 +46,5 @@ export default class Sidebar extends React.Component {
 }
 
 Sidebar.propTypes = {
+  children: React.PropTypes.array
 };
