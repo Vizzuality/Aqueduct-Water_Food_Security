@@ -1,4 +1,5 @@
 import React from 'react';
+import Accordion from 'components/ui/Accordion';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
 const SortableItem = SortableElement(({ layer, index }) => { // eslint-disable-line
@@ -11,7 +12,7 @@ const SortableItem = SortableElement(({ layer, index }) => { // eslint-disable-l
 
 const SortableList = SortableContainer(({ items }) => { // eslint-disable-line
   return (
-    <ul className="c-legend">
+    <ul>
       {items.map((layer, index) =>
         <SortableItem
           key={index}
@@ -27,17 +28,22 @@ export default class Legend extends React.Component {
 
   render() {
     return (
-      <SortableList
-        axis="y"
-        lockAxis="y"
-        lockToContainerEdges
-        lockOffset="50%"
-        items={this.props.layers}
-      />
+      <div className={`c-legend ${this.props.className}`}>
+        <Accordion title="View legend">
+          <SortableList
+            axis="y"
+            lockAxis="y"
+            lockToContainerEdges
+            lockOffset="50%"
+            items={this.props.layers}
+          />
+        </Accordion>
+      </div>
     );
   }
 }
 
 Legend.propTypes = {
-  layers: React.PropTypes.array
+  layers: React.PropTypes.array,
+  className: React.PropTypes.string
 };
