@@ -65,7 +65,8 @@ const config = {
       fonts: 'src/fonts',
       main: 'src/main',
       reducers: 'src/reducers',
-      selectors: 'src/selectors'
+      selectors: 'src/selectors',
+      utils: 'src/utils'
     },
     extensions: ['', '.js', '.jsx', '.json', 'css', '.scss']
   },
