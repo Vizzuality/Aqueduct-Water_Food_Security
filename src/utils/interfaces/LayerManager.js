@@ -6,11 +6,11 @@ import L from 'leaflet';
 export default class LayerManager {
 
   // Constructor
-  constructor(map, onLayerAddedOK = null, onLayerAddedKO = null) {
+  constructor(map, onLayerAddedSuccess = null, onLayerAddedError = null) {
     this._map = map;
     this._mapLayers = {};
-    this._onLayerAddedOK = onLayerAddedOK;
-    this._onLayerAddedKO = onLayerAddedKO;
+    this._onLayerAddedSuccess = onLayerAddedSuccess;
+    this._onLayerAddedError = onLayerAddedError;
   }
 
   /*
@@ -66,7 +66,7 @@ export default class LayerManager {
       const eventName = (layerData.type === 'wms' ||
       layerData.type === 'tileLayer') ? 'tileload' : 'load';
       layer.on(eventName, () => {
-        this._onLayerAddedOK && this._onLayerAddedOK(layer);
+        this._onLayerAddedSuccess && this._onLayerAddedSuccess(layer);
       });
       if (zIndex) {
         layer.setZIndex(zIndex);
@@ -94,7 +94,7 @@ export default class LayerManager {
       }
       const newLayer = L.esri[layer.type](layerConfig);
       newLayer.on('load', () => {
-        this._onLayerAddedOK && this._onLayerAddedOK(layer);
+        this._onLayerAddedSuccess && this._onLayerAddedSuccess(layer);
         const layerElement = this._map.getPane('tilePane').lastChild;
         if (zIndex) {
           layerElement.style.zIndex = zIndex;
@@ -139,15 +139,15 @@ export default class LayerManager {
           this._mapLayers[layer.id] = L.tileLayer(tileUrl).addTo(this._map).setZIndex(zIndex);
         }
         this._mapLayers[layer.id].on('load', () => {
-          this._onLayerAddedOK && this._onLayerAddedOK(layer);
+          this._onLayerAddedSuccess && this._onLayerAddedSuccess(layer);
         });
         this._mapLayers[layer.id].on('tileerror', () => {
-          this._onLayerAddedKO && this._onLayerAddedKO(layer);
+          this._onLayerAddedError && this._onLayerAddedError(layer);
         });
       })
       .catch((err) => {
         console.error('Request failed', err);
-        this._onLayerAddedKO && this._onLayerAddedKO(layer);
+        this._onLayerAddedError && this._onLayerAddedError(layer);
       });
   }
 }
