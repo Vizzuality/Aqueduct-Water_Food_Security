@@ -28,11 +28,11 @@
   left: 0;
   height: 100%;
   width: 50%;
-  z-index: 2;
   max-width: $max-width-sidebar;
   display: flex;
   flex-direction: column;
   z-index: 999;
+  overflow: auto;
 
   .l-filters {
     position: relative;

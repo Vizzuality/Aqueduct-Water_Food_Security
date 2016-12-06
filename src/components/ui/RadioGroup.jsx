@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Radio from 'components/ui/Radio';
+import Checkbox from 'components/ui/Checkbox';
 
 class RadioGroup extends React.Component {
 
@@ -28,7 +28,7 @@ class RadioGroup extends React.Component {
       <div className={`c-radio-box ${this.props.className}`}>
         {this.props.title && <span className="radio-box-title">{this.props.title}</span>}
         {items.map((item, i) => {
-          return (<Radio
+          return (<Checkbox
             key={i}
             name={name}
             value={item.value}

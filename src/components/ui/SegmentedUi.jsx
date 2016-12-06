@@ -19,8 +19,11 @@ export default class SegmentedUi extends React.Component {
 
   getItems() {
     return this.props.items.map((item, index) => {
+      const cNames = classNames('segmented-ui-item', {
+        '-active': item.value === this.state.selected
+      });
       return (
-        <li key={index} className={classNames('segmented-ui-item', { '-active': item.value === this.state.selected })}>
+        <li key={index} className={cNames}>
           <button type="button" className="segmented-ui-btn" onClick={() => { this.onChange(item); }}>{item.label}</button>
         </li>
       );
@@ -28,8 +31,11 @@ export default class SegmentedUi extends React.Component {
   }
 
   render() {
+    const cNames = classNames('c-segmented-ui', {
+      [this.props.className]: this.props.className
+    });
     return (
-      <ul className="c-segmented-ui">
+      <ul className={cNames}>
         {this.getItems()}
       </ul>
     );
@@ -39,5 +45,6 @@ export default class SegmentedUi extends React.Component {
 SegmentedUi.propTypes = {
   items: React.PropTypes.array,
   selected: React.PropTypes.string,
+  className: React.PropTypes.string,
   onChange: React.PropTypes.func
 };

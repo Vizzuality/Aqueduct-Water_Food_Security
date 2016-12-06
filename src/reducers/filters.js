@@ -3,6 +3,7 @@ import {
 } from 'constants/filters';
 
 const initialState = {
+  crop: 'all',
   scope: 'global',            // {global|country}
   country: null,
   prediction: 'optimistic',     // {optimistic|pesimistic|business}

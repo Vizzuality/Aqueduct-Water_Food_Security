@@ -1,5 +1,8 @@
 // Override React selectize styles
 .react-selectize {
+  &.root-node {
+    width: 100%;
+  }
   &.open {
 
   }
@@ -141,4 +144,9 @@
       font-weight: 700;
     }
   }
+}
+
+.react-selectize-title {
+  color: $color-white;
+  font-size: $font-size-big;
 }
