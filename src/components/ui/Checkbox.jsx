@@ -1,4 +1,5 @@
 import React from 'react';
+import Icon from 'components/ui/Icon';
 
 class Checkbox extends React.Component {
 
@@ -30,7 +31,9 @@ class Checkbox extends React.Component {
           onChange={this.onChange}
         />
         <label htmlFor={`checkbox-${name}-${value}`}>
-          <span />
+          <span>
+            <Icon name="icon-checkbox" />
+          </span>
           {label}
         </label>
       </div>

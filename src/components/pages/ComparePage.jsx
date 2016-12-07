@@ -40,7 +40,7 @@ export default class ComparePage extends React.Component {
       <div>
         <div className="compare-filters">
           <div className="compare-filters-section">
-            <div className="row expanded">{this.getCountrySelects()}</div>
+            <div className="row">{this.getCountrySelects()}</div>
           </div>
           <div className="compare-filters-section">
             <Filters filters={this.props.compare.filters} setFilters={this.props.setFilters} />

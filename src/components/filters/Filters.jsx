@@ -31,7 +31,7 @@ export default class Filters extends React.Component {
         {/* Scope */}
         {this.props.withScope &&
           <div className="filters-lead">
-            <div className="row expanded">
+            <div className="row">
               <div className="small-12 column">
                 <SegmentedUi
                   className="-tabs"
@@ -45,7 +45,7 @@ export default class Filters extends React.Component {
         }
         {this.props.filters.scope === 'country' &&
           <div className="filters-section">
-            <div className="row expanded">
+            <div className="row">
               <div className="small-4 columns">
                 {/* Country */}
                 <CountrySelect
@@ -56,14 +56,14 @@ export default class Filters extends React.Component {
               <div className="small-8 columns">
                 {/* Compare */}
                 <Link className="filters-btn" to={this.props.filters.country ? `/compare?countries=${this.props.filters.country}` : '/compare'}>
-                  Compare country <Icon className="filters-btn-icon" name="icon-plus" />
+                  Compare country <Icon className="-big" name="icon-plus" />
                 </Link>
               </div>
             </div>
           </div>
         }
         <div className="filters-section">
-          <div className="row expanded filters-family">
+          <div className="row filters-family">
             <div className="small-4 columns">
               {/* Crops */}
               <span className="react-selectize-title">Crops</span>
@@ -95,7 +95,7 @@ export default class Filters extends React.Component {
               />
             </div>
           </div>
-          <div className="row expanded filters-family -push">
+          <div className="row filters-family -push">
             <div className="small-12 columns">
               <CheckboxGroup
                 items={irrigationOptions}
@@ -105,7 +105,7 @@ export default class Filters extends React.Component {
               />
             </div>
           </div>
-          <div className="row expanded filters-family">
+          <div className="row filters-family">
             <div className="small-4 columns">
               {/* Baseline */}
               <SimpleSelect

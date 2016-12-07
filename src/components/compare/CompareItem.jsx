@@ -8,8 +8,10 @@ export default class CompareItem extends React.Component {
   getEmptyPlaceholder() {
     return (
       <div className="country-placeholder">
-        <Icon name="icon-country-empty" />
-        <p>Choose a country first</p>
+        <div>
+          <Icon className="-huge country-placeholder-icon" name="icon-country_illustration" />
+          <p className="country-placeholder-text">Choose a country first</p>
+        </div>
       </div>
     );
   }

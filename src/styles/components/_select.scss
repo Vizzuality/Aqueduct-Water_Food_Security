@@ -2,6 +2,7 @@
 .react-selectize {
   &.root-node {
     width: 100%;
+    max-width: 180px;
   }
   &.open {
 
