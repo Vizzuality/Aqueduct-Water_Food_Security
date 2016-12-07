@@ -1,11 +1,12 @@
 import { connect } from 'react-redux';
 import ComparePage from 'components/pages/ComparePage';
-import { setCompareFilters } from 'actions/compare';
+import { setCompareFilters, setCompareCountry } from 'actions/compare';
 import { updateCompareUrl } from 'actions/url';
 
-const mapStateToProps = ({ compare, datasets }) => ({
+const mapStateToProps = ({ compare, datasets, countries }) => ({
   compare,
-  datasets
+  datasets,
+  countries
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -14,6 +15,10 @@ const mapDispatchToProps = dispatch => ({
     dispatch(updateCompareUrl());
   },
   updateCompareUrl: () => {
+    dispatch(updateCompareUrl());
+  },
+  setCompareCountry: (country) => {
+    dispatch(setCompareCountry(country));
     dispatch(updateCompareUrl());
   }
 });

@@ -1,0 +1,83 @@
+.c-checkbox {
+  label {
+    font-size: $font-size-big;
+    font-weight: 500;
+    display: block;
+    padding: 2px 0;
+    text-transform: none;
+    position: relative;
+    padding-left: 22px;
+    line-height: 1;
+    cursor: pointer;
+    width: auto;
+    top: 0;
+    left: 0;
+    transform: none;
+    text-align: left;
+    color: $color-deactivate;
+
+    &:hover {
+      color: lighten($color-deactivate, 12.5%);
+    }
+
+    span {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 14px;
+      height: 14px;
+      border: 1px solid $color-deactivate;
+      border-radius: 2px;
+      transform: translate(0,-50%);
+
+      &:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 8px;
+        height: 8px;
+        border-radius: 1px;
+        background: $color-alternative;
+        display: block;
+        transform: translate(-50%,-50%) scale(0);
+        transition: all $animation-time $ease-in-out-sine;
+      }
+    }
+  }
+
+  input[type=checkbox] {
+    display: none;
+  }
+
+  input[type=checkbox]:checked + label {
+    font-weight: 700;
+    color: $color-white;
+
+    span {
+      border-color: $color-alternative;
+      &:after {
+        transform: translate(-50%,-50%) scale(1);
+      }
+    }
+  }
+}
+
+.c-checkbox-box {
+  > * {
+    margin: 0 0 10px;
+    &:last-child {
+      margin: 0;
+    }
+  }
+
+  &.-inline {
+    display: flex;
+    > * {
+      margin: 0 ($space-1 * 2) 0 0;
+      &:last-child {
+        margin: 0;
+      }
+    }
+  }
+}

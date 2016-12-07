@@ -1,22 +1,27 @@
 .c-filters {
   background: $color-secondary;
-  padding: 40px 25px 36px 40px;
+}
 
-  .collapsed-wrapper {
-    background-color: $color-tertiary;
-    margin: -40px -25px 0 -40px;
-    padding: 0 25px 0 40px;
+.filters-lead {
+  background-color: $color-tertiary;
+  padding-left: 31px;
+}
+
+.filters-section {
+  border-bottom: 2px solid $color-tertiary;
+  padding: 20px 14px 20px 31px;
+  &:last-child {
+    border-bottom: 0;
   }
+}
 
-  .wrapper {
-    margin-bottom: 1.5rem;
+.filters-family {
+  margin-bottom: 25px;
+  &.-push {
+    margin-bottom: 40px;
   }
-
-  .section {
-    padding: 1.5rem 0;
-    &.-lead {
-      border-bottom: 2px solid $color-tertiary;
-    }
+  &:last-child {
+    margin-bottom: 0;
   }
 }
 

@@ -51,7 +51,7 @@ class CheckboxGroup extends React.Component {
 
   render() {
     return (
-      <div className={`c-checkbox-box ${this.props.className}`}>
+      <div className={`c-checkbox-box ${this.props.className ? this.props.className : ''}`}>
         {this.props.title && <span className="checkbox-box-title">{this.props.title}</span>}
         {this.getCheckbox()}
       </div>

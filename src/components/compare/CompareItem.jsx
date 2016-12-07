@@ -1,12 +1,17 @@
 import React from 'react';
-import CountrySelect from 'containers/countries/CountrySelect';
 import WidgetList from 'components/widgets/WidgetList';
 import Map from 'components/map/Map';
+import Icon from 'components/ui/Icon';
 
 export default class CompareItem extends React.Component {
 
   getEmptyPlaceholder() {
-    return <p>Choose a country first</p>;
+    return (
+      <div className="country-placeholder">
+        <Icon name="icon-country-empty" />
+        <p>Choose a country first</p>
+      </div>
+    );
   }
 
   render() {
@@ -20,19 +25,11 @@ export default class CompareItem extends React.Component {
       }
     };
     if (this.props.country) {
-      countrySelected = this.props.countries.list.find(c => c.id === this.props.country);
+      countrySelected = this.props.countryList.find(c => c.id === this.props.country);
       mapConfig.fitOn = countrySelected;
     }
     return (
       <div className="c-compareitem">
-        <section className="compareitem-filters">
-          <CountrySelect
-            defaultValue={this.props.country || null}
-            onValueChange={(selected) => {
-              selected && this.props.setCompareCountry({ index: this.props.index, iso: selected.value });
-            }}
-          />
-        </section>
         <section className="compareitem-map">
           {this.props.country ? <Map mapConfig={mapConfig} /> : this.getEmptyPlaceholder()}
         </section>
@@ -45,9 +42,7 @@ export default class CompareItem extends React.Component {
 }
 
 CompareItem.propTypes = {
-  countries: React.PropTypes.object,
+  countryList: React.PropTypes.array,
   country: React.PropTypes.string,
-  setCompareCountry: React.PropTypes.func,
-  index: React.PropTypes.number,
   datasets: React.PropTypes.object
 };

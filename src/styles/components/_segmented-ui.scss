@@ -60,7 +60,7 @@
 
       &.-active {
         .segmented-ui-btn {
-          background-color: $color-primary;
+          background-color: $color-tertiary;
           color: $color-white;
         }
       }
@@ -72,7 +72,7 @@
       display: block;
       width: 100%;
       text-align: center;
-      padding: 2px 7px;
+      padding: 7px 15px;
       background-color: $color-secondary;
       transition: background-color linear .2s;
       &:hover {

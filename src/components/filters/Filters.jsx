@@ -27,52 +27,40 @@ export default class Filters extends React.Component {
   render() {
     return (
       <div className="c-filters">
-        <div className="collapsed-wrapper">
-          {/* Scope */}
-          <SegmentedUi
-            className="-tabs"
-            items={scopeOptions}
-            selected={this.props.filters.scope}
-            onChange={selected => this.updateFilters(selected.value, 'scope')}
-          />
-        </div>
-        {this.props.filters.scope === 'country' &&
-          <div className="row collapse-borders section -lead">
-            <div className="small-4 columns">
-              {/* Country */}
-              <CountrySelect
-                onValueChange={selected => this.updateFilters(selected && selected.value, 'country')}
-                defaultValue={this.props.filters.country !== 'null' ? this.props.filters.country : null}
-              />
-            </div>
-            <div className="small-8 columns">
-              {/* Compare */}
-              <Link className="filters-btn" to={this.props.filters.country ? `/compare?countries=${this.props.filters.country}` : '/compare'}>Compare countries</Link>
+        {/* Scope */}
+        {this.props.withScope &&
+          <div className="filters-lead">
+            <div className="row expanded">
+              <div className="small-12 column">
+                <SegmentedUi
+                  className="-tabs"
+                  items={scopeOptions}
+                  selected={this.props.filters.scope}
+                  onChange={selected => this.updateFilters(selected.value, 'scope')}
+                />
+              </div>
             </div>
           </div>
         }
-        <div className="section">
-          <div className="row collapse-borders wrapper">
-            <div className="small-4 columns">
-              {/* Baseline */}
-              <SimpleSelect
-                hideResetButton
-                options={baselineOptions}
-                defaultValue={baselineOptions.find(i => i.value === this.props.filters.baseline)}
-                onValueChange={selected => selected && this.updateFilters(selected.value, 'baseline')}
-              />
-            </div>
-            <div className="small-8 columns">
-              {/* Prediction */}
-              <SegmentedUi
-                className="-btn"
-                items={predictionOptions}
-                selected={this.props.filters.prediction}
-                onChange={selected => this.updateFilters(selected.value, 'prediction')}
-              />
+        {this.props.filters.scope === 'country' &&
+          <div className="filters-section">
+            <div className="row expanded">
+              <div className="small-4 columns">
+                {/* Country */}
+                <CountrySelect
+                  onValueChange={selected => this.updateFilters(selected && selected.value, 'country')}
+                  defaultValue={this.props.filters.country !== 'null' ? this.props.filters.country : null}
+                />
+              </div>
+              <div className="small-8 columns">
+                {/* Compare */}
+                <Link className="filters-btn" to={this.props.filters.country ? `/compare?countries=${this.props.filters.country}` : '/compare'}>Compare countries</Link>
+              </div>
             </div>
           </div>
-          <div className="row collapse-borders wrapper">
+        }
+        <div className="filters-section">
+          <div className="row expanded filters-family">
             <div className="small-4 columns">
               {/* Crops */}
               <span className="react-selectize-title">Crops</span>
@@ -104,12 +92,33 @@ export default class Filters extends React.Component {
               />
             </div>
           </div>
-          <div className="row collapse-borders">
+          <div className="row expanded filters-family -push">
             <div className="small-12 columns">
               <CheckboxGroup
                 items={irrigationOptions}
                 onChange={selected => this.updateFilters(selected, 'irrigation')}
                 selected={this.props.filters.irrigation}
+                className="-inline"
+              />
+            </div>
+          </div>
+          <div className="row expanded filters-family">
+            <div className="small-4 columns">
+              {/* Baseline */}
+              <SimpleSelect
+                hideResetButton
+                options={baselineOptions}
+                defaultValue={baselineOptions.find(i => i.value === this.props.filters.baseline)}
+                onValueChange={selected => selected && this.updateFilters(selected.value, 'baseline')}
+              />
+            </div>
+            <div className="small-8 columns">
+              {/* Prediction */}
+              <SegmentedUi
+                className="-btn"
+                items={predictionOptions}
+                selected={this.props.filters.prediction}
+                onChange={selected => this.updateFilters(selected.value, 'prediction')}
               />
             </div>
           </div>
@@ -121,5 +130,6 @@ export default class Filters extends React.Component {
 
 Filters.propTypes = {
   setFilters: React.PropTypes.func,
-  filters: React.PropTypes.object
+  filters: React.PropTypes.object,
+  withScope: React.PropTypes.bool
 };

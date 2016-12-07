@@ -31,6 +31,7 @@ class Checkbox extends React.Component {
         />
         <label htmlFor={`checkbox-${name}-${value}`}>
           <span />
+          <Icon name="checkbox" />
           {label}
         </label>
       </div>
