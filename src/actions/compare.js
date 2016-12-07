@@ -8,6 +8,6 @@ export function setCompareCountry(country) {
   return dispatch => dispatch({ type: COMPARE_SET_COUNTRY, payload: country });
 }
 
-export function setFilters(filter) {
+export function setCompareFilters(filter) {
   return dispatch => dispatch({ type: COMPARE_SET_FILTER, payload: filter });
 }

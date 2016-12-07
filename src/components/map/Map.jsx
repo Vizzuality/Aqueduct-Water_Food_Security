@@ -32,8 +32,6 @@ class Map extends React.Component {
     if (this.props.setMapParams) {
       // Listen to leaflet events
       this.addMapEventListeners();
-      // Set map params on route loading
-      this.props.setMapParams(this.getMapParams());
     }
   }
 

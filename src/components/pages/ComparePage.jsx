@@ -5,6 +5,11 @@ import CompareList from 'components/compare/CompareList';
 import Filters from 'components/filters/Filters';
 
 export default class ComparePage extends React.Component {
+
+  componentWillMount() {
+    this.props.updateCompareUrl();
+  }
+
   render() {
     return (
       <div>
@@ -17,5 +22,7 @@ export default class ComparePage extends React.Component {
 
 ComparePage.propTypes = {
   compare: React.PropTypes.object,
-  datasets: React.PropTypes.object
+  datasets: React.PropTypes.object,
+  setFilters: React.PropTypes.func,
+  updateCompareUrl: React.PropTypes.func
 };

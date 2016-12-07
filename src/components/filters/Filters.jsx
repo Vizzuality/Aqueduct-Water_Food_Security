@@ -46,7 +46,7 @@ export default class Filters extends React.Component {
             </div>
             <div className="small-8 columns">
               {/* Compare */}
-              <Link className="filters-btn" to={`/compare?countries=${this.props.filters.country}`}>Compare countries</Link>
+              <Link className="filters-btn" to={this.props.filters.country ? `/compare?countries=${this.props.filters.country}` : '/compare'}>Compare countries</Link>
             </div>
           </div>
         }

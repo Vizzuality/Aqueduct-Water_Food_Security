@@ -27,10 +27,19 @@ export function updateMapUrl() {
 export function updateCompareUrl() {
   return (dispatch, state) => {
     const { compare } = state();
+    const { baseline, country, crop, food, irrigation, prediction, scope, water } = compare.filters;
     const locationDescriptor = {
       pathname: '/compare',
       query: {
-        countries: compare.countries.join(',')
+        countries: compare.countries.join(','),
+        baseline,
+        country,
+        crop,
+        food,
+        irrigation: irrigation.join(','),
+        prediction,
+        scope,
+        water
       }
     };
     dispatch(push(locationDescriptor));

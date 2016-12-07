@@ -2,7 +2,7 @@
 import { dispatch } from 'main';
 import { setMapLocation } from 'actions/map';
 import { setFilters } from 'actions/filters';
-import { setCompareCountry } from 'actions/compare';
+import { setCompareCountry, setCompareFilters } from 'actions/compare';
 
 export function onEnterMapPage({ location }, replace, done) {
   // if there are map position params
@@ -39,9 +39,29 @@ export function onEnterMapPage({ location }, replace, done) {
 }
 
 export function onEnterComparePage({ location }, replace, done) {
-  const countries = location.query.countries ? location.query.countries.split(',') : [];
-  countries.forEach((c, i) => {
-    dispatch(setCompareCountry({ iso: c, index: i }));
-  });
+  // If thera are country params
+  if (location.query.countries) {
+    const countries = location.query.countries.split(',');
+    countries.forEach((c, i) => {
+      dispatch(setCompareCountry({ iso: c, index: i }));
+    });
+  }
+  // If there are filter params
+  if (location.query.crop) {
+    const { crop, scope, country, prediction, baseline, food, water } = location.query;
+    let { irrigation } = location.query;
+    irrigation = irrigation.split(',');
+    const filtersObj = {
+      crop,
+      scope,
+      country,
+      prediction,
+      baseline,
+      food,
+      water,
+      irrigation
+    };
+    dispatch(setCompareFilters(filtersObj));
+  }
   done();
 }
