@@ -6,6 +6,13 @@
 .compare-filters {
   background-color: $color-secondary;
 }
+.compare-filters-section {
+  padding: 25px 40px;
+  border-bottom: 2px solid $color-tertiary;
+  &:last-child {
+    border-bottom: 0;
+  }
+}
 .compareitem-map {
   height: 430px;
 }

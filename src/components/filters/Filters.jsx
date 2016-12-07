@@ -3,6 +3,7 @@ import React from 'react';
 import CheckboxGroup from 'components/ui/CheckboxGroup';
 import SegmentedUi from 'components/ui/SegmentedUi';
 import CountrySelect from 'containers/countries/CountrySelect';
+import Icon from 'components/ui/Icon';
 import { SimpleSelect } from 'react-selectize';
 import { Link } from 'react-router';
 // Options
@@ -26,7 +27,7 @@ export default class Filters extends React.Component {
 
   render() {
     return (
-      <div className="c-filters">
+      <div className={`c-filters ${this.props.className ? this.props.className : ''}`}>
         {/* Scope */}
         {this.props.withScope &&
           <div className="filters-lead">
@@ -54,7 +55,9 @@ export default class Filters extends React.Component {
               </div>
               <div className="small-8 columns">
                 {/* Compare */}
-                <Link className="filters-btn" to={this.props.filters.country ? `/compare?countries=${this.props.filters.country}` : '/compare'}>Compare countries</Link>
+                <Link className="filters-btn" to={this.props.filters.country ? `/compare?countries=${this.props.filters.country}` : '/compare'}>
+                  Compare country <Icon className="filters-btn-icon" name="icon-plus" />
+                </Link>
               </div>
             </div>
           </div>
@@ -131,5 +134,6 @@ export default class Filters extends React.Component {
 Filters.propTypes = {
   setFilters: React.PropTypes.func,
   filters: React.PropTypes.object,
-  withScope: React.PropTypes.bool
+  withScope: React.PropTypes.bool,
+  className: React.PropTypes.string
 };

@@ -1,5 +1,11 @@
 .c-filters {
   background: $color-secondary;
+
+  &.-sidebar {
+    .filters-section {
+      padding: 20px 14px 20px 31px;
+    }
+  }
 }
 
 .filters-lead {
@@ -9,7 +15,6 @@
 
 .filters-section {
   border-bottom: 2px solid $color-tertiary;
-  padding: 20px 14px 20px 31px;
   &:last-child {
     border-bottom: 0;
   }
@@ -31,12 +36,17 @@
   font-size: $font-size-big;
   font-weight: 500;
   color: $color-white;
-  padding: 16px 27px;
-  background-color: $color-secondary;
-  border-radius: 3px;
-  border: 1px solid $color-deactivate;
-  transition: background-color .2s linear;
   &:hover {
-    background-color: lighten($color-secondary, 10);
+
   }
+}
+
+.filters-btn-icon {
+  fill: white;
+  stroke: white;
+  border: 1px solid $color-soft;
+  border-radius: 50%;
+  padding: 9px;
+  vertical-align: middle;
+  margin-left: 14px;
 }

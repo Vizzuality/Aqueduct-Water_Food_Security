@@ -26,7 +26,7 @@ class MapPage extends React.Component {
         <Sidebar>
           {/* Filters */}
           <div className="l-filters">
-            <Filters filters={this.props.filters} setFilters={this.props.setFilters} withScope />
+            <Filters className="-sidebar" filters={this.props.filters} setFilters={this.props.setFilters} withScope />
           </div>
           {/* Widget List */}
           <div className="l-sidebar-content">
