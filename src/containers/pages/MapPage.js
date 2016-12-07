@@ -1,10 +1,13 @@
 import { connect } from 'react-redux';
 import MapPage from 'components/pages/MapPage';
 import { setMapLocation } from 'actions/map';
+import { setFilters } from 'actions/filters';
 import { updateMapUrl } from 'actions/url';
 
-const mapStateToProps = ({ map }) => ({
-  mapConfig: map
+const mapStateToProps = ({ map, filters, countries }) => ({
+  mapConfig: map,
+  filters,
+  countries
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -13,6 +16,10 @@ const mapDispatchToProps = dispatch => ({
     dispatch(updateMapUrl());
   },
   updateMapUrl: () => {
+    dispatch(updateMapUrl());
+  },
+  setFilters: (params) => {
+    dispatch(setFilters(params));
     dispatch(updateMapUrl());
   }
 });

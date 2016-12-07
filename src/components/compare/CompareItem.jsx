@@ -21,7 +21,7 @@ export default class CompareItem extends React.Component {
     };
     if (this.props.country) {
       countrySelected = this.props.countries.list.find(c => c.id === this.props.country);
-      mapConfig.fitOn = countrySelected.geometry;
+      mapConfig.fitOn = countrySelected;
     }
     return (
       <div className="c-compareitem">

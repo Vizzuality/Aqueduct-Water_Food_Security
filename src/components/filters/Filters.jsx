@@ -28,6 +28,7 @@ export default class Filters extends React.Component {
     return (
       <div className="c-filters">
         <div className="collapsed-wrapper">
+          {/* Scope */}
           <SegmentedUi
             className="-tabs"
             items={scopeOptions}

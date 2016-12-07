@@ -20,9 +20,6 @@ export default class CompareList extends React.Component {
   render() {
     return (
       <div className="c-comparelist">
-        <div className="comparelist-header">
-          <span>Back</span>
-        </div>
         <div className="comparelist-content">
           <div className="row expanded">
             {this.getItems()}
