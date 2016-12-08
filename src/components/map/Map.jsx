@@ -5,6 +5,7 @@ import React from 'react';
 import L from 'leaflet';
 import { MAP_CONFIG } from 'constants/map';
 import LayerManager from 'utils/interfaces/LayerManager';
+import Legend from 'components/legend/Legend';
 
 class Map extends React.Component {
 
@@ -87,8 +88,19 @@ class Map extends React.Component {
 
   // RENDER
   render() {
+    const layers = [
+      { title: 'Layer title' },
+      { title: 'Layer title' },
+      { title: 'Layer title' },
+      { title: 'Layer title' },
+      { title: 'Layer title' },
+      { title: 'Layer title' }
+    ];
     return (
-      <div ref={(node) => { this.mapNode = node; }} className="c-map" />
+      <div className="c-map">
+        <div ref={(node) => { this.mapNode = node; }} className="map-leaflet" />
+        <Legend className="-map" layers={layers} />
+      </div>
     );
   }
 }
