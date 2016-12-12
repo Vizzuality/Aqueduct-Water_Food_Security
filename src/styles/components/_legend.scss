@@ -1,0 +1,10 @@
+.c-legend {
+  &.-map {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    background-color: white;
+    z-index: 999;
+  }
+}
+.c-legend-item {}
