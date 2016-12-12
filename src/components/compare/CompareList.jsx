@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import CompareItem from 'containers/compare/CompareItem';
+import CompareItem from 'components/compare/CompareItem';
 
 export default class CompareList extends React.Component {
 
@@ -10,7 +10,7 @@ export default class CompareList extends React.Component {
     for (let i = 0; i < this.props.items; i += 1) {
       items.push(
         <div key={i} className="small-6">
-          <CompareItem country={this.props.countries[i]} datasets={this.props.datasets} index={i} />
+          <CompareItem datasets={this.props.datasets} index={i} country={this.props.countries[i]} countryList={this.props.countryList} />
         </div>
       );
     }
@@ -20,9 +20,6 @@ export default class CompareList extends React.Component {
   render() {
     return (
       <div className="c-comparelist">
-        <div className="comparelist-header">
-          <span>Back</span>
-        </div>
         <div className="comparelist-content">
           <div className="row expanded">
             {this.getItems()}
@@ -35,6 +32,7 @@ export default class CompareList extends React.Component {
 
 CompareList.propTypes = {
   countries: React.PropTypes.array,
+  countryList: React.PropTypes.array,
   datasets: React.PropTypes.object,
   items: React.PropTypes.number
 };

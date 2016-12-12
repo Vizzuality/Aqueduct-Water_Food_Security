@@ -1,0 +1,83 @@
+.c-segmented-ui {
+  display: flex;
+  list-style-type: none;
+
+  .segmented-ui-item {
+    flex-grow: 1;
+  }
+
+  // Component themes
+  // Tabs theme
+  &.-tabs {
+    .segmented-ui-item {
+      flex-grow: 0;
+      border: 0;
+      margin-right: 28px;
+      &:last-child {
+        margin-right: 0;
+      }
+      &.-active {
+        .segmented-ui-btn {
+          border-bottom-color: $color-primary;
+        }
+      }
+    }
+    .segmented-ui-btn {
+      font-size: $font-size-default;
+      transition: all .2s linear;
+      border-bottom: 3px solid;
+      border-bottom-color: transparent;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 14px 0;
+      font-weight: 500;
+      color: $color-white;
+      &:hover {
+        color: white;
+      }
+    }
+  }
+
+  // Btn theme
+  &.-btn {
+    border: 1px solid $color-deactivate;
+    border-radius: 3px;
+    .segmented-ui-item {
+      border-right: 1px solid $color-deactivate;
+
+      &:first-child {
+        .segmented-ui-btn {
+          border-radius: 3px 0 0 3px;
+        }
+      }
+
+      &:last-child {
+        border-right: 0;
+        .segmented-ui-btn {
+          border-radius: 0 3px 3px 0;
+        }
+      }
+
+      &.-active {
+        .segmented-ui-btn {
+          background-color: $color-tertiary;
+          color: $color-white;
+        }
+      }
+    }
+    .segmented-ui-btn {
+      color: $color-deactivate;
+      font-size: $font-size-big;
+      font-weight: 500;
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 7px 15px;
+      background-color: $color-secondary;
+      transition: background-color linear .2s;
+      &:hover {
+        background-color: lighten($color-secondary, 10);
+      }
+    }
+  }
+}
