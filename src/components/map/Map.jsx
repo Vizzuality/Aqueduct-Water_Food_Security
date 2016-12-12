@@ -19,12 +19,12 @@ class Map extends React.Component {
     });
 
     if (this.props.mapConfig.fitOn) {
-      this.fitMap(this.props.mapConfig.fitOn);
+      this.fitMap(this.props.mapConfig.fitOn.geometry);
     }
 
     this.layerManager = new LayerManager(this.map /* , onLayerAddedOK, onLayerAddedKO */);
 
-    this.map.attributionControl.addAttribution('&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>');
+    this.map.attributionControl.addAttribution('&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>');
     this.map.zoomControl && this.map.zoomControl.setPosition('topright');
     this.tileLayer = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}')
                       .addTo(this.map)
@@ -33,14 +33,12 @@ class Map extends React.Component {
     if (this.props.setMapParams) {
       // Listen to leaflet events
       this.addMapEventListeners();
-      // Set map params on route loading
-      this.props.setMapParams(this.getMapParams());
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (JSON.stringify(this.props.mapConfig.fitOn) !== JSON.stringify(nextProps.mapConfig.fitOn)) {
-      this.fitMap(nextProps.mapConfig.fitOn);
+    if ((nextProps.mapConfig.fitOn && !this.props.mapConfig.fitOn) || (this.props.mapConfig.fitOn && this.props.mapConfig.fitOn.id !== nextProps.mapConfig.fitOn.id)) {
+      this.fitMap(nextProps.mapConfig.fitOn.geometry);
     }
   }
 
