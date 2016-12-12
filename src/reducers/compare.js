@@ -14,7 +14,7 @@ const initialState = {
     baseline: 'current',
     food: 'production',         // {production|demand|trade}
     water: 'water-risk',        // {water-risk|ground}
-    irrigation: ['irrigated']   // {irrigated|rainfed}, one value at least
+    irrigation: ['irrigated', 'rainfed']   // {irrigated|rainfed}, one value at least
   }
 };
 

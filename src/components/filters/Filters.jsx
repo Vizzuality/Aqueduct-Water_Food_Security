@@ -56,14 +56,14 @@ export default class Filters extends React.Component {
               <div className="small-8 columns">
                 {/* Compare */}
                 <Link className="filters-btn" to={this.props.filters.country ? `/compare?countries=${this.props.filters.country}` : '/compare'}>
-                  Compare country <Icon className="-big" name="icon-plus" />
+                  Compare country <Icon className="-big filters-btn-icon" name="icon-plus" />
                 </Link>
               </div>
             </div>
           </div>
         }
         <div className="filters-section">
-          <div className="row filters-family">
+          <div className="row filters-group">
             <div className="small-4 columns">
               {/* Crops */}
               <span className="react-selectize-title">Crops</span>
@@ -95,7 +95,7 @@ export default class Filters extends React.Component {
               />
             </div>
           </div>
-          <div className="row filters-family -push">
+          <div className="row filters-group -push">
             <div className="small-12 columns">
               <CheckboxGroup
                 items={irrigationOptions}
@@ -105,7 +105,7 @@ export default class Filters extends React.Component {
               />
             </div>
           </div>
-          <div className="row filters-family">
+          <div className="row filters-group">
             <div className="small-4 columns">
               {/* Baseline */}
               <SimpleSelect

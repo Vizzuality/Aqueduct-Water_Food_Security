@@ -20,13 +20,13 @@ class WidgetButtons extends React.Component {
       <ul className="c-widget-buttons">
         <li>
           <button data-action="share" className="widget-button" onClick={this.triggerAction}>
-            <Icon name="icon-cross" />
+            <Icon name="icon-download" />
           </button>
         </li>
 
         <li>
           <button data-action="download" className="widget-button" onClick={this.triggerAction}>
-            <Icon name="icon-menu" />
+            <Icon name="icon-info" />
           </button>
         </li>
       </ul>
