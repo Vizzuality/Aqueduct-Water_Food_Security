@@ -5,6 +5,7 @@ import { setFilters } from 'actions/filters';
 import { setCompareCountry, setCompareFilters } from 'actions/compare';
 
 export function onEnterMapPage({ location }, replace, done) {
+  // TODO: this check is not as consistent as it should be. The right solution could be grouping al filter params inside "map"
   // if there are map position params
   if (location.query.zoom) {
     const map = {
@@ -17,6 +18,7 @@ export function onEnterMapPage({ location }, replace, done) {
     dispatch(setMapLocation(map));
   }
 
+  // TODO: this check is not as consistent as it should be. The right solution could be grouping al filter params inside "filters"
   // if there are filter params
   if (location.query.crop) {
     const { crop, scope, country, prediction, baseline, food, water } = location.query;
