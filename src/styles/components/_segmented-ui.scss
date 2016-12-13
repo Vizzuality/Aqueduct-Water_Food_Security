@@ -13,27 +13,44 @@
       flex-grow: 0;
       border: 0;
       margin-right: 28px;
+
       &:last-child {
         margin-right: 0;
       }
+
       &.-active {
         .segmented-ui-btn {
-          border-bottom-color: $color-primary;
+          &:after {
+            width: 100%;
+          }
         }
       }
     }
+
     .segmented-ui-btn {
+      position: relative;
       font-size: $font-size-default;
       transition: all .2s linear;
-      border-bottom: 3px solid;
-      border-bottom-color: transparent;
       text-transform: uppercase;
       letter-spacing: 1px;
       padding: 14px 0;
       font-weight: 500;
       color: $color-white;
+
+      &:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0%;
+        height: 3px;
+        background: $color-primary;
+        transform: translate(-50%,0);
+        transition: all $animation-time $ease-in-out-cubic;
+      }
+
       &:hover {
-        color: white;
+        color: darken($color-white, 10%);
       }
     }
   }
@@ -42,6 +59,7 @@
   &.-btn {
     border: 1px solid $color-deactivate;
     border-radius: 3px;
+
     .segmented-ui-item {
       border-right: 1px solid $color-deactivate;
 
@@ -53,6 +71,7 @@
 
       &:last-child {
         border-right: 0;
+
         .segmented-ui-btn {
           border-radius: 0 3px 3px 0;
         }
@@ -65,6 +84,7 @@
         }
       }
     }
+
     .segmented-ui-btn {
       color: $color-deactivate;
       font-size: $font-size-big;
@@ -74,7 +94,8 @@
       text-align: center;
       padding: 7px 15px;
       background-color: $color-secondary;
-      transition: background-color linear .2s;
+      transition: background-color linear $animation-time;
+
       &:hover {
         background-color: lighten($color-secondary, 10);
       }
