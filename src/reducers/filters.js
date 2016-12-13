@@ -6,30 +6,12 @@ const initialState = {
   crop: 'all',
   scope: 'global',
   country: null,
-  scenario: '24',
-  year: 'bs',
-  food: 'production',
-  water: 'ws',
+  scenario: 'optimistic',
+  year: 'baseline',
+  food: 'xxx',
+  water: 'xxx',
   irrigation: ['irrigated', 'rainfed']
 };
-
-function getQuery({ crop, scope, country, scenario, year, food, water, irrigation }) {
-
-  // Water query: {indicator code}{year code}{scenario code}{data type code}{sufix}
-  // Food query: ???
-
-  const indicator = water;
-  const dataType = 'c';
-  const sufix = 'r';
-  const _scenario = year === 'baseline' ? '00' : scenario;
-
-  return {
-    query: {
-      water: `${indicator}${year}${_scenario}${dataType}${sufix}`,
-      food: ''
-    }
-  };
-}
 
 export default function (state = initialState, action) {
   switch (action.type) {

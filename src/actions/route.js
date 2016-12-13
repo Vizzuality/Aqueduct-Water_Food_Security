@@ -20,19 +20,18 @@ export function onEnterMapPage({ location }, replace, done) {
 
   // TODO: this check is not as consistent as it should be. The right solution could be grouping all filter params inside "filters"
   // if there are filter params
+  // I really don't like this...
   if (location.query.crop) {
-    const { crop, scope, country, scenario, baseline, food, water } = location.query;
-    let { irrigation } = location.query;
-    irrigation = irrigation.split(',');
+    const { crop, country, food, irrigation, scope, scenario, year, water } = location.query;
     const filtersObj = {
-      crop,
-      scope,
       country,
-      scenario,
-      baseline,
+      crop,
       food,
-      water,
-      irrigation
+      irrigation: (irrigation) ? irrigation.split(',') : undefined,
+      scope,
+      scenario,
+      year,
+      water
     };
     dispatch(setFilters(filtersObj));
   }

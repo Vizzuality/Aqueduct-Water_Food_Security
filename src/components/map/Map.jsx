@@ -3,6 +3,8 @@
 
 import React from 'react';
 import L from 'leaflet';
+import isEqual from 'lodash/isEqual';
+
 import { MAP_CONFIG } from 'constants/map';
 import LayerManager from 'utils/layers/LayerManager';
 import Legend from 'components/legend/Legend';
@@ -35,8 +37,7 @@ class Map extends React.Component {
       this.addMapEventListeners();
     }
 
-    // TODO: hardcoding this
-    this.layerManager.addLayer({
+    this.addLayer({
       id: 5,
       provider: 'marker',
       layerConfig: {
@@ -49,6 +50,19 @@ class Map extends React.Component {
   componentWillReceiveProps(nextProps) {
     if ((nextProps.mapConfig.fitOn && !this.props.mapConfig.fitOn) || (this.props.mapConfig.fitOn && this.props.mapConfig.fitOn.id !== nextProps.mapConfig.fitOn.id)) {
       this.fitMap(nextProps.mapConfig.fitOn.geometry);
+    }
+
+    if (!isEqual(nextProps.filters, this.props.filters)) {
+      // we need to control the loading of layers or abort the request
+      this.removeLayers();
+      this.addLayer({
+        id: 5,
+        provider: 'marker',
+        layerConfig: {
+          body: {},
+          type: 'bubble'
+        }
+      });
     }
   }
 
@@ -111,11 +125,26 @@ class Map extends React.Component {
       </div>
     );
   }
+
+  // Layer methods
+  addLayer(layer) {
+    this.layerManager.addLayer(layer, this.props.filters);
+  }
+
+  removeLayer(layer) {
+    this.layerManager.removeLayer(layer.id);
+  }
+
+  removeLayers() {
+    this.layerManager.removeLayers();
+  }
+
 }
 
 Map.propTypes = {
   // STORE
   mapConfig: React.PropTypes.object,
+  filters: React.PropTypes.object,
   // ACTIONS
   setMapParams: React.PropTypes.func
 };

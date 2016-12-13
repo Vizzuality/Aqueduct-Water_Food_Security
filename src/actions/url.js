@@ -14,7 +14,7 @@ export function updateMapUrl() {
         country,
         crop,
         food,
-        irrigation: irrigation.join(','),
+        irrigation: (irrigation) ? irrigation.join(',') : undefined,
         scenario,
         scope,
         water

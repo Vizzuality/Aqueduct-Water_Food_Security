@@ -3,11 +3,11 @@ import layerSpec from 'utils/layers/layer_spec.json';
 
 export const SET_FILTERS = 'SET_FILTERS';
 
-// Filter ui values
+// Filter values
 export const scenarioOptions = [
-  { value: '24', label: 'Optimistic' },
-  { value: '28', label: 'Pesimistic' },
-  { value: '38', label: 'Business as usual' }
+  { value: 'optimistic', label: 'Optimistic' },
+  { value: 'pesimistic', label: 'Pesimistic' },
+  { value: 'business', label: 'Business as usual' }
 ];
 
 export const foodOptions = filter(layerSpec, { category: 'food' }).map((layer) => {
@@ -30,10 +30,11 @@ export const scopeOptions = [
 ];
 
 export const yearOptions = [
-  { value: 'bs', label: 'Baseline (current)' },
-  { value: '20', label: '2020' },
-  { value: '30', label: '2030' },
-  { value: '40', label: '2040' }
+  { value: 'baseline', label: 'Baseline (current)' },
+  { value: '2020', label: '2020' },
+  { value: '2030', label: '2030' },
+  { value: '2040', label: '2040' },
+  { value: '2050', label: '2050' }
 ];
 
 export const cropOptions = [
