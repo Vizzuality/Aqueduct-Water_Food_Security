@@ -3,6 +3,8 @@
 
 import L from 'leaflet';
 
+import BubbleLayer from 'utils/interfaces/markers/BubbleLayer';
+
 export default class LayerManager {
 
   // Constructor
@@ -20,7 +22,8 @@ export default class LayerManager {
     const method = {
       leaflet: this._addLeafletLayer,
       arcgis: this._addEsriLayer,
-      cartodb: this._addCartoLayer
+      cartodb: this._addCartoLayer,
+      marker: this._addMarkerLayer
     }[layer.provider];
 
     return method && method.call(this, layer, opts);
@@ -34,6 +37,45 @@ export default class LayerManager {
   /*
     Private methods
   */
+  _addMarkerLayer(layerSpec) {
+    const layer = layerSpec.layerConfig;
+    layer.id = layerSpec.id;
+
+    switch (layer.type) {
+      case 'bubble': {
+        const sql = "with r as (SELECT iso, value, commodity FROM combined01_prepared where   impactparameter='Food Demand' and year= 2020 and scenario='SSP2-GFDL') select geom, jsonb_object_agg(commodity, value) properties from (SELECT st_asgeojson(st_centroid(the_geom)) geom,  commodity, value FROM impact_regions_159 t inner join  r on new_region=iso) c group by geom";
+        // const request = new Request(`https://${layer.account}.cartodb.com/api/v1/map`, {
+        const request = new Request(`https://wri-01.cartodb.com/api/v2/sql/?q=${sql}`, {
+          method: 'GET'
+        });
+
+        fetch(request)
+          .then((res) => {
+            if (!res.ok) {
+              const error = new Error(res.statusText);
+              error.response = res;
+              throw error;
+            }
+            return res.json();
+          })
+          .then((data) => {
+            this._mapLayers[layer.id] = new BubbleLayer(
+              this._convertToGeoJson(data.rows), {}
+            ).addTo(this._map);
+            this._onLayerAddedSuccess && this._onLayerAddedSuccess(layer);
+          })
+          .catch((err) => {
+            console.error('Request failed', err);
+            this._onLayerAddedError && this._onLayerAddedError(layer);
+          });
+        break;
+      }
+      default:
+        throw new Error('"type" specified in layer spec doesn`t exist');
+    }
+  }
+
+
   _addLeafletLayer(layerSpec, { zIndex }) {
     const layerData = layerSpec.layerConfig;
 
@@ -150,4 +192,15 @@ export default class LayerManager {
         this._onLayerAddedError && this._onLayerAddedError(layer);
       });
   }
+
+  static _convertToGeoJson(items) {
+    return items.map((item) => {
+      return {
+        type: 'Feature',
+        properties: JSON.parse(item.properties),
+        geometry: JSON.parse(item.geom)
+      };
+    });
+  }
+
 }

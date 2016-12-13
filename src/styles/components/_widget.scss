@@ -29,14 +29,14 @@
 
     h2 {
       font-size: $font-size-default;
-      color: $color-widgets;
+      color: $color-text-1;
       font-weight: 700;
       line-height: 1.25;
     }
 
     h3 {
       font-size: $font-size-extra-small;
-      color: $color-widgets;
+      color: $color-text-1;
       text-transform: uppercase;
       letter-spacing: 1px;
       font-weight: 500;
@@ -72,13 +72,13 @@
     align-items: flex-start;
 
     svg {
-      fill: $color-widgets;
+      fill: $color-text-1;
       display: block;
     }
 
     &:hover {
       svg {
-        fill: darken($color-widgets, 25%);
+        fill: darken($color-text-1, 25%);
       }
     }
   }
