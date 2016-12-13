@@ -36,7 +36,7 @@ export default class CompareItem extends React.Component {
           {this.props.country ? <Map mapConfig={mapConfig} /> : this.getEmptyPlaceholder()}
         </section>
         <section className="compareitem-widgets">
-          <WidgetList datasets={this.props.datasets} datasetsActive={this.props.datasets} />
+          <WidgetList loading={this.props.loading} widgetsActive={this.props.widgetsActive} />
         </section>
       </div>
     );
@@ -46,5 +46,6 @@ export default class CompareItem extends React.Component {
 CompareItem.propTypes = {
   countryList: React.PropTypes.array,
   country: React.PropTypes.string,
-  datasets: React.PropTypes.object
+  loading: React.PropTypes.bool,
+  widgetsActive: React.PropTypes.array
 };

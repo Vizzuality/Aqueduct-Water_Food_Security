@@ -4,10 +4,9 @@ import { setMapLocation } from 'actions/map';
 import { setFilters } from 'actions/filters';
 import { updateMapUrl } from 'actions/url';
 
-const mapStateToProps = ({ map, filters, layers, countries }) => ({
+const mapStateToProps = ({ map, filters, countries }) => ({
   mapConfig: map,
   filters,
-  layers,
   countries
 });
 

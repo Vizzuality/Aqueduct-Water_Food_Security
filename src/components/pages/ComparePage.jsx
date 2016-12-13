@@ -46,7 +46,7 @@ export default class ComparePage extends React.Component {
             <Filters filters={this.props.filters} setFilters={this.props.setFilters} />
           </div>
         </div>
-        <CompareList countryList={this.props.countries.list} countries={this.props.compare.countries} datasets={this.props.datasets} items={this.state.items} />
+        <CompareList countryList={this.props.countries.list} countries={this.props.compare.countries} loading={this.props.loading} widgetsActive={this.props.widgetsActive} items={this.state.items} />
       </div>
     );
   }
@@ -54,10 +54,11 @@ export default class ComparePage extends React.Component {
 
 ComparePage.propTypes = {
   compare: React.PropTypes.object,
-  datasets: React.PropTypes.object,
+  loading: React.PropTypes.bool,
   countries: React.PropTypes.object,
   filters: React.PropTypes.object,
   setFilters: React.PropTypes.func,
   updateCompareUrl: React.PropTypes.func,
-  setCompareCountry: React.PropTypes.func
+  setCompareCountry: React.PropTypes.func,
+  widgetsActive: React.PropTypes.array
 };
