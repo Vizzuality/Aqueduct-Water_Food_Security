@@ -1,6 +1,7 @@
 /* eslint import/no-unresolved: 0 */
 /* eslint import/extensions: 0 */
 import L from 'leaflet';
+import find from 'lodash/find';
 import { format } from 'd3-format';
 
 /**
@@ -15,24 +16,21 @@ export default class BubbleLayer {
 
     return L.geoJson(data, {
       pointToLayer: (feature) => {
-        // If it doesn't have data, don't show it
-        // We should pass the current filters to see witch crop is selected instead of hardcoding it
-        const cropSelected = feature.properties.Rice;
-
-        if (!cropSelected) {
-          return null;
-        }
+        // This should be given by the current filters
+        const cropFilter = 'allcrops';
+        const crops = feature.properties.crops;
+        const cropSelected = find(crops, { slug: cropFilter });
 
         // Options
         const options = {
           location: feature.geometry.coordinates,
           className: 'c-marker-bubble',
-          size: this._getSize(cropSelected),
+          size: this._getSize(cropSelected.value),
           data: feature.properties
         };
 
         // Marker && infowindow html
-        const divHtmlIcon = this._setMarkerHtml(cropSelected);
+        const divHtmlIcon = this._setMarkerHtml(cropSelected.value);
         const divHtmlInfowindow = this._setInfowindowHtml(options.data);
 
         const marker = L.marker(options.location.reverse(), {
@@ -75,10 +73,9 @@ export default class BubbleLayer {
   }
 
   _setInfowindowHtml(properties) {
-    console.info(properties);
     return (`
       <div class="c-infowindow -no-iteraction">
-        <h3>Country name</h3>
+        <h3>${properties.country}</h3>
       </div>`
     );
   }

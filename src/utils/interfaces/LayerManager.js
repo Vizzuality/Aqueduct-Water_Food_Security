@@ -44,7 +44,7 @@ export default class LayerManager {
     switch (layer.type) {
       case 'bubble': {
         // Get the sql from the current layer instead of hardcoding it
-        const sql = "with r as (SELECT iso, value, commodity FROM combined01_prepared where   impactparameter='Food Demand' and year= 2020 and scenario='SSP2-GFDL') select geom, jsonb_object_agg(commodity, value) properties from (SELECT st_asgeojson(st_centroid(the_geom)) geom,  commodity, value FROM impact_regions_159 t inner join  r on new_region=iso) c group by geom";
+        const sql = "with s as (SELECT iso, region, value, commodity FROM combined01_prepared where  impactparameter='Food Demand' and year= 2020 and scenario='SSP2-GFDL' and iso is not null ), t as (SELECT iso, region, sum(value) as value FROM s group by iso, region), r as (select iso, region, value, 'allCrops' commodity from t union all select * from s), d as (select json_agg(crop) crops, region, geometry from (SELECT st_asgeojson(st_centroid(the_geom))  as geometry,  json_build_object('name',commodity,'slug',lower(commodity),'value', value) crop, region FROM impact_regions_159 t inner join  r on new_region=iso) c group by geometry, region) select json_build_object('type','FeatureCollection','features',json_agg(json_build_object('geometry',cast(geometry as json),'properties', json_build_object('crops',crops,'country',region),'type','Feature'))) as data from d";
         const request = new Request(`https://wri-01.cartodb.com/api/v2/sql/?q=${sql}`, {
           method: 'GET'
         });
@@ -59,8 +59,9 @@ export default class LayerManager {
             return res.json();
           })
           .then((data) => {
+            const geojson = data.rows[0].data.features;
             this._mapLayers[layer.id] = new BubbleLayer(
-              this._convertToGeoJson(data.rows), {}
+              geojson, {}
             ).addTo(this._map);
             this._onLayerAddedSuccess && this._onLayerAddedSuccess(layer);
           })
@@ -192,19 +193,4 @@ export default class LayerManager {
         this._onLayerAddedError && this._onLayerAddedError(layer);
       });
   }
-
-
-  // STATIC methods
-  // - _convertToGeoJson
-  // This function should be unnecessary if the response from the query is done well
-  _convertToGeoJson(items) {
-    return items.map((item) => {
-      return {
-        type: 'Feature',
-        properties: JSON.parse(item.properties),
-        geometry: JSON.parse(item.geom)
-      };
-    });
-  }
-
 }
