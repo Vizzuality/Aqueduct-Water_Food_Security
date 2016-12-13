@@ -8,7 +8,7 @@ import getActiveWidgets from 'selectors/widgets_active';
 const mapStateToProps = state => ({
   compare: state.compare,
   filters: state.filters,
-  datasets: state.datasets,
+  loding: state.datasets.loading,
   countries: state.countries,
   widgetsActive: getActiveWidgets(state)
 });
