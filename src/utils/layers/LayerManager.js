@@ -3,7 +3,7 @@
 
 import L from 'leaflet';
 
-import BubbleLayer from 'utils/interfaces/markers/BubbleLayer';
+import BubbleLayer from 'utils/layers/markers/BubbleLayer';
 
 export default class LayerManager {
 

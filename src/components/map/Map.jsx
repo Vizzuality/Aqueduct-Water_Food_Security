@@ -4,7 +4,7 @@
 import React from 'react';
 import L from 'leaflet';
 import { MAP_CONFIG } from 'constants/map';
-import LayerManager from 'utils/interfaces/LayerManager';
+import LayerManager from 'utils/layers/LayerManager';
 import Legend from 'components/legend/Legend';
 
 class Map extends React.Component {
