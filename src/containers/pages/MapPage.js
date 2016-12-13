@@ -3,11 +3,14 @@ import MapPage from 'components/pages/MapPage';
 import { setMapLocation } from 'actions/map';
 import { setFilters } from 'actions/filters';
 import { updateMapUrl } from 'actions/url';
+import getActiveLayers from 'selectors/layers_active';
 
-const mapStateToProps = ({ map, filters, countries }) => ({
-  mapConfig: map,
-  filters,
-  countries
+const mapStateToProps = state => ({
+  mapConfig: state.map,
+  filters: state.filters,
+  layers: state.layers,
+  layersActive: getActiveLayers(state),
+  countries: state.countries
 });
 
 const mapDispatchToProps = dispatch => ({
