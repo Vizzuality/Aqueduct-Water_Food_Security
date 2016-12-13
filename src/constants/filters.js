@@ -2,9 +2,9 @@ export const SET_FILTERS = 'SET_FILTERS';
 
 // Filter ui values
 export const scenarioOptions = [
-  { value: 'ssp2 rcp45', label: 'Optimistic' },
-  { value: 'ssp3 rcp85', label: 'Pesimistic' },
-  { value: 'ssp2 rcp85', label: 'Business as usual' }
+  { value: '24', label: 'Optimistic' },
+  { value: '28', label: 'Pesimistic' },
+  { value: '38', label: 'Business as usual' }
 ];
 export const foodOptions = [
   { value: 'production', label: 'Production' },
@@ -12,8 +12,8 @@ export const foodOptions = [
   { value: 'trade', label: 'Trade' }
 ];
 export const waterOptions = [
-  { value: 'water-risk', label: 'Water riks layer' },
-  { value: 'ground', label: 'Ground layer' }
+  { value: 'ws', label: 'Water riks layer' },
+  { value: 'sv', label: 'Ground layer' }
 ];
 export const scopeOptions = [
   { value: 'global', label: 'Global' },
