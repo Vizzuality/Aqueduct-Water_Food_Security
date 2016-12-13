@@ -30,7 +30,7 @@ export default function (state = initialState, action) {
   switch (action.type) {
     case SET_FILTERS: {
       const filters = Object.assign({}, state, action.payload);
-      return Object.assign({}, state, getQuery(filters));
+      return Object.assign({}, state, action.payload, getQuery(filters));
     }
     default:
       return state;

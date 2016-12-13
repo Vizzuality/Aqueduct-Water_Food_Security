@@ -2,7 +2,7 @@
 import { dispatch } from 'main';
 import { setMapLocation } from 'actions/map';
 import { setFilters } from 'actions/filters';
-import { setCompareCountry, setCompareFilters } from 'actions/compare';
+import { setCompareCountry } from 'actions/compare';
 
 export function onEnterMapPage({ location }, replace, done) {
   // TODO: this check is not as consistent as it should be. The right solution could be grouping al filter params inside "map"
@@ -50,12 +50,12 @@ export function onEnterComparePage({ location }, replace, done) {
   }
   // If there are filter params
   if (location.query.crop) {
-    const { crop, scope, country, prediction, baseline, food, water } = location.query;
+    const { crop, country, prediction, baseline, food, water } = location.query;
     let { irrigation } = location.query;
     irrigation = irrigation.split(',');
     const filtersObj = {
       crop,
-      scope,
+      scope: 'global',
       country,
       prediction,
       baseline,
@@ -63,7 +63,7 @@ export function onEnterComparePage({ location }, replace, done) {
       water,
       irrigation
     };
-    dispatch(setCompareFilters(filtersObj));
+    dispatch(setFilters(filtersObj));
   }
   done();
 }
