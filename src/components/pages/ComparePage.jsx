@@ -43,7 +43,7 @@ export default class ComparePage extends React.Component {
             <div className="row">{this.getCountrySelects()}</div>
           </div>
           <div className="compare-filters-section">
-            <Filters filters={this.props.compare.filters} setFilters={this.props.setFilters} />
+            <Filters filters={this.props.filters} setFilters={this.props.setFilters} />
           </div>
         </div>
         <CompareList countryList={this.props.countries.list} countries={this.props.compare.countries} datasets={this.props.datasets} items={this.state.items} />
@@ -56,6 +56,7 @@ ComparePage.propTypes = {
   compare: React.PropTypes.object,
   datasets: React.PropTypes.object,
   countries: React.PropTypes.object,
+  filters: React.PropTypes.object,
   setFilters: React.PropTypes.func,
   updateCompareUrl: React.PropTypes.func,
   setCompareCountry: React.PropTypes.func

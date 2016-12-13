@@ -1,21 +1,12 @@
 import {
-   COMPARE_SET_COUNTRY,
-   COMPARE_SET_FILTER
+   COMPARE_SET_COUNTRY
 }
 from 'constants/compare';
 
 const initialState = {
   countries: [],
   datasets: [],
-  filters: {
-    crop: 'all',
-    scope: 'global',            // {global|country}
-    prediction: 'optimistic',     // {optimistic|pesimistic|business}
-    baseline: 'current',
-    food: 'production',         // {production|demand|trade}
-    water: 'water-risk',        // {water-risk|ground}
-    irrigation: ['irrigated', 'rainfed']   // {irrigated|rainfed}, one value at least
-  }
+  layers: []
 };
 
 export default function (state = initialState, action) {
@@ -24,10 +15,6 @@ export default function (state = initialState, action) {
       const countries = state.countries.slice(0);
       countries[action.payload.index] = action.payload.iso;
       return Object.assign({}, state, { countries });
-    }
-    case COMPARE_SET_FILTER: {
-      const newFilters = Object.assign({}, state.filters, action.payload);
-      return Object.assign({}, state, { filters: newFilters });
     }
     default:
       return state;

@@ -3,19 +3,19 @@ import { push } from 'react-router-redux';
 export function updateMapUrl() {
   return (dispatch, state) => {
     const { map, filters } = state();
-    const { baseline, country, crop, food, irrigation, prediction, scope, water } = filters;
+    const { year, country, crop, food, irrigation, scenario, scope, water } = filters;
     const locationDescriptor = {
       pathname: '/',
       query: {
         lat: map.latLng.lat.toFixed(2),
         lng: map.latLng.lng.toFixed(2),
         zoom: map.zoom,
-        baseline,
+        year,
         country,
         crop,
         food,
         irrigation: irrigation.join(','),
-        prediction,
+        scenario,
         scope,
         water
       }
@@ -26,18 +26,18 @@ export function updateMapUrl() {
 
 export function updateCompareUrl() {
   return (dispatch, state) => {
-    const { compare } = state();
-    const { baseline, country, crop, food, irrigation, prediction, scope, water } = compare.filters;
+    const { compare, filters } = state();
+    const { year, country, crop, food, irrigation, scenario, scope, water } = filters;
     const locationDescriptor = {
       pathname: '/compare',
       query: {
         countries: compare.countries.join(','),
-        baseline,
+        year,
         country,
         crop,
         food,
         irrigation: irrigation.join(','),
-        prediction,
+        scenario,
         scope,
         water
       }
