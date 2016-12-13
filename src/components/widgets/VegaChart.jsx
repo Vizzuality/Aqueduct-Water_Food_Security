@@ -33,8 +33,18 @@ class VegaChart extends React.Component {
     this.height = this.chart.offsetHeight;
   }
 
-  applyTheme(data, ...themes) {
-    return Object.assign({}, data, ...themes);
+  applyTheme(data, themes) {
+    const padding = {
+      top: 20,
+      left: 20,
+      bottom: 20,
+      right: 20
+    };
+
+    return Object.assign({}, data, themes, {
+      width: this.width - (padding.left + padding.right),
+      height: this.height - (padding.top + padding.bottom)
+    });
   }
 
   parseVega() {

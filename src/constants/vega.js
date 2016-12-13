@@ -2,9 +2,6 @@ const markColor = '#ab5787';
 const axisColor = '#979797';
 
 export const defaultTheme = {
-  // TODO: insert real width and height
-  width: 485,
-  height: 130,
   background: '#f9f9f9',
 
   mark: {
