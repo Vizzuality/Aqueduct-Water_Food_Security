@@ -75,7 +75,6 @@ export default class BubbleLayer {
   }
 
   _setInfowindowHtml(properties) {
-    console.info(properties);
     return (`
       <div class="c-infowindow -no-iteraction">
         <h3>Country name</h3>
