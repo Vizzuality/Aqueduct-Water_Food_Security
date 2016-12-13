@@ -3,6 +3,7 @@ import vega from 'vega';
 import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';
 import { defaultTheme } from 'constants/vega';
+import { applyTheme } from 'utils/vega/vega';
 
 class VegaChart extends React.Component {
 
@@ -33,22 +34,12 @@ class VegaChart extends React.Component {
     this.height = this.chart.offsetHeight;
   }
 
-  applyTheme(data, themes) {
-    const padding = {
-      top: 20,
-      left: 20,
-      bottom: 20,
-      right: 20
-    };
-
-    return Object.assign({}, data, themes, {
-      width: this.width - (padding.left + padding.right),
-      height: this.height - (padding.top + padding.bottom)
-    });
-  }
-
   parseVega() {
-    const dataObj = this.applyTheme(this.props.data, defaultTheme);
+    const size = {
+      width: this.width - this.props.data.padding.left - this.props.data.padding.right,
+      height: this.height - this.props.data.padding.top - this.props.data.padding.bottom
+    };
+    const dataObj = applyTheme(this.props.data, defaultTheme, size);
     vega.parse.spec(dataObj, (chart) => {
       const chartVis = chart({
         el: this.chart
