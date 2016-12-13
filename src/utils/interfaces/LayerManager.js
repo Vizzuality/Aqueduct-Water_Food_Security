@@ -193,8 +193,11 @@ export default class LayerManager {
       });
   }
 
+
+  // STATIC methods
+  // - _convertToGeoJson
   // This function should be unnecessary if the response from the query is done well
-  static _convertToGeoJson(items) {
+  _convertToGeoJson(items) {
     return items.map((item) => {
       return {
         type: 'Feature',

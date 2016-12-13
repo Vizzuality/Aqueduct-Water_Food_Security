@@ -65,7 +65,7 @@ export default class BubbleLayer {
   // - _setMarkerHtml
   // - _setInfowindowHtml
   // - _getSize
-  static _setMarkerHtml(value) {
+  _setMarkerHtml(value) {
     const _value = format('.3s')(value);
     return (`
       <div class="marker-bubble-inner">
@@ -74,7 +74,7 @@ export default class BubbleLayer {
     `);
   }
 
-  static _setInfowindowHtml(properties) {
+  _setInfowindowHtml(properties) {
     console.info(properties);
     return (`
       <div class="c-infowindow -no-iteraction">
@@ -83,7 +83,7 @@ export default class BubbleLayer {
     );
   }
 
-  static _getSize(v) {
+  _getSize(v) {
     const size = (v < 1) ? 1 : v;
     const multiplicator = 2.5;
     const constant = 50;
