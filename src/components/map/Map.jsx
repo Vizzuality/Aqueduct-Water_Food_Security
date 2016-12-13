@@ -34,6 +34,16 @@ class Map extends React.Component {
       // Listen to leaflet events
       this.addMapEventListeners();
     }
+
+    // TODO: hardcoding this
+    this.layerManager.addLayer({
+      id: 5,
+      provider: 'marker',
+      layerConfig: {
+        body: {},
+        type: 'bubble'
+      }
+    });
   }
 
   componentWillReceiveProps(nextProps) {
