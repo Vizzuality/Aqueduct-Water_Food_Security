@@ -10,11 +10,7 @@ const initialState = {
   year: 'bs',
   food: 'production',
   water: 'ws',
-  irrigation: ['irrigated', 'rainfed'],
-  query: {
-    water: '',
-    food: ''
-  }
+  irrigation: ['irrigated', 'rainfed']
 };
 
 function getQuery({ crop, scope, country, scenario, year, food, water, irrigation }) {
@@ -38,8 +34,7 @@ function getQuery({ crop, scope, country, scenario, year, food, water, irrigatio
 export default function (state = initialState, action) {
   switch (action.type) {
     case SET_FILTERS: {
-      const filters = Object.assign({}, state, action.payload);
-      return Object.assign({}, state, action.payload, getQuery(filters));
+      return Object.assign({}, state, action.payload);
     }
     default:
       return state;
