@@ -2,6 +2,8 @@ import React from 'react';
 import vega from 'vega';
 import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';
+import { defaultTheme } from 'constants/vega';
+import { applyTheme } from 'utils/vega/vega';
 
 class VegaChart extends React.Component {
 
@@ -27,39 +29,17 @@ class VegaChart extends React.Component {
     window.removeEventListener('resize', this.resizeEvent);
   }
 
-  getData() {
-    // const { data } = this.props;
-    // let dataObj = {};
-    const dataObj = this.props.data;
-
-    //
-    // if (typeof data === 'object') {
-    //   dataObj = data;
-    // } else if (typeof data === 'string') {
-    //   dataObj = JSON.parse(data);
-    // }
-    //
-    let widthSpace = 50;
-    let heightSpace = 50;
-
-    if (dataObj.padding) {
-      widthSpace = (dataObj.padding.left || 20) + (dataObj.padding.right || 20);
-      heightSpace = (dataObj.padding.top || 25) + (dataObj.padding.bottom || 25);
-    }
-
-    dataObj.width = this.width - widthSpace;
-    dataObj.height = this.height - heightSpace;
-
-    return dataObj;
-  }
-
   setSize() {
     this.width = this.chart.offsetWidth;
     this.height = this.chart.offsetHeight;
   }
 
   parseVega() {
-    const dataObj = this.getData();
+    const size = {
+      width: this.width - this.props.data.padding.left - this.props.data.padding.right,
+      height: this.height - this.props.data.padding.top - this.props.data.padding.bottom
+    };
+    const dataObj = applyTheme(this.props.data, defaultTheme, size);
     vega.parse.spec(dataObj, (chart) => {
       const chartVis = chart({
         el: this.chart
