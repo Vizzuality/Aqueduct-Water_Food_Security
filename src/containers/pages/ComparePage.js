@@ -3,12 +3,14 @@ import ComparePage from 'components/pages/ComparePage';
 import { setCompareCountry } from 'actions/compare';
 import { setFilters } from 'actions/filters';
 import { updateCompareUrl } from 'actions/url';
+import getActiveWidgets from 'selectors/widgets_active';
 
-const mapStateToProps = ({ compare, datasets, countries, filters }) => ({
-  compare,
-  filters,
-  datasets,
-  countries
+const mapStateToProps = state => ({
+  compare: state.compare,
+  filters: state.filters,
+  datasets: state.datasets,
+  countries: state.countries,
+  widgetsActive: getActiveWidgets(state)
 });
 
 const mapDispatchToProps = dispatch => ({

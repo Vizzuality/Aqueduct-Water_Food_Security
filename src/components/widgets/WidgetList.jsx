@@ -14,19 +14,12 @@ export default class WidgetList extends React.Component {
   // Return a array of Widget components
   getWidgets() {
     const widgetList = [];
-    let widget;
-    this.props.datasetsActive.list.forEach((dataset, index) => {
-      if (dataset.widget.length) {
-        widget = dataset.widget[0].attributes;
-        // Vega type widget doesn't have 'type' property
-        if (!Object.prototype.hasOwnProperty.call(widget.widgetConfig, 'type')) {
-          widgetList.push(
-            <div key={index} className={'column small-12'}>
-              <Widget widget={widget} />
-            </div>
-          );
-        }
-      }
+    this.props.widgetsActive.forEach((widget, index) => {
+      widgetList.push(
+        <div key={index} className={'column small-12'}>
+          <Widget widget={widget} />
+        </div>
+      );
     });
     return widgetList;
   }
@@ -49,5 +42,5 @@ WidgetList.propTypes = {
   // STORE
   datasets: React.PropTypes.object,
   // SELECTOR
-  datasetsActive: React.PropTypes.object
+  widgetsActive: React.PropTypes.array
 };
