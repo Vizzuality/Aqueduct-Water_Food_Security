@@ -5,7 +5,7 @@ import { setFilters } from 'actions/filters';
 import { setCompareCountry } from 'actions/compare';
 
 export function onEnterMapPage({ location }, replace, done) {
-  // TODO: this check is not as consistent as it should be. The right solution could be grouping al filter params inside "map"
+  // TODO: this check is not as consistent as it should be. The right solution could be grouping all map params inside "map"
   // if there are map position params
   if (location.query.zoom) {
     const map = {
@@ -18,17 +18,17 @@ export function onEnterMapPage({ location }, replace, done) {
     dispatch(setMapLocation(map));
   }
 
-  // TODO: this check is not as consistent as it should be. The right solution could be grouping al filter params inside "filters"
+  // TODO: this check is not as consistent as it should be. The right solution could be grouping all filter params inside "filters"
   // if there are filter params
   if (location.query.crop) {
-    const { crop, scope, country, prediction, baseline, food, water } = location.query;
+    const { crop, scope, country, scenario, baseline, food, water } = location.query;
     let { irrigation } = location.query;
     irrigation = irrigation.split(',');
     const filtersObj = {
       crop,
       scope,
       country,
-      prediction,
+      scenario,
       baseline,
       food,
       water,
@@ -50,14 +50,14 @@ export function onEnterComparePage({ location }, replace, done) {
   }
   // If there are filter params
   if (location.query.crop) {
-    const { crop, country, prediction, baseline, food, water } = location.query;
+    const { crop, country, scenario, baseline, food, water } = location.query;
     let { irrigation } = location.query;
     irrigation = irrigation.split(',');
     const filtersObj = {
       crop,
       scope: 'global',
       country,
-      prediction,
+      scenario,
       baseline,
       food,
       water,
