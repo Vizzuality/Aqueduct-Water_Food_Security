@@ -7,7 +7,7 @@ import Icon from 'components/ui/Icon';
 import { SimpleSelect } from 'react-selectize';
 import { Link } from 'react-router';
 // Options
-import { predictionOptions, waterOptions, foodOptions, scopeOptions, baselineOptions, cropOptions, irrigationOptions } from 'constants/filters';
+import { scenarioOptions, waterOptions, foodOptions, scopeOptions, yearOptions, cropOptions, irrigationOptions } from 'constants/filters';
 
 export default class Filters extends React.Component {
 
@@ -107,21 +107,21 @@ export default class Filters extends React.Component {
           </div>
           <div className="row filters-group">
             <div className="small-4 columns">
-              {/* Baseline */}
+              {/* Year */}
               <SimpleSelect
                 hideResetButton
-                options={baselineOptions}
-                defaultValue={baselineOptions.find(i => i.value === this.props.filters.baseline)}
-                onValueChange={selected => selected && this.updateFilters(selected.value, 'baseline')}
+                options={yearOptions}
+                defaultValue={yearOptions.find(i => i.value === this.props.filters.year)}
+                onValueChange={selected => selected && this.updateFilters(selected.value, 'year')}
               />
             </div>
             <div className="small-8 columns">
-              {/* Prediction */}
+              {/* Scenario */}
               <SegmentedUi
                 className="-btn"
-                items={predictionOptions}
-                selected={this.props.filters.prediction}
-                onChange={selected => this.updateFilters(selected.value, 'prediction')}
+                items={scenarioOptions}
+                selected={this.props.filters.scenario}
+                onChange={selected => this.updateFilters(selected.value, 'scenario')}
               />
             </div>
           </div>

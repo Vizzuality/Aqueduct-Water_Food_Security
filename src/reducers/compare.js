@@ -7,14 +7,19 @@ from 'constants/compare';
 const initialState = {
   countries: [],
   datasets: [],
+  layers: [],
   filters: {
     crop: 'all',
     scope: 'global',            // {global|country}
-    prediction: 'optimistic',     // {optimistic|pesimistic|business}
-    baseline: 'current',
+    scenario: 'ssp2 rcp45',     // {optimistic|pesimistic|business}
+    year: 'bs',
     food: 'production',         // {production|demand|trade}
     water: 'water-risk',        // {water-risk|ground}
-    irrigation: ['irrigated', 'rainfed']   // {irrigated|rainfed}, one value at least
+    irrigation: ['irrigated', 'rainfed'],   // {irrigated|rainfed}, one value at least
+    query: {
+      water: '',
+      food: ''
+    }
   }
 };
 

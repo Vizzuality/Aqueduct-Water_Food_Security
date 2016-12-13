@@ -35,7 +35,7 @@ class MapPage extends React.Component {
         </Sidebar>
 
         {/* Map */}
-        <Map mapConfig={mapConfig} setMapParams={this.props.setMapParams} layers={this.props.layersActive.list} />
+        <Map mapConfig={mapConfig} setMapParams={this.props.setMapParams} layers={this.props.layers.list} />
       </div>
     );
   }
@@ -48,7 +48,7 @@ MapPage.propTypes = {
   filters: React.PropTypes.object,
   countries: React.PropTypes.object,
   setFilters: React.PropTypes.func,
-  layersActive: React.PropTypes.object
+  layers: React.PropTypes.object
 };
 
 export default MapPage;

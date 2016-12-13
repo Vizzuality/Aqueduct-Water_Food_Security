@@ -1,10 +1,10 @@
 export const SET_FILTERS = 'SET_FILTERS';
 
 // Filter ui values
-export const predictionOptions = [
-  { value: 'optimistic', label: 'Optimistic' },
-  { value: 'pesimistic', label: 'Pesimistic' },
-  { value: 'business', label: 'Business as usual' }
+export const scenarioOptions = [
+  { value: 'ssp2 rcp45', label: 'Optimistic' },
+  { value: 'ssp3 rcp85', label: 'Pesimistic' },
+  { value: 'ssp2 rcp85', label: 'Business as usual' }
 ];
 export const foodOptions = [
   { value: 'production', label: 'Production' },
@@ -20,12 +20,11 @@ export const scopeOptions = [
   { value: 'country', label: 'Country' }
 ];
 // Mocks
-export const baselineOptions = [
-  { value: 'current', label: 'Baseline (current)' },
-  { value: '2010', label: '2010' },
-  { value: '2020', label: '2020' },
-  { value: '2030', label: '2030' },
-  { value: '2040', label: '2040' }
+export const yearOptions = [
+  { value: 'bs', label: 'Baseline (current)' },
+  { value: '20', label: '2020' },
+  { value: '30', label: '2030' },
+  { value: '40', label: '2040' }
 ];
 export const cropOptions = [
   { value: 'all', label: 'All crops' },
