@@ -43,8 +43,8 @@ export default class LayerManager {
 
     switch (layer.type) {
       case 'bubble': {
+        // Get the sql from the current layer instead of hardcoding it
         const sql = "with r as (SELECT iso, value, commodity FROM combined01_prepared where   impactparameter='Food Demand' and year= 2020 and scenario='SSP2-GFDL') select geom, jsonb_object_agg(commodity, value) properties from (SELECT st_asgeojson(st_centroid(the_geom)) geom,  commodity, value FROM impact_regions_159 t inner join  r on new_region=iso) c group by geom";
-        // const request = new Request(`https://${layer.account}.cartodb.com/api/v1/map`, {
         const request = new Request(`https://wri-01.cartodb.com/api/v2/sql/?q=${sql}`, {
           method: 'GET'
         });
@@ -193,6 +193,7 @@ export default class LayerManager {
       });
   }
 
+  // This function should be unnecessary if the response from the query is done well
   static _convertToGeoJson(items) {
     return items.map((item) => {
       return {

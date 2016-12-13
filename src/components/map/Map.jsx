@@ -35,7 +35,7 @@ class Map extends React.Component {
       this.addMapEventListeners();
     }
 
-    // TODO: harcoding this
+    // TODO: hardcoding this
     this.layerManager.addLayer({
       id: 5,
       provider: 'marker',

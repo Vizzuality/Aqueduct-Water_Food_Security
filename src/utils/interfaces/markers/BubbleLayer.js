@@ -4,22 +4,22 @@ import L from 'leaflet';
 import { format } from 'd3-format';
 
 /**
- * Creating buble marker layer for region and countries layer
- * @param  {Object} geoJson
+ * Creating buble marker layer for food layers
+ * @param  {Array} data
  * @param  {Object} params
  * @return {Object} layer
  */
 export default class BubbleLayer {
-  // var markerTemplate = HandlebarsTemplates['marker_bubble'];
-  // var infowindowTemplate = HandlebarsTemplates['infowindow_bubble'];
-
   constructor(data, params) {
     this.params = params;
 
     return L.geoJson(data, {
       pointToLayer: (feature) => {
         // If it doesn't have data, don't show it
-        if (!feature.properties.Rice) {
+        // We should pass the current filters to see witch crop is selected instead of hardcoding it
+        const cropSelected = feature.properties.Rice;
+
+        if (!cropSelected) {
           return null;
         }
 
@@ -27,12 +27,12 @@ export default class BubbleLayer {
         const options = {
           location: feature.geometry.coordinates,
           className: 'c-marker-bubble',
-          size: this._getSize(feature.properties.Rice),
+          size: this._getSize(cropSelected),
           data: feature.properties
         };
 
         // Marker && infowindow html
-        const divHtmlIcon = this._setMarkerHtml(options.data.Rice);
+        const divHtmlIcon = this._setMarkerHtml(cropSelected);
         const divHtmlInfowindow = this._setInfowindowHtml(options.data);
 
         const marker = L.marker(options.location.reverse(), {
