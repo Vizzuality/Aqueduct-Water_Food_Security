@@ -131,9 +131,8 @@ export default class Filters extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="small-8 columns">
+            {/* <div className="small-8 columns">
               <div className="filter-item">
-                {/* Scenario */}
                 <SegmentedUi
                   className="-btn"
                   items={scenarioOptions}
@@ -141,7 +140,7 @@ export default class Filters extends React.Component {
                   onChange={selected => this.updateFilters(selected.value, 'scenario')}
                 />
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
