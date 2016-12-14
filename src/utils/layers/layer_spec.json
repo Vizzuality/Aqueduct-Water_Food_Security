@@ -1,0 +1,55 @@
+[
+  {
+    "id": "xxx",
+    "name": "Demand",
+    "category": "food"
+  },
+  {
+    "id": "xxx",
+    "name": "Production",
+    "category": "food"
+  },
+  {
+    "id": "xxx",
+    "name": "Trade",
+    "category": "food"
+  },
+  {
+    "id": "xxx",
+    "name": "World price",
+    "category": "food"
+  },
+  {
+    "id": "xxx",
+    "name": "Area",
+    "category": "food"
+  },
+  {
+    "id": "xxx",
+    "name": "Yield",
+    "category": "food"
+  },
+  {
+    "id": "xxx",
+    "name": "Population at risk of hunger",
+    "category": "food"
+  },
+
+
+  
+  {
+    "id": "xxx",
+    "name": "Water stress",
+    "category": "water"
+  },
+  {
+    "id": "xxx",
+    "name": "Interanual variability",
+    "category": "water"
+  },
+  {
+    "id": "xxx",
+    "name": "Seasonal variability",
+    "category": "water"
+  }
+]

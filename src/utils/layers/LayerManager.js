@@ -2,9 +2,11 @@
 /* eslint import/extensions: 0 */
 
 import L from 'leaflet';
+// Layers
+import BubbleLayer from 'utils/layers/markers/BubbleLayer';
 
-import BubbleLayer from 'utils/interfaces/markers/BubbleLayer';
-
+// Functions
+import { waterConverter, foodConverter } from 'utils/filters/filters'
 export default class LayerManager {
 
   // Constructor
@@ -30,22 +32,37 @@ export default class LayerManager {
   }
 
   removeLayer(layerId) {
-    this._map.removeLayer(this._mapLayers[layerId]);
-    delete this._mapLayers[layerId];
+    if (this._mapLayers[layerId]) {
+      this._map.removeLayer(this._mapLayers[layerId]);
+      delete this._mapLayers[layerId];
+    }
+  }
+
+  removeLayers() {
+    Object.keys(this._mapLayers).forEach((id) => {
+      if (this._mapLayers[id]) {
+        this._map.removeLayer(this._mapLayers[id]);
+        delete this._mapLayers[id];
+      }
+    });
   }
 
   /*
     Private methods
   */
-  _addMarkerLayer(layerSpec) {
+  _addMarkerLayer(layerSpec, opts) {
     const layer = layerSpec.layerConfig;
+    const options = opts;
     layer.id = layerSpec.id;
+    layer.sql = "with s as (SELECT iso, region, value, commodity FROM combined01_prepared where impactparameter='Yield' and year={{year}} and scenario='SSP2-GFDL' and iso is not null ), t as (SELECT iso, region, sum(value) as value FROM s group by iso, region), r as (select iso, region, value, 'allCrops' commodity from t union all select * from s), d as (select json_agg(crop) crops, region, geometry from (SELECT st_asgeojson(st_centroid(the_geom))  as geometry,  json_build_object('name',commodity,'slug',lower(commodity),'value', value) crop, region FROM impact_regions_159 t inner join  r on new_region=iso) c group by geometry, region) select json_build_object('type','FeatureCollection','features',json_agg(json_build_object('geometry',cast(geometry as json),'properties', json_build_object('crops',crops,'country',region),'type','Feature'))) as data from d";
+    layer.params_config = {
+      year: 'baseline'
+    };
 
     switch (layer.type) {
       case 'bubble': {
         // Get the sql from the current layer instead of hardcoding it
-        const sql = "with s as (SELECT iso, region, value, commodity FROM combined01_prepared where  impactparameter='Yield' and year= 2020 and scenario='SSP2-GFDL' and iso is not null ), t as (SELECT iso, region, sum(value) as value FROM s group by iso, region), r as (select iso, region, value, 'allCrops' commodity from t union all select * from s), d as (select json_agg(crop) crops, region, geometry from (SELECT st_asgeojson(st_centroid(the_geom))  as geometry,  json_build_object('name',commodity,'slug',lower(commodity),'value', value) crop, region FROM impact_regions_159 t inner join  r on new_region=iso) c group by geometry, region) select json_build_object('type','FeatureCollection','features',json_agg(json_build_object('geometry',cast(geometry as json),'properties', json_build_object('crops',crops,'country',region),'type','Feature'))) as data from d";
-        const request = new Request(`https://wri-01.cartodb.com/api/v2/sql/?q=${sql}`, {
+        const request = new Request(`https://wri-01.cartodb.com/api/v2/sql/?q=${foodConverter(layer.sql, options, layer.params_config)}`, {
           method: 'GET'
         });
 

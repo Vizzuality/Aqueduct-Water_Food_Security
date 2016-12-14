@@ -35,7 +35,7 @@ class MapPage extends React.Component {
         </Sidebar>
 
         {/* Map */}
-        <Map mapConfig={mapConfig} setMapParams={this.props.setMapParams} />
+        <Map mapConfig={mapConfig} filters={this.props.filters} setMapParams={this.props.setMapParams} />
       </div>
     );
   }
