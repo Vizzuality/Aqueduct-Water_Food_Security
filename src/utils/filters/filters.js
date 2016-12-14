@@ -1,12 +1,4 @@
-function substitution(string, params) {
-  let str;
-  let key;
-  params.forEach((param) => {
-    key = Object.keys(param)[0];
-    str = string.replace(new RegExp(`{{${key}}}`, 'g'), param[key]);
-  });
-  return str;
-}
+import { substitution, concatenation } from 'utils/utils';
 
 export function widgetsFilter(widget, { crop, country }) {
   // TODO: uncomment when using real api data
@@ -18,12 +10,45 @@ export function widgetsFilter(widget, { crop, country }) {
 }
 
 // LAYER FUNCTIONS
-export function waterConverter(filters, paramsConfig, sqlConfig) {
-  console.info(filters, paramsConfig, sqlConfig);
+export function waterConverter(string = '', filters = {}, paramsConfig = [], sqlConfig = []) {
+  // Merge filters && paramsConfig
+  const params = paramsConfig.map((param) => {
+    switch (param.key) {
+      case 'water_column':
+        return {
+          key: param.key,
+          value: getWaterColumn(filters)
+        };
+      default:
+        return {
+          key: param.key,
+          value: filters[param.key]
+        };
+    }
+  });
+
+  // Merge filters && sqlConfig
+  const sqlParams = sqlConfig.map((param) => {
+    return {
+      key: param.key,
+      key_params: param.key_params.map((p) => {
+        return {
+          key: p.key,
+          value: filters[p.key]
+        };
+      })
+    };
+  });
+
+  let str = string;
+  str = substitution(str, params);
+  str = concatenation(str, sqlParams);
+
+  return str;
 }
 
 
-export function foodConverter(string, filters, paramsConfig, sqlConfig) {
+export function foodConverter(string = '', filters = {}, paramsConfig = [], sqlConfig = []) {
   // Dictionary
   const yearOptions = {
     baseline: '2005',
@@ -34,21 +59,42 @@ export function foodConverter(string, filters, paramsConfig, sqlConfig) {
   };
 
   // Merge filters && paramsConfig
-  const keysArr = Object.keys(paramsConfig);
-  const params = keysArr.map((key) => {
-    switch (key) {
+  const params = paramsConfig.map((param) => {
+    switch (param.key) {
       case 'year':
-        return { [key]: yearOptions[filters[key]] };
+        return {
+          key: param.key,
+          value: yearOptions[filters[param.key]]
+        };
       default:
-        return { [key]: filters[key] };
+        return {
+          key: param.key,
+          value: filters[param.key]
+        };
     }
   });
 
-  // return the string with the keys substituted
-  return substitution(string, params);
+  // Merge filters && sqlConfig
+  const sqlParams = sqlConfig.map((param) => {
+    return {
+      key: param.key,
+      key_params: param.key_params.map((p) => {
+        return {
+          key: p.key,
+          value: filters[p.key]
+        };
+      })
+    };
+  });
+
+  let str = string;
+  str = substitution(str, params);
+  str = concatenation(str, sqlParams);
+
+  return str;
 }
 
-export function getWaterColumn({ year, scenario }) {
+function getWaterColumn({ year, scenario }) {
   // Dictionary
   const yearOptions = {
     baseline: '00',
@@ -71,3 +117,48 @@ export function getWaterColumn({ year, scenario }) {
 
   return `${_indicator}${_year}${_scenario}${_dataType}${_sufix}`;
 }
+
+
+// // TESTING
+// const waterConfig = waterConverter('SELECT {{water_column}} from {{scenario}} {{crop}} {{where}} {{where1}}', {
+//   crop: 'all',
+//   scope: 'global',
+//   country: null,
+//   scenario: 'optimistic',
+//   year: 'baseline',
+//   food: 'xxx',
+//   water: 'xxx'
+// }, [
+//   {
+//     key: 'water_column',
+//     required: true
+//   },
+//   {
+//     key: 'crop',
+//     required: true
+//   },
+//   {
+//     key: 'scenario',
+//     required: true
+//   }
+// ], [
+//   {
+//     key: 'where',
+//     required: true,
+//     key_params: [
+//       { key: 'year', required: true },
+//       { key: 'crop' },
+//       { key: 'country' }
+//     ]
+//   },
+//   {
+//     key: 'where1',
+//     required: true,
+//     key_params: [
+//       { key: 'year', required: true },
+//       { key: 'crop' },
+//       { key: 'country' }
+//     ]
+//   }
+// ]);
+// console.info(waterConfig);
