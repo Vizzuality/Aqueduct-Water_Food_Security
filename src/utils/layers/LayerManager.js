@@ -4,9 +4,9 @@
 import L from 'leaflet';
 // Layers
 import BubbleLayer from 'utils/layers/markers/BubbleLayer';
-
 // Functions
 import { waterConverter, foodConverter } from 'utils/filters/filters'
+
 export default class LayerManager {
 
   // Constructor
@@ -55,9 +55,12 @@ export default class LayerManager {
     const options = opts;
     layer.id = layerSpec.id;
     layer.sql = "with s as (SELECT iso, region, value, commodity FROM combined01_prepared where impactparameter='Yield' and year={{year}} and scenario='SSP2-GFDL' and iso is not null ), t as (SELECT iso, region, sum(value) as value FROM s group by iso, region), r as (select iso, region, value, 'allCrops' commodity from t union all select * from s), d as (select json_agg(crop) crops, region, geometry from (SELECT st_asgeojson(st_centroid(the_geom))  as geometry,  json_build_object('name',commodity,'slug',lower(commodity),'value', value) crop, region FROM impact_regions_159 t inner join  r on new_region=iso) c group by geometry, region) select json_build_object('type','FeatureCollection','features',json_agg(json_build_object('geometry',cast(geometry as json),'properties', json_build_object('crops',crops,'country',region),'type','Feature'))) as data from d";
-    layer.params_config = {
-      year: 'baseline'
-    };
+    layer.params_config = [
+      {
+        key: 'year',
+        required: true
+      }
+    ];
 
     switch (layer.type) {
       case 'bubble': {
@@ -171,6 +174,7 @@ export default class LayerManager {
   _addCartoLayer(layerSpec, { zIndex }) {
     const layer = layerSpec.layerConfig;
     layer.id = layerSpec.id;
+
 
     const request = new Request(`https://${layer.account}.cartodb.com/api/v1/map`, {
       method: 'POST',

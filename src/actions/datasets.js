@@ -13,7 +13,7 @@ export function getDatasets() {
   return (dispatch) => {
     // Waiting for fetch from server -> Dispatch loading
     dispatch({ type: GET_DATASETS_LOADING });
-    fetch(new Request(`${config.apiUrl}/dataset?app=prep&includes=widget&page[size]=999`))
+    fetch(new Request(`${config.apiUrl}/dataset?app=aqueduct&includes=widget,layer&page[size]=999`))
     .then((response) => {
       if (response.ok) return response.json();
       throw new Error(response.statusText);
