@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import { widgetsFilter } from 'utils/filters/filters';
 
 // Get the datasets and filters from state
 const datasets = state => state.datasets;
@@ -12,9 +11,14 @@ const getActiveLayers = (_datasets, _filters) => {
   _datasets.list.forEach((dataset) => {
     if (dataset.layer.length) {
       layer = dataset.layer[0].attributes;
+      // if (dataset.id === _filters.water || dataset.id === _filters.food) {
+      if (dataset.id === _filters.water) {
+        layerList.push(layer);
+      }
     }
   });
-  return widgetList;
+  console.log(layerList);
+  return layerList;
 };
 
 // Export the selector

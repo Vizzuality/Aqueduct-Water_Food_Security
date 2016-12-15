@@ -11,6 +11,14 @@ export function widgetsFilter(widget, { crop, country }) {
 
 // LAYER FUNCTIONS
 export function waterConverter(string = '', filters = {}, paramsConfig = [], sqlConfig = []) {
+  const yearOptions = {
+    baseline: 2010,
+    2020: 2020,
+    2030: 2030,
+    2040: 2040,
+    2050: 2050
+  };
+
   // Merge filters && paramsConfig
   const params = paramsConfig.map((param) => {
     switch (param.key) {
@@ -31,11 +39,26 @@ export function waterConverter(string = '', filters = {}, paramsConfig = [], sql
   const sqlParams = sqlConfig.map((param) => {
     return {
       key: param.key,
-      key_params: param.key_params.map((p) => {
-        return {
-          key: p.key,
-          value: filters[p.key]
-        };
+      keyParams: param.keyParams.map((p) => {
+        switch (p.key) {
+          case 'year':
+            return {
+              key: p.key,
+              value: yearOptions[filters[p.key]]
+            };
+          case 'crop':
+            const crop = filters[param.key];
+            return {
+              key: param.key,
+              value: (crop !== 'all') ? crop : null
+            };
+
+          default:
+            return {
+              key: p.key,
+              value: filters[p.key]
+            };
+        }
       })
     };
   });
@@ -51,11 +74,11 @@ export function waterConverter(string = '', filters = {}, paramsConfig = [], sql
 export function foodConverter(string = '', filters = {}, paramsConfig = [], sqlConfig = []) {
   // Dictionary
   const yearOptions = {
-    baseline: '2005',
-    2020: '2020',
-    2030: '2030',
-    2040: '2040',
-    2050: '2050'
+    baseline: 2005,
+    2020: 2020,
+    2030: 2030,
+    2040: 2040,
+    2050: 2050
   };
 
   // Merge filters && paramsConfig
@@ -78,7 +101,7 @@ export function foodConverter(string = '', filters = {}, paramsConfig = [], sqlC
   const sqlParams = sqlConfig.map((param) => {
     return {
       key: param.key,
-      key_params: param.key_params.map((p) => {
+      keyParams: param.keyParams.map((p) => {
         return {
           key: p.key,
           value: filters[p.key]
@@ -94,26 +117,21 @@ export function foodConverter(string = '', filters = {}, paramsConfig = [], sqlC
   return str;
 }
 
-function getWaterColumn({ year, scenario }) {
+function getWaterColumn({ year }) {
   // Dictionary
   const yearOptions = {
-    baseline: '00',
+    baseline: 'bs',
     2020: '20',
     2030: '30',
     2040: '40',
     2050: '50'
   };
-  const scenarioOptions = {
-    optimistic: 24,
-    business: 28,
-    pesimistic: 38
-  };
 
   const _indicator = 'ws'; // 'ws'=>'Water riks layer', 'sv'=> 'Ground layer'
   const _year = yearOptions[year];
-  const _dataType = 'c';
+  const _dataType = 't';
   const _sufix = 'r';
-  const _scenario = scenarioOptions[scenario];
+  const _scenario = (year === 'baseline') ? '00' : '28';
 
   return `${_indicator}${_year}${_scenario}${_dataType}${_sufix}`;
 }
@@ -145,7 +163,7 @@ function getWaterColumn({ year, scenario }) {
 //   {
 //     key: 'where',
 //     required: true,
-//     key_params: [
+//     keyParams: [
 //       { key: 'year', required: true },
 //       { key: 'crop' },
 //       { key: 'country' }
@@ -154,7 +172,7 @@ function getWaterColumn({ year, scenario }) {
 //   {
 //     key: 'where1',
 //     required: true,
-//     key_params: [
+//     keyParams: [
 //       { key: 'year', required: true },
 //       { key: 'crop' },
 //       { key: 'country' }

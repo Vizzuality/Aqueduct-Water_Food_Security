@@ -2,6 +2,7 @@
 /* eslint import/extensions: 0 */
 
 import L from 'leaflet';
+import forIn from 'lodash/forIn';
 // Layers
 import BubbleLayer from 'utils/layers/markers/BubbleLayer';
 // Functions
@@ -25,7 +26,7 @@ export default class LayerManager {
       leaflet: this._addLeafletLayer,
       arcgis: this._addEsriLayer,
       cartodb: this._addCartoLayer,
-      marker: this._addMarkerLayer
+      geojson: this._addGeojsonLayer
     }[layer.provider];
 
     return method && method.call(this, layer, opts);
@@ -50,7 +51,7 @@ export default class LayerManager {
   /*
     Private methods
   */
-  _addMarkerLayer(layerSpec, opts) {
+  _addGeojsonLayer(layerSpec, opts) {
     const layer = layerSpec.layerConfig;
     const options = opts;
     layer.id = layerSpec.id;
@@ -171,17 +172,26 @@ export default class LayerManager {
     }
   }
 
-  _addCartoLayer(layerSpec, { zIndex }) {
+  _addCartoLayer(layerSpec, opts) {
     const layer = layerSpec.layerConfig;
-    layer.id = layerSpec.id;
+    const options = opts;
 
+    layer.id = layerSpec.id;
+    layer.body.layers.map((l) => {
+      l.options = forIn(l.options, (v,k) => {
+        l.options[k] = waterConverter(v, options, layer.paramsConfig, layer.sqlConfig);
+      });
+      l.options.cartocss_version = l.options.cartocssVersion;
+      l.user_name = layer.account;
+      return l;
+    });
 
     const request = new Request(`https://${layer.account}.cartodb.com/api/v1/map`, {
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/json'
       }),
-      body: layer.body
+      body: JSON.stringify(layer.body)
     });
 
     // add to the load layers lists before the fetch
@@ -199,9 +209,10 @@ export default class LayerManager {
       .then((data) => {
         // we can switch off the layer while it is loading
         const tileUrl = `https://${layer.account}.cartodb.com/api/v1/map/${data.layergroupid}/{z}/{x}/{y}.png`;
-        if (zIndex) {
-          this._mapLayers[layer.id] = L.tileLayer(tileUrl).addTo(this._map).setZIndex(zIndex);
-        }
+        this._mapLayers[layer.id] = L.tileLayer(tileUrl).addTo(this._map).setZIndex(1000);
+        // if (zIndex) {
+        //   this._mapLayers[layer.id] = L.tileLayer(tileUrl).addTo(this._map).setZIndex(zIndex);
+        // }
         this._mapLayers[layer.id].on('load', () => {
           this._onLayerAddedSuccess && this._onLayerAddedSuccess(layer);
         });
@@ -210,7 +221,6 @@ export default class LayerManager {
         });
       })
       .catch((err) => {
-        console.error('Request failed', err);
         this._onLayerAddedError && this._onLayerAddedError(layer);
       });
   }
