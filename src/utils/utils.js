@@ -16,9 +16,10 @@ export function concatenation(string, params) {
   let str = string;
   let sql;
   params.forEach((param) => {
-    sql = `WHERE ${compact(param.key_params.map((p) => {
-      if (p.value) {
-        return `${p.key} = '${p.value}'`;
+    sql = `WHERE ${compact(param.keyParams.map((p) => {
+      const value = p.value;
+      if (value) {
+        return (isNaN(value)) ? `${p.key} = '${value}'` : `${p.key} = ${value}`;
       }
       return null;
     })).join(' AND ')}`;
