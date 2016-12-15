@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 
 export default class Accordion extends React.Component {
 
@@ -18,15 +19,26 @@ export default class Accordion extends React.Component {
   }
 
   render() {
+    const cNames = classNames('c-accordion', {
+      '-closed': !this.state.opened,
+      [this.props.className]: this.props.className
+    });
     return (
-      <div className={`c-accordion ${this.state.opened || '-closed'}`}>
+      <div className={cNames}>
+        {this.props.contentPosition === 'top' &&
+          <div className="accordion-content">
+            {this.props.children}
+          </div>
+        }
         <div className="accordion-header">
-          <span className="accordion-title">{this.props.title}</span>
-          <button className="accordion-btn" type="button" onClick={this.toggle}>Toggle legend</button>
+          {this.props.title && <span className="accordion-title">{this.props.title}</span>}
+          <button className="accordion-btn" type="button" onClick={this.toggle}>{this.props.toggleIcon}</button>
         </div>
-        <div className="accordion-content">
-          {this.props.children}
-        </div>
+        {this.props.contentPosition === 'bottom' &&
+          <div className="accordion-content">
+            {this.props.children}
+          </div>
+        }
       </div>
     );
   }
@@ -35,5 +47,8 @@ export default class Accordion extends React.Component {
 Accordion.propTypes = {
   opened: React.PropTypes.bool,
   title: React.PropTypes.string,
-  children: React.PropTypes.object
+  className: React.PropTypes.string,
+  contentPosition: React.PropTypes.string,
+  children: React.PropTypes.object,
+  toggleIcon: React.PropTypes.object
 };
