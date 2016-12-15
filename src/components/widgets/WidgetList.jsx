@@ -25,16 +25,17 @@ export default class WidgetList extends React.Component {
   }
 
   render() {
-    const widgetList = this.getWidgets();
-    return (
-      <div className="c-widget-list">
-        {this.props.loading ? <Spinner isLoading={this.props.loading} /> :
-          <div className="row collapse">
-            {widgetList}
-          </div>
-        }
-      </div>
-    );
+    return (<div>Holla</div>)
+    // const widgetList = this.getWidgets();
+    // return (
+    //   <div className="c-widget-list">
+    //     {this.props.loading ? <Spinner isLoading={this.props.loading} /> :
+    //       <div className="row collapse">
+    //         {widgetList}
+    //       </div>
+    //     }
+    //   </div>
+    // );
   }
 }
 
