@@ -47,7 +47,7 @@ export default class Filters extends React.Component {
         <Accordion className="-filters" opened contentPosition="top" toggleIcon={<Icon name="icon-arrow3-up" className="filters-collapse-btn" />}>
           <div>
             {this.props.filters.scope === 'country' &&
-              <div className="filters-section">
+              <div className="filters-section -highlighted">
                 <div className="row collapse filters-group">
                   <div className="small-4 columns">
                     <div className="filter-item">
@@ -69,7 +69,7 @@ export default class Filters extends React.Component {
                 </div>
               </div>
             }
-            <div className="filters-section">
+            <div className="filters-section -separator">
               <div className="row collapse filters-group">
                 <div className="small-4 columns">
                   {/* Crops */}
@@ -120,6 +120,8 @@ export default class Filters extends React.Component {
                   </div>
                 </div>
               </div>
+            </div>
+            <div className="filters-section">
               <div className="row collapse filters-group">
                 <div className="small-4 columns">
                   <div className="filter-item">
@@ -134,16 +136,6 @@ export default class Filters extends React.Component {
                     </div>
                   </div>
                 </div>
-                {/* <div className="small-8 columns">
-                  <div className="filter-item">
-                    <SegmentedUi
-                      className="-btn"
-                      items={scenarioOptions}
-                      selected={this.props.filters.scenario}
-                      onChange={selected => this.updateFilters(selected.value, 'scenario')}
-                    />
-                  </div>
-                </div> */}
               </div>
             </div>
           </div>

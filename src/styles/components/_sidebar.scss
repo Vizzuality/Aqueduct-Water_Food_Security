@@ -1,5 +1,5 @@
 .c-sidebar {
-  background: $color-gray;
+  background-color: $color-map;
   color: white;
   transform: translate(calc(-100% + #{$space-sidebar}),0);
   transition: all $animation-time-2 $ease-in-out-sine;
