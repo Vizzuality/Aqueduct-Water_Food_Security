@@ -31,7 +31,7 @@ class Widget extends React.Component {
           </header>
           <div className="widget-content">
             {/* WidgetLegend */}
-            <WidgetChart config={widgetConfig} />
+            <WidgetChart config={widgetConfig} filters={this.props.filters} />
             {/* WidgetBaseline */}
           </div>
         </div>
@@ -41,7 +41,8 @@ class Widget extends React.Component {
 }
 
 Widget.propTypes = {
-  widget: React.PropTypes.object
+  widget: React.PropTypes.object,
+  filters: React.PropTypes.object
 };
 
 
