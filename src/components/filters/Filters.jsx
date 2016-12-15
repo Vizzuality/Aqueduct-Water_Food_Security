@@ -46,7 +46,7 @@ export default class Filters extends React.Component {
         }
         <Accordion className="-filters" opened contentPosition="top" toggleIcon={<Icon name="icon-arrow3-up" className="filters-collapse-btn" />}>
           <div>
-            {this.props.filters.scope === 'country' &&
+            {this.props.withScope && this.props.filters.scope === 'country' &&
               <div className="filters-section -highlighted">
                 <div className="row collapse filters-group">
                   <div className="small-4 columns">

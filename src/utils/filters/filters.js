@@ -135,7 +135,7 @@ export function getFoodSql(layer = {}, filters = {}) {
   });
 }
 
-function getWaterColumn({ water, year }) {
+function getWaterColumn({ water, year }, sufix) {
   const layers = {
     '6c49ae6c-2c73-46ac-93ab-d4ed1b05d44e': {
       indicator: 'ws',
@@ -163,10 +163,77 @@ function getWaterColumn({ water, year }) {
   const _indicator = layers[water].indicator;
   const _year = yearOptions[year];
   const _dataType = layers[water].dataType;
-  const _sufix = 'r';
   const _scenario = (year === 'baseline') ? '00' : '28';
 
-  return `${_indicator}${_year}${_scenario}${_dataType}${_sufix}`;
+  return `${_indicator}${_year}${_scenario}${_dataType}${sufix || 'r'}`;
+}
+
+export function getWidgetSql(widgetConfig, filters) {
+  const newConfig = Object.assign({}, widgetConfig);
+  const { data } = newConfig;
+
+  // Dictionary
+  const yearOptions = {
+    baseline: 2010,
+    2020: 2020,
+    2030: 2030,
+    2040: 2040,
+    2050: 2050
+  };
+
+  // paramsConfig transform
+  const paramsConfig = widgetConfig.paramsConfig.map((param) => {
+    switch (param.key) {
+      case 'water_column':
+        return {
+          key: param.key,
+          value: getWaterColumn(filters, param.sufix)
+        };
+      default:
+        return {
+          key: param.key,
+          value: param.key === 'year' ? yearOptions[filters[param.key]] : filters[param.key]
+        };
+    }
+  });
+
+  // sqlConfig transform
+  const sqlConfig = widgetConfig.sqlConfig.map((param) => {
+    return {
+      key: param.key,
+      keyParams: param.keyParams.map((p) => {
+        switch (p.key) {
+          case 'year': {
+            return {
+              key: p.key,
+              value: yearOptions[filters[p.key]]
+            };
+          }
+          default:
+            return {
+              key: p.key,
+              value: filters[p.key]
+            };
+        }
+      })
+    };
+  });
+
+  // sql query substitution
+  data.forEach((item) => {
+    if (item.url) {
+      item.url = substitution(item.url, paramsConfig);
+      item.url = concatenation(item.url, sqlConfig);
+    }
+    if (item.value) {
+      Object.keys(item.value).forEach((key) => {
+        item.value[key] = substitution(item.value[key], paramsConfig);
+        item.value[key] = concatenation(item.value[key], sqlConfig);
+      });
+    }
+  });
+
+  return newConfig;
 }
 
 function getConversion(string, params, sqlParams) {

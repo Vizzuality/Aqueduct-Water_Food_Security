@@ -17,7 +17,7 @@ export default class WidgetList extends React.Component {
     this.props.widgetsActive.forEach((widget, index) => {
       widgetList.push(
         <div key={index} className={'column small-12'}>
-          <Widget widget={widget} />
+          <Widget widget={widget} filters={this.props.filters} />
         </div>
       );
     });
@@ -25,23 +25,23 @@ export default class WidgetList extends React.Component {
   }
 
   render() {
-    return (<div>Holla</div>)
-    // const widgetList = this.getWidgets();
-    // return (
-    //   <div className="c-widget-list">
-    //     {this.props.loading ? <Spinner isLoading={this.props.loading} /> :
-    //       <div className="row collapse">
-    //         {widgetList}
-    //       </div>
-    //     }
-    //   </div>
-    // );
+    const widgetList = this.getWidgets();
+    return (
+      <div className="c-widget-list">
+        {this.props.loading ? <Spinner isLoading={this.props.loading} /> :
+          <div className="row collapse">
+            {widgetList}
+          </div>
+        }
+      </div>
+    );
   }
 }
 
 WidgetList.propTypes = {
   // STORE
   loading: React.PropTypes.bool,
+  filters: React.PropTypes.object,
   // SELECTOR
   widgetsActive: React.PropTypes.array
 };
