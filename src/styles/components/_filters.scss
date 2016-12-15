@@ -1,6 +1,6 @@
 .c-filters {
   background: $color-secondary;
-
+  box-shadow: inset 0 -3px 2px 0 rgba(0, 0, 0, 0.3);
   &.-sidebar {
     .filters-section {
       padding: ($space-1 * 3) 0 ($space-1 * 3) ($space-1 * 4);
@@ -14,9 +14,14 @@
 }
 
 .filters-section {
-  border-bottom: 2px solid $color-tertiary;
   &:last-child {
     border-bottom: 0;
+  }
+  &.-highlighted {
+    background-color: $color-tertiary;
+  }
+  &.-separator {
+    border-bottom: solid 1px #112e70;
   }
 }
 
@@ -37,10 +42,6 @@
       }
     }
   }
-}
-
-.filters-collapse-btn {
-  fill: $color-deactivate;
 }
 
 .filters-btn {
