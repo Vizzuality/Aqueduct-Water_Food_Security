@@ -1,15 +1,20 @@
 {
   "background": "#fff",
-  "load": {"baseURL": "app/","domainWhiteList": false},
+  "load": {
+    "baseURL": "app/",
+    "domainWhiteList": false
+  },
   "scale": {},
-  "render": {"retina": true},
+  "render": {
+    "retina": true
+  },
   "scene": {},
   "axis": {
     "layer": "back",
     "ticks": 5,
-    "padding": 14.7,
+    "padding": 10,
     "axisColor": "#eeeeee",
-    "axisWidth": 1,
+    "axisWidth": 0,
     "gridColor": "#eeeeee",
     "gridOpacity": 1,
     "tickColor": "#eeeeee",
@@ -18,7 +23,7 @@
     "tickSize": 10,
     "tickLabelFontSize": 14,
     "tickLabelFont": "\"Roboto\"",
-    "tickOffset": 15,
+    "tickOffset": 10,
     "titleColor": "#8a9da6",
     "titleFont": "\"Roboto\"",
     "titleFontSize": 14,
@@ -28,22 +33,22 @@
     "titleOffsetAutoMax": 10000,
     "titleOffsetAutoMargin": 10
   },
-  "axis_x":{
+  "axis_x": {
     "grid": {
-    "ordinal": false,
-    "default": false
-  },
-  "tickSize": 0
-  },
-  "axis_y":{
-  "grid": {
-    "ordinal": false,
-    "default": true
+      "ordinal": false,
+      "default": false
     },
-   "axisColor": "#8a9da6",
+    "tickSize": 0
+  },
+  "axis_y": {
+    "grid": {
+      "ordinal": false,
+      "default": true
+    },
+    "axisColor": "#8a9da6",
     "axisWidth": 0,
-     "padding": -15,
-     "tickSize": 40
+    "padding": -5,
+    "tickSize": 10
   },
   "legend": {
     "orient": "right",
@@ -68,28 +73,32 @@
     "titleFontSize": 16,
     "titleFontWeight": "bold"
   },
- "marks":{"color":"#3d6ac4"},
+  "marks": {
+    "color": "#3d6ac4"
+  },
   "color": {
-    "rgb": [128,128,128],
-    "lab": [50,0,0],
-    "hcl": [0,0,50],
-    "hsl": [0,0,0.5]
+    "rgb": [128, 128, 128],
+    "lab": [50, 0, 0],
+    "hcl": [0, 0, 50],
+    "hsl": [0, 0, 0.5]
   },
   "range": {
-    "positionx":[-60, 440],
-    "positiony":[-140],
-    "cropColor":[
+    "positionx": [-60, 440],
+    "positiony": [-140],
+    "cropColor": [
       "#3d6ac4",
       "#749be9",
       "#51d4f0",
-      "#b1f3b7"],
-    "riskColor":[
+      "#b1f3b7"
+    ],
+    "riskColor": [
       "#f4f4f1",
       "#fffbca",
       "#ffe01b",
       "#f6bb0f",
       "#f6811d",
-      "#e24e2c"],
+      "#e24e2c"
+    ],
     "shapes": [
       "circle",
       "cross",
@@ -101,8 +110,8 @@
       "textMark"
     ]
   },
-  "shape":{
+  "shape": {
     "line": "M-5 -5 H 5 V -3 H -5 L -5 -5",
-    "textMark":"M462,185 L493,148 523,185 525,107 461,106 z"
+    "textMark": "M462,185 L493,148 523,185 525,107 461,106 z"
   }
 }

@@ -34,17 +34,15 @@ class VegaChart extends React.Component {
   }
 
   parseVega() {
-    const subTheme = { padding: { top: 80, left: 40, bottom: 40, right: 20 } };
+    const defaultPadding = { top: 40, left: 40, bottom: 40, right: 40 };
+    const padding = this.props.data.padding || defaultPadding;
     const size = {
-      width: this.width - subTheme.padding.left - subTheme.padding.right,
-      height: this.height - subTheme.padding.top - subTheme.padding.bottom
+      width: this.width - padding.left - padding.right,
+      height: this.height - padding.top - padding.bottom
     };
-    // debugger;
-    const data = Object.assign({}, this.props.data, size, subTheme);
-    const theme = Object.assign({}, defaultTheme);
-    console.info('DATA', data);
-    console.info('THEME', theme);
-    vega.parse.spec(data, theme, (chart) => {
+    const data = Object.assign({}, this.props.data, size);
+
+    vega.parse.spec(data, defaultTheme, (chart) => {
       const chartVis = chart({
         el: this.chart,
         renderer: 'svg'

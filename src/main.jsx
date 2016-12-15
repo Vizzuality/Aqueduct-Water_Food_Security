@@ -17,10 +17,12 @@ import './styles/index.scss';
 /**
  * Monitoring
  */
-initOpbeat({
-  orgId: config.opbeatOrgId,
-  appId: config.opbeatAppId,
-});
+if (config.opbeatOrgId && config.opbeatAppId) {
+  initOpbeat({
+    orgId: config.opbeatOrgId,
+    appId: config.opbeatAppId,
+  });
+}
 
 /**
  * Reducers
