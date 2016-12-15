@@ -1,20 +1,68 @@
 // Route actions won't be dispatched inside connect, so dispatch funcion is needed
 import { dispatch } from 'main';
 import { setMapLocation } from 'actions/map';
-import { setTotalFilters } from 'actions/filters';
+import { setFilters } from 'actions/filters';
+import { setCompareCountry } from 'actions/compare';
 
-export function onEnterAppPage({ location }, replace, done) {
-  const map = {
-    zoom: +location.query.zoom,
-    latLng: {
-      lat: +location.query.lat,
-      lng: +location.query.lng
-    }
-  };
+export function onEnterMapPage({ location }, replace, done) {
+  // TODO: this check is not as consistent as it should be. The right solution could be grouping all map params inside "map"
+  // if there are map position params
+  if (location.query.zoom) {
+    const map = {
+      zoom: +location.query.zoom,
+      latLng: {
+        lat: +location.query.lat,
+        lng: +location.query.lng
+      }
+    };
+    dispatch(setMapLocation(map));
+  }
 
-  const filters = location.query.filters ? JSON.parse(atob(location.query.filters)) : null;
+  // TODO: this check is not as consistent as it should be. The right solution could be grouping all filter params inside "filters"
+  // if there are filter params
+  // I really don't like this...
+  if (location.query.crop) {
+    const { crop, country, food, irrigation, scope, scenario, year, water } = location.query;
+    const filtersObj = {
+      country,
+      crop,
+      food,
+      irrigation: (irrigation) ? irrigation.split(',') : undefined,
+      scope,
+      scenario,
+      year,
+      water
+    };
+    dispatch(setFilters(filtersObj));
+  }
 
-  dispatch(setMapLocation(map));
-  dispatch(setTotalFilters(filters));
+  done();
+}
+
+export function onEnterComparePage({ location }, replace, done) {
+  // If thera are country params
+  if (location.query.countries) {
+    const countries = location.query.countries.split(',');
+    countries.forEach((c, i) => {
+      dispatch(setCompareCountry({ iso: c, index: i }));
+    });
+  }
+  // If there are filter params
+  if (location.query.crop) {
+    const { crop, country, scenario, baseline, food, water } = location.query;
+    let { irrigation } = location.query;
+    irrigation = irrigation.split(',');
+    const filtersObj = {
+      crop,
+      scope: 'global',
+      country,
+      scenario,
+      baseline,
+      food,
+      water,
+      irrigation
+    };
+    dispatch(setFilters(filtersObj));
+  }
   done();
 }

@@ -1,0 +1,104 @@
+.c-segmented-ui {
+  display: flex;
+  list-style-type: none;
+
+  .segmented-ui-item {
+    flex-grow: 1;
+  }
+
+  // Component themes
+  // Tabs theme
+  &.-tabs {
+    .segmented-ui-item {
+      flex-grow: 0;
+      border: 0;
+      margin-right: 28px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &.-active {
+        .segmented-ui-btn {
+          &:after {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    .segmented-ui-btn {
+      position: relative;
+      font-size: $font-size-default;
+      transition: all .2s linear;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 14px 0;
+      font-weight: 500;
+      color: $color-white;
+
+      &:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0%;
+        height: 3px;
+        background: $color-primary;
+        transform: translate(-50%,0);
+        transition: all $animation-time $ease-in-out-cubic;
+      }
+
+      &:hover {
+        color: darken($color-white, 10%);
+      }
+    }
+  }
+
+  // Btn theme
+  &.-btn {
+    border: 1px solid #617db8;
+    border-radius: 2px;
+
+    .segmented-ui-item {
+      border-right: 1px solid #617db8;
+
+      &:first-child {
+        .segmented-ui-btn {
+          border-radius: 2px 0 0 2px;
+        }
+      }
+
+      &:last-child {
+        border-right: 0;
+
+        .segmented-ui-btn {
+          border-radius: 0 2px 2px 0;
+        }
+      }
+
+      &.-active {
+        .segmented-ui-btn {
+          background-color: $color-tertiary;
+          color: $color-white;
+        }
+      }
+    }
+
+    .segmented-ui-btn {
+      color: $color-deactivate;
+      font-size: $font-size-big;
+      font-weight: 500;
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 7px 15px;
+      background-color: $color-secondary;
+      transition: background-color linear $animation-time;
+
+      &:hover {
+        background-color: lighten($color-secondary, 10);
+      }
+    }
+  }
+}

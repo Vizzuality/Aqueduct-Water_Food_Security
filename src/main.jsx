@@ -1,17 +1,28 @@
+import initOpbeat from 'opbeat-react';
+import 'opbeat-react/router';
 import React from 'react';
 import { render } from 'react-dom';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import { browserHistory } from 'react-router';
 import thunk from 'redux-thunk';
+import { createOpbeatMiddleware } from 'opbeat-react/redux';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
-import Modal from 'containers/ui/Modal';
-import ModalSample from 'containers/ui/ModalSample';
 
 import * as reducers from './reducers';
 import Routes from './routes';
 
 import './styles/index.scss';
+
+/**
+ * Monitoring
+ */
+if (config.opbeatOrgId && config.opbeatAppId) {
+  initOpbeat({
+    orgId: config.opbeatOrgId,
+    appId: config.opbeatAppId,
+  });
+}
 
 /**
  * Reducers
@@ -34,7 +45,7 @@ export const store = createStore(
   compose(
     /* The router middleware MUST be before thunk otherwise the URL changes
     * inside a thunk function won't work properly */
-    applyMiddleware(middlewareRouter, thunk),
+    applyMiddleware(middlewareRouter, thunk, createOpbeatMiddleware()),
     /* Redux dev tool, install chrome extension in
      * https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en */
     typeof window === 'object' &&
@@ -59,11 +70,8 @@ export const history = syncHistoryWithStore(browserHistory, store);
 
 render(
   <Provider store={store}>
-    <div>
-      {/* Tell the Router to use our enhanced history */}
-      <Routes history={history} />
-      <Modal />
-    </div>
+    {/* Tell the Router to use our enhanced history */}
+    <Routes history={history} />
   </Provider>,
-  document.getElementById('main')
+  document.getElementById('app')
 );

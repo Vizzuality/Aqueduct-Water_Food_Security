@@ -3,41 +3,74 @@
 
 import React from 'react';
 import L from 'leaflet';
+import isEqual from 'lodash/isEqual';
+
 import { MAP_CONFIG } from 'constants/map';
+import LayerManager from 'utils/layers/LayerManager';
+import Legend from 'components/legend/Legend';
 
 class Map extends React.Component {
 
   componentDidMount() {
-    this.map = L.map('map', {
+    this.map = L.map(this.mapNode, {
       minZoom: MAP_CONFIG.minZoom,
-      zoom: this.props.map.zoom,
-      center: [this.props.map.latLng.lat, this.props.map.latLng.lng],
+      zoom: this.props.mapConfig.zoom,
+      zoomControl: isNaN(this.props.mapConfig.zoomControl) ? MAP_CONFIG.zoomControl : this.props.mapConfig.zoomControl,
+      center: [this.props.mapConfig.latLng.lat, this.props.mapConfig.latLng.lng],
       detectRetina: true
     });
 
-    this.map.attributionControl.addAttribution('&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>');
-    this.map.zoomControl.setPosition('topright');
-    this.tileLayer = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}')
+    if (this.props.mapConfig.fitOn) {
+      this.fitMap(this.props.mapConfig.fitOn.geometry);
+    }
+
+    this.layerManager = new LayerManager(this.map /* , onLayerAddedOK, onLayerAddedKO */);
+
+    this.map.attributionControl.addAttribution('&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>');
+    this.map.zoomControl && this.map.zoomControl.setPosition('topright');
+
+    this.tileLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/wri.c974eefc/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoid3JpIiwiYSI6IjU3NWNiNGI4Njc4ODk4MmIyODFkYmJmM2NhNDgxMWJjIn0.v1tciCeBElMdpnrikGDrPg', {})
                       .addTo(this.map)
                       .setZIndex(0);
 
-    // Listen to leaflet events
-    this.addMapEventListeners();
-    // Set map params on route loading
-    this.props.setMapParams(this.getMapParams());
+    this.labelLayer = L.tileLayer("https://api.tiles.mapbox.com/v4/wri.acf5a04e/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoid3JpIiwiYSI6IjU3NWNiNGI4Njc4ODk4MmIyODFkYmJmM2NhNDgxMWJjIn0.v1tciCeBElMdpnrikGDrPg", {})
+                       .addTo(this.map)
+                       .setZIndex(1);
+
+    if (this.props.setMapParams) {
+      // Listen to leaflet events
+      this.addMapEventListeners();
+    }
+
+    this.addLayers();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if ((nextProps.mapConfig.fitOn && !this.props.mapConfig.fitOn) || (this.props.mapConfig.fitOn && this.props.mapConfig.fitOn.id !== nextProps.mapConfig.fitOn.id)) {
+      this.fitMap(nextProps.mapConfig.fitOn.geometry);
+    }
   }
 
   // TODO: update with real check
-  shouldComponentUpdate() {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (!isEqual(nextProps.filters, this.props.filters) || !isEqual(nextProps.layersActive, this.props.layersActive)) {
+      return true;
+    }
     return false;
+  }
+
+  componentDidUpdate() {
+    this.removeLayers();
+    this.addLayers();
   }
 
   componentWillUnmount() {
     // Remember to remove the listeners before removing the map
     // or they will stay in memory
-    this.removeMapEventListeners();
+    this.props.setMapParams && this.removeMapEventListeners();
     this.map.remove();
   }
+
 
   // GETTERS
   getMapParams() {
@@ -46,6 +79,11 @@ class Map extends React.Component {
       latLng: this.map.getCenter()
     };
     return params;
+  }
+
+  fitMap(geoJson) {
+    const geojsonLayer = L.geoJson(geoJson);
+    this.map.fitBounds(geojsonLayer.getBounds());
   }
 
   // MAP LISTENERS
@@ -63,11 +101,31 @@ class Map extends React.Component {
     this.map.off('dragend');
   }
 
+  // Layer methods
+  addLayer(layer) {
+    this.layerManager.addLayer(layer, this.props.filters);
+  }
+
+  addLayers() {
+    this.props.layersActive.forEach((layer) => {
+      this.addLayer(layer);
+    });
+  }
+
+  removeLayer(layer) {
+    this.layerManager.removeLayer(layer.id);
+  }
+
+  removeLayers() {
+    this.layerManager.removeLayers();
+  }
+
   // RENDER
   render() {
     return (
-      <div className="l-map -fullscreen">
-        <div id={'map'} className="c-map" />
+      <div className="c-map">
+        <div ref={(node) => { this.mapNode = node; }} className="map-leaflet" />
+        {/* <Legend className="-map" layers={this.props.layersActive} /> */}
       </div>
     );
   }
@@ -75,7 +133,9 @@ class Map extends React.Component {
 
 Map.propTypes = {
   // STORE
-  map: React.PropTypes.object,
+  mapConfig: React.PropTypes.object,
+  filters: React.PropTypes.object,
+  layersActive: React.PropTypes.array,
   // ACTIONS
   setMapParams: React.PropTypes.func
 };

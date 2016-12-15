@@ -11,26 +11,15 @@ export default class WidgetList extends React.Component {
     };
   }
 
-  componentWillMount() {
-    this.props.getDatasets();
-  }
-
   // Return a array of Widget components
   getWidgets() {
     const widgetList = [];
-    let widget;
-    this.props.datasetsActive.list.forEach((dataset, index) => {
-      if (dataset.widget.length) {
-        widget = dataset.widget[0].attributes;
-        // Vega type widget doesn't have 'type' property
-        if (!Object.prototype.hasOwnProperty.call(widget.widgetConfig, 'type')) {
-          widgetList.push(
-            <div key={index} className={'column small-12'}>
-              <Widget widget={widget} />
-            </div>
-          );
-        }
-      }
+    this.props.widgetsActive.forEach((widget, index) => {
+      widgetList.push(
+        <div key={index} className={'column small-12'}>
+          <Widget widget={widget} filters={this.props.filters} />
+        </div>
+      );
     });
     return widgetList;
   }
@@ -39,7 +28,7 @@ export default class WidgetList extends React.Component {
     const widgetList = this.getWidgets();
     return (
       <div className="c-widget-list">
-        {this.props.datasets.loading ? <Spinner isLoading={this.props.datasets.loading} /> :
+        {this.props.loading ? <Spinner isLoading={this.props.loading} /> :
           <div className="row collapse">
             {widgetList}
           </div>
@@ -51,9 +40,8 @@ export default class WidgetList extends React.Component {
 
 WidgetList.propTypes = {
   // STORE
-  datasets: React.PropTypes.object,
+  loading: React.PropTypes.bool,
+  filters: React.PropTypes.object,
   // SELECTOR
-  datasetsActive: React.PropTypes.object,
-  // ACTIONS
-  getDatasets: React.PropTypes.func
+  widgetsActive: React.PropTypes.array
 };

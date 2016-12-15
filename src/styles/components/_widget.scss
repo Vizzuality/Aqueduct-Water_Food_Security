@@ -16,8 +16,10 @@
     justify-content: space-between;
     align-items: flex-end;
     margin: 0 0 ($space-1 * 2);
+    padding-left: $space-1 * 2;
 
     .widget-titles {
+      font-size: $font-size-default;
       max-width: calc(100% - 60px);
       > * {
         margin: 5px 0 0;
@@ -27,16 +29,26 @@
       }
     }
 
+    .widget-title {
+      text-transform: uppercase;
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+
+    .widget-description {
+
+    }
+
     h2 {
       font-size: $font-size-default;
-      color: $color-widgets;
+      color: $color-text-1;
       font-weight: 700;
       line-height: 1.25;
     }
 
     h3 {
       font-size: $font-size-extra-small;
-      color: $color-widgets;
+      color: $color-text-1;
       text-transform: uppercase;
       letter-spacing: 1px;
       font-weight: 500;
@@ -44,7 +56,7 @@
   }
 
   .widget-content {
-    min-height: 200px;
+    // min-height: 200px;
     background: white;
     box-shadow: 0 1px 0 0 #dbdfe5;
   }
@@ -56,13 +68,27 @@
   justify-content: flex-end;
   align-items: center;
 
+  button {
+    border: solid 1px rgba(74, 89, 106, 0.13);
+    border-radius: 50%;
+    padding: 6px;
+    height: 29px;
+    width: 29px;
+  }
+
   > * {
     display: flex;
     list-style: none;
-    margin: 0 0 0 $space-1;
+    margin: 0 0 0 14px;
 
     &:first-child {
       margin: 0;
+    }
+
+    .c-icon {
+      fill: $color-text-1;
+      width: 14px;
+      height: 14px;
     }
   }
 
@@ -72,13 +98,13 @@
     align-items: flex-start;
 
     svg {
-      fill: $color-widgets;
+      fill: $color-text-1;
       display: block;
     }
 
     &:hover {
       svg {
-        fill: darken($color-widgets, 25%);
+        fill: darken($color-text-1, 25%);
       }
     }
   }

@@ -1,23 +1,25 @@
 .l-main {
-  // max-width: $main-max-width;
-  // margin: 0 auto;
   background: white;
   box-shadow: 0 0 5px rgba(black, 0.1);
+  padding-top: $size-header;
 }
 
 .l-header {
-  position: relative;
+  position: absolute;
   z-index: 2;
+  top: 0;
+  left: 0;
 }
 
 .l-content {
   position: relative;
   z-index: 1;
   overflow: hidden;
+}
 
-  &.-fullscreen {
-    height: calc(100vh - 60px);
-  }
+// Util class, must override height property value
+.-fullscreen {
+  height: calc(100vh - #{$size-header}) !important;
 }
 
 .l-sidebar {
@@ -26,10 +28,12 @@
   left: 0;
   height: 100%;
   width: 50%;
-  z-index: 2;
   max-width: $max-width-sidebar;
   display: flex;
   flex-direction: column;
+  z-index: 999;
+  overflow: auto;
+  min-width: 650px;
 
   .l-filters {
     position: relative;

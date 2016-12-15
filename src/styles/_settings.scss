@@ -9,9 +9,12 @@ $color-tertiary: #294d94;
 $color-alternative: #fbbc22;
 $color-error: #d25766;
 $color-gray: #eff3f8;
-$color-widgets: #4a596a; // Bad name
 $color-white: white;
 $color-deactivate: #a6c3ff;
+$color-soft: #c2d7ff;
+$color-map: #f5f4f0;
+
+$color-text-1: #4a596a;
 
 // Font families
 $font-family-roboto: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -20,6 +23,7 @@ $font-family-roboto: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $font-size-extra-small:   10px;
 $font-size-small:   12px;
 $font-size-default: 14px;
+$font-size-big:     16px;
 $font-size-medium:  20px;
 
 // Grays
@@ -34,6 +38,9 @@ $border-color-1: #eee;
 // Margins & Paddings
 $space-1: 8px;
 $space-sidebar: 50px;
+
+// Sizes
+$size-header: 60px;
 
 // Modal
 $modal-max-width: 750px;

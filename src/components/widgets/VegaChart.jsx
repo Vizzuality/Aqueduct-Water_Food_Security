@@ -2,6 +2,7 @@ import React from 'react';
 import vega from 'vega';
 import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';
+import defaultTheme from 'data/vega-theme.json';
 
 class VegaChart extends React.Component {
 
@@ -27,42 +28,24 @@ class VegaChart extends React.Component {
     window.removeEventListener('resize', this.resizeEvent);
   }
 
-  getData() {
-    // const { data } = this.props;
-    // let dataObj = {};
-    const dataObj = this.props.data;
-
-    //
-    // if (typeof data === 'object') {
-    //   dataObj = data;
-    // } else if (typeof data === 'string') {
-    //   dataObj = JSON.parse(data);
-    // }
-    //
-    let widthSpace = 50;
-    let heightSpace = 50;
-
-    if (dataObj.padding) {
-      widthSpace = (dataObj.padding.left || 20) + (dataObj.padding.right || 20);
-      heightSpace = (dataObj.padding.top || 25) + (dataObj.padding.bottom || 25);
-    }
-
-    dataObj.width = this.width - widthSpace;
-    dataObj.height = this.height - heightSpace;
-
-    return dataObj;
-  }
-
   setSize() {
     this.width = this.chart.offsetWidth;
     this.height = this.chart.offsetHeight;
   }
 
   parseVega() {
-    const dataObj = this.getData();
-    vega.parse.spec(dataObj, (chart) => {
+    const defaultPadding = { top: 40, left: 40, bottom: 40, right: 40 };
+    const padding = this.props.data.padding || defaultPadding;
+    const size = {
+      width: this.width - padding.left - padding.right,
+      height: this.height - padding.top - padding.bottom
+    };
+    const data = Object.assign({}, this.props.data, size);
+
+    vega.parse.spec(data, defaultTheme, (chart) => {
       const chartVis = chart({
-        el: this.chart
+        el: this.chart,
+        renderer: 'svg'
       });
       chartVis.update();
     });

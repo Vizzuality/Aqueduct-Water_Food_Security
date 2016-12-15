@@ -65,7 +65,8 @@ const config = {
       fonts: 'src/fonts',
       main: 'src/main',
       reducers: 'src/reducers',
-      selectors: 'src/selectors'
+      selectors: 'src/selectors',
+      utils: 'src/utils'
     },
     extensions: ['', '.js', '.jsx', '.json', 'css', '.scss']
   },
@@ -84,7 +85,9 @@ const config = {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV)
       },
       config: {
-        apiUrl: JSON.stringify(process.env.API_URL)
+        apiUrl: JSON.stringify(process.env.API_URL),
+        opbeatOrgId: JSON.stringify(process.env.OPBEAT_ORGID),
+        opbeatAppId: JSON.stringify(process.env.OPBEAT_APPID)
       }
     })
   ]

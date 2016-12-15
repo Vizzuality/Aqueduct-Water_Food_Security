@@ -1,41 +1,23 @@
-import { SET_FILTERS, SET_TOTAL_FILTERS, SET_SCOPE_FILTER } from 'actions/filters';
+import {
+  SET_FILTERS
+} from 'constants/filters';
 
 const initialState = {
+  crop: 'all',
   scope: 'global',
-  global: {
-    datasetsIds: ['62520fd2-2dfb-4a13-840b-35ac88fc7aa4'],
-    layerType: 'food',
-    prediction: 'optimistic'
-  },
-  country: {
-    datasetsIds: ['4e6fbd04-253d-4fae-929e-0dbc8e106c86'],
-    layerType: 'water',
-    prediction: 'optimistic',
-    iso: null
-  },
-  subcatchment: {
-    datasetsIds: ['06c44f9a-aae7-401e-874c-de13b7764959'],
-    layerType: 'food',
-    prediction: 'business'
-  }
+  country: null,
+  scenario: 'optimistic',
+  year: 'baseline',
+  food: '76f53ba4-b1d9-4385-8bab-f56aa707d961',
+  water: '6c49ae6c-2c73-46ac-93ab-d4ed1b05d44e',
+  irrigation: ['irrigated', 'rainfed']
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case SET_FILTERS:
-      return Object.assign({}, state, {
-        [state.scope]: action.payload
-      });
-
-    case SET_TOTAL_FILTERS:
+    case SET_FILTERS: {
       return Object.assign({}, state, action.payload);
-
-    case SET_SCOPE_FILTER:
-      return Object.assign({}, state, {
-        scope: action.payload
-      });
-
-
+    }
     default:
       return state;
   }
