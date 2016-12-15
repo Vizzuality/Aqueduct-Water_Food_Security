@@ -16,13 +16,14 @@ export function concatenation(string, params) {
   let str = string;
   let sql;
   params.forEach((param) => {
-    sql = `WHERE ${compact(param.keyParams.map((p) => {
+    sql = `${compact(param.keyParams.map((p) => {
       const value = p.value;
       if (value) {
         return (isNaN(value)) ? `${p.key} = '${value}'` : `${p.key} = ${value}`;
       }
       return null;
     })).join(' AND ')}`;
+    sql = (sql) ? `WHERE ${sql}` : '';
     str = str.replace(new RegExp(`{{${param.key}}}`, 'g'), sql);
   });
   return str;

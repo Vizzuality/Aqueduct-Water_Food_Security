@@ -102,10 +102,9 @@ class Map extends React.Component {
   }
 
   addLayers() {
-    this.props.layersActive.map((layer) => {
+    this.props.layersActive.forEach((layer) => {
       this.addLayer(layer);
     });
-    // console.info(this.props.layersActive);
   }
 
   removeLayer(layer) {
