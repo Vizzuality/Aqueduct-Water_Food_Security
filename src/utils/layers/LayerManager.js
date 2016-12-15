@@ -6,7 +6,7 @@ import forIn from 'lodash/forIn';
 // Layers
 import BubbleLayer from 'utils/layers/markers/BubbleLayer';
 // Functions
-import { waterConverter, foodConverter } from 'utils/filters/filters'
+import { getWaterSql, getFoodSql } from 'utils/filters/filters';
 
 export default class LayerManager {
 
@@ -66,7 +66,7 @@ export default class LayerManager {
     switch (layer.type) {
       case 'bubble': {
         // Get the sql from the current layer instead of hardcoding it
-        const request = new Request(`https://wri-01.cartodb.com/api/v2/sql/?q=${foodConverter(layer.sql, options, layer.params_config)}`, {
+        const request = new Request(`https://wri-01.cartodb.com/api/v2/sql/?q=${getFoodSql(layer.sql, options, layer.params_config)}`, {
           method: 'GET'
         });
 
@@ -179,7 +179,7 @@ export default class LayerManager {
     layer.id = layerSpec.id;
     layer.body.layers.map((l) => {
       l.options = forIn(l.options, (v,k) => {
-        l.options[k] = waterConverter(v, options, layer.paramsConfig, layer.sqlConfig);
+        l.options[k] = getWaterSql(v, options, layer.paramsConfig, layer.sqlConfig);
       });
       l.options.cartocss_version = l.options.cartocssVersion;
       l.user_name = layer.account;
@@ -209,10 +209,8 @@ export default class LayerManager {
       .then((data) => {
         // we can switch off the layer while it is loading
         const tileUrl = `https://${layer.account}.cartodb.com/api/v1/map/${data.layergroupid}/{z}/{x}/{y}.png`;
+
         this._mapLayers[layer.id] = L.tileLayer(tileUrl).addTo(this._map).setZIndex(1000);
-        // if (zIndex) {
-        //   this._mapLayers[layer.id] = L.tileLayer(tileUrl).addTo(this._map).setZIndex(zIndex);
-        // }
         this._mapLayers[layer.id].on('load', () => {
           this._onLayerAddedSuccess && this._onLayerAddedSuccess(layer);
         });

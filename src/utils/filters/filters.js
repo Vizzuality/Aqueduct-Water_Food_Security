@@ -10,7 +10,7 @@ export function widgetsFilter(widget, { crop, country }) {
 }
 
 // LAYER FUNCTIONS
-export function waterConverter(string = '', filters = {}, paramsConfig = [], sqlConfig = []) {
+export function getWaterSql(string = '', filters = {}, paramsConfig = [], sqlConfig = []) {
   const yearOptions = {
     baseline: 2010,
     2020: 2020,
@@ -41,17 +41,19 @@ export function waterConverter(string = '', filters = {}, paramsConfig = [], sql
       key: param.key,
       keyParams: param.keyParams.map((p) => {
         switch (p.key) {
-          case 'year':
+          case 'year': {
             return {
               key: p.key,
               value: yearOptions[filters[p.key]]
             };
-          case 'crop':
+          }
+          case 'crop': {
             const crop = filters[param.key];
             return {
               key: param.key,
               value: (crop !== 'all') ? crop : null
             };
+          }
 
           default:
             return {
@@ -71,7 +73,7 @@ export function waterConverter(string = '', filters = {}, paramsConfig = [], sql
 }
 
 
-export function foodConverter(string = '', filters = {}, paramsConfig = [], sqlConfig = []) {
+export function getFoodSql(string = '', filters = {}, paramsConfig = [], sqlConfig = []) {
   // Dictionary
   const yearOptions = {
     baseline: 2005,
@@ -135,48 +137,3 @@ function getWaterColumn({ year }) {
 
   return `${_indicator}${_year}${_scenario}${_dataType}${_sufix}`;
 }
-
-
-// // TESTING
-// const waterConfig = waterConverter('SELECT {{water_column}} from {{scenario}} {{crop}} {{where}} {{where1}}', {
-//   crop: 'all',
-//   scope: 'global',
-//   country: null,
-//   scenario: 'optimistic',
-//   year: 'baseline',
-//   food: 'xxx',
-//   water: 'xxx'
-// }, [
-//   {
-//     key: 'water_column',
-//     required: true
-//   },
-//   {
-//     key: 'crop',
-//     required: true
-//   },
-//   {
-//     key: 'scenario',
-//     required: true
-//   }
-// ], [
-//   {
-//     key: 'where',
-//     required: true,
-//     keyParams: [
-//       { key: 'year', required: true },
-//       { key: 'crop' },
-//       { key: 'country' }
-//     ]
-//   },
-//   {
-//     key: 'where1',
-//     required: true,
-//     keyParams: [
-//       { key: 'year', required: true },
-//       { key: 'crop' },
-//       { key: 'country' }
-//     ]
-//   }
-// ]);
-// console.info(waterConfig);
