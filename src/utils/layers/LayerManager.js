@@ -63,38 +63,6 @@ export default class LayerManager {
       }
     ];
 
-    switch (layer.type) {
-      case 'bubble': {
-        // Get the sql from the current layer instead of hardcoding it
-        const request = new Request(`https://wri-01.cartodb.com/api/v2/sql/?q=${getFoodSql(layer.sql, options, layer.params_config)}`, {
-          method: 'GET'
-        });
-
-        fetch(request)
-          .then((res) => {
-            if (!res.ok) {
-              const error = new Error(res.statusText);
-              error.response = res;
-              throw error;
-            }
-            return res.json();
-          })
-          .then((data) => {
-            const geojson = data.rows[0].data.features;
-            this._mapLayers[layer.id] = new BubbleLayer(
-              geojson, {}
-            ).addTo(this._map);
-            this._onLayerAddedSuccess && this._onLayerAddedSuccess(layer);
-          })
-          .catch((err) => {
-            console.error('Request failed', err);
-            this._onLayerAddedError && this._onLayerAddedError(layer);
-          });
-        break;
-      }
-      default:
-        throw new Error('"type" specified in layer spec doesn`t exist');
-    }
   }
 
 
@@ -173,53 +141,86 @@ export default class LayerManager {
   }
 
   _addCartoLayer(layerSpec, opts) {
-    const layer = layerSpec.layerConfig;
+    const layer = Object.assign({}, layerSpec.layerConfig, {
+      id: layerSpec.id,
+      category: layerSpec.category
+    });
     const options = opts;
 
-    layer.id = layerSpec.id;
-    layer.body.layers.map((l) => {
-      l.options = forIn(l.options, (v,k) => {
-        l.options[k] = getWaterSql(v, options, layer.paramsConfig, layer.sqlConfig);
-      });
-      l.options.cartocss_version = l.options.cartocssVersion;
-      l.user_name = layer.account;
-      return l;
-    });
-
-    const request = new Request(`https://${layer.account}.cartodb.com/api/v1/map`, {
-      method: 'POST',
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      }),
-      body: JSON.stringify(layer.body)
-    });
-
-    // add to the load layers lists before the fetch
-    // to avoid multiples loads while the layer is loading
-    this._mapLayers[layer.id] = true;
-    fetch(request)
-      .then((res) => {
-        if (!res.ok) {
-          const error = new Error(res.statusText);
-          error.response = res;
-          throw error;
-        }
-        return res.json();
-      })
-      .then((data) => {
-        // we can switch off the layer while it is loading
-        const tileUrl = `https://${layer.account}.cartodb.com/api/v1/map/${data.layergroupid}/{z}/{x}/{y}.png`;
-
-        this._mapLayers[layer.id] = L.tileLayer(tileUrl).addTo(this._map).setZIndex(1000);
-        this._mapLayers[layer.id].on('load', () => {
-          this._onLayerAddedSuccess && this._onLayerAddedSuccess(layer);
+    switch (layer.category) {
+      case 'water': {
+        const body = getWaterSql(layer, options);
+        const request = new Request(`https://${layer.account}.cartodb.com/api/v1/map`, {
+          method: 'POST',
+          headers: new Headers({
+            'Content-Type': 'application/json'
+          }),
+          body: JSON.stringify(body)
         });
-        this._mapLayers[layer.id].on('tileerror', () => {
-          this._onLayerAddedError && this._onLayerAddedError(layer);
+
+        // add to the load layers lists before the fetch
+        // to avoid multiples loads while the layer is loading
+        this._mapLayers[layer.id] = true;
+        fetch(request)
+          .then((res) => {
+            if (!res.ok) {
+              const error = new Error(res.statusText);
+              error.response = res;
+              throw error;
+            }
+            return res.json();
+          })
+          .then((data) => {
+            // we can switch off the layer while it is loading
+            const tileUrl = `https://${layer.account}.cartodb.com/api/v1/map/${data.layergroupid}/{z}/{x}/{y}.png`;
+
+            this._mapLayers[layer.id] = L.tileLayer(tileUrl).addTo(this._map).setZIndex(1000);
+
+            this._mapLayers[layer.id].on('load', () => {
+              this._onLayerAddedSuccess && this._onLayerAddedSuccess(layer);
+            });
+            this._mapLayers[layer.id].on('tileerror', () => {
+              this._onLayerAddedError && this._onLayerAddedError(layer);
+            });
+          })
+          .catch((err) => {
+            this._onLayerAddedError && this._onLayerAddedError(layer);
+          });
+        break;
+      }
+
+      case 'food': {
+        const body = getFoodSql(layer, options);
+        // Get the sql from the current layer instead of hardcoding it
+        const request = new Request(body.url, {
+          method: 'GET'
         });
-      })
-      .catch((err) => {
-        this._onLayerAddedError && this._onLayerAddedError(layer);
-      });
+
+        fetch(request)
+          .then((res) => {
+            if (!res.ok) {
+              const error = new Error(res.statusText);
+              error.response = res;
+              throw error;
+            }
+            return res.json();
+          })
+          .then((data) => {
+            const geojson = data.rows[0].data.features;
+            this._mapLayers[layer.id] = new BubbleLayer(
+              geojson, {}
+            ).addTo(this._map);
+            this._onLayerAddedSuccess && this._onLayerAddedSuccess(layer);
+          })
+          .catch((err) => {
+            console.error('Request failed', err);
+            this._onLayerAddedError && this._onLayerAddedError(layer);
+          });
+        break;
+      }
+
+      default:
+        throw new Error('"category" specified in layer spec doesn`t exist');
+    }
   }
 }

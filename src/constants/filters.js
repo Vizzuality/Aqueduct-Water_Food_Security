@@ -39,10 +39,10 @@ export const yearOptions = [
 
 export const cropOptions = [
   { value: 'all', label: 'All crops' },
+  { value: 'maize', label: 'Maize' },
   { value: 'rice', label: 'Rice' },
-  { value: 'corn', label: 'Corn' },
-  { value: 'soy', label: 'Soy' },
-  { value: 'oat', label: 'Oat' }
+  { value: 'soybean', label: 'Soybean' },
+  { value: 'wheat', label: 'Wheat' }
 ];
 
 export const irrigationOptions = [

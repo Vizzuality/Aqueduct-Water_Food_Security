@@ -10,7 +10,7 @@ export function widgetsFilter(widget, { crop, country }) {
 }
 
 // LAYER FUNCTIONS
-export function getWaterSql(string = '', filters = {}, paramsConfig = [], sqlConfig = []) {
+export function getWaterSql(layer = {}, filters = {}) {
   const yearOptions = {
     baseline: 2010,
     2020: 2020,
@@ -20,7 +20,7 @@ export function getWaterSql(string = '', filters = {}, paramsConfig = [], sqlCon
   };
 
   // Merge filters && paramsConfig
-  const params = paramsConfig.map((param) => {
+  const params = layer.paramsConfig.map((param) => {
     switch (param.key) {
       case 'water_column':
         return {
@@ -36,7 +36,7 @@ export function getWaterSql(string = '', filters = {}, paramsConfig = [], sqlCon
   });
 
   // Merge filters && sqlConfig
-  const sqlParams = sqlConfig.map((param) => {
+  const sqlParams = layer.sqlConfig.map((param) => {
     return {
       key: param.key,
       keyParams: param.keyParams.map((p) => {
@@ -48,10 +48,22 @@ export function getWaterSql(string = '', filters = {}, paramsConfig = [], sqlCon
             };
           }
           case 'crop': {
-            const crop = filters[param.key];
             return {
-              key: param.key,
-              value: (crop !== 'all') ? crop : null
+              key: p.key,
+              value: (filters[p.key] !== 'all') ? filters[p.key] : null
+            };
+          }
+          case 'irrigation': {
+            return {
+              key: p.key,
+              // We can't have a irrigation different from 1, in this case we don't need to add anything
+              value: (!filters[p.key] || filters[p.key].length === 0 || filters[p.key].length === 2) ? null : filters[p.key]
+            };
+          }
+          case 'iso': {
+            return {
+              key: p.key,
+              value: (filters.country) ? filters.country : null
             };
           }
 
@@ -65,15 +77,22 @@ export function getWaterSql(string = '', filters = {}, paramsConfig = [], sqlCon
     };
   });
 
-  let str = string;
-  str = substitution(str, params);
-  str = concatenation(str, sqlParams);
-
-  return str;
+  return Object.assign({}, layer.body, {
+    layers: layer.body.layers.map((l) => {
+      return Object.assign({}, l, {
+        options: Object.assign({}, l.options, {
+          user_name: layer.account,
+          cartocss: getConversion(l.options.cartocss, params, sqlParams),
+          cartocss_version: l.options.cartocssVersion,
+          sql: getConversion(l.options.sql, params, sqlParams)
+        })
+      });
+    })
+  });
 }
 
 
-export function getFoodSql(string = '', filters = {}, paramsConfig = [], sqlConfig = []) {
+export function getFoodSql(layer = {}, filters = {}) {
   // Dictionary
   const yearOptions = {
     baseline: 2005,
@@ -83,8 +102,7 @@ export function getFoodSql(string = '', filters = {}, paramsConfig = [], sqlConf
     2050: 2050
   };
 
-  // Merge filters && paramsConfig
-  const params = paramsConfig.map((param) => {
+  const params = layer.paramsConfig.map((param) => {
     switch (param.key) {
       case 'year':
         return {
@@ -100,7 +118,7 @@ export function getFoodSql(string = '', filters = {}, paramsConfig = [], sqlConf
   });
 
   // Merge filters && sqlConfig
-  const sqlParams = sqlConfig.map((param) => {
+  const sqlParams = layer.sqlConfig.map((param) => {
     return {
       key: param.key,
       keyParams: param.keyParams.map((p) => {
@@ -112,14 +130,27 @@ export function getFoodSql(string = '', filters = {}, paramsConfig = [], sqlConf
     };
   });
 
-  let str = string;
-  str = substitution(str, params);
-  str = concatenation(str, sqlParams);
-
-  return str;
+  return Object.assign({}, layer.body, {
+    url: getConversion(layer.body.url, params, sqlParams)
+  });
 }
 
-function getWaterColumn({ year }, sufix) {
+function getWaterColumn({ water, year }, sufix) {
+  const layers = {
+    '6c49ae6c-2c73-46ac-93ab-d4ed1b05d44e': {
+      indicator: 'ws',
+      dataType: 't'
+    },
+    '345cfef3-ee8a-46bc-9bb9-164c406dfd2c': {
+      indicator: 'ws',
+      dataType: 'u'
+    },
+    'd9785282-2140-463f-a82d-f7296687055a': {
+      indicator: 'ws',
+      dataType: 't'
+    }
+  };
+
   // Dictionary
   const yearOptions = {
     baseline: 'bs',
@@ -129,9 +160,9 @@ function getWaterColumn({ year }, sufix) {
     2050: '50'
   };
 
-  const _indicator = 'ws'; // 'ws'=>'Water riks layer', 'sv'=> 'Ground layer'
+  const _indicator = layers[water].indicator;
   const _year = yearOptions[year];
-  const _dataType = 't';
+  const _dataType = layers[water].dataType;
   const _scenario = (year === 'baseline') ? '00' : '28';
 
   return `${_indicator}${_year}${_scenario}${_dataType}${sufix || 'r'}`;
@@ -203,4 +234,12 @@ export function getWidgetSql(widgetConfig, filters) {
   });
 
   return newConfig;
+}
+
+function getConversion(string, params, sqlParams) {
+  let str = string;
+  str = substitution(str, params);
+  str = concatenation(str, sqlParams);
+
+  return str;
 }
