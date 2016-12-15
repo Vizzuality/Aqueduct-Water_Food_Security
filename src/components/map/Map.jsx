@@ -37,38 +37,26 @@ class Map extends React.Component {
       this.addMapEventListeners();
     }
 
-    this.addLayer({
-      id: 5,
-      provider: 'marker',
-      layerConfig: {
-        body: {},
-        type: 'bubble'
-      }
-    });
+    this.addLayers();
   }
 
   componentWillReceiveProps(nextProps) {
     if ((nextProps.mapConfig.fitOn && !this.props.mapConfig.fitOn) || (this.props.mapConfig.fitOn && this.props.mapConfig.fitOn.id !== nextProps.mapConfig.fitOn.id)) {
       this.fitMap(nextProps.mapConfig.fitOn.geometry);
     }
-
-    if (!isEqual(nextProps.filters, this.props.filters)) {
-      // we need to control the loading of layers or abort the request
-      this.removeLayers();
-      this.addLayer({
-        id: 5,
-        provider: 'marker',
-        layerConfig: {
-          body: {},
-          type: 'bubble'
-        }
-      });
-    }
   }
 
   // TODO: update with real check
-  shouldComponentUpdate() {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (!isEqual(nextProps.filters, this.props.filters) || !isEqual(nextProps.layersActive, this.props.layersActive)) {
+      return true;
+    }
     return false;
+  }
+
+  componentDidUpdate() {
+    this.removeLayers();
+    this.addLayers();
   }
 
   componentWillUnmount() {
@@ -108,27 +96,16 @@ class Map extends React.Component {
     this.map.off('dragend');
   }
 
-  // RENDER
-  render() {
-    const layers = [
-      { title: 'Layer title' },
-      { title: 'Layer title' },
-      { title: 'Layer title' },
-      { title: 'Layer title' },
-      { title: 'Layer title' },
-      { title: 'Layer title' }
-    ];
-    return (
-      <div className="c-map">
-        <div ref={(node) => { this.mapNode = node; }} className="map-leaflet" />
-        <Legend className="-map" layers={layers} />
-      </div>
-    );
-  }
-
   // Layer methods
   addLayer(layer) {
     this.layerManager.addLayer(layer, this.props.filters);
+  }
+
+  addLayers() {
+    this.props.layersActive.map((layer) => {
+      this.addLayer(layer);
+    });
+    // console.info(this.props.layersActive);
   }
 
   removeLayer(layer) {
@@ -139,12 +116,22 @@ class Map extends React.Component {
     this.layerManager.removeLayers();
   }
 
+  // RENDER
+  render() {
+    return (
+      <div className="c-map">
+        <div ref={(node) => { this.mapNode = node; }} className="map-leaflet" />
+        {/* <Legend className="-map" layers={this.props.layersActive} /> */}
+      </div>
+    );
+  }
 }
 
 Map.propTypes = {
   // STORE
   mapConfig: React.PropTypes.object,
   filters: React.PropTypes.object,
+  layersActive: React.PropTypes.array,
   // ACTIONS
   setMapParams: React.PropTypes.func
 };

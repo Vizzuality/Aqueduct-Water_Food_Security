@@ -1,54 +1,49 @@
 [
   {
-    "id": "xxx",
-    "name": "Demand",
+    "id": "76f53ba4-b1d9-4385-8bab-f56aa707d961",
+    "name": "Food Demand",
     "category": "food"
   },
   {
-    "id": "xxx",
-    "name": "Production",
+    "id": "0eb7ef57-037b-4356-8902-04a39cf4bd24",
+    "name": "Food production",
     "category": "food"
   },
   {
-    "id": "xxx",
-    "name": "Trade",
+    "id": "bc60a695-ab95-4264-8058-bd61d13c4918",
+    "name": "Net trade",
     "category": "food"
   },
   {
-    "id": "xxx",
+    "id": "d16c518b-70c5-4381-911a-a1784ed402bf",
     "name": "World price",
     "category": "food"
   },
   {
-    "id": "xxx",
-    "name": "Area",
+    "id": "ccdaede2-5343-49d6-8ea9-769528c3ab92",
+    "name": "Kcal per capita",
     "category": "food"
   },
   {
-    "id": "xxx",
-    "name": "Yield",
-    "category": "food"
-  },
-  {
-    "id": "xxx",
+    "id": "1c9a1e4f-455b-4c03-ac88-dd2242a2e4b1",
     "name": "Population at risk of hunger",
     "category": "food"
   },
 
 
-  
+
   {
-    "id": "xxx",
+    "id": "6c49ae6c-2c73-46ac-93ab-d4ed1b05d44e",
     "name": "Water stress",
     "category": "water"
   },
   {
-    "id": "xxx",
+    "id": "345cfef3-ee8a-46bc-9bb9-164c406dfd2c",
     "name": "Interanual variability",
     "category": "water"
   },
   {
-    "id": "xxx",
+    "id": "d9785282-2140-463f-a82d-f7296687055a",
     "name": "Seasonal variability",
     "category": "water"
   }

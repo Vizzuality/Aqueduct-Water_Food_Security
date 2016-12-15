@@ -13,7 +13,8 @@ export function getDatasets() {
   return (dispatch) => {
     // Waiting for fetch from server -> Dispatch loading
     dispatch({ type: GET_DATASETS_LOADING });
-    fetch(new Request(`${config.apiUrl}/dataset?app=aqueduct&includes=widget,layer&page[size]=999`))
+    // TODO: remove the date now
+    fetch(new Request(`${config.apiUrl}/dataset?app=aqueduct&includes=widget,layer&page[size]=${Date.now()}`))
     .then((response) => {
       if (response.ok) return response.json();
       throw new Error(response.statusText);

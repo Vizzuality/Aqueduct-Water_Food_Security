@@ -4,7 +4,7 @@ import React from 'react';
 import Sidebar from 'components/ui/Sidebar';
 import Map from 'components/map/Map';
 import Filters from 'components/filters/Filters';
-import WidgetList from 'containers/widgets/WidgetList';
+import WidgetList from 'components/widgets/WidgetList';
 
 class MapPage extends React.Component {
 
@@ -30,12 +30,12 @@ class MapPage extends React.Component {
           </div>
           {/* Widget List */}
           <div className="l-sidebar-content">
-            <WidgetList />
+            <WidgetList widgetsActive={this.props.widgetsActive} />
           </div>
         </Sidebar>
 
         {/* Map */}
-        <Map mapConfig={mapConfig} filters={this.props.filters} setMapParams={this.props.setMapParams} />
+        <Map mapConfig={mapConfig} filters={this.props.filters} layersActive={this.props.layersActive} setMapParams={this.props.setMapParams} />
       </div>
     );
   }
@@ -43,10 +43,13 @@ class MapPage extends React.Component {
 
 MapPage.propTypes = {
   mapConfig: React.PropTypes.object,
-  setMapParams: React.PropTypes.func,
-  updateMapUrl: React.PropTypes.func,
   filters: React.PropTypes.object,
   countries: React.PropTypes.object,
+  layersActive: React.PropTypes.array,
+  widgetsActive: React.PropTypes.array,
+  // Actions
+  setMapParams: React.PropTypes.func,
+  updateMapUrl: React.PropTypes.func,
   setFilters: React.PropTypes.func
 };
 
