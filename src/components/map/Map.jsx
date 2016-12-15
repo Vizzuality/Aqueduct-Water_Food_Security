@@ -28,9 +28,14 @@ class Map extends React.Component {
 
     this.map.attributionControl.addAttribution('&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>');
     this.map.zoomControl && this.map.zoomControl.setPosition('topright');
-    this.tileLayer = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}')
+
+    this.tileLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/wri.c974eefc/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoid3JpIiwiYSI6IjU3NWNiNGI4Njc4ODk4MmIyODFkYmJmM2NhNDgxMWJjIn0.v1tciCeBElMdpnrikGDrPg', {})
                       .addTo(this.map)
                       .setZIndex(0);
+
+    this.labelLayer = L.tileLayer("https://api.tiles.mapbox.com/v4/wri.acf5a04e/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoid3JpIiwiYSI6IjU3NWNiNGI4Njc4ODk4MmIyODFkYmJmM2NhNDgxMWJjIn0.v1tciCeBElMdpnrikGDrPg", {})
+                       .addTo(this.map)
+                       .setZIndex(1);
 
     if (this.props.setMapParams) {
       // Listen to leaflet events
@@ -102,10 +107,9 @@ class Map extends React.Component {
   }
 
   addLayers() {
-    this.props.layersActive.map((layer) => {
+    this.props.layersActive.forEach((layer) => {
       this.addLayer(layer);
     });
-    // console.info(this.props.layersActive);
   }
 
   removeLayer(layer) {

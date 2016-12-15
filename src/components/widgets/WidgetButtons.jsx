@@ -19,14 +19,13 @@ class WidgetButtons extends React.Component {
     return (
       <ul className="c-widget-buttons">
         <li>
-          <button data-action="share" className="widget-button" onClick={this.triggerAction}>
-            <Icon name="icon-download" />
+          <button data-action="info" className="widget-button" onClick={this.triggerAction}>
+            <Icon name="icon-info" />
           </button>
         </li>
-
         <li>
           <button data-action="download" className="widget-button" onClick={this.triggerAction}>
-            <Icon name="icon-info" />
+            <Icon name="icon-download" />
           </button>
         </li>
       </ul>

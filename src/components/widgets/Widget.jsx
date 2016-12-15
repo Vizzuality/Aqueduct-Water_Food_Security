@@ -19,19 +19,20 @@ class Widget extends React.Component {
   }
 
   render() {
-    const { name, widgetConfig } = this.props.widget;
+    const { name, description, widgetConfig } = this.props.widget;
     return (
       <div className="c-widget">
         <div>
           <header className="widget-header">
             <div className="widget-titles">
-              <h2>{name}</h2>
+              <h2 className="widget-title">{name}</h2>
+              <h3 className="widget-description">{description}</h3>
             </div>
             <WidgetButtons triggerAction={this.triggerAction} />
           </header>
           <div className="widget-content">
             {/* WidgetLegend */}
-            <WidgetChart config={widgetConfig} />
+            <WidgetChart config={widgetConfig} filters={this.props.filters} />
             {/* WidgetBaseline */}
           </div>
         </div>
@@ -41,7 +42,8 @@ class Widget extends React.Component {
 }
 
 Widget.propTypes = {
-  widget: React.PropTypes.object
+  widget: React.PropTypes.object,
+  filters: React.PropTypes.object
 };
 
 

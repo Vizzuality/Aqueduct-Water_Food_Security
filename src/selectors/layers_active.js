@@ -1,4 +1,6 @@
+import find from 'lodash/find';
 import { createSelector } from 'reselect';
+import layerSpec from 'utils/layers/layer_spec.json';
 
 // Get the datasets and filters from state
 const datasets = state => state.datasets;
@@ -11,13 +13,13 @@ const getActiveLayers = (_datasets, _filters) => {
   _datasets.list.forEach((dataset) => {
     if (dataset.layer.length) {
       layer = dataset.layer[0].attributes;
-      // if (dataset.id === _filters.water || dataset.id === _filters.food) {
-      if (dataset.id === _filters.water) {
-        layerList.push(layer);
+      if (dataset.id === _filters.water || dataset.id === _filters.food) {
+        layerList.push(Object.assign({}, {
+          category: find(layerSpec, { id: dataset.id }).category
+        }, layer));
       }
     }
   });
-  console.log(layerList);
   return layerList;
 };
 
