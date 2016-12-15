@@ -16,15 +16,6 @@ class WidgetChart extends React.Component {
   }
 
   render() {
-    // if (this.props.data) {
-    //   const widget = this.props.data[this.props.slug];
-    //   if (widget && widget.widget_config) {
-    //     return (
-    //       <VegaChart data={data}/>
-    //     );
-    //   }
-    // }
-    // return null;
     const widgetConfig = getWidgetSql(this.props.config, this.props.filters);
     return (
       <VegaChart data={widgetConfig} />
