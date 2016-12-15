@@ -1,15 +1,26 @@
+import initOpbeat from 'opbeat-react';
+import 'opbeat-react/router';
 import React from 'react';
 import { render } from 'react-dom';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import { browserHistory } from 'react-router';
 import thunk from 'redux-thunk';
+import { createOpbeatMiddleware } from 'opbeat-react/redux';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
 
 import * as reducers from './reducers';
 import Routes from './routes';
 
 import './styles/index.scss';
+
+/**
+ * Monitoring
+ */
+initOpbeat({
+  orgId: config.opbeatOrgId,
+  appId: config.opbeatAppId,
+});
 
 /**
  * Reducers
@@ -32,7 +43,7 @@ export const store = createStore(
   compose(
     /* The router middleware MUST be before thunk otherwise the URL changes
     * inside a thunk function won't work properly */
-    applyMiddleware(middlewareRouter, thunk),
+    applyMiddleware(middlewareRouter, thunk, createOpbeatMiddleware()),
     /* Redux dev tool, install chrome extension in
      * https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en */
     typeof window === 'object' &&
