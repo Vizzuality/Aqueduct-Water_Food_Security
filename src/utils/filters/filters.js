@@ -151,7 +151,6 @@ export function getWidgetSql(widgetConfig, filters) {
   };
 
   // paramsConfig transform
-
   const paramsConfig = widgetConfig.paramsConfig.map((param) => {
     switch (param.key) {
       case 'water_column':
@@ -167,20 +166,38 @@ export function getWidgetSql(widgetConfig, filters) {
     }
   });
 
-  // TODO: sqlConfig transform
+  // sqlConfig transform
   const sqlConfig = widgetConfig.sqlConfig.map((param) => {
-    console.info(param);
+    return {
+      key: param.key,
+      keyParams: param.keyParams.map((p) => {
+        switch (p.key) {
+          case 'year': {
+            return {
+              key: p.key,
+              value: yearOptions[filters[p.key]]
+            };
+          }
+          default:
+            return {
+              key: p.key,
+              value: filters[p.key]
+            };
+        }
+      })
+    };
   });
 
   // sql query substitution
-
   data.forEach((item) => {
     if (item.url) {
       item.url = substitution(item.url, paramsConfig);
+      item.url = concatenation(item.url, sqlConfig);
     }
     if (item.value) {
       Object.keys(item.value).forEach((key) => {
-        item.value[key] = substitution(item.url, paramsConfig);
+        item.value[key] = substitution(item.value[key], paramsConfig);
+        item.value[key] = concatenation(item.value[key], sqlConfig);
       });
     }
   });
