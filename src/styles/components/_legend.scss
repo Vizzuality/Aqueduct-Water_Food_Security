@@ -1,10 +1,128 @@
+// LEGEND
 .c-legend {
+  min-width: 300px;
+
   &.-map {
     position: absolute;
     right: 1rem;
     bottom: 1rem;
-    background-color: white;
+    background-color: rgba(245, 243, 240, 0.9);
     z-index: 999;
+    width: 400px;
   }
 }
-.c-legend-item {}
+
+// ITEM
+.c-legend-item {
+  list-style: none;
+  padding: 14px 14px 14px 14px;;
+  border-bottom: 1px solid #a5a696;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .legend-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  h3 {
+    font-weight: 500;
+    font-size: $font-size-big;
+    color: $color-text-1;
+
+    .category {
+      font-size: $font-size-default;
+      font-weight: 400;
+      text-transform: capitalize;
+      padding: 0 $space-1 0 0;
+    }
+  }
+}
+
+// BUTTONS
+.c-legend-buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 5px 0 0 5px;
+
+  button {
+  }
+
+  > * {
+    display: flex;
+    list-style: none;
+    margin: 0 0 0 14px;
+
+    &:first-child {
+      margin: 0;
+    }
+
+    .c-icon {
+      fill: $color-text-1;
+      width: 12px;
+      height: 12px;
+    }
+  }
+
+  .legend-button {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    svg {
+      fill: $color-text-1;
+      display: block;
+    }
+
+    &:hover {
+      svg {
+        fill: darken($color-text-1, 25%);
+      }
+    }
+  }
+}
+
+
+// GRAPH
+.c-legend-graph {
+  margin: $space-1 0 0;
+  .graph {
+    display: flex;
+
+    // BASIC (CHOROPLETH...)
+    &.-basic {
+      .graph-item {
+        .color {
+          display: block;
+          height: 7px;
+          border-top: 1px solid $border-color-1;
+          border-bottom: 1px solid $border-color-1;
+        }
+
+        .label {
+          display: block;
+          margin: 3px 0 0;
+          line-height: 1.25;
+          color: $color-text-1;
+          font-size: $font-size-small;
+          font-weight: 400;
+        }
+
+        &:first-child {
+          .color {
+            border-left: 1px solid $border-color-1;
+          }
+        }
+        &:last-child {
+          .color {
+            border-right: 1px solid $border-color-1;
+          }
+        }
+      }
+    }
+  }
+}

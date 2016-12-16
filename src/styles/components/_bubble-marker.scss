@@ -10,11 +10,11 @@
   border: 10px solid rgba($color-white, 0.2);
   border-radius: 100%;
 
-  box-shadow: 0 0 6px 1px rgba(black, 0.3);
+  box-shadow: 0 0 3px 1px rgba(0,0,0,.15);
   transition: all .3s ease;
 
   &:hover {
-    box-shadow: 0 0 6px 1px rgba(black, 0.3);
+    box-shadow: 0 0 3px 1px rgba(0,0,0,.15);
     z-index: 1000 !important;
   }
 
