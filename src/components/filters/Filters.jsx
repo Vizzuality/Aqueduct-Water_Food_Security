@@ -8,7 +8,7 @@ import Icon from 'components/ui/Icon';
 import { SimpleSelect } from 'react-selectize';
 import { Link } from 'react-router';
 // Options
-import { scenarioOptions, waterOptions, foodOptions, scopeOptions, yearOptions, cropOptions, irrigationOptions } from 'constants/filters';
+import { waterOptions, foodOptions, scopeOptions, yearOptions, cropOptions, irrigationOptions } from 'constants/filters';
 
 export default class Filters extends React.Component {
 
@@ -75,7 +75,7 @@ export default class Filters extends React.Component {
                   {/* Crops */}
                   <div className="filter-item">
                     <div className="c-select">
-                      <span className="title">Crops</span>
+                      <span className="title">Crops <Icon name="icon-question_mark" className="title-icon" /></span>
                       <SimpleSelect
                         hideResetButton
                         options={cropOptions}
@@ -95,7 +95,7 @@ export default class Filters extends React.Component {
                   {/* Water */}
                   <div className="filter-item">
                     <div className="c-select">
-                      <span className="title">Water</span>
+                      <span className="title">Water <Icon name="icon-question_mark" className="title-icon" /></span>
                       <SimpleSelect
                         hideResetButton
                         options={waterOptions}
@@ -109,7 +109,7 @@ export default class Filters extends React.Component {
                   {/* Food */}
                   <div className="filter-item">
                     <div className="c-select">
-                      <span className="title">Food</span>
+                      <span className="title">Food <Icon name="icon-question_mark" className="title-icon" /></span>
                       <SimpleSelect
                         hideResetButton
                         options={foodOptions}
@@ -127,7 +127,7 @@ export default class Filters extends React.Component {
                   <div className="filter-item">
                     {/* Year */}
                     <div className="c-select">
-                      <span className="title">Timeframe</span>
+                      <span className="title">Timeframe <Icon name="icon-question_mark" className="title-icon" /></span>
                       <SimpleSelect
                         hideResetButton
                         options={yearOptions}
