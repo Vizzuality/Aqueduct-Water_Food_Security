@@ -10,7 +10,15 @@ export default class CompareList extends React.Component {
     for (let i = 0; i < this.props.items; i += 1) {
       items.push(
         <div key={i} className="small-6">
-          <CompareItem filters={this.props.filters} loading={this.props.loading} widgetsActive={this.props.widgetsActive} index={i} country={this.props.countries[i]} countryList={this.props.countryList} />
+          <CompareItem
+            filters={this.props.filters}
+            loading={this.props.loading}
+            widgetsActive={this.props.widgetsActive}
+            index={i}
+            country={this.props.countries[i]}
+            countryList={this.props.countryList}
+            layersActive={this.props.layersActive}
+          />
         </div>
       );
     }
@@ -36,5 +44,6 @@ CompareList.propTypes = {
   loading: React.PropTypes.bool,
   items: React.PropTypes.number,
   widgetsActive: React.PropTypes.array,
-  filters: React.PropTypes.object
+  filters: React.PropTypes.object,
+  layersActive: React.PropTypes.array
 };

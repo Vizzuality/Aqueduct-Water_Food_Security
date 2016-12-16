@@ -6,7 +6,6 @@ const initialState = {
   crop: 'all',
   scope: 'global',
   country: null,
-  scenario: 'optimistic',
   year: 'baseline',
   food: '76f53ba4-b1d9-4385-8bab-f56aa707d961',
   water: '6c49ae6c-2c73-46ac-93ab-d4ed1b05d44e',

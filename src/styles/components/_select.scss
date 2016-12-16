@@ -5,12 +5,31 @@
   .title {
     color: $color-white;
     font-size: $font-size-big;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .title-icon {
+    background-color: $color-deactivate;
+    fill: $color-secondary;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    padding: 2px;
+    margin-right: 20px;
+    cursor: pointer;
+    &:hover {
+      // TODO: define hover effect
+    }
   }
 }
 
 .react-selectize {
   &.root-node {
     width: 100%;
+  }
+  &.-fixed {
+    max-width: 180px;
   }
 }
 
