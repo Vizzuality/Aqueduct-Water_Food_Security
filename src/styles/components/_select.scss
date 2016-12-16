@@ -12,6 +12,9 @@
   &.root-node {
     width: 100%;
   }
+  &.-fixed {
+    max-width: 180px;
+  }
 }
 
 .simple-select {

@@ -24,6 +24,7 @@ export default class ComparePage extends React.Component {
       items.push(
         <div className="small-6 columns" key={i}>
           <CountrySelect
+            className="-fixed"
             defaultValue={this.props.compare.countries[i] || null}
             onValueChange={(selected) => {
               selected && this.props.setCompareCountry({ index: i, iso: selected.value });
@@ -39,14 +40,22 @@ export default class ComparePage extends React.Component {
     return (
       <div>
         <div className="compare-filters">
-          <div className="compare-filters-section">
-            <div className="row">{this.getCountrySelects()}</div>
+          <div className="compare-filters-section -highlighted">
+            <div className="row expanded collapse">{this.getCountrySelects()}</div>
           </div>
-          <div className="compare-filters-section">
-            <Filters filters={this.props.filters} setFilters={this.props.setFilters} />
+          <div className="compare-filters-section -collapsed">
+            <Filters className="-compare" filters={this.props.filters} setFilters={this.props.setFilters} />
           </div>
         </div>
-        <CompareList filters={this.props.filters} countryList={this.props.countries.list} countries={this.props.compare.countries} loading={this.props.loading} widgetsActive={this.props.widgetsActive} items={this.state.items} />
+        <CompareList
+          filters={this.props.filters}
+          countryList={this.props.countries.list}
+          countries={this.props.compare.countries}
+          loading={this.props.loading}
+          widgetsActive={this.props.widgetsActive}
+          layersActive={this.props.layersActive}
+          items={this.state.items}
+        />
       </div>
     );
   }
@@ -60,5 +69,6 @@ ComparePage.propTypes = {
   setFilters: React.PropTypes.func,
   updateCompareUrl: React.PropTypes.func,
   setCompareCountry: React.PropTypes.func,
-  widgetsActive: React.PropTypes.array
+  widgetsActive: React.PropTypes.array,
+  layersActive: React.PropTypes.array
 };

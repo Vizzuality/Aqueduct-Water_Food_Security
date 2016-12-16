@@ -32,7 +32,7 @@ export default class Filters extends React.Component {
         {/* Scope */}
         {this.props.withScope &&
           <div className="filters-lead">
-            <div className="row collapse">
+            <div className="row expanded collapse">
               <div className="small-12 column">
                 <SegmentedUi
                   className="-tabs"
@@ -48,7 +48,7 @@ export default class Filters extends React.Component {
           <div>
             {this.props.withScope && this.props.filters.scope === 'country' &&
               <div className="filters-section -highlighted">
-                <div className="row collapse filters-group">
+                <div className="row expanded collapse filters-group">
                   <div className="small-4 columns">
                     <div className="filter-item">
                       {/* Country */}
@@ -70,7 +70,7 @@ export default class Filters extends React.Component {
               </div>
             }
             <div className="filters-section -separator">
-              <div className="row collapse filters-group">
+              <div className="row expanded collapse filters-group">
                 <div className="small-4 columns">
                   {/* Crops */}
                   <div className="filter-item">
@@ -122,11 +122,12 @@ export default class Filters extends React.Component {
               </div>
             </div>
             <div className="filters-section">
-              <div className="row collapse filters-group">
+              <div className="row expanded collapse filters-group">
                 <div className="small-4 columns">
                   <div className="filter-item">
                     {/* Year */}
                     <div className="c-select">
+                      <span className="title">Timeframe</span>
                       <SimpleSelect
                         hideResetButton
                         options={yearOptions}
