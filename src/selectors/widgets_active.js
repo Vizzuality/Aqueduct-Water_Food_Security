@@ -15,7 +15,7 @@ const getActiveWidgets = (_datasets, _filters) => {
     if (dataset.widget.length) {
       widget = dataset.widget[0].attributes;
       // Vega type widget doesn't have 'type' property
-      if (!Object.prototype.hasOwnProperty.call(widget.widgetConfig, 'type') && widgetsFilter(widget, _filters)) {
+      if (!Object.prototype.hasOwnProperty.call(widget.widgetConfig, 'type') && widgetsFilter(widget, _filters, dataset.tags)) {
         widgetList.push(widget);
       }
     }
