@@ -30,11 +30,11 @@ class Map extends React.Component {
     this.map.attributionControl.addAttribution('&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>');
     this.map.zoomControl && this.map.zoomControl.setPosition('topright');
 
-    this.tileLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/wri.c974eefc/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoid3JpIiwiYSI6IjU3NWNiNGI4Njc4ODk4MmIyODFkYmJmM2NhNDgxMWJjIn0.v1tciCeBElMdpnrikGDrPg', {})
+    this.tileLayer = L.tileLayer(config.BASEMAP_TILE_URL, {})
                       .addTo(this.map)
                       .setZIndex(0);
 
-    this.labelLayer = L.tileLayer("https://api.tiles.mapbox.com/v4/wri.acf5a04e/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoid3JpIiwiYSI6IjU3NWNiNGI4Njc4ODk4MmIyODFkYmJmM2NhNDgxMWJjIn0.v1tciCeBElMdpnrikGDrPg", {})
+    this.labelLayer = L.tileLayer(config.BASEMAP_LABEL_URL, {})
                        .addTo(this.map)
                        .setZIndex(1);
 
