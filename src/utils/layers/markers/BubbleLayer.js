@@ -6,15 +6,15 @@ import { format } from 'd3-format';
 
 /**
  * Creating buble marker layer for food layers
- * @param  {Array} data
+ * @param  {Array} geoJson
  * @param  {Object} params
  * @return {Object} layer
  */
 export default class BubbleLayer {
-  constructor(data, params) {
+  constructor(geoJson, params) {
     this.params = params;
 
-    return L.geoJson(data, {
+    return L.geoJson(geoJson, {
       pointToLayer: (feature) => {
         // This should be given by the current filters
         const cropFilter = 'allcrops';

@@ -4,7 +4,7 @@
 import L from 'leaflet';
 import forIn from 'lodash/forIn';
 // Layers
-import BubbleLayer from 'utils/layers/markers/BubbleLayer';
+import BubbleClusterLayer from 'utils/layers/markers/BubbleClusterLayer';
 // Functions
 import { getWaterSql, getFoodSql } from 'utils/filters/filters';
 
@@ -207,7 +207,7 @@ export default class LayerManager {
           })
           .then((data) => {
             const geojson = data.rows[0].data.features;
-            this._mapLayers[layer.id] = new BubbleLayer(
+            this._mapLayers[layer.id] = new BubbleClusterLayer(
               geojson, {}
             ).addTo(this._map);
             this._onLayerAddedSuccess && this._onLayerAddedSuccess(layer);
