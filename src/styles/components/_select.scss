@@ -6,7 +6,8 @@
     color: $color-white;
     font-size: $font-size-big;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: center;
   }
 
   .title-icon {
@@ -16,7 +17,7 @@
     width: 16px;
     height: 16px;
     padding: 2px;
-    margin-right: 20px;
+    margin-left: $space-1;
     cursor: pointer;
     &:hover {
       // TODO: define hover effect

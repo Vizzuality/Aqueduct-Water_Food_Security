@@ -19,8 +19,8 @@ class LegendButtons extends React.Component {
     return (
       <ul className="c-legend-buttons">
         <li>
-          <button data-action="download" className="legend-button" onClick={this.triggerAction}>
-            <Icon name="icon-download" />
+          <button data-action="visibility" className="legend-button" onClick={this.triggerAction}>
+            <Icon name="icon-eye" />
           </button>
         </li>
         <li>
