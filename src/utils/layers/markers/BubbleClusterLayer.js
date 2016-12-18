@@ -1,6 +1,9 @@
 /* global PruneCluster, PruneClusterForLeaflet */
 /* eslint import/no-unresolved: 0 */
 /* eslint import/extensions: 0 */
+/* eslint new-cap: 0 */
+/* eslint class-methods-use-this: 0 */
+
 import L from 'leaflet';
 import find from 'lodash/find';
 import { format } from 'd3-format';
@@ -13,17 +16,18 @@ import { format } from 'd3-format';
  */
 export default class BubbleClusterLayer {
   constructor(geoJson, params) {
-    const customParams = params;
     const pruneCluster = new PruneClusterForLeaflet();
+    console.info(params);
 
-    pruneCluster.PrepareLeafletMarker = (leafletMarker, data) => {
-      leafletMarker.setIcon(data.icon);
-      leafletMarker.off('click').on('click', () => {
-        console.info('click');
-      });
+    // MARKER
+    pruneCluster.BuildLeafletIcon = (feature) => {
+      const location = feature.geometry.coordinates;
+      const marker = new PruneCluster.Marker(location[1], location[0]); // lat, lng
+      marker.data.feature = feature;
+      return marker;
     };
 
-    pruneCluster.BuildLeafletIcon = (feature) => {
+    pruneCluster.PrepareLeafletMarker = (leafletMarker, { feature }) => {
       const cropFilter = 'allcrops';
       const crops = feature.properties.crops;
       const cropSelected = find(crops, { slug: cropFilter });
@@ -33,40 +37,71 @@ export default class BubbleClusterLayer {
         location: feature.geometry.coordinates,
         className: 'c-marker-bubble',
         size: this._getSize(cropSelected.value),
-        data: feature.properties
+        data: feature.properties,
+        htmlIcon: this._setMarkerHtml(cropSelected.value),
+        htmlInfowindow: this._setInfowindowHtml(feature.properties)
       };
 
-      const divHtmlIcon = this._setMarkerHtml(cropSelected.value);
-      const divHtmlInfowindow = this._setInfowindowHtml(feature.properties);
+      leafletMarker.setIcon(L.divIcon({
+        iconSize: [options.size, options.size],
+        className: options.className,
+        html: options.htmlIcon
+      }));
+      leafletMarker.bindPopup(options.htmlInfowindow);
 
-      const bubbleIcon = L.divIcon({
-        iconSize: [60, 60],
-        className: 'c-marker-bubble',
-        html: divHtmlIcon
+      // BINDINGS
+      leafletMarker.off('mouseover').on('mouseover', function mouseover() {
+        this.openPopup();
       });
-
-      const marker = new PruneCluster.Marker(options.location[1], options.location[0]); // lat, lng
-      marker.data.icon = bubbleIcon;
-      marker.data.feature = feature;
-      return marker;
+      leafletMarker.off('mouseout').on('mouseout', function mouseleave() {
+        this.closePopup();
+      });
     };
 
+    // CLUSTER
     pruneCluster.originalIcon = pruneCluster.BuildLeafletClusterIcon;
+
+    pruneCluster.BuildLeafletCluster = (cluster, position) => {
+      const m = new L.Marker(position, {
+        icon: pruneCluster.BuildLeafletClusterIcon(cluster)
+      });
+
+      m.bindPopup(this._setInfowindowClusterHtml(cluster));
+
+      m.on('click', () => {
+        // Compute the  cluster bounds (it's slow : O(n))
+        const markersArea = pruneCluster.Cluster.FindMarkersInArea(cluster.bounds);
+        const b = pruneCluster.Cluster.ComputeBounds(markersArea);
+
+        if (b) {
+          const bounds = new L.LatLngBounds(
+            new L.LatLng(b.minLat, b.maxLng),
+            new L.LatLng(b.maxLat, b.minLng));
+
+          pruneCluster._map.fitBounds(bounds, {
+            paddingTopLeft: [40, 25],
+            paddingBottomRight: [60, 25]
+          });
+        }
+      });
+
+      m.on('mouseover', function mouseover() {
+        this.openPopup();
+      });
+
+      m.on('mouseout', function mouseout() {
+        this.closePopup();
+      });
+
+      return m;
+    };
 
     pruneCluster.BuildLeafletClusterIcon = (cluster) => {
       const icon = pruneCluster.originalIcon(cluster);
-      icon.options.iconSize = new L.Point(60, 60, null);
-      return icon;
-    };
+      icon.options.iconSize = new L.Point(30, 30, null);
+      icon.options.className = 'c-marker-cluster-bubble';
 
-    pruneCluster.getBounds = () => {
-      const bounds = pruneCluster.Cluster.ComputeGlobalBounds();
-      if (!bounds) {
-        return bounds;
-      }
-      const southWest = L.latLng(bounds.minLat, bounds.maxLng);
-      const northEast = L.latLng(bounds.maxLat, bounds.minLng);
-      return L.latLngBounds(southWest, northEast);
+      return icon;
     };
 
     geoJson.forEach((feature) => {
@@ -79,6 +114,8 @@ export default class BubbleClusterLayer {
   // STATIC methods
   // - _setMarkerHtml
   // - _setInfowindowHtml
+  // - _setInfowindowClusterHtml
+  // - _getSize
   _setMarkerHtml(value) {
     const _value = format('.3s')(value);
     return (`
@@ -86,12 +123,20 @@ export default class BubbleClusterLayer {
       ${_value}
       </div>
       `);
-    }
+  }
 
   _setInfowindowHtml(properties) {
     return (`
       <div class="c-infowindow -no-iteraction">
       <h3>${properties.country}</h3>
+      </div>`
+    );
+  }
+
+  _setInfowindowClusterHtml(properties) {
+    return (`
+      <div class="c-infowindow -no-iteraction">
+      <h3>${properties.population} countries</h3>
       </div>`
     );
   }

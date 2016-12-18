@@ -1,5 +1,7 @@
 /* eslint import/no-unresolved: 0 */
 /* eslint import/extensions: 0 */
+/* eslint class-methods-use-this: 0*/
+
 import L from 'leaflet';
 import find from 'lodash/find';
 import { format } from 'd3-format';
