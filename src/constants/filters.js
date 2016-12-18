@@ -4,12 +4,6 @@ import layerSpec from 'utils/layers/layer_spec.json';
 export const SET_FILTERS = 'SET_FILTERS';
 
 // Filter values
-export const scenarioOptions = [
-  { value: 'optimistic', label: 'Optimistic' },
-  { value: 'pesimistic', label: 'Pesimistic' },
-  { value: 'business', label: 'Business as usual' }
-];
-
 export const foodOptions = filter(layerSpec, { category: 'food' }).map((layer) => {
   return {
     label: layer.name,

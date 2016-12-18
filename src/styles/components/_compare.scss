@@ -7,10 +7,15 @@
   background-color: $color-secondary;
 }
 .compare-filters-section {
-  padding: 25px 40px;
-  border-bottom: 2px solid $color-tertiary;
+  padding: 24px 40px;
+  &.-collapsed {
+    padding: 0;
+  }
+  &.-highlighted {
+    background-color: $color-tertiary;
+  }
   &:last-child {
-    border-bottom: 0;
+    padding-bottom: 0;
   }
 }
 .compareitem-map {

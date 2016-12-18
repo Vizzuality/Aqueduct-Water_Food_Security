@@ -4,13 +4,16 @@ import { setCompareCountry } from 'actions/compare';
 import { setFilters } from 'actions/filters';
 import { updateCompareUrl } from 'actions/url';
 import getActiveWidgets from 'selectors/widgets_active';
+import getActiveLayers from 'selectors/layers_active';
+
 
 const mapStateToProps = state => ({
   compare: state.compare,
   filters: state.filters,
   loding: state.datasets.loading,
   countries: state.countries,
-  widgetsActive: getActiveWidgets(state)
+  widgetsActive: getActiveWidgets(state),
+  layersActive: getActiveLayers(state)
 });
 
 const mapDispatchToProps = dispatch => ({

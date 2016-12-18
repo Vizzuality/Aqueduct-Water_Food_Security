@@ -13,7 +13,7 @@ class MapPage extends React.Component {
   }
 
   render() {
-    const mapConfig = Object.assign({}, this.props.mapConfig);
+    const mapConfig = Object.assign({}, this.props.mapConfig, { scrollWheelZoom: true });
     if (this.props.filters.country) {
       // Obtain country geom
       mapConfig.fitOn = this.props.countries.list.find(c => c.id === this.props.filters.country);
