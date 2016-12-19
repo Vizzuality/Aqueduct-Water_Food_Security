@@ -18,11 +18,11 @@ class LegendButtons extends React.Component {
   render() {
     return (
       <ul className="c-legend-buttons">
-        <li>
+        {/* <li>
           <button data-action="visibility" className="legend-button" onClick={this.triggerAction}>
             <Icon name="icon-eye" />
           </button>
-        </li>
+        </li> */}
         <li>
           <button data-action="info" className="legend-button" onClick={this.triggerAction}>
             <Icon name="icon-info" />
