@@ -126,7 +126,7 @@ class Map extends React.Component {
     return (
       <div className="c-map">
         <div ref={(node) => { this.mapNode = node; }} className="map-leaflet" />
-        {/* <Legend className="-map" layers={this.props.layersActive} /> */}
+        <Legend className="-map" layers={this.props.layersActive} />
       </div>
     );
   }

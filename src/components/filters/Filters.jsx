@@ -44,7 +44,7 @@ export default class Filters extends React.Component {
             </div>
           </div>
         }
-        <Accordion className="-filters" opened contentPosition="top" toggleIcon={<Icon name="icon-arrow3-up" className="filters-collapse-btn" />}>
+        <Accordion className="-filters" opened contentPosition="top" toggleIcon={<Icon name="icon-arrow-up-2" className="filters-collapse-btn" />}>
           <div>
             {this.props.withScope && this.props.filters.scope === 'country' &&
               <div className="filters-section -highlighted">
@@ -75,7 +75,7 @@ export default class Filters extends React.Component {
                   {/* Crops */}
                   <div className="filter-item">
                     <div className="c-select">
-                      <span className="title">Crops <Icon name="icon-question_mark" className="title-icon" /></span>
+                      <span className="title">Crops <Icon name="icon-question" className="title-icon" /></span>
                       <SimpleSelect
                         hideResetButton
                         options={cropOptions}
@@ -95,7 +95,7 @@ export default class Filters extends React.Component {
                   {/* Water */}
                   <div className="filter-item">
                     <div className="c-select">
-                      <span className="title">Water <Icon name="icon-question_mark" className="title-icon" /></span>
+                      <span className="title">Water <Icon name="icon-question" className="title-icon" /></span>
                       <SimpleSelect
                         hideResetButton
                         options={waterOptions}
@@ -109,7 +109,7 @@ export default class Filters extends React.Component {
                   {/* Food */}
                   <div className="filter-item">
                     <div className="c-select">
-                      <span className="title">Food <Icon name="icon-question_mark" className="title-icon" /></span>
+                      <span className="title">Food <Icon name="icon-question" className="title-icon" /></span>
                       <SimpleSelect
                         hideResetButton
                         options={foodOptions}
@@ -127,7 +127,7 @@ export default class Filters extends React.Component {
                   <div className="filter-item">
                     {/* Year */}
                     <div className="c-select">
-                      <span className="title">Timeframe <Icon name="icon-question_mark" className="title-icon" /></span>
+                      <span className="title">Timeframe <Icon name="icon-question" className="title-icon" /></span>
                       <SimpleSelect
                         hideResetButton
                         options={yearOptions}
