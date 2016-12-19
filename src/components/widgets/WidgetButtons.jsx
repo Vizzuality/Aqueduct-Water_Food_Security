@@ -23,11 +23,11 @@ class WidgetButtons extends React.Component {
             <Icon name="icon-info" />
           </button>
         </li>
-        <li>
+        {/* <li>
           <button data-action="download" className="widget-button" onClick={this.triggerAction}>
             <Icon name="icon-download" />
           </button>
-        </li>
+        </li> */}
       </ul>
     );
   }

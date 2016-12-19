@@ -8,7 +8,7 @@ export default function InfoModal() {
           <span className="info-title">Lorem ipsum dolor sit amet</span>
           <span className="info-subtitle">Lorem ipsum dolor sit amet</span>
         </div>
-        <button className="c-btn -primary" type="button">Download</button>
+        {/* <button className="c-btn -primary" type="button">Download</button> */}
       </div>
       <div className="info-content">
         <div className="row collapse">
