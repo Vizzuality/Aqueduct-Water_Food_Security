@@ -38,7 +38,7 @@ export default class ComparePage extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="l-comparepage">
         <div className="compare-filters">
           <div className="compare-filters-section -highlighted">
             <div className="row expanded collapse">{this.getCountrySelects()}</div>
