@@ -23,6 +23,10 @@ export default class Sidebar extends React.Component {
     window.addEventListener('resize', debounce(this.resizeEvent, 100));
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.resizeEvent);
+  }
+
   /**
    * UI EVENTS
    * - triggerToggle
