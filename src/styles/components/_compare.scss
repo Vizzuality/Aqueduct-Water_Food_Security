@@ -1,20 +1,32 @@
 
 /* Comparelist */
 
+.c-widget-list {
+  background-color: $color-map;
+}
+
 /* Compareitem */
 
 .compare-filters {
   background-color: $color-secondary;
 }
 .compare-filters-section {
-  padding: 25px 40px;
-  border-bottom: 2px solid $color-tertiary;
+  padding: 24px 40px;
+  &.-collapsed {
+    padding: 0;
+  }
+  &.-highlighted {
+    background-color: $color-tertiary;
+  }
   &:last-child {
-    border-bottom: 0;
+    padding-bottom: 0;
   }
 }
 .compareitem-map {
   height: 430px;
+  .comparelist-item:first-child & {
+    border-right: 3px solid #F5F1E0;
+  }
 }
 .compareitem-widgets {
   position: relative;
@@ -23,14 +35,15 @@
 
 .country-placeholder-text {
   color: #4a596a;
-  font-size: $font-size-big;
+  font-size: $font-size-huge;
   opacity: .5;
+  font-weight: 300;
 }
 .country-placeholder-icon {
   margin: 0 auto;
   display: block;
   fill: #4a596a;
-  margin-bottom: 13px;
+  margin-bottom: 22px;
   opacity: .5;
 }
 .country-placeholder {

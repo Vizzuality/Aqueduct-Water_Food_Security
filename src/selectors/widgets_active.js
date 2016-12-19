@@ -11,11 +11,12 @@ const getActiveWidgets = (_datasets, _filters) => {
   // TODO: filter _datasets using _filters
   const widgetList = [];
   let widget;
+
   _datasets.list.forEach((dataset) => {
     if (dataset.widget.length) {
       widget = dataset.widget[0].attributes;
       // Vega type widget doesn't have 'type' property
-      if (!Object.prototype.hasOwnProperty.call(widget.widgetConfig, 'type') && widgetsFilter(widget, _filters)) {
+      if (!!widget.widgetConfig && !Object.prototype.hasOwnProperty.call(widget.widgetConfig, 'type') && widgetsFilter(widget, _filters, dataset.tags)) {
         widgetList.push(widget);
       }
     }

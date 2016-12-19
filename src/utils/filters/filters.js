@@ -1,12 +1,10 @@
 import { substitution, concatenation } from 'utils/utils';
 
-export function widgetsFilter(widget, { crop, country }) {
-  // TODO: uncomment when using real api data
-  // const _crop = crop === 'all' ? 'all_crops' : 'one_crop';
-  // const _country = country ? 'country' : 'global';
-  //
-  // return widget.tags && widget.tags.includes(_crop) && widget.tags.includes(_country);
-  return true;
+export function widgetsFilter(widget, { scope, crop, country }, datasetTags) {
+  const _crop = crop === 'all' ? 'all_crops' : 'one_crop';
+  const _country = scope === 'country' && country ? 'country' : 'global';
+
+  return datasetTags && datasetTags.includes(_crop) && datasetTags.includes(_country);
 }
 
 // LAYER FUNCTIONS
@@ -188,6 +186,17 @@ export function getWidgetSql(widgetConfig, filters) {
         return {
           key: param.key,
           value: getWaterColumn(filters, param.sufix)
+        };
+      case 'irrigation':
+        return {
+          key: param.key,
+          // We can't have a irrigation different from 1, in this case we don't need to add anything
+          value: (!filters[param.key] || filters[param.key].length === 0 || filters[param.key].length === 2) ? null : filters[param.key]
+        };
+      case 'iso':
+        return {
+          key: param.key,
+          value: (filters.country) ? filters.country : null
         };
       default:
         return {

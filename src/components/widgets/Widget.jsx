@@ -1,6 +1,7 @@
 import React from 'react';
 import WidgetButtons from 'components/widgets/WidgetButtons';
 import WidgetChart from 'components/widgets/WidgetChart';
+import InfoModal from 'components/modal/InfoModal';
 
 class Widget extends React.Component {
 
@@ -15,7 +16,11 @@ class Widget extends React.Component {
   }
 
   triggerAction(action) {
-    console.info(action, this.props.widget);
+    if (action === 'info') {
+      this.props.toggleModal(true, {
+        children: InfoModal
+      });
+    }
   }
 
   render() {
@@ -43,7 +48,8 @@ class Widget extends React.Component {
 
 Widget.propTypes = {
   widget: React.PropTypes.object,
-  filters: React.PropTypes.object
+  filters: React.PropTypes.object,
+  toggleModal: React.PropTypes.func
 };
 
 

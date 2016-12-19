@@ -7,7 +7,7 @@ import isEqual from 'lodash/isEqual';
 
 import { MAP_CONFIG } from 'constants/map';
 import LayerManager from 'utils/layers/LayerManager';
-import Legend from 'components/legend/Legend';
+import Legend from 'containers/legend/Legend';
 
 class Map extends React.Component {
 
@@ -17,7 +17,8 @@ class Map extends React.Component {
       zoom: this.props.mapConfig.zoom,
       zoomControl: isNaN(this.props.mapConfig.zoomControl) ? MAP_CONFIG.zoomControl : this.props.mapConfig.zoomControl,
       center: [this.props.mapConfig.latLng.lat, this.props.mapConfig.latLng.lng],
-      detectRetina: true
+      detectRetina: true,
+      scrollWheelZoom: !!this.props.mapConfig.scrollWheelZoom
     });
 
     if (this.props.mapConfig.fitOn) {
@@ -29,13 +30,13 @@ class Map extends React.Component {
     this.map.attributionControl.addAttribution('&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>');
     this.map.zoomControl && this.map.zoomControl.setPosition('topright');
 
-    this.tileLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/wri.c974eefc/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoid3JpIiwiYSI6IjU3NWNiNGI4Njc4ODk4MmIyODFkYmJmM2NhNDgxMWJjIn0.v1tciCeBElMdpnrikGDrPg', {})
+    this.tileLayer = L.tileLayer(config.BASEMAP_TILE_URL, {})
                       .addTo(this.map)
                       .setZIndex(0);
 
-    this.labelLayer = L.tileLayer("https://api.tiles.mapbox.com/v4/wri.acf5a04e/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoid3JpIiwiYSI6IjU3NWNiNGI4Njc4ODk4MmIyODFkYmJmM2NhNDgxMWJjIn0.v1tciCeBElMdpnrikGDrPg", {})
+    this.labelLayer = L.tileLayer(config.BASEMAP_LABEL_URL, {})
                        .addTo(this.map)
-                       .setZIndex(1);
+                       .setZIndex(1000);
 
     if (this.props.setMapParams) {
       // Listen to leaflet events
@@ -125,7 +126,6 @@ class Map extends React.Component {
     return (
       <div className="c-map">
         <div ref={(node) => { this.mapNode = node; }} className="map-leaflet" />
-        {/* <Legend className="-map" layers={this.props.layersActive} /> */}
       </div>
     );
   }

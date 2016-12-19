@@ -1,43 +1,44 @@
 import React from 'react';
-import Accordion from 'components/ui/Accordion';
-import { SortableContainer, SortableElement } from 'react-sortable-hoc';
-
-const SortableItem = SortableElement(({ layer, index }) => { // eslint-disable-line
-  return (
-    <li className="c-legend-item" key={index}>
-      <span>{layer.title}</span>
-    </li>
-  );
-});
-
-const SortableList = SortableContainer(({ items }) => { // eslint-disable-line
-  return (
-    <ul>
-      {items.map((layer, index) =>
-        <SortableItem
-          key={index}
-          index={index}
-          layer={layer}
-        />
-      )}
-    </ul>
-  );
-});
+import LegendButtons from 'components/legend/LegendButtons';
+import LegendGraph from 'components/legend/LegendGraph';
+import SourceModal from 'components/modal/SourceModal';
 
 export default class Legend extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+    };
+
+    // BINDINGS
+    this.triggerAction = this.triggerAction.bind(this);
+  }
+
+  triggerAction(action) {
+    if (action === 'info') {
+      this.props.toggleModal(true, {
+        children: SourceModal
+      });
+    }
+  }
 
   render() {
     return (
       <div className={`c-legend ${this.props.className}`}>
-        <Accordion title="View legend">
-          <SortableList
-            axis="y"
-            lockAxis="y"
-            lockToContainerEdges
-            lockOffset="50%"
-            items={this.props.layers}
-          />
-        </Accordion>
+        <ul>
+          {this.props.layers.map((layer, index) =>
+            <li className="c-legend-item" key={index}>
+              <header className="legend-item-header">
+                <h3>
+                  <span className="category">{layer.category} -</span>
+                  <span className="name">{layer.name}</span>
+                </h3>
+                <LegendButtons triggerAction={this.triggerAction} />
+              </header>
+              <LegendGraph config={layer.legendConfig} />
+            </li>
+          )}
+        </ul>
       </div>
     );
   }
@@ -45,5 +46,6 @@ export default class Legend extends React.Component {
 
 Legend.propTypes = {
   layers: React.PropTypes.array,
-  className: React.PropTypes.string
+  className: React.PropTypes.string,
+  toggleModal: React.PropTypes.func  
 };
