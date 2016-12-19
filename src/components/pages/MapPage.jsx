@@ -5,6 +5,7 @@ import Sidebar from 'components/ui/Sidebar';
 import Map from 'components/map/Map';
 import Filters from 'components/filters/Filters';
 import WidgetList from 'components/widgets/WidgetList';
+import Legend from 'components/legend/Legend';
 
 class MapPage extends React.Component {
 
@@ -36,6 +37,7 @@ class MapPage extends React.Component {
 
         {/* Map */}
         <Map mapConfig={mapConfig} filters={this.props.filters} layersActive={this.props.layersActive} setMapParams={this.props.setMapParams} />
+        <Legend className="-map" layers={this.props.layersActive} />
       </div>
     );
   }

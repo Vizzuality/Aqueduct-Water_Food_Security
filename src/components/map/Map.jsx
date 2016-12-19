@@ -7,7 +7,6 @@ import isEqual from 'lodash/isEqual';
 
 import { MAP_CONFIG } from 'constants/map';
 import LayerManager from 'utils/layers/LayerManager';
-import Legend from 'components/legend/Legend';
 
 class Map extends React.Component {
 
@@ -126,7 +125,6 @@ class Map extends React.Component {
     return (
       <div className="c-map">
         <div ref={(node) => { this.mapNode = node; }} className="map-leaflet" />
-        <Legend className="-map" layers={this.props.layersActive} />
       </div>
     );
   }

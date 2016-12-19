@@ -1,6 +1,10 @@
 
 /* Comparelist */
 
+.c-widget-list {
+  background-color: $color-map;
+}
+
 /* Compareitem */
 
 .compare-filters {
@@ -20,6 +24,9 @@
 }
 .compareitem-map {
   height: 430px;
+  .comparelist-item:first-child & {
+    border-right: 3px solid #F5F1E0;
+  }
 }
 .compareitem-widgets {
   position: relative;
@@ -28,14 +35,15 @@
 
 .country-placeholder-text {
   color: #4a596a;
-  font-size: $font-size-big;
+  font-size: $font-size-huge;
   opacity: .5;
+  font-weight: 300;
 }
 .country-placeholder-icon {
   margin: 0 auto;
   display: block;
   fill: #4a596a;
-  margin-bottom: 13px;
+  margin-bottom: 22px;
   opacity: .5;
 }
 .country-placeholder {
