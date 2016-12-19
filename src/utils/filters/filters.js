@@ -1,12 +1,10 @@
 import { substitution, concatenation } from 'utils/utils';
 
-export function widgetsFilter(widget, { crop, country }) {
-  // TODO: uncomment when using real api data
-  // const _crop = crop === 'all' ? 'all_crops' : 'one_crop';
-  // const _country = country ? 'country' : 'global';
-  //
-  // return widget.tags && widget.tags.includes(_crop) && widget.tags.includes(_country);
-  return true;
+export function widgetsFilter(widget, { scope, crop, country }, datasetTags) {
+  const _crop = crop === 'all' ? 'all_crops' : 'one_crop';
+  const _country = scope === 'country' && country ? 'country' : 'global';
+
+  return datasetTags && datasetTags.includes(_crop) && datasetTags.includes(_country);
 }
 
 // LAYER FUNCTIONS

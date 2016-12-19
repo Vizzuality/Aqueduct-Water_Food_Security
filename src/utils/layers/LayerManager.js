@@ -2,9 +2,8 @@
 /* eslint import/extensions: 0 */
 
 import L from 'leaflet';
-import forIn from 'lodash/forIn';
 // Layers
-import BubbleLayer from 'utils/layers/markers/BubbleLayer';
+import BubbleClusterLayer from 'utils/layers/markers/BubbleClusterLayer';
 // Functions
 import { getWaterSql, getFoodSql } from 'utils/filters/filters';
 
@@ -25,8 +24,7 @@ export default class LayerManager {
     const method = {
       leaflet: this._addLeafletLayer,
       arcgis: this._addEsriLayer,
-      cartodb: this._addCartoLayer,
-      geojson: this._addGeojsonLayer
+      cartodb: this._addCartoLayer
     }[layer.provider];
 
     return method && method.call(this, layer, opts);
@@ -51,21 +49,6 @@ export default class LayerManager {
   /*
     Private methods
   */
-  _addGeojsonLayer(layerSpec, opts) {
-    const layer = layerSpec.layerConfig;
-    const options = opts;
-    layer.id = layerSpec.id;
-    layer.sql = "with s as (SELECT iso, region, value, commodity FROM combined01_prepared where impactparameter='Yield' and year={{year}} and scenario='SSP2-GFDL' and iso is not null ), t as (SELECT iso, region, sum(value) as value FROM s group by iso, region), r as (select iso, region, value, 'allCrops' commodity from t union all select * from s), d as (select json_agg(crop) crops, region, geometry from (SELECT st_asgeojson(st_centroid(the_geom))  as geometry,  json_build_object('name',commodity,'slug',lower(commodity),'value', value) crop, region FROM impact_regions_159 t inner join  r on new_region=iso) c group by geometry, region) select json_build_object('type','FeatureCollection','features',json_agg(json_build_object('geometry',cast(geometry as json),'properties', json_build_object('crops',crops,'country',region),'type','Feature'))) as data from d";
-    layer.params_config = [
-      {
-        key: 'year',
-        required: true
-      }
-    ];
-
-  }
-
-
   _addLeafletLayer(layerSpec, { zIndex }) {
     const layerData = layerSpec.layerConfig;
 
@@ -184,6 +167,7 @@ export default class LayerManager {
             });
           })
           .catch((err) => {
+            console.error(err);
             this._onLayerAddedError && this._onLayerAddedError(layer);
           });
         break;
@@ -207,7 +191,7 @@ export default class LayerManager {
           })
           .then((data) => {
             const geojson = data.rows[0].data.features;
-            this._mapLayers[layer.id] = new BubbleLayer(
+            this._mapLayers[layer.id] = new BubbleClusterLayer(
               geojson, {}
             ).addTo(this._map);
             this._onLayerAddedSuccess && this._onLayerAddedSuccess(layer);

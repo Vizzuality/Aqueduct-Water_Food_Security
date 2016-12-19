@@ -85,7 +85,9 @@ const config = {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV)
       },
       config: {
-        apiUrl: JSON.stringify(process.env.API_URL),
+        API_URL: JSON.stringify(process.env.API_URL),
+        BASEMAP_TILE_URL: JSON.stringify(process.env.BASEMAP_TILE_URL),
+        BASEMAP_LABEL_URL: JSON.stringify(process.env.BASEMAP_LABEL_URL),
         opbeatOrgId: JSON.stringify(process.env.OPBEAT_ORGID),
         opbeatAppId: JSON.stringify(process.env.OPBEAT_APPID)
       }

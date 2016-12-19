@@ -8,7 +8,7 @@ import Icon from 'components/ui/Icon';
 import { SimpleSelect } from 'react-selectize';
 import { Link } from 'react-router';
 // Options
-import { scenarioOptions, waterOptions, foodOptions, scopeOptions, yearOptions, cropOptions, irrigationOptions } from 'constants/filters';
+import { waterOptions, foodOptions, scopeOptions, yearOptions, cropOptions, irrigationOptions } from 'constants/filters';
 
 export default class Filters extends React.Component {
 
@@ -32,7 +32,7 @@ export default class Filters extends React.Component {
         {/* Scope */}
         {this.props.withScope &&
           <div className="filters-lead">
-            <div className="row collapse">
+            <div className="row expanded collapse">
               <div className="small-12 column">
                 <SegmentedUi
                   className="-tabs"
@@ -44,11 +44,11 @@ export default class Filters extends React.Component {
             </div>
           </div>
         }
-        <Accordion className="-filters" opened contentPosition="top" toggleIcon={<Icon name="icon-arrow3-up" className="filters-collapse-btn" />}>
+        <Accordion className="-filters" opened contentPosition="top" toggleIcon={<Icon name="icon-arrow-up-2" className="filters-collapse-btn" />}>
           <div>
             {this.props.withScope && this.props.filters.scope === 'country' &&
               <div className="filters-section -highlighted">
-                <div className="row collapse filters-group">
+                <div className="row expanded collapse filters-group">
                   <div className="small-4 columns">
                     <div className="filter-item">
                       {/* Country */}
@@ -70,12 +70,12 @@ export default class Filters extends React.Component {
               </div>
             }
             <div className="filters-section -separator">
-              <div className="row collapse filters-group">
+              <div className="row expanded collapse filters-group">
                 <div className="small-4 columns">
                   {/* Crops */}
                   <div className="filter-item">
                     <div className="c-select">
-                      <span className="title">Crops</span>
+                      <span className="title">Crops <Icon name="icon-question" className="title-icon" /></span>
                       <SimpleSelect
                         hideResetButton
                         options={cropOptions}
@@ -95,7 +95,7 @@ export default class Filters extends React.Component {
                   {/* Water */}
                   <div className="filter-item">
                     <div className="c-select">
-                      <span className="title">Water</span>
+                      <span className="title">Water <Icon name="icon-question" className="title-icon" /></span>
                       <SimpleSelect
                         hideResetButton
                         options={waterOptions}
@@ -109,7 +109,7 @@ export default class Filters extends React.Component {
                   {/* Food */}
                   <div className="filter-item">
                     <div className="c-select">
-                      <span className="title">Food</span>
+                      <span className="title">Food <Icon name="icon-question" className="title-icon" /></span>
                       <SimpleSelect
                         hideResetButton
                         options={foodOptions}
@@ -122,11 +122,12 @@ export default class Filters extends React.Component {
               </div>
             </div>
             <div className="filters-section">
-              <div className="row collapse filters-group">
+              <div className="row expanded collapse filters-group">
                 <div className="small-4 columns">
                   <div className="filter-item">
                     {/* Year */}
                     <div className="c-select">
+                      <span className="title">Timeframe <Icon name="icon-question" className="title-icon" /></span>
                       <SimpleSelect
                         hideResetButton
                         options={yearOptions}
