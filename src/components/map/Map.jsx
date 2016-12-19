@@ -47,15 +47,18 @@ class Map extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.mapConfig.bounds && nextProps.mapConfig.bounds.id) {
+      const sidebarWidth = (nextProps.sidebar && nextProps.sidebar.width) ? nextProps.sidebar.width : 0;
       if (this.props.mapConfig.bounds && this.props.mapConfig.bounds.id !== nextProps.mapConfig.bounds.id) {
-        this.fitBounds(nextProps.mapConfig.bounds.geometry, nextProps.sidebar.width || 0);
+        this.fitBounds(nextProps.mapConfig.bounds.geometry, sidebarWidth || 0);
       } else if (!this.props.mapConfig.bounds) {
-        this.fitBounds(nextProps.mapConfig.bounds.geometry, nextProps.sidebar.width || 0);
+        this.fitBounds(nextProps.mapConfig.bounds.geometry, sidebarWidth || 0);
       }
     }
 
-    if (nextProps.sidebar && this.props.mapConfig.bounds && nextProps.sidebar.width !== this.props.sidebar.width) {
-      this.fitBounds(this.props.mapConfig.bounds, nextProps.sidebar.width || 0);
+    if (nextProps.sidebar && this.props.sidebar && this.props.mapConfig.bounds) {
+      if (nextProps.sidebar.width !== this.props.sidebar.width) {
+        this.fitBounds(this.props.mapConfig.bounds, nextProps.sidebar.width || 0);
+      }
     }
   }
 
