@@ -1,3 +1,17 @@
 .c-btn {
-
+  display: inline-block;
+  padding: $space-1 $space-1 * 4;
+  &.-primary {
+    font-family: $font-family-roboto;
+    font-size: $font-size-big;
+    color: $color-primary;
+    border: 1px solid $color-primary;
+    background-color: $color-white;
+    border-radius: 3px;
+    font-weight: 500;
+    transition: all .1s linear;
+    &:hover {
+      // TODO: hover effect
+    }
+  }
 }

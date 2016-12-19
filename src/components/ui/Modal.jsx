@@ -23,7 +23,7 @@ export default class Modal extends React.Component {
       <section className={`c-modal ${this.props.modal.opened ? '' : '-hidden'}`}>
         <div className="modal-container">
           <button className="modal-close" onClick={() => this.props.toggleModal(false)}>
-            <Icon name="icon-cross" />
+            <Icon name="icon-cross" className="-big" />
           </button>
           <div className="modal-content">
             {this.props.modal.loading ? <Spinner isLoading /> : this.getContent()}

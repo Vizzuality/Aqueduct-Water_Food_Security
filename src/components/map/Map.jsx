@@ -7,7 +7,7 @@ import isEqual from 'lodash/isEqual';
 
 import { MAP_CONFIG } from 'constants/map';
 import LayerManager from 'utils/layers/LayerManager';
-import Legend from 'components/legend/Legend';
+import Legend from 'containers/legend/Legend';
 
 class Map extends React.Component {
 
