@@ -36,7 +36,7 @@ export default class CompareItem extends React.Component {
           {this.props.country ? <Map filters={this.props.filters} mapConfig={mapConfig} layersActive={this.props.layersActive} /> : this.getEmptyPlaceholder()}
         </section>
         <section className="compareitem-widgets">
-          {/* <WidgetList filters={this.props.filters} loading={this.props.loading} widgetsActive={this.props.widgetsActive} /> */}
+          <WidgetList filters={this.props.filters} loading={this.props.loading} widgetsActive={this.props.widgetsActive} />
         </section>
       </div>
     );

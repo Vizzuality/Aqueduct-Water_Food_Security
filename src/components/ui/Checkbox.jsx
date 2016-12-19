@@ -32,7 +32,7 @@ class Checkbox extends React.Component {
         />
         <label htmlFor={`checkbox-${name}-${value}`}>
           <span>
-            <Icon name="icon-check" />
+            <Icon name="icon-checkbox" />
           </span>
           {label}
         </label>
