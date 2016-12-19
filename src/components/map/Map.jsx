@@ -20,8 +20,8 @@ class Map extends React.Component {
       scrollWheelZoom: !!this.props.mapConfig.scrollWheelZoom
     });
 
-    if (this.props.mapConfig.fitOn) {
-      this.fitMap(this.props.mapConfig.fitOn.geometry);
+    if (this.props.mapConfig.bounds) {
+      this.fitBounds(this.props.mapConfig.bounds.geometry);
     }
 
     this.layerManager = new LayerManager(this.map /* , onLayerAddedOK, onLayerAddedKO */);
@@ -46,8 +46,16 @@ class Map extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if ((nextProps.mapConfig.fitOn && !this.props.mapConfig.fitOn) || (this.props.mapConfig.fitOn && this.props.mapConfig.fitOn.id !== nextProps.mapConfig.fitOn.id)) {
-      this.fitMap(nextProps.mapConfig.fitOn.geometry);
+    if (nextProps.mapConfig.bounds && nextProps.mapConfig.bounds.id) {
+      if (this.props.mapConfig.bounds && this.props.mapConfig.bounds.id !== nextProps.mapConfig.bounds.id) {
+        this.fitBounds(nextProps.mapConfig.bounds.geometry, nextProps.sidebar.width || 0);
+      } else if (!this.props.mapConfig.bounds) {
+        this.fitBounds(nextProps.mapConfig.bounds.geometry, nextProps.sidebar.width || 0);
+      }
+    }
+
+    if (nextProps.sidebar && this.props.mapConfig.bounds && nextProps.sidebar.width !== this.props.sidebar.width) {
+      this.fitBounds(this.props.mapConfig.bounds, nextProps.sidebar.width || 0);
     }
   }
 
@@ -81,9 +89,12 @@ class Map extends React.Component {
     return params;
   }
 
-  fitMap(geoJson) {
+  fitBounds(geoJson, sidebarWidth) {
     const geojsonLayer = L.geoJson(geoJson);
-    this.map.fitBounds(geojsonLayer.getBounds());
+    this.map.fitBounds(geojsonLayer.getBounds(), {
+      paddingTopLeft: [sidebarWidth || 0, 0],
+      paddingBottomRight: [0, 0]
+    });
   }
 
   // MAP LISTENERS
@@ -134,6 +145,7 @@ Map.propTypes = {
   // STORE
   mapConfig: React.PropTypes.object,
   filters: React.PropTypes.object,
+  sidebar: React.PropTypes.object,
   layersActive: React.PropTypes.array,
   // ACTIONS
   setMapParams: React.PropTypes.func

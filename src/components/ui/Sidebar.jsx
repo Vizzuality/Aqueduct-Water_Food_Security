@@ -1,5 +1,6 @@
 import React from 'react';
 import Icon from 'components/ui/Icon';
+import debounce from 'lodash/debounce';
 
 export default class Sidebar extends React.Component {
 
@@ -14,6 +15,14 @@ export default class Sidebar extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.props.setSidebarWidth(this.sidebarNode.offsetWidth);
+    this.resizeEvent = () => {
+      this.triggerResize();
+    };
+    window.addEventListener('resize', debounce(this.resizeEvent, 100));
+  }
+
   /**
    * UI EVENTS
    * - triggerToggle
@@ -21,14 +30,20 @@ export default class Sidebar extends React.Component {
   triggerToggle() {
     this.setState({
       opened: !this.state.opened
+    }, () => {
+      this.props.setSidebarWidth((this.state.opened) ? this.sidebarNode.offsetWidth : '50');
     });
+  }
+
+  triggerResize() {
+    this.props.setSidebarWidth((this.state.opened) ? this.sidebarNode.offsetWidth : '50');
   }
 
   render() {
     const openedClass = (this.state.opened) ? '-opened' : '';
 
     return (
-      <aside className={`l-sidebar c-sidebar ${openedClass}`}>
+      <aside ref={(node) => { this.sidebarNode = node; }} className={`l-sidebar c-sidebar ${openedClass}`}>
         {/*
           Toggle button
           - I'm using a div instead of a button because I don't want that browser's styles interfere with it
@@ -46,5 +61,6 @@ export default class Sidebar extends React.Component {
 }
 
 Sidebar.propTypes = {
-  children: React.PropTypes.array
+  children: React.PropTypes.array,
+  setSidebarWidth: React.PropTypes.func
 };

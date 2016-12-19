@@ -10,6 +10,7 @@ const mapStateToProps = state => ({
   mapConfig: state.map,
   filters: state.filters,
   countries: state.countries,
+  sidebar: state.sidebar,
   layersActive: getActiveLayers(state),
   widgetsActive: getActiveWidgets(state)
 });
