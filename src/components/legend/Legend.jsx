@@ -1,6 +1,7 @@
 import React from 'react';
 import LegendButtons from 'components/legend/LegendButtons';
 import LegendGraph from 'components/legend/LegendGraph';
+import SourceModal from 'components/modal/SourceModal';
 
 export default class Legend extends React.Component {
   constructor(props) {
@@ -14,7 +15,11 @@ export default class Legend extends React.Component {
   }
 
   triggerAction(action) {
-    console.info(action);
+    if (action === 'info') {
+      this.props.toggleModal(true, {
+        children: SourceModal
+      });
+    }
   }
 
   render() {
@@ -41,5 +46,6 @@ export default class Legend extends React.Component {
 
 Legend.propTypes = {
   layers: React.PropTypes.array,
-  className: React.PropTypes.string
+  className: React.PropTypes.string,
+  toggleModal: React.PropTypes.func  
 };

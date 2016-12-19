@@ -7,7 +7,7 @@
   Leaflet overiding styles
 */
 
-.leaflet-touch {
+.leaflet-touch, .leaflet-touch-drag {
   .leaflet-bar {
     box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.26);
     a {
@@ -47,7 +47,6 @@
 
     &.leaflet-disabled {
       background-color: transparent;
-      color: $color-white;
     }
 
     &:hover {
