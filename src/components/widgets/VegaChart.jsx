@@ -15,10 +15,6 @@ class VegaChart extends React.Component {
     this.renderChart();
   }
 
-  shouldComponentUpdate(nextProps) {
-    return !isEqual(nextProps.data, this.props.data);
-  }
-
   componentDidUpdate() {
     // We should check if the data has changed
     this.renderChart();

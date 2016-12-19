@@ -31,7 +31,7 @@ class MapPage extends React.Component {
           </div>
           {/* Widget List */}
           <div className="l-sidebar-content">
-            <WidgetList filters={this.props.filters} widgetsActive={this.props.widgetsActive} />
+            {/* <WidgetList filters={this.props.filters} widgetsActive={this.props.widgetsActive} /> */}
           </div>
         </Sidebar>
 
