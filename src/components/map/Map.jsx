@@ -7,7 +7,6 @@ import isEqual from 'lodash/isEqual';
 
 import { MAP_CONFIG } from 'constants/map';
 import LayerManager from 'utils/layers/LayerManager';
-import Legend from 'containers/legend/Legend';
 
 class Map extends React.Component {
 
@@ -36,7 +35,7 @@ class Map extends React.Component {
 
     this.labelLayer = L.tileLayer(config.BASEMAP_LABEL_URL, {})
                        .addTo(this.map)
-                       .setZIndex(1000);
+                       .setZIndex(1);
 
     if (this.props.setMapParams) {
       // Listen to leaflet events
