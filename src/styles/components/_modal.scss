@@ -10,10 +10,6 @@
   visibility: visible;
   opacity: 1;
 
-  .modal-container {
-    transform: translate(-50%, -50%);
-  }
-
   // Active styles
   &.-hidden {
     opacity: 0;
@@ -26,11 +22,12 @@
     max-width: $modal-max-width;
     top: 50%;
     left: 50%;
+    width: 90%;
     background: white;
     box-shadow: 0 1px 1px rgba(0,0,0,.15);
     transition: all $animation-time $ease-in-sine;
 
-    transform: translate(-50%, -55%);
+    transform: translate(-50%, -50%);
     z-index: 1;
   }
 
@@ -45,7 +42,7 @@
   }
 
   .modal-close {
-    fill: $color-white;
+    fill: $color-soft;
     display: block;
     position: absolute;
     bottom: 100%;
@@ -55,7 +52,10 @@
     padding: 0;
     cursor: pointer;
     z-index: 2; /* Otherwise, it won't be reachable */
-    margin-bottom: $space-1 * 2;
+
+    &:hover {
+      fill: $color-white;
+    }
   }
 
   .modal-backdrop {
