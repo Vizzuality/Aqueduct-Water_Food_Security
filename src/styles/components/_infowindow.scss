@@ -25,6 +25,8 @@
 
 // Overriding leaflet popup styles
 .leaflet-popup {
+  margin-bottom: 25px;
+
   .leaflet-popup-content-wrapper {
     border-radius: 0;
     padding: 35px;
@@ -36,6 +38,7 @@
   }
 
   a.leaflet-popup-close-button {
+    display: none; // Let's do this for the moment. If it could be opened by a click it should have a close button
     top: 5px;
     right: 5px;
     color: $color-primary;
