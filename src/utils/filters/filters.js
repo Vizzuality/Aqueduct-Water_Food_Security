@@ -3,7 +3,6 @@ import { substitution, concatenation } from 'utils/utils';
 export function widgetsFilter(widget, { scope, crop, country }, datasetTags) {
   const _crop = crop === 'all' ? 'all_crops' : 'one_crop';
   const _country = scope === 'country' && country ? 'country' : 'global';
-
   return datasetTags && datasetTags.includes(_crop) && datasetTags.includes(_country);
 }
 
@@ -167,9 +166,6 @@ function getWaterColumn({ water, year }, sufix) {
 }
 
 export function getWidgetSql(widgetConfig, filters) {
-  const newConfig = Object.assign({}, widgetConfig);
-  const { data } = newConfig;
-
   // Dictionary
   const yearOptions = {
     baseline: 2010,
@@ -180,7 +176,7 @@ export function getWidgetSql(widgetConfig, filters) {
   };
 
   // paramsConfig transform
-  const paramsConfig = widgetConfig.paramsConfig.map((param) => {
+  const params = widgetConfig.paramsConfig.map((param) => {
     switch (param.key) {
       case 'water_column':
         return {
@@ -207,7 +203,7 @@ export function getWidgetSql(widgetConfig, filters) {
   });
 
   // sqlConfig transform
-  const sqlConfig = widgetConfig.sqlConfig.map((param) => {
+  const sqlParams = widgetConfig.sqlConfig.map((param) => {
     return {
       key: param.key,
       keyParams: param.keyParams.map((p) => {
@@ -216,6 +212,12 @@ export function getWidgetSql(widgetConfig, filters) {
             return {
               key: p.key,
               value: yearOptions[filters[p.key]]
+            };
+          }
+          case 'commodity': {
+            return {
+              key: p.key,
+              value: filters.crop
             };
           }
           default:
@@ -228,21 +230,17 @@ export function getWidgetSql(widgetConfig, filters) {
     };
   });
 
-  // sql query substitution
-  data.forEach((item) => {
-    if (item.url) {
-      item.url = substitution(item.url, paramsConfig);
-      item.url = concatenation(item.url, sqlConfig);
-    }
-    if (item.value) {
-      Object.keys(item.value).forEach((key) => {
-        item.value[key] = substitution(item.value[key], paramsConfig);
-        item.value[key] = concatenation(item.value[key], sqlConfig);
+  // TODO: review
+  return Object.assign({}, widgetConfig, {
+    data: widgetConfig.data.map((d) => {
+      return Object.assign({}, d, {
+        url: (d.url) ? getConversion(d.url, params, sqlParams) : null,
+        value: (d.value) ? Object.keys(d.value).forEach((key) => {
+          d.value[key] = getConversion(d.value[key], params, sqlParams);
+        }) : null
       });
-    }
+    })
   });
-
-  return newConfig;
 }
 
 function getConversion(string, params, sqlParams) {
