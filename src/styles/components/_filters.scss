@@ -20,6 +20,7 @@
 .filters-section {
   &:last-child {
     border-bottom: 0;
+    padding-bottom: 0;
   }
   &.-highlighted {
     background-color: $color-tertiary;

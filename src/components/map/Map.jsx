@@ -36,7 +36,7 @@ class Map extends React.Component {
 
     this.labelLayer = L.tileLayer(config.BASEMAP_LABEL_URL, {})
                        .addTo(this.map)
-                       .setZIndex(1);
+                       .setZIndex(1000);
 
     if (this.props.setMapParams) {
       // Listen to leaflet events
@@ -126,7 +126,6 @@ class Map extends React.Component {
     return (
       <div className="c-map">
         <div ref={(node) => { this.mapNode = node; }} className="map-leaflet" />
-        <Legend className="-map" layers={this.props.layersActive} />
       </div>
     );
   }
