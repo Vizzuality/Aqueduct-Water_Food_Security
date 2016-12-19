@@ -54,7 +54,7 @@ export function getWaterSql(layer = {}, filters = {}) {
             return {
               key: p.key,
               // We can't have a irrigation different from 1, in this case we don't need to add anything
-              value: (!filters[p.key] || filters[p.key].length === 0 || filters[p.key].length === 2) ? null : filters[p.key]
+              value: (!filters[p.key] || filters[p.key].length === 0 || filters[p.key].length === 2) ? null : filters[p.key][0]
             };
           }
           case 'iso': {
