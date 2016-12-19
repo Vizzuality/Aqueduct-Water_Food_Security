@@ -24,11 +24,10 @@ export const scopeOptions = [
 ];
 
 export const yearOptions = [
-  { value: 'baseline', label: 'Baseline (current)' },
+  { value: 'baseline', label: 'Baseline' },
   { value: '2020', label: '2020' },
   { value: '2030', label: '2030' },
-  { value: '2040', label: '2040' },
-  { value: '2050', label: '2050' }
+  { value: '2040', label: '2040' }
 ];
 
 export const cropOptions = [
