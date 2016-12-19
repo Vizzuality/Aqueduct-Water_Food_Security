@@ -204,7 +204,12 @@ export function getWidgetSql(widgetConfig, filters) {
       case 'iso':
         return {
           key: param.key,
-          value: (filters.country) ? filters.country : null
+          value: (filters.scope === 'country' && filters.country) ? filters.country : null
+        };
+      case 'crops.iso':
+        return {
+          key: param.key,
+          value: (filters.scope === 'country' && filters.country) ? filters.country : null
         };
       default:
         return {
@@ -232,6 +237,16 @@ export function getWidgetSql(widgetConfig, filters) {
               value: filters.crop
             };
           }
+          case 'iso':
+            return {
+              key: p.key,
+              value: (filters.scope === 'country' && filters.country) ? filters.country : null
+            };
+          case 'crops.iso':
+            return {
+              key: p.key,
+              value: (filters.scope === 'country' && filters.country) ? filters.country : null
+            };
           default:
             return {
               key: p.key,
@@ -242,7 +257,7 @@ export function getWidgetSql(widgetConfig, filters) {
     };
   });
 
-  return Object.assign({}, widgetConfig, {
+  const vegaParams = Object.assign({}, widgetConfig, {
     data: widgetConfig.data.map((d) => {
       const newValue = {};
       if (d.url) {
@@ -257,4 +272,5 @@ export function getWidgetSql(widgetConfig, filters) {
       return Object.assign({}, d, newValue);
     })
   });
+  return vegaParams;
 }

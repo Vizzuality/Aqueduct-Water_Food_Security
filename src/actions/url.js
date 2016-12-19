@@ -3,7 +3,7 @@ import { push } from 'react-router-redux';
 export function updateMapUrl() {
   return (dispatch, state) => {
     const { map, filters } = state();
-    const { year, country, crop, food, irrigation, scenario, scope, water } = filters;
+    const { year, country, crop, food, irrigation, scope, water } = filters;
     const locationDescriptor = {
       pathname: '/',
       query: {
@@ -15,7 +15,6 @@ export function updateMapUrl() {
         crop,
         food,
         irrigation: (irrigation) ? irrigation.join(',') : undefined,
-        scenario,
         scope,
         water
       }
@@ -27,18 +26,16 @@ export function updateMapUrl() {
 export function updateCompareUrl() {
   return (dispatch, state) => {
     const { compare, filters } = state();
-    const { year, country, crop, food, irrigation, scenario, scope, water } = filters;
+    const { year, crop, food, irrigation, water } = filters;
     const locationDescriptor = {
       pathname: '/compare',
       query: {
         countries: compare.countries.join(','),
         year,
-        country,
         crop,
         food,
         irrigation: irrigation.join(','),
-        scenario,
-        scope,
+        scope: 'country',
         water
       }
     };
