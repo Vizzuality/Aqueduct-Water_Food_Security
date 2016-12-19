@@ -8,8 +8,7 @@ export default class CompareList extends React.Component {
   getItems() {
     const items = [];
     for (let i = 0; i < this.props.items; i += 1) {
-      const country = this.props.countries[i];
-      const filters = Object.assign({}, this.props.filters, country);
+      const filters = Object.assign({}, this.props.filters, { country: this.props.countries[i] });
       items.push(
         <div key={i} className="comparelist-item small-6">
           <CompareItem
@@ -17,7 +16,7 @@ export default class CompareList extends React.Component {
             loading={this.props.loading}
             widgetsActive={this.props.widgetsActive}
             index={i}
-            country={country}
+            country={this.props.countries[i]}
             countryList={this.props.countryList}
             layersActive={this.props.layersActive}
           />

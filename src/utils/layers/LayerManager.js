@@ -157,7 +157,7 @@ export default class LayerManager {
             // we can switch off the layer while it is loading
             const tileUrl = `https://${layer.account}.cartodb.com/api/v1/map/${data.layergroupid}/{z}/{x}/{y}.png`;
 
-            this._mapLayers[layer.id] = L.tileLayer(tileUrl).addTo(this._map).setZIndex(1000);
+            this._mapLayers[layer.id] = L.tileLayer(tileUrl).addTo(this._map).setZIndex(999);
 
             this._mapLayers[layer.id].on('load', () => {
               this._onLayerAddedSuccess && this._onLayerAddedSuccess(layer);

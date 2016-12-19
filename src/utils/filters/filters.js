@@ -187,6 +187,17 @@ export function getWidgetSql(widgetConfig, filters) {
           key: param.key,
           value: getWaterColumn(filters, param.sufix)
         };
+      case 'irrigation':
+        return {
+          key: param.key,
+          // We can't have a irrigation different from 1, in this case we don't need to add anything
+          value: (!filters[param.key] || filters[param.key].length === 0 || filters[param.key].length === 2) ? null : filters[param.key]
+        };
+      case 'iso':
+        return {
+          key: param.key,
+          value: (filters.country) ? filters.country : null
+        };
       default:
         return {
           key: param.key,
