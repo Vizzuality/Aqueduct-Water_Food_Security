@@ -18,7 +18,8 @@ class Widget extends React.Component {
   triggerAction(action) {
     if (action === 'info') {
       this.props.toggleModal(true, {
-        children: InfoModal
+        children: InfoModal,
+        size: '-medium'
       });
     }
   }
