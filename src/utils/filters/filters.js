@@ -156,10 +156,30 @@ export function getFoodSql(layer = {}, filters = {}) {
     return {
       key: param.key,
       keyParams: param.keyParams.map((p) => {
-        return {
-          key: p.key,
-          value: filters[p.key]
-        };
+        switch (p.key) {
+          case 'year': {
+            return {
+              key: p.key,
+              value: yearOptions[filters[p.key]]
+            };
+          }
+          case 'commodity': {
+            return {
+              key: `lower(${p.key})`,
+              value: (filters.crop !== 'all') ? filters.crop : null
+            };
+          }
+          case 'iso':
+            return {
+              key: p.key,
+              value: (filters.scope === 'country' && filters.country) ? filters.country : null
+            };
+          default:
+            return {
+              key: p.key,
+              value: filters[p.key]
+            };
+        }
       })
     };
   });
