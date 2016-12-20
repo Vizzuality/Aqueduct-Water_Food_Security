@@ -18,7 +18,6 @@ export default class CompareItem extends React.Component {
     let countrySelected = null;
     const mapConfig = {
       zoom: 3,
-      zoomControl: false,
       latLng: {
         lat: 0,
         lng: 0

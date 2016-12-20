@@ -32,6 +32,10 @@
   &.-fixed {
     max-width: 180px;
   }
+  &.-disabled {
+    opacity: .4;
+    pointer-events: none;
+  }
 }
 
 .simple-select {

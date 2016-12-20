@@ -171,9 +171,9 @@ export function getFoodSql(layer = {}, filters = {}) {
 
 // WIDGET FUNCTIONS
 
-export function widgetsFilter(widget, { scope, crop, country }, datasetTags) {
+export function widgetsFilter(widget, { scope, crop, country }, compare, datasetTags) {
   const _crop = crop === 'all' ? 'all_crops' : 'one_crop';
-  const _country = scope === 'country' && country ? 'country' : 'global';
+  const _country = ((scope === 'country' && country) || compare.countries.length) ? 'country' : 'global';
   return datasetTags && datasetTags.includes(_crop) && datasetTags.includes(_country);
 }
 

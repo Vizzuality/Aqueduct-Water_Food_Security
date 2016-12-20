@@ -15,11 +15,6 @@
     "category": "food"
   },
   {
-    "id": "d16c518b-70c5-4381-911a-a1784ed402bf",
-    "name": "World price",
-    "category": "food"
-  },
-  {
     "id": "ccdaede2-5343-49d6-8ea9-769528c3ab92",
     "name": "Kcal per capita",
     "category": "food"
@@ -35,11 +30,6 @@
   {
     "id": "6c49ae6c-2c73-46ac-93ab-d4ed1b05d44e",
     "name": "Water stress",
-    "category": "water"
-  },
-  {
-    "id": "345cfef3-ee8a-46bc-9bb9-164c406dfd2c",
-    "name": "Interanual variability",
     "category": "water"
   },
   {

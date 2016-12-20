@@ -1,12 +1,11 @@
 import {
-   COMPARE_SET_COUNTRY
+   COMPARE_SET_COUNTRY,
+   COMPARE_EMPTY_COUNTRIES
 }
 from 'constants/compare';
 
 const initialState = {
-  countries: [],
-  datasets: [],
-  layers: []
+  countries: []
 };
 
 export default function (state = initialState, action) {
@@ -16,6 +15,8 @@ export default function (state = initialState, action) {
       countries[action.payload.index] = action.payload.iso;
       return Object.assign({}, state, { countries });
     }
+    case COMPARE_EMPTY_COUNTRIES:
+      return Object.assign({}, state, { countries: [] });
     default:
       return state;
   }
