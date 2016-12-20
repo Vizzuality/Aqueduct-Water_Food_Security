@@ -11,7 +11,7 @@ export function closeModal() {
 
 export function toggleModal(opened, opts = {}) {
   return (dispatch) => {
-    if (opened && opts.children) {
+    if (opened && opts) {
       dispatch({ type: MODAL_SET_OPTIONS, payload: opts });
     }
     dispatch({ type: MODAL_TOGGLE, payload: opened });
@@ -20,4 +20,8 @@ export function toggleModal(opened, opts = {}) {
 
 export function modalLoading(loading) {
   return dispatch => dispatch({ type: MODAL_LOADING, payload: loading });
+}
+
+export function setModalOptions(opts) {
+  return dispatch => dispatch({ type: MODAL_SET_OPTIONS, payload: opts });
 }
