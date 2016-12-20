@@ -26,6 +26,11 @@
     font-size: $font-size-default;
   }
 
+  .info-widget {
+    .c-chart {
+      width: 100%;
+    }
+  }
 
   .info-description {
     font-family: $font-family-roboto;
