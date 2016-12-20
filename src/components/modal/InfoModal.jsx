@@ -22,13 +22,13 @@ export default function InfoModal(props) {
         {/* <button className="c-btn -primary" type="button">Download</button> */}
       </div>
       <div className="info-content">
-        <div className="row collapse expanded">
-          <div className="small-12 medium-8">
+        <div className="row expanded">
+          <div className="small-12 medium-8 columns">
             <div className="info-widget">
               <WidgetChart config={props.widget.widgetConfig} filters={props.filters} />
             </div>
           </div>
-          <div className="small-12 medium-4">
+          <div className="small-12 medium-4 columns">
             <div className="info-description">
               <dl>
                 <dt>Description:</dt>

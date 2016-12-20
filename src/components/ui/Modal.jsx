@@ -21,7 +21,6 @@ export default class Modal extends React.Component {
   }
 
   render() {
-
     return (
       <section className={`c-modal ${this.props.modal.opened ? '' : '-hidden'} ${this.props.modal.options.size}`}>
         <div className="modal-container">
