@@ -11,6 +11,12 @@ export const foodOptions = filter(layerSpec, { category: 'food' }).map((layer) =
   };
 });
 
+// Add 'none' option
+foodOptions.push({
+  label: 'None',
+  value: 'none'
+});
+
 export const waterOptions = filter(layerSpec, { category: 'water' }).map((layer) => {
   return {
     label: layer.name,
@@ -24,11 +30,10 @@ export const scopeOptions = [
 ];
 
 export const yearOptions = [
-  { value: 'baseline', label: 'Baseline (current)' },
+  { value: 'baseline', label: 'Baseline' },
   { value: '2020', label: '2020' },
   { value: '2030', label: '2030' },
-  { value: '2040', label: '2040' },
-  { value: '2050', label: '2050' }
+  { value: '2040', label: '2040' }
 ];
 
 export const cropOptions = [

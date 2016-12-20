@@ -5,7 +5,6 @@
 /* eslint class-methods-use-this: 0 */
 
 import L from 'leaflet';
-import find from 'lodash/find';
 import { format } from 'd3-format';
 
 /**
@@ -15,9 +14,8 @@ import { format } from 'd3-format';
  * @return {Object} layer
  */
 export default class BubbleClusterLayer {
-  constructor(geoJson, params) {
+  constructor(geoJson) {
     const pruneCluster = new PruneClusterForLeaflet();
-    console.info(params);
 
     // MARKER
     pruneCluster.BuildLeafletIcon = (feature) => {
@@ -28,17 +26,13 @@ export default class BubbleClusterLayer {
     };
 
     pruneCluster.PrepareLeafletMarker = (leafletMarker, { feature }) => {
-      const cropFilter = 'allcrops';
-      const crops = feature.properties.crops;
-      const cropSelected = find(crops, { slug: cropFilter });
-
       // Options
       const options = {
         location: feature.geometry.coordinates,
         className: 'c-marker-bubble',
-        size: this._getSize(cropSelected.value),
+        size: this._getSize(feature.properties.value),
         data: feature.properties,
-        htmlIcon: this._setMarkerHtml(cropSelected.value),
+        htmlIcon: this._setMarkerHtml(feature.properties.value),
         htmlInfowindow: this._setInfowindowHtml(feature.properties)
       };
 

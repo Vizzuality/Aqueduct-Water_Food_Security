@@ -1,7 +1,8 @@
 // Max widths
 $max-width-main: 1280px;
 $max-width-sidebar: 700px;
-
+$max-width-modal: 700px;
+$max-width-modal-medium: 1130px;
 // Colors
 $color-primary: #03a1de;
 $color-secondary: #3559a1;
@@ -34,6 +35,7 @@ $gray-9: #999;
 
 // Borders
 $border-color-1: #eee;
+$border-color-2: #ccc;
 
 // Margins & Paddings
 $space-1: 8px;
@@ -41,9 +43,6 @@ $space-sidebar: 50px;
 
 // Sizes
 $size-header: 60px;
-
-// Modal
-$modal-max-width: 1250px;
 
 // Times
 $animation-time: .16s;

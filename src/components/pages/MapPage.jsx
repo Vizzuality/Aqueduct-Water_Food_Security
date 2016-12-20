@@ -1,11 +1,11 @@
 import React from 'react';
 
 // Components
-import Sidebar from 'components/ui/Sidebar';
+import Sidebar from 'containers/ui/Sidebar';
 import Map from 'components/map/Map';
 import Filters from 'components/filters/Filters';
 import WidgetList from 'components/widgets/WidgetList';
-import Legend from 'components/legend/Legend';
+import Legend from 'containers/legend/Legend';
 
 class MapPage extends React.Component {
 
@@ -15,9 +15,10 @@ class MapPage extends React.Component {
 
   render() {
     const mapConfig = Object.assign({}, this.props.mapConfig, { scrollWheelZoom: true });
-    if (this.props.filters.country) {
+
+    if (this.props.filters.scope === 'country' && this.props.filters.country) {
       // Obtain country geom
-      mapConfig.fitOn = this.props.countries.list.find(c => c.id === this.props.filters.country);
+      mapConfig.bounds = this.props.countries.list.find(c => c.id === this.props.filters.country);
     }
 
     return (
@@ -31,13 +32,15 @@ class MapPage extends React.Component {
           </div>
           {/* Widget List */}
           <div className="l-sidebar-content">
-            {/* <WidgetList filters={this.props.filters} widgetsActive={this.props.widgetsActive} /> */}
+            <WidgetList filters={this.props.filters} widgetsActive={this.props.widgetsActive} />
           </div>
         </Sidebar>
 
         {/* Map */}
-        <Map mapConfig={mapConfig} filters={this.props.filters} layersActive={this.props.layersActive} setMapParams={this.props.setMapParams} />
-        <Legend className="-map" layers={this.props.layersActive} />
+        <div className="c-map-container">
+          <Map mapConfig={mapConfig} filters={this.props.filters} layersActive={this.props.layersActive} setMapParams={this.props.setMapParams} sidebar={this.props.sidebar} />
+          <Legend className="-map" layers={this.props.layersActive} />
+        </div>
       </div>
     );
   }
@@ -47,6 +50,7 @@ MapPage.propTypes = {
   mapConfig: React.PropTypes.object,
   filters: React.PropTypes.object,
   countries: React.PropTypes.object,
+  sidebar: React.PropTypes.object,
   layersActive: React.PropTypes.array,
   widgetsActive: React.PropTypes.array,
   // Actions

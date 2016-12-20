@@ -133,7 +133,7 @@ export default class LayerManager {
     switch (layer.category) {
       case 'water': {
         const body = getWaterSql(layer, options);
-        const request = new Request(`https://${layer.account}.cartodb.com/api/v1/map`, {
+        const request = new Request(`https://${layer.account}.carto.com/api/v1/map`, {
           method: 'POST',
           headers: new Headers({
             'Content-Type': 'application/json'
@@ -155,7 +155,7 @@ export default class LayerManager {
           })
           .then((data) => {
             // we can switch off the layer while it is loading
-            const tileUrl = `https://${layer.account}.cartodb.com/api/v1/map/${data.layergroupid}/{z}/{x}/{y}.png`;
+            const tileUrl = `https://${layer.account}.carto.com/api/v1/map/${data.layergroupid}/{z}/{x}/{y}.png`;
 
             this._mapLayers[layer.id] = L.tileLayer(tileUrl).addTo(this._map).setZIndex(999);
 
@@ -190,7 +190,7 @@ export default class LayerManager {
             return res.json();
           })
           .then((data) => {
-            const geojson = data.rows[0].data.features;
+            const geojson = data.rows[0].data.features || [];
             this._mapLayers[layer.id] = new BubbleClusterLayer(
               geojson, {}
             ).addTo(this._map);

@@ -95,7 +95,7 @@ export default class Filters extends React.Component {
                   {/* Water */}
                   <div className="filter-item">
                     <div className="c-select">
-                      <span className="title">Water <Icon name="icon-question" className="title-icon" /></span>
+                      <span className="title">Water Risk <Icon name="icon-question" className="title-icon" /></span>
                       <SimpleSelect
                         hideResetButton
                         options={waterOptions}
@@ -109,12 +109,13 @@ export default class Filters extends React.Component {
                   {/* Food */}
                   <div className="filter-item">
                     <div className="c-select">
-                      <span className="title">Food <Icon name="icon-question" className="title-icon" /></span>
+                      <span className="title">Country Data <Icon name="icon-question" className="title-icon" /></span>
                       <SimpleSelect
                         hideResetButton
                         options={foodOptions}
                         defaultValue={foodOptions.find(i => i.value === this.props.filters.food)}
                         onValueChange={selected => selected && this.updateFilters(selected.value, 'food')}
+                        className={this.props.filters.scope === 'country' ? '-disabled' : ''}
                       />
                     </div>
                   </div>

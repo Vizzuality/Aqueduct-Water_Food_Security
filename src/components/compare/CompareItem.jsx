@@ -5,8 +5,8 @@ import Icon from 'components/ui/Icon';
 
 export default class CompareItem extends React.Component {
 
-  getEmptyPlaceholder() {
-    return (
+  render() {
+    const emptyPlaceholder = (
       <div className="country-placeholder">
         <div>
           <Icon className="-huge country-placeholder-icon" name="icon-country" />
@@ -14,13 +14,10 @@ export default class CompareItem extends React.Component {
         </div>
       </div>
     );
-  }
 
-  render() {
     let countrySelected = null;
     const mapConfig = {
       zoom: 3,
-      zoomControl: false,
       latLng: {
         lat: 0,
         lng: 0
@@ -28,16 +25,18 @@ export default class CompareItem extends React.Component {
     };
     if (this.props.country) {
       countrySelected = this.props.countryList.find(c => c.id === this.props.country);
-      mapConfig.fitOn = countrySelected;
+      mapConfig.bounds = countrySelected;
     }
     return (
       <div className="c-compareitem">
         <section className="compareitem-map">
-          {this.props.country ? <Map filters={this.props.filters} mapConfig={mapConfig} layersActive={this.props.layersActive} /> : this.getEmptyPlaceholder()}
+          {this.props.country ? <Map filters={this.props.filters} mapConfig={mapConfig} layersActive={this.props.layersActive} /> : emptyPlaceholder}
         </section>
-        <section className="compareitem-widgets">
-          {/* <WidgetList filters={this.props.filters} loading={this.props.loading} widgetsActive={this.props.widgetsActive} /> */}
-        </section>
+        {this.props.country &&
+          <section className="compareitem-widgets">
+            <WidgetList filters={this.props.filters} loading={this.props.loading} widgetsActive={this.props.widgetsActive} />
+          </section>
+        }
       </div>
     );
   }

@@ -36,9 +36,13 @@ export default class ComparePage extends React.Component {
     return items;
   }
 
+  componentWillUnmount() {
+    this.props.emptyCompareCountries();
+  }
+
   render() {
     return (
-      <div>
+      <div className="l-comparepage">
         <div className="compare-filters">
           <div className="compare-filters-section -highlighted">
             <div className="row expanded collapse">{this.getCountrySelects()}</div>
@@ -69,6 +73,7 @@ ComparePage.propTypes = {
   setFilters: React.PropTypes.func,
   updateCompareUrl: React.PropTypes.func,
   setCompareCountry: React.PropTypes.func,
+  emptyCompareCountries: React.PropTypes.func,
   widgetsActive: React.PropTypes.array,
   layersActive: React.PropTypes.array
 };

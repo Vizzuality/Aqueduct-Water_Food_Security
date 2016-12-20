@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import ComparePage from 'components/pages/ComparePage';
-import { setCompareCountry } from 'actions/compare';
+import { setCompareCountry, emptyCompareCountries } from 'actions/compare';
 import { setFilters } from 'actions/filters';
 import { updateCompareUrl } from 'actions/url';
 import getActiveWidgets from 'selectors/widgets_active';
@@ -27,6 +27,9 @@ const mapDispatchToProps = dispatch => ({
   setCompareCountry: (country) => {
     dispatch(setCompareCountry(country));
     dispatch(updateCompareUrl());
+  },
+  emptyCompareCountries: () => {
+    dispatch(emptyCompareCountries());
   }
 });
 

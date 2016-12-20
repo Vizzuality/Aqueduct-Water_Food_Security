@@ -47,5 +47,5 @@ export default class Legend extends React.Component {
 Legend.propTypes = {
   layers: React.PropTypes.array,
   className: React.PropTypes.string,
-  toggleModal: React.PropTypes.func  
+  toggleModal: React.PropTypes.func
 };

@@ -3,6 +3,15 @@ import Icon from 'components/ui/Icon';
 import Spinner from 'components/ui/Spinner';
 
 export default class Modal extends React.Component {
+
+  componentDidMount() {
+    this.el.addEventListener('transitionend', () => {
+      if (!this.props.modal.opened) {
+        this.props.setModalOptions({ children: null });
+      }
+    });
+  }
+
   // Close modal when esc key is pressed
   componentWillReceiveProps({ modal }) {
     const self = this;
@@ -15,12 +24,14 @@ export default class Modal extends React.Component {
       document[modal.opened ? 'addEventListener' : 'removeEventListener']('keydown', escKeyPressListener);
     }
   }
+
   getContent() {
-    return this.props.modal.children ? <this.props.modal.children {...this.props.modal.childrenProps} /> : null;
+    return this.props.modal.options.children ? <this.props.modal.options.children {...this.props.modal.options.childrenProps} /> : null;
   }
+
   render() {
     return (
-      <section className={`c-modal ${this.props.modal.opened ? '' : '-hidden'}`}>
+      <section ref={(node) => { this.el = node; }} className={`c-modal ${this.props.modal.opened ? '' : '-hidden'} ${this.props.modal.options.size}`}>
         <div className="modal-container">
           <button className="modal-close" onClick={() => this.props.toggleModal(false)}>
             <Icon name="icon-cross" className="-big" />
@@ -39,5 +50,6 @@ Modal.propTypes = {
   // STORE
   modal: React.PropTypes.object,
   // ACTIONS
-  toggleModal: React.PropTypes.func
+  toggleModal: React.PropTypes.func,
+  setModalOptions: React.PropTypes.func
 };
