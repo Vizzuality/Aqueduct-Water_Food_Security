@@ -1,7 +1,5 @@
-{ "width": 510,
-  "height":110,
+{
   "background":"#fff",
-  "padding": {"top": 80, "left": 40, "bottom": 40, "right": 20},
   "load": {"baseURL": "app/","domainWhiteList": false},
   "scale": {},
   "render": {"retina": true},
@@ -9,7 +7,7 @@
   "axis": {
     "layer": "back",
     "ticks": 5,
-    "padding": 14.7,
+    "padding": 15,
     "axisColor": "#eeeeee",
     "axisWidth": 1,
     "gridColor": "#eeeeee",
@@ -57,7 +55,7 @@
     "gradientHeight": 16,
     "gradientWidth": 100,
     "labelColor": "#4a596a",
-    "labelFontSize": 16,
+    "labelFontSize": 14,
     "labelFont": "\"Roboto\"",
     "labelAlign": "left",
     "labelBaseline": "Bottom",
@@ -67,7 +65,7 @@
     "symbolStrokeWidth": 0,
     "titleColor": "#4a596a",
     "titleFont": "\"Roboto\"",
-    "titleFontSize": 16,
+    "titleFontSize": 14,
     "titleFontWeight": "bold"
   },
  "marks":{"color":"#3d6ac4"},
