@@ -21,3 +21,7 @@ export function toggleModal(opened, opts = {}) {
 export function modalLoading(loading) {
   return dispatch => dispatch({ type: MODAL_LOADING, payload: loading });
 }
+
+export function setModalOptions(opts) {
+  return dispatch => dispatch({ type: MODAL_SET_OPTIONS, payload: opts });
+}
