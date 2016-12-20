@@ -203,8 +203,7 @@ export function getWidgetSql(widgetConfig, filters) {
     baseline: 2010,
     2020: 2020,
     2030: 2030,
-    2040: 2040,
-    2050: 2050
+    2040: 2040
   };
 
   // paramsConfig transform
@@ -215,6 +214,13 @@ export function getWidgetSql(widgetConfig, filters) {
           key: param.key,
           value: getWaterColumn(filters, param.sufix)
         };
+      case 'year': {
+        return {
+          key: param.key,
+          value: yearOptions[filters[param.key]]
+        };
+      }
+
       case 'irrigation':
         return {
           key: param.key,
@@ -253,8 +259,8 @@ export function getWidgetSql(widgetConfig, filters) {
           }
           case 'commodity': {
             return {
-              key: p.key,
-              value: filters.crop
+              key: `lower(${p.key})`,
+              value: (filters.crop !== 'all') ? filters.crop : null
             };
           }
           case 'iso':
@@ -277,20 +283,7 @@ export function getWidgetSql(widgetConfig, filters) {
     };
   });
 
-  const vegaParams = Object.assign({}, widgetConfig, {
-    data: widgetConfig.data.map((d) => {
-      const newValue = {};
-      if (d.url) {
-        newValue.url = getConversion(d.url, params, sqlParams);
-      }
-      if (d.value) {
-        newValue.value = {};
-        Object.keys(d.value).forEach((key) => {
-          newValue.value[key] = getConversion(d.value[key], params, sqlParams);
-        });
-      }
-      return Object.assign({}, d, newValue);
-    })
+  return Object.assign({}, widgetConfig, {
+    data: JSON.parse(getConversion(JSON.stringify(widgetConfig.data), params, sqlParams))
   });
-  return vegaParams;
 }
