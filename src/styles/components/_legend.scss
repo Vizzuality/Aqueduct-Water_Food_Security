@@ -1,11 +1,12 @@
 // LEGEND
 .c-legend {
   min-width: 300px;
+  box-shadow: 0 0 2px rgba(0,0,0,0.25);
 
   &.-map {
     position: absolute;
-    right: 1rem;
-    bottom: 1rem;
+    right: 1.5rem;
+    bottom: 1.5rem;
     background-color: rgba(245, 243, 240, 0.9);
     z-index: 999;
     width: 400px;
@@ -16,7 +17,7 @@
 .c-legend-item {
   list-style: none;
   padding: 14px 14px 14px 14px;;
-  border-bottom: 1px solid #a5a696;
+  border-bottom: 1px solid $border-color-2;
 
   &:last-child {
     border-bottom: none;
@@ -89,40 +90,108 @@
 
 // GRAPH
 .c-legend-graph {
-  margin: $space-1 0 0;
+
+
   .graph {
-    display: flex;
+    margin: $space-1 0 0;
 
-    // BASIC (CHOROPLETH...)
-    &.-basic {
-      .graph-item {
-        .color {
-          display: block;
-          height: 7px;
-          border-top: 1px solid $border-color-1;
-          border-bottom: 1px solid $border-color-1;
-        }
+    // CHOROPLETH
+    &.-choropleth {
+      .graph-list {
+        display: flex;
 
-        .label {
-          display: block;
-          margin: 3px 0 0;
-          line-height: 1.25;
-          color: $color-text-1;
-          font-size: $font-size-small;
-          font-weight: 400;
-        }
-
-        &:first-child {
+        .graph-list-item {
           .color {
-            border-left: 1px solid $border-color-1;
+            display: block;
+            height: 7px;
+            border-top: 1px solid $border-color-2;
+            border-bottom: 1px solid $border-color-2;
           }
-        }
-        &:last-child {
-          .color {
-            border-right: 1px solid $border-color-1;
+
+          .label {
+            display: block;
+            margin: 5px 5px 0 0;
+            line-height: 1.25;
+            color: $color-text-1;
+            font-size: $font-size-extra-small;
+            font-weight: 500;
+          }
+
+          .value {
+            display: block;
+            margin: 3px 5px 0 0;
+            line-height: 1.25;
+            color: $color-text-1;
+            font-size: 11px;
+            font-weight: 400;
+          }
+
+          &:first-child {
+            .color {
+              border-left: 1px solid $border-color-2;
+            }
+          }
+          &:last-child {
+            .color {
+              border-right: 1px solid $border-color-2;
+            }
           }
         }
       }
+    }
+
+    // CLUSTER
+    &.-cluster {
+      .graph-units {
+        display: block;
+        line-height: 1.25;
+        color: $color-text-1;
+        font-size: $font-size-extra-small;
+        font-weight: 500;
+      }
+
+      .graph-description {
+        display: block;
+        margin: $space-1 0 0;
+        line-height: 1.25;
+        color: $color-text-1;
+        font-size: 11px;
+        font-weight: 400;
+      }
+      .graph-list {
+        display: flex;
+        margin: 10px 0 0 0;
+
+        .graph-list-item {
+          margin: 0 0 0 $space-1 * 2;
+
+          &:first-child {
+            margin: 0;
+          }
+
+          .color {
+            display: block;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 1px solid $border-color-2;
+          }
+
+          .label {
+            display: block;
+            line-height: 1.25;
+            color: $color-text-1;
+            font-size: $font-size-small;
+            font-weight: 500;
+            margin: 5px 0 0;
+          }
+        }
+      }
+    }
+
+    // BASIC
+    &.-basic {
+      display: none;
     }
   }
 }
