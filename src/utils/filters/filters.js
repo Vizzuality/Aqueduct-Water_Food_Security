@@ -272,6 +272,5 @@ export function getWidgetSql(widgetConfig, filters) {
       return Object.assign({}, d, newValue);
     })
   });
-  debugger;
   return vegaParams;
 }
