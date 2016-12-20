@@ -11,6 +11,12 @@ export const foodOptions = filter(layerSpec, { category: 'food' }).map((layer) =
   };
 });
 
+// Add 'none' option
+foodOptions.push({
+  label: 'None',
+  value: 'none'
+});
+
 export const waterOptions = filter(layerSpec, { category: 'water' }).map((layer) => {
   return {
     label: layer.name,

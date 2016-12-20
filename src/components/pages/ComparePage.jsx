@@ -36,6 +36,10 @@ export default class ComparePage extends React.Component {
     return items;
   }
 
+  componentWillUnmount() {
+    this.props.emptyCompareCountries();
+  }
+
   render() {
     return (
       <div className="l-comparepage">
@@ -69,6 +73,7 @@ ComparePage.propTypes = {
   setFilters: React.PropTypes.func,
   updateCompareUrl: React.PropTypes.func,
   setCompareCountry: React.PropTypes.func,
+  emptyCompareCountries: React.PropTypes.func,
   widgetsActive: React.PropTypes.array,
   layersActive: React.PropTypes.array
 };

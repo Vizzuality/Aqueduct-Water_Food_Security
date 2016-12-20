@@ -115,6 +115,7 @@ export default class Filters extends React.Component {
                         options={foodOptions}
                         defaultValue={foodOptions.find(i => i.value === this.props.filters.food)}
                         onValueChange={selected => selected && this.updateFilters(selected.value, 'food')}
+                        className={this.props.filters.scope === 'country' ? '-disabled' : ''}
                       />
                     </div>
                   </div>
