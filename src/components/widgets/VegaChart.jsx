@@ -29,8 +29,10 @@ class VegaChart extends React.Component {
   }
 
   setSize() {
-    this.width = this.chart.offsetWidth;
-    this.height = this.chart.offsetHeight;
+    if (this.chart) {
+      this.width = this.chart.offsetWidth;
+      this.height = this.chart.offsetHeight;
+    }
   }
 
   parseVega() {
