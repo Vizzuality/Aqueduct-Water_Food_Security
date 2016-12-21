@@ -23,7 +23,7 @@ export default function CountrySelect(props) {
   // Include all other SimpleSelect props
   parsedProps = Object.assign({}, props, parsedProps);
 
-  return <SimpleSelect {...parsedProps} />;
+  return <SimpleSelect hideResetButton {...parsedProps} />;
 }
 
 CountrySelect.propTypes = {

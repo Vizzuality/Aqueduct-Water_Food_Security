@@ -4,6 +4,7 @@ import CountrySelect from 'containers/countries/CountrySelect';
 // Components
 import CompareList from 'components/compare/CompareList';
 import Filters from 'components/filters/Filters';
+import { Link } from 'react-router';
 
 export default class ComparePage extends React.Component {
 
@@ -42,7 +43,10 @@ export default class ComparePage extends React.Component {
 
   render() {
     return (
-      <div className="l-comparepage">
+      <div className="l-comparepage l-fullheight">
+        <div className="compare-header">
+          <Link to="/" className="link">Back</Link>
+        </div>
         <div className="compare-filters">
           <div className="compare-filters-section -highlighted">
             <div className="row expanded collapse">{this.getCountrySelects()}</div>
