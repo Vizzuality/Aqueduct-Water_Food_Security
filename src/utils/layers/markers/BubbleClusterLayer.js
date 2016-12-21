@@ -4,8 +4,9 @@
 /* eslint new-cap: 0 */
 /* eslint class-methods-use-this: 0 */
 
-import L from 'leaflet';
+import L from 'leaflet/dist/leaflet';
 import { format } from 'd3-format';
+import { PruneCluster, PruneClusterForLeaflet } from '../../../../lib/PruneCluster';
 
 /**
  * Creating buble cluster marker for food layers
@@ -141,7 +142,7 @@ export default class BubbleClusterLayer {
     const constant = 50;
     const border = 10;
 
-    return border + constant + (multiplicator * Math.log(size));
+    return border + constant + (multiplicator * Math.log2(size));
   }
 
 }

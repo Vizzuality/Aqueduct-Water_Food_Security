@@ -1,17 +1,18 @@
-import initOpbeat from 'opbeat-react';
-import 'opbeat-react/router';
 import React from 'react';
 import { render } from 'react-dom';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import { browserHistory } from 'react-router';
 import thunk from 'redux-thunk';
-import { createOpbeatMiddleware } from 'opbeat-react/redux';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
+import initOpbeat from 'opbeat-react';
+import 'opbeat-react/router';
+import { createOpbeatMiddleware } from 'opbeat-react/redux';
 
 import * as reducers from './reducers';
 import Routes from './routes';
 
+import 'leaflet/dist/leaflet.css';
 import './styles/index.scss';
 
 /**

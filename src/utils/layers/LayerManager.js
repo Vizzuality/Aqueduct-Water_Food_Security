@@ -1,11 +1,15 @@
 /* eslint import/no-unresolved: 0 */
 /* eslint import/extensions: 0 */
 
-import L from 'leaflet';
+import L from 'leaflet/dist/leaflet';
+import esri from 'esri-leaflet';
 // Layers
 import BubbleClusterLayer from 'utils/layers/markers/BubbleClusterLayer';
 // Functions
 import { getWaterSql, getFoodSql } from 'utils/filters/filters';
+
+// adding support for esri
+L.esri = esri;
 
 export default class LayerManager {
 

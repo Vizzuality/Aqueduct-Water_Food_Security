@@ -4,6 +4,8 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const env = process.env.NODE_ENV || 'development';
+const envPath = path.join(__dirname, 'environments', env);
 const rootPath = path.join(process.cwd());
 
 const app = express();
@@ -16,6 +18,6 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(rootPath, 'public')));
 
 // Load environment config
-require(path.join(__dirname, 'environments', process.env.NODE_ENV || 'development'))(app);
+require(envPath)(app);
 
 module.exports = app;

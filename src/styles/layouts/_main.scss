@@ -1,3 +1,7 @@
+.l-app {
+  min-width: 960px;
+  position: relative;
+}
 .l-main {
   background: white;
   box-shadow: 0 0 5px rgba(black, 0.1);
@@ -20,6 +24,10 @@
 // Util class, must override height property value
 .-fullscreen {
   height: calc(100vh - #{$size-header}) !important;
+}
+
+.l-fullheight {
+  min-height: 100vh;
 }
 
 .l-sidebar {
