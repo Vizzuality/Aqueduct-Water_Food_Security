@@ -220,7 +220,6 @@ export function getWidgetSql(widgetConfig, filters) {
           value: yearOptions[filters[param.key]]
         };
       }
-
       case 'irrigation':
         return {
           key: param.key,
@@ -240,7 +239,7 @@ export function getWidgetSql(widgetConfig, filters) {
       default:
         return {
           key: param.key,
-          value: param.key === 'year' ? yearOptions[filters[param.key]] : filters[param.key]
+          value: filters[param.key]
         };
     }
   });

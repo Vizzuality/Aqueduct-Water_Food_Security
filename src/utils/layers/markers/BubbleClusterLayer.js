@@ -142,7 +142,7 @@ export default class BubbleClusterLayer {
     const constant = 50;
     const border = 10;
 
-    return border + constant + (multiplicator * Math.log(size));
+    return border + constant + (multiplicator * Math.log2(size));
   }
 
 }

@@ -26,15 +26,28 @@
 // Overriding leaflet popup styles
 .leaflet-popup {
   margin-bottom: 25px;
+  border: solid 1px rgba(138, 157, 166, 0.15);
 
   .leaflet-popup-content-wrapper {
     border-radius: 0;
-    padding: 35px;
-    padding-bottom: 30px;
+    padding: 0;
+    background-color: transparent;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.17);
   }
 
   .leaflet-popup-content {
+    padding: 18px 36px;
+    background-color: $color-map;
     margin: 0;
+  }
+
+  .leaflet-popup-tip-container {
+    margin-top: -1px;
+  }
+  .leaflet-popup-tip {
+    background-color: $color-map;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.17);
+    border: solid 1px rgba(138, 157, 166, 0.15);
   }
 
   a.leaflet-popup-close-button {
