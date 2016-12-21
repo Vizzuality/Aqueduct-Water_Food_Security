@@ -1,4 +1,4 @@
-import jsonExample from 'data/widget-list-example';
+// import jsonExample from 'data/widget-list-example';
 
 /**
  * GET POSTS
@@ -24,7 +24,7 @@ export function getWidgets() {
     // We should change this to an API call
     return setTimeout(() => {
       dispatch(executeAction(GET_WIDGETS_LOADING, false));
-      dispatch(executeAction(GET_WIDGETS_SUCCESS, jsonExample));
+      // dispatch(executeAction(GET_WIDGETS_SUCCESS, jsonExample));
     }, 2500);
     // return fetch(`${API_ROOT_URL}/widgets`)
     //   .then(response => response.json())

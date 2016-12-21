@@ -27,25 +27,23 @@ const config = {
 
   module: {
     loaders: [
-      { test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/ },
-
       {
+        test: /\.jsx?$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/
+      }, {
         test: /\.css$/,
         loader: 'style-loader!css-loader'
-      },
-      {
+      }, {
         test: /\.(scss|sass)$/,
         loader: 'style-loader!css-loader!sass-loader!postcss-loader'
-      },
-      {
+      }, {
         test: /\.json$/,
         loader: 'json'
-      },
-      {
+      }, {
         test: /\.(eot|ttf|woff2|woff)$/,
         loader: 'url-loader?prefix=fonts/&context=/src/fonts'
-      },
-      {
+      }, {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'url-loader?prefix=image/&limit=5000&context=/src/images'
       }

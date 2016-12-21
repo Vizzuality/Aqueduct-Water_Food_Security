@@ -6,7 +6,7 @@
   "scripts": {
     "build": "NODE_ENV=production ./node_modules/.bin/webpack --config ./config/webpack.config.js",
     "postinstall": "npm run build",
-    "test": "./node_modules/.bin/eslint . && ./node_modules/.bin/jscs ."
+    "test": "./node_modules/.bin/eslint ."
   },
   "repository": {
     "type": "git",
@@ -35,14 +35,15 @@
     "eslint": "^3.9.1",
     "eslint-config-airbnb": "^12.0.0",
     "eslint-import-resolver-webpack": "^0.7.0",
-    "eslint-plugin-import": "^2.1.0",
+    "eslint-plugin-import": "^1.16.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.5.0",
+    "esri-leaflet": "^2.0.6",
     "express": "^4.13.4",
     "html-webpack-plugin": "^2.24.1",
-    "jscs": "^3.0.7",
     "json-loader": "^0.5.4",
     "jsonapi-serializer": "^3.4.1",
+    "leaflet": "^1.0.2",
     "lodash": "^4.17.2",
     "mocha": "^3.0.0",
     "morgan": "^1.7.0",
@@ -53,6 +54,7 @@
     "postcss-loader": "^1.1.0",
     "pretty-error": "^2.0.2",
     "prunecluster": "^2.0.0-beta.3",
+    "raw-loader": "^0.5.1",
     "react": "^15.0.2",
     "react-addons-css-transition-group": "^15.2.1",
     "react-addons-shallow-compare": "^15.3.2",
@@ -68,6 +70,7 @@
     "reselect": "^2.5.4",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
     "vega": "2.5.2",
     "webpack": "^1.13.3",
     "webpack-dev-middleware": "^1.8.4"

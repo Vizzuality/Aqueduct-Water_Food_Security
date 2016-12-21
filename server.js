@@ -8,7 +8,7 @@ const app = require('./config/application');
 /**
  * Initializing server
  */
-app.listen(port, '0.0.0.0', err => {
+app.listen(port, '0.0.0.0', (err) => {
   if (err) {
     console.log(err);
   }

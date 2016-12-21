@@ -2,7 +2,7 @@
 /* eslint import/extensions: 0 */
 
 import React from 'react';
-import L from 'leaflet';
+import L from 'leaflet/dist/leaflet';
 import isEqual from 'lodash/isEqual';
 
 import { MAP_CONFIG } from 'constants/map';
