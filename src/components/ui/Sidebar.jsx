@@ -32,7 +32,7 @@ export default class Sidebar extends React.Component {
    * - triggerToggle
   */
   triggerToggle() {
-    this.setState({
+    this.sidebarNode && this.setState({
       opened: !this.state.opened
     }, () => {
       this.props.setSidebarWidth((this.state.opened) ? this.sidebarNode.offsetWidth : '50');
@@ -40,7 +40,7 @@ export default class Sidebar extends React.Component {
   }
 
   triggerResize() {
-    this.props.setSidebarWidth((this.state.opened) ? this.sidebarNode.offsetWidth : '50');
+    this.sidebarNode && this.props.setSidebarWidth((this.state.opened) ? this.sidebarNode.offsetWidth : '50');
   }
 
   render() {
