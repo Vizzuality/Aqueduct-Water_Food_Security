@@ -4,8 +4,8 @@ import { SET_MAP_LOCATION } from 'actions/map';
 const initialState = {
   zoom: 2,
   latLng: {
-    lat: 52,
-    lng: 7
+    lat: 30,
+    lng: -120
   }
 };
 
