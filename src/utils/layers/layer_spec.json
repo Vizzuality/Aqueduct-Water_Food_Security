@@ -36,5 +36,12 @@
     "id": "d9785282-2140-463f-a82d-f7296687055a",
     "name": "Seasonal variability",
     "category": "water"
+  },
+
+
+  {
+    "id": "e844accd-9e65-414b-84e7-efc5bd65aa17",
+    "name": "Country mask",
+    "category": "mask"
   }
 ]

@@ -61,6 +61,13 @@ export function getWaterSql(layer = {}, filters = {}) {
           key: param.key,
           value: getWaterColumn(filters)
         };
+      case 'iso': {
+        return {
+          key: param.key,
+          value: (filters.scope === 'country' && filters.country) ? filters.country : null
+        };
+      }
+
       default:
         return {
           key: param.key,

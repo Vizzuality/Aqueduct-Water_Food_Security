@@ -13,7 +13,7 @@ const getActiveLayers = (_datasets, _filters) => {
   _datasets.list.forEach((dataset) => {
     if (dataset.layer.length) {
       layer = dataset.layer[0].attributes;
-      if (dataset.id === _filters.water || (_filters.scope === 'global' && dataset.id === _filters.food)) {
+      if (dataset.id === _filters.water || (_filters.scope === 'global' && dataset.id === _filters.food) || (_filters.scope === 'country' && _filters.country && dataset.id === 'e844accd-9e65-414b-84e7-efc5bd65aa17')) {
         layerList.push(Object.assign({}, {
           category: find(layerSpec, { id: dataset.id }).category
         }, layer));
