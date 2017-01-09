@@ -38,7 +38,10 @@ class Map extends React.Component {
       });
     };
 
-    this.layerManager = new LayerManager(this.map, stopLoading, stopLoading);
+    this.layerManager = new LayerManager(this.map, {
+      onLayerAddedSuccess: stopLoading,
+      onLayerAddedError: stopLoading
+    });
 
     this.map.attributionControl.addAttribution('&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>');
     this.map.zoomControl && this.map.zoomControl.setPosition('topright');
