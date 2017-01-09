@@ -76,7 +76,7 @@ export default class BubbleClusterLayer {
 
           // We should check if the sidebar is opened
           pruneCluster._map.fitBounds(bounds, {
-            paddingTopLeft: [40, 25],
+            paddingTopLeft: [600, 25],
             paddingBottomRight: [60, 25]
           });
         }
