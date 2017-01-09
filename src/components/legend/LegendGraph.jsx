@@ -9,6 +9,10 @@ class LegendGraph extends React.Component {
         return null;
       }
 
+      case 'mask': {
+        return null;
+      }
+
       case 'cluster': {
         return (
           <div className={`graph -${config.type}`}>

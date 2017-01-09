@@ -14,11 +14,11 @@ L.esri = esri;
 export default class LayerManager {
 
   // Constructor
-  constructor(map, onLayerAddedSuccess = null, onLayerAddedError = null) {
+  constructor(map, options = {}) {
     this._map = map;
     this._mapLayers = {};
-    this._onLayerAddedSuccess = onLayerAddedSuccess;
-    this._onLayerAddedError = onLayerAddedError;
+    this._onLayerAddedSuccess = options.onLayerAddedSuccess;
+    this._onLayerAddedError = options.onLayerAddedError;
   }
 
   /*
@@ -135,7 +135,7 @@ export default class LayerManager {
     const options = opts;
 
     switch (layer.category) {
-      case 'water': {
+      case 'mask' : {
         const body = getWaterSql(layer, options);
         const request = new Request(`https://${layer.account}.carto.com/api/v1/map`, {
           method: 'POST',
@@ -177,6 +177,48 @@ export default class LayerManager {
         break;
       }
 
+      case 'water': {
+        const body = getWaterSql(layer, options);
+        const request = new Request(`https://${layer.account}.carto.com/api/v1/map`, {
+          method: 'POST',
+          headers: new Headers({
+            'Content-Type': 'application/json'
+          }),
+          body: JSON.stringify(body)
+        });
+
+        // add to the load layers lists before the fetch
+        // to avoid multiples loads while the layer is loading
+        this._mapLayers[layer.id] = true;
+        fetch(request)
+          .then((res) => {
+            if (!res.ok) {
+              const error = new Error(res.statusText);
+              error.response = res;
+              throw error;
+            }
+            return res.json();
+          })
+          .then((data) => {
+            // we can switch off the layer while it is loading
+            const tileUrl = `https://${layer.account}.carto.com/api/v1/map/${data.layergroupid}/{z}/{x}/{y}.png`;
+
+            this._mapLayers[layer.id] = L.tileLayer(tileUrl).addTo(this._map).setZIndex(998);
+
+            this._mapLayers[layer.id].on('load', () => {
+              this._onLayerAddedSuccess && this._onLayerAddedSuccess(layer);
+            });
+            this._mapLayers[layer.id].on('tileerror', () => {
+              this._onLayerAddedError && this._onLayerAddedError(layer);
+            });
+          })
+          .catch((err) => {
+            console.error(err);
+            this._onLayerAddedError && this._onLayerAddedError(layer);
+          });
+        break;
+      }
+
       case 'food': {
         const body = getFoodSql(layer, options);
         // Get the sql from the current layer instead of hardcoding it
@@ -196,7 +238,7 @@ export default class LayerManager {
           .then((data) => {
             const geojson = data.rows[0].data.features || [];
             this._mapLayers[layer.id] = new BubbleClusterLayer(
-              geojson, {}
+              geojson, layer
             ).addTo(this._map);
             this._onLayerAddedSuccess && this._onLayerAddedSuccess(layer);
           })

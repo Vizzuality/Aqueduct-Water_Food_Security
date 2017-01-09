@@ -5,7 +5,7 @@ import {
 const initialState = {
   crop: 'all',
   scope: 'global',
-  country: null,
+  country: undefined,
   year: 'baseline',
   food: 'none',
   water: '6c49ae6c-2c73-46ac-93ab-d4ed1b05d44e',

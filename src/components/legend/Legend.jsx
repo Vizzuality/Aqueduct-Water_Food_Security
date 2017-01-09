@@ -1,4 +1,6 @@
 import React from 'react';
+import orderBy from 'lodash/orderBy';
+
 import LegendButtons from 'components/legend/LegendButtons';
 import LegendGraph from 'components/legend/LegendGraph';
 import SourceModal from 'components/modal/SourceModal';
@@ -23,10 +25,13 @@ export default class Legend extends React.Component {
   }
 
   render() {
+    const layers = orderBy(this.props.layers, ['category'], ['desc']);
+
     return (
       <div className={`c-legend ${this.props.className}`}>
         <ul>
-          {this.props.layers.map((layer, index) =>
+          {layers.map((layer, index) =>
+            layer.category !== 'mask' &&
             <li className="c-legend-item" key={index}>
               <header className="legend-item-header">
                 <h3>

@@ -47,16 +47,16 @@ class Header extends React.Component {
               </button>
             </li>
             <li>
-              <Link className="c-header-button" to="/how-to">How to</Link>
+              <Link className="c-header-button" to="/how-to">How to </Link>
             </li>
             <li>
-              <Link className="c-header-button" to="/resource-library">Resource Library</Link>
+              <Link className="c-header-button" to="/resource-library">Resource Library </Link>
             </li>
             <li>
-              <Link className="c-header-button" to="/about">About us</Link>
+              <Link className="c-header-button" to="/about">About us </Link>
             </li>
             <li>
-              <Link className="c-header-button" to="/get-involved">Get involved</Link>
+              <Link className="c-header-button" to="/get-involved">Get involved </Link>
             </li>
             <li>
               <Link className="c-header-button" to="/search">
