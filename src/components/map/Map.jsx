@@ -4,11 +4,19 @@
 import React from 'react';
 import L from 'leaflet/dist/leaflet';
 import isEqual from 'lodash/isEqual';
+import Spinner from 'components/ui/Spinner';
 
 import { MAP_CONFIG } from 'constants/map';
 import LayerManager from 'utils/layers/LayerManager';
 
 class Map extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: false
+    };
+  }
 
   componentDidMount() {
     this.map = L.map(this.mapNode, {
@@ -24,7 +32,13 @@ class Map extends React.Component {
       this.fitBounds(this.props.mapConfig.bounds.geometry);
     }
 
-    this.layerManager = new LayerManager(this.map /* , onLayerAddedOK, onLayerAddedKO */);
+    const stopLoading = () => {
+      this.setState({
+        loading: false
+      });
+    };
+
+    this.layerManager = new LayerManager(this.map, stopLoading, stopLoading);
 
     this.map.attributionControl.addAttribution('&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>');
     this.map.zoomControl && this.map.zoomControl.setPosition('topright');
@@ -60,19 +74,19 @@ class Map extends React.Component {
         this.fitBounds(this.props.mapConfig.bounds, nextProps.sidebar.width || 0);
       }
     }
-  }
 
-  // TODO: update with real check
-  shouldComponentUpdate(nextProps, nextState) {
-    if (!isEqual(nextProps.filters, this.props.filters) || !isEqual(nextProps.layersActive, this.props.layersActive)) {
-      return true;
+    const filtersChanged = !isEqual(nextProps.filters, this.props.filters);
+    const layersActiveChanged = !isEqual(nextProps.layersActive, this.props.layersActive);
+    if (filtersChanged || layersActiveChanged) {
+      this.removeLayers();
+      this.addLayers(nextProps.layersActive, nextProps.filters);
     }
-    return false;
   }
 
-  componentDidUpdate() {
-    this.removeLayers();
-    this.addLayers();
+  shouldComponentUpdate(nextProps, nextState) {
+    const loadingChanged = this.state.loading !== nextState.loading;
+    const sidebarWidthChanged = +this.props.sidebar.width !== +nextProps.sidebar.width;
+    return loadingChanged || sidebarWidthChanged;
   }
 
   componentWillUnmount() {
@@ -81,7 +95,6 @@ class Map extends React.Component {
     this.props.setMapParams && this.removeMapEventListeners();
     this.map.remove();
   }
-
 
   // GETTERS
   getMapParams() {
@@ -116,13 +129,17 @@ class Map extends React.Component {
   }
 
   // Layer methods
-  addLayer(layer) {
-    this.layerManager.addLayer(layer, this.props.filters);
+  addLayer(layer, filters) {
+    this.setState({
+      loading: true
+    });
+    this.layerManager.addLayer(layer, filters || this.props.filters);
   }
 
-  addLayers() {
-    this.props.layersActive.forEach((layer) => {
-      this.addLayer(layer);
+  addLayers(layers, filters) {
+    if (!layers) return;
+    layers.forEach((layer) => {
+      this.addLayer(layer, filters);
     });
   }
 
@@ -138,6 +155,7 @@ class Map extends React.Component {
   render() {
     return (
       <div className="c-map">
+        {this.state.loading && <Spinner isLoading style={{ marginLeft: +this.props.sidebar.width ? `${+this.props.sidebar.width / 2}px` : 0 }} />}
         <div ref={(node) => { this.mapNode = node; }} className="map-leaflet" />
       </div>
     );
