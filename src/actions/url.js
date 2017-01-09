@@ -11,7 +11,7 @@ export function updateMapUrl() {
         lng: map.latLng.lng.toFixed(2),
         zoom: map.zoom,
         year,
-        country: country || undefined,
+        country,
         crop,
         food,
         irrigation: (irrigation) ? irrigation.join(',') : undefined,

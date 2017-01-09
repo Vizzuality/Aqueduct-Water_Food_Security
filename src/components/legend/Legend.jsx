@@ -27,6 +27,7 @@ export default class Legend extends React.Component {
       <div className={`c-legend ${this.props.className}`}>
         <ul>
           {this.props.layers.map((layer, index) =>
+            layer.category !== 'mask' &&
             <li className="c-legend-item" key={index}>
               <header className="legend-item-header">
                 <h3>
