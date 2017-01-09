@@ -15,7 +15,8 @@ import { PruneCluster, PruneClusterForLeaflet } from '../../../../lib/PruneClust
  * @return {Object} layer
  */
 export default class BubbleClusterLayer {
-  constructor(geoJson) {
+  constructor(geoJson, layer) {
+    const { id } = layer;
     const pruneCluster = new PruneClusterForLeaflet();
 
     // MARKER
@@ -30,7 +31,7 @@ export default class BubbleClusterLayer {
       // Options
       const options = {
         location: feature.geometry.coordinates,
-        className: 'c-marker-bubble',
+        className: this._setMarkerClass(id, feature.properties.value),
         size: this._getSize(feature.properties.value),
         data: feature.properties,
         htmlIcon: this._setMarkerHtml(feature.properties.value),
@@ -73,6 +74,7 @@ export default class BubbleClusterLayer {
             new L.LatLng(b.minLat, b.maxLng),
             new L.LatLng(b.maxLat, b.minLng));
 
+          // We should check if the sidebar is opened
           pruneCluster._map.fitBounds(bounds, {
             paddingTopLeft: [40, 25],
             paddingBottomRight: [60, 25]
@@ -107,10 +109,26 @@ export default class BubbleClusterLayer {
   }
 
   // STATIC methods
+  // - _setMarkerClass
   // - _setMarkerHtml
   // - _setInfowindowHtml
   // - _setInfowindowClusterHtml
   // - _getSize
+
+  _setMarkerClass(layerId, value) {
+    let additionalClass = '';
+    switch (layerId) {
+      case 'b8e135d2-b64f-4ea3-93e9-9f8d1245fb2a':
+        if (value > 0) { additionalClass = '-positive'; }
+        if (value < 0) { additionalClass = '-negative'; }
+        break;
+      default:
+
+    }
+    return `c-marker-bubble ${additionalClass}`;
+  }
+
+
   _setMarkerHtml(value) {
     const _value = format('.3s')(value);
     return (`
@@ -137,9 +155,9 @@ export default class BubbleClusterLayer {
   }
 
   _getSize(v) {
-    const size = (v < 1) ? 1 : v;
+    const size = (v < 1 && v > -1) ? 1 : Math.abs(v);
     const multiplicator = 2.5;
-    const constant = 50;
+    const constant = 55;
     const border = 10;
 
     return border + constant + (multiplicator * Math.log2(size));

@@ -238,7 +238,7 @@ export default class LayerManager {
           .then((data) => {
             const geojson = data.rows[0].data.features || [];
             this._mapLayers[layer.id] = new BubbleClusterLayer(
-              geojson, {}
+              geojson, layer
             ).addTo(this._map);
             this._onLayerAddedSuccess && this._onLayerAddedSuccess(layer);
           })
