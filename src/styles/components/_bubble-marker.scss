@@ -18,6 +18,20 @@
     z-index: 1000 !important;
   }
 
+  &.-positive {
+    border: 8px solid rgba($color-success, 0.2);
+    .marker-bubble-inner {
+      background-color: rgba($color-success, 0.85);
+    }
+  }
+
+  &.-negative {
+    border: 8px solid rgba($color-error, 0.2);
+    .marker-bubble-inner {
+      background-color: rgba($color-error, 0.85);
+    }
+  }
+
   .marker-bubble-inner {
     display: flex;
     align-items: center;

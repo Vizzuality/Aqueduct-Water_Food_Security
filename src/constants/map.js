@@ -1,9 +1,9 @@
 export const MAP_CONFIG = {
-  zoom: 3,
-  minZoom: 3,
+  zoom: 2,
+  minZoom: 2,
   latLng: {
-    lat: 52,
-    lng: 7
+    lat: 30,
+    lng: -120
   },
   zoomControl: true
 };
