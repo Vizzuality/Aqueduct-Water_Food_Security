@@ -15,6 +15,27 @@
     flex-direction: column;
   }
 
+  // Share button
+  .btn-share {
+    position: absolute;
+    top: 0;
+    right: $space-sidebar;
+    height: $space-sidebar;
+    z-index: 2;
+    font-family: $font-family-roboto;
+    font-size: $font-size-big;
+    font-weight: 500;
+    &:after {
+      content: '';
+      width: 1px;
+      height: 24px;
+      display: inline-block;
+      vertical-align: middle;
+      border-right: 2px solid #617db8;
+      margin-left: 19px;
+    }
+  }
+
   // Toggle button
   .btn-toggle {
     display: flex;

@@ -30,6 +30,7 @@
     "canvas": "^1.6.2",
     "chai": "^3.5.0",
     "classnames": "^2.2.5",
+    "clipboard": "^1.5.16",
     "css-loader": "^0.25.0",
     "dotenv": "^2.0.0",
     "esri-leaflet": "^2.0.6",
