@@ -1,5 +1,5 @@
 import React from 'react';
-import sortBy from 'lodash/sortBy';
+import orderBy from 'lodash/orderBy';
 
 import LegendButtons from 'components/legend/LegendButtons';
 import LegendGraph from 'components/legend/LegendGraph';
@@ -25,7 +25,7 @@ export default class Legend extends React.Component {
   }
 
   render() {
-    const layers = sortBy(this.props.layers, ['category'], ['desc']).reverse();
+    const layers = orderBy(this.props.layers, ['category'], ['desc']);
 
     return (
       <div className={`c-legend ${this.props.className}`}>
