@@ -14,11 +14,11 @@ L.esri = esri;
 export default class LayerManager {
 
   // Constructor
-  constructor(map, onLayerAddedSuccess = null, onLayerAddedError = null) {
+  constructor(map, options = {}) {
     this._map = map;
     this._mapLayers = {};
-    this._onLayerAddedSuccess = onLayerAddedSuccess;
-    this._onLayerAddedError = onLayerAddedError;
+    this._onLayerAddedSuccess = options.onLayerAddedSuccess;
+    this._onLayerAddedError = options.onLayerAddedError;
   }
 
   /*

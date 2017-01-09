@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default function Spinner({ isLoading }) {
+export default function Spinner({ isLoading, style }) {
   const loading = (isLoading) ? '-loading' : '';
   return (
     <div className={`c-spinner ${loading}`}>
-      <div className="spinner-box">
+      <div className="spinner-box" style={style}>
         <div className="icon" />
       </div>
     </div>
@@ -12,5 +12,6 @@ export default function Spinner({ isLoading }) {
 }
 
 Spinner.propTypes = {
-  isLoading: React.PropTypes.bool
+  isLoading: React.PropTypes.bool,
+  style: React.PropTypes.object
 };
