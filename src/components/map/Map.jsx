@@ -19,6 +19,7 @@ class Map extends React.Component {
   }
 
   componentDidMount() {
+    this._mounted = true;
     this.map = L.map(this.mapNode, {
       minZoom: MAP_CONFIG.minZoom,
       zoom: this.props.mapConfig.zoom,
@@ -33,7 +34,8 @@ class Map extends React.Component {
     }
 
     const stopLoading = () => {
-      this.setState({
+      // Don't execute callback if component has been unmounted
+      this._mounted && this.setState({
         loading: false
       });
     };
@@ -88,11 +90,12 @@ class Map extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     const loadingChanged = this.state.loading !== nextState.loading;
-    const sidebarWidthChanged = +this.props.sidebar.width !== +nextProps.sidebar.width;
+    const sidebarWidthChanged = this.props.sidebar ? (+this.props.sidebar.width !== +nextProps.sidebar.width) : false;
     return loadingChanged || sidebarWidthChanged;
   }
 
   componentWillUnmount() {
+    this._mounted = false;
     // Remember to remove the listeners before removing the map
     // or they will stay in memory
     this.props.setMapParams && this.removeMapEventListeners();
@@ -156,9 +159,10 @@ class Map extends React.Component {
 
   // RENDER
   render() {
+    const spinnerStyles = { marginLeft: this.props.sidebar && +this.props.sidebar.width ? `${+this.props.sidebar.width / 2}px` : 0 };
     return (
       <div className="c-map">
-        {this.state.loading && <Spinner isLoading style={{ marginLeft: +this.props.sidebar.width ? `${+this.props.sidebar.width / 2}px` : 0 }} />}
+        {this.state.loading && <Spinner isLoading style={spinnerStyles} />}
         <div ref={(node) => { this.mapNode = node; }} className="map-leaflet" />
       </div>
     );
