@@ -1,17 +1,89 @@
 .c-btn {
-  display: inline-block;
-  padding: $space-1 $space-1 * 4;
+  display: inline-flex;
+  font-family: $font-family-roboto;
+  padding: 0 $space-1 * 4;
+  border-radius: 0px;
+  height: 49px;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  fill: $color-white;
+
   &.-primary {
     font-family: $font-family-roboto;
     font-size: $font-size-big;
     color: $color-primary;
     border: 1px solid $color-primary;
     background-color: $color-white;
-    border-radius: 3px;
     font-weight: 500;
-    transition: all .1s linear;
+    transition: all .16s linear;
+    text-transform: uppercase;
+
     &:hover {
-      // TODO: hover effect
+      color: $color-white;
+      background-color: $color-primary;
+    }
+  }
+
+  // SOCIAL STATES
+  &.-facebook {
+    background: #3b5998;
+    color: $color-white;
+    border-color: #3b5998;
+
+    &:hover {
+      background: darken(#3b5998, 10%);
+    }
+  }
+
+  &.-twitter {
+    background: #55acee;
+    color: $color-white;
+    border-color: #55acee;
+
+    &:hover {
+      background: darken(#55acee, 10%);
+    }
+  }
+
+  &.-linkedin {
+    background: #007bb5;
+    color: $color-white;
+    border-color: #007bb5;
+
+    &:hover {
+      background: darken(#007bb5, 10%);
+    }
+  }
+
+  // ACTION STATES
+  &.-success {
+    color: $color-white !important;
+    border: 1px solid $color-success !important;
+    background-color: $color-success !important;
+  }
+
+  &.-error {
+    color: $color-white !important;
+    border: 1px solid $color-error !important;
+    background-color: $color-error !important;
+  }
+
+  &.-share {
+    position: absolute;
+    top: 0;
+    right: $space-sidebar;
+    z-index: 2;
+    height: $space-sidebar;
+    padding: 0 18px;
+    font-size: $font-size-big;
+    font-weight: 500;    
+  }
+
+  &.-with-icon {
+    > * {
+      margin: 0 5px 0 0;
+      &:last-child { margin: 0;}
     }
   }
 }
