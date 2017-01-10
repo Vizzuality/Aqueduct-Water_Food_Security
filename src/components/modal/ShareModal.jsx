@@ -8,7 +8,8 @@ export default class ShareModal extends React.Component {
   }
 
   render() {
-    const url = 'http://www.google.es';
+    // TODO: bitly
+    const url = location.href;
     return (
       <div className="c-share">
         <div className="share-header">

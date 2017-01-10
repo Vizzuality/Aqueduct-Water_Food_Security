@@ -1,5 +1,5 @@
 .c-share {
-  padding: 2rem;
+  padding: 4rem;
 
   .share-title {
     font-family: $font-family-roboto;
@@ -7,6 +7,10 @@
     margin-bottom: 2rem;
   }
   .share-url {
-    padding: 13px;
+    display: inline-block;
+    width: 60%;
+    padding: 10px;
+    margin-right: 1rem;
+    border-bottom: 1px solid $color-primary;
   }
 }
