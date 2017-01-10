@@ -39,6 +39,7 @@
 }
 .compareitem-map {
   height: 430px;
+  position: relative;
   .comparelist-item:first-child & {
     border-right: 3px solid #F5F1E0;
   }

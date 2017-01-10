@@ -15,6 +15,35 @@
     flex-direction: column;
   }
 
+  // Share button
+  .btn-share {
+    position: absolute;
+    top: 0;
+    right: $space-sidebar;
+    z-index: 2;
+    height: $space-sidebar;
+    padding: 0 18px;
+    font-size: $font-size-big;
+    font-weight: 500;
+    transition: all $animation-time linear;
+
+    &:hover {
+      fill: darken($color-white, 20%);
+      color: darken($color-white, 20%);
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 24px;
+      display: inline-block;
+      vertical-align: middle;
+      background: #617db8;
+      right: 0;
+    }
+  }
+
   // Toggle button
   .btn-toggle {
     display: flex;

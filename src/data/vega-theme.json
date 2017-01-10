@@ -1,61 +1,35 @@
 {
   "background":"#fff",
-  "load": {"baseURL": "app/","domainWhiteList": false},
-  "scale": {},
   "render": {"retina": true},
-  "scene": {},
   "axis": {
     "layer": "back",
     "ticks": 5,
-    "padding": 15,
-    "axisColor": "#eeeeee",
+    "axisColor": "transparent",
     "axisWidth": 1,
     "gridColor": "#eeeeee",
     "gridOpacity": 1,
     "tickColor": "#eeeeee",
-    "tickLabelColor": "#8a9da6",
-    "tickWidth": 1,
+    "tickLabelColor": "#758290",
+    "tickWidth": 0,
     "tickSize": 10,
-    "tickLabelFontSize": 14,
+    "tickLabelFontSize": 12,
     "tickLabelFont": "\"Roboto\"",
-    "tickOffset": 15,
-    "titleColor": "#8a9da6",
+    "tickOffset": 0,
     "titleFont": "\"Roboto\"",
-    "titleFontSize": 14,
-    "titleFontWeight": "medium",
+    "titleFontSize": 12,
+    "titleFontWeight": "regular",
+    "titleColor": "#758290",
     "titleOffset": "auto",
-    "titleOffsetAutoMin": 30,
-    "titleOffsetAutoMax": 10000,
-    "titleOffsetAutoMargin": 10
-  },
-  "axis_x":{
-    "grid": {
-    "ordinal": false,
-    "default": false
-  },
-  "tickSize": 0
-  },
-  "axis_y":{
-  "grid": {
-    "ordinal": false,
-    "default": true
-    },
-   "axisColor": "#8a9da6",
-    "axisWidth": 0,
-     "padding": -15,
-     "tickSize": 40
+    "titleOffsetAutoMin": 0,
+    "titleOffsetAutoMax": 0,
+    "titleOffsetAutoMargin": 0
   },
   "legend": {
-    "orient": "right",
-    "offset": 0,
+    "orient": "left",
     "padding": 0,
-    "margin": 15,
-    "gradientStrokeColor": "#888",
-    "gradientStrokeWidth": 1,
-    "gradientHeight": 16,
-    "gradientWidth": 100,
-    "labelColor": "#4a596a",
-    "labelFontSize": 14,
+    "margin": 0,
+    "labelColor": "#758290",
+    "labelFontSize": 12,
     "labelFont": "\"Roboto\"",
     "labelAlign": "left",
     "labelBaseline": "Bottom",
@@ -63,12 +37,11 @@
     "symbolShape": "line",
     "symbolSize": 2,
     "symbolStrokeWidth": 0,
-    "titleColor": "#4a596a",
     "titleFont": "\"Roboto\"",
-    "titleFontSize": 14,
-    "titleFontWeight": "bold"
+    "titleFontSize": 12,
+    "titleFontWeight": "medium",
+    "titleColor": "#758290"
   },
- "marks":{"color":"#3d6ac4"},
   "color": {
     "rgb": [128,128,128],
     "lab": [50,0,0],
@@ -76,8 +49,6 @@
     "hsl": [0,0,0.5]
   },
   "range": {
-    "positionx":[-40,30,100,180, 240, 300],
-    "positiony":[-140],
     "cropColor":[
       "#3d6ac4",
       "#749be9",
@@ -100,9 +71,5 @@
       "line",
       "textMark"
     ]
-  },
-  "shapes":{
-    "line": "M-5 -5 H 5 V -3 H -5 L -5 -5",
-    "textMark":"M462,185 L493,148 523,185 525,107 461,106 z"
   }
 }
