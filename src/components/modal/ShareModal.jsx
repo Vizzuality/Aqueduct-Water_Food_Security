@@ -13,6 +13,11 @@ export default class ShareModal extends React.Component {
     };
   }
 
+  componentWillMount() {
+    this.props.getShareUrl(location.href);
+  }
+
+
   componentDidMount() {
     this.clipboard = new Clipboard(this.btn);
     this.clipboard.on('success', (e) => {
@@ -31,10 +36,23 @@ export default class ShareModal extends React.Component {
     });
   }
 
+  // UI EVENTS
+  triggerPopup(e) {
+    e && e.preventDefault();
+    const width = 575;
+    const height = 400;
+    const left = (window.innerWidth - width) / 2;
+    const top = (window.innerHeight - height) / 2;
+
+    const url = e.currentTarget.href;
+    const opts = `status=1,width=${width},height=${height},top=${top},left=${left}`;
+
+    window.open(url, 'Share this analysis', opts);
+  }
+
   render() {
-    // TODO: bitly
-    const url = location.href;
-    const urlEncoded = encodeURIComponent(location.href);
+    const url = this.props.share.url || location.href;
+    const urlEncoded = encodeURIComponent(this.props.share.url || location.href);
 
     let text = 'Copy';
     let classCopy = '';
@@ -66,15 +84,42 @@ export default class ShareModal extends React.Component {
             </button>
           </div>
           <div className="share-sozial">
-            <a href={`https://twitter.com/share?url=${urlEncoded}`} data-social="Twitter" target="_blank" rel="noopener noreferrer" className="c-btn -primary -with-icon -twitter" type="button" name="button">
+            <a
+              href={`https://twitter.com/share?url=${urlEncoded}`}
+              data-social="Twitter"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="c-btn -primary -with-icon -twitter"
+              type="button"
+              name="button"
+              onClick={this.triggerPopup}
+            >
               <Icon name="icon-twitter" />
               Twitter
             </a>
-            <a href={`https://www.facebook.com/sharer/sharer.php?u=${urlEncoded}&t=Global Cancer Project Map`} data-social="Facebook" target="_blank" rel="noopener noreferrer" className="c-btn -primary -with-icon -facebook" type="button" name="button">
+            <a
+              href={`https://www.facebook.com/sharer/sharer.php?u=${urlEncoded}&t=Global Cancer Project Map`}
+              data-social="Facebook"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="c-btn -primary -with-icon -facebook"
+              type="button"
+              name="button"
+              onClick={this.triggerPopup}
+            >
               <Icon name="icon-facebook" />
               Facebook
             </a>
-            <a href={`https://www.linkedin.com/shareArticle?mini=true&url=${urlEncoded}&title=Global Cancer Project Map&summary=&source=`} data-social="Linkedin" target="_blank" rel="noopener noreferrer" className="c-btn -primary -with-icon -linkedin" type="button" name="button">
+            <a
+              href={`https://www.linkedin.com/shareArticle?mini=true&url=${urlEncoded}&title=Global Cancer Project Map&summary=&source=`}
+              data-social="Linkedin"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="c-btn -primary -with-icon -linkedin"
+              type="button"
+              name="button"
+              onClick={this.triggerPopup}
+            >
               <Icon name="icon-linkedin" />
               Linkedin
             </a>
@@ -84,3 +129,8 @@ export default class ShareModal extends React.Component {
     );
   }
 }
+
+ShareModal.propTypes = {
+  share: React.PropTypes.object,
+  getShareUrl: React.PropTypes.func
+};
