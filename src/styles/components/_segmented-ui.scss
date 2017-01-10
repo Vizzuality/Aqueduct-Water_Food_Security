@@ -30,7 +30,7 @@
     .segmented-ui-btn {
       position: relative;
       font-size: $font-size-default;
-      transition: all .2s linear;
+      transition: all $animation-time linear;
       text-transform: uppercase;
       letter-spacing: 1px;
       padding: 14px 0;
@@ -50,7 +50,7 @@
       }
 
       &:hover {
-        color: darken($color-white, 10%);
+        color: darken($color-white, 20%);
       }
     }
   }
