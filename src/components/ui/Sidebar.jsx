@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon from 'components/ui/Icon';
 import debounce from 'lodash/debounce';
-import ShareModal from 'components/modal/ShareModal';
+import ShareModal from 'containers/modal/ShareModal';
 
 export default class Sidebar extends React.Component {
 
