@@ -86,12 +86,9 @@ export default class ShareModal extends React.Component {
           <div className="share-sozial">
             <a
               href={`https://twitter.com/share?url=${urlEncoded}`}
-              data-social="Twitter"
               target="_blank"
               rel="noopener noreferrer"
               className="c-btn -primary -with-icon -twitter"
-              type="button"
-              name="button"
               onClick={this.triggerPopup}
             >
               <Icon name="icon-twitter" />
@@ -99,12 +96,9 @@ export default class ShareModal extends React.Component {
             </a>
             <a
               href={`https://www.facebook.com/sharer/sharer.php?u=${urlEncoded}&t=Global Cancer Project Map`}
-              data-social="Facebook"
               target="_blank"
               rel="noopener noreferrer"
               className="c-btn -primary -with-icon -facebook"
-              type="button"
-              name="button"
               onClick={this.triggerPopup}
             >
               <Icon name="icon-facebook" />
@@ -112,12 +106,9 @@ export default class ShareModal extends React.Component {
             </a>
             <a
               href={`https://www.linkedin.com/shareArticle?mini=true&url=${urlEncoded}&title=Global Cancer Project Map&summary=&source=`}
-              data-social="Linkedin"
               target="_blank"
               rel="noopener noreferrer"
               className="c-btn -primary -with-icon -linkedin"
-              type="button"
-              name="button"
               onClick={this.triggerPopup}
             >
               <Icon name="icon-linkedin" />

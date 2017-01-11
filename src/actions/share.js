@@ -26,7 +26,7 @@ export function getShareUrl(url) {
         }
       })
       .catch((err) => {
-        console.log('parsing failed', err);
+        console.error('parsing failed', err);
       });
   };
 }
