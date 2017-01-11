@@ -70,7 +70,8 @@
     "url-loader": "^0.5.7",
     "vega": "2.5.2",
     "webpack": "^1.13.3",
-    "webpack-dev-middleware": "^1.8.4"
+    "webpack-dev-middleware": "^1.8.4",
+    "whatwg-fetch": "^2.0.1"
   },
   "devDependencies": {
     "eslint": "^3.9.1",
