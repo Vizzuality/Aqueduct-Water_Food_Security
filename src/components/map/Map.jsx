@@ -61,7 +61,7 @@ class Map extends React.Component {
       this.addMapEventListeners();
     }
 
-    this.addLayers();
+    this.addLayers(this.props.layersActive, this.props.filters);
   }
 
   componentWillReceiveProps(nextProps) {
