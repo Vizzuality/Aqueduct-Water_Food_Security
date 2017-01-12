@@ -12,7 +12,7 @@ export function getShareUrl(url) {
     // Waiting for fetch from server -> Dispatch loading
     dispatch({ type: GET_SHARE_LOADING });
 
-    fetchJsonp(`https://api-ssl.bitly.com/v3/shorten?longUrl=${encodeURIComponent(url)}&login=o_7jgk3fc9jd&apiKey=R_15709bbeafa545cbb6a62de75605897e`)
+    fetchJsonp(`https://api-ssl.bitly.com/v3/shorten?longUrl=${encodeURIComponent(url)}&login=${config.BITLY_LOGIN}&apiKey=${config.BITLY_KEY}`)
       .then((response) => {
         if (response.ok) return response.json();
         throw new Error(response.status_txt);
