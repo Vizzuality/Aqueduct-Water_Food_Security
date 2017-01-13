@@ -6,3 +6,4 @@ export { default as tooltip } from './tooltip';
 export { default as compare } from './compare';
 export { default as countries } from './countries';
 export { default as sidebar } from './sidebar';
+export { default as share } from './share';

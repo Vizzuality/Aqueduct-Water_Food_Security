@@ -53,14 +53,17 @@
       "#3d6ac4",
       "#749be9",
       "#51d4f0",
-      "#b1f3b7"],
+      "#b1f3b7",
+      "#24962e"
+    ],
     "riskColor":[
       "#f4f4f1",
       "#fffbca",
       "#ffe01b",
       "#f6bb0f",
       "#f6811d",
-      "#e24e2c"],
+      "#e24e2c"
+    ],
     "shapes": [
       "circle",
       "cross",

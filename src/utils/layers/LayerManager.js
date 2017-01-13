@@ -1,11 +1,13 @@
 /* eslint import/no-unresolved: 0 */
 /* eslint import/extensions: 0 */
 
+import 'whatwg-fetch';
 import L from 'leaflet/dist/leaflet';
 import esri from 'esri-leaflet';
 // Layers
 import BubbleClusterLayer from 'utils/layers/markers/BubbleClusterLayer';
 // Functions
+import { makePromiseCancelable } from 'utils/utils';
 import { getWaterSql, getFoodSql } from 'utils/filters/filters';
 
 // adding support for esri
@@ -17,6 +19,7 @@ export default class LayerManager {
   constructor(map, options = {}) {
     this._map = map;
     this._mapLayers = {};
+    this._mapRequests = {};
     this._onLayerAddedSuccess = options.onLayerAddedSuccess;
     this._onLayerAddedError = options.onLayerAddedError;
   }
@@ -134,6 +137,12 @@ export default class LayerManager {
     });
     const options = opts;
 
+    if (this._mapRequests[layer.category]) {
+      if (this._mapRequests[layer.category].promise.__zone_symbol__value.status !== 200) {
+        this._mapRequests[layer.category].cancel();
+      }
+    }
+
     switch (layer.category) {
       case 'mask' : {
         const body = getWaterSql(layer, options);
@@ -145,10 +154,10 @@ export default class LayerManager {
           body: JSON.stringify(body)
         });
 
-        // add to the load layers lists before the fetch
-        // to avoid multiples loads while the layer is loading
-        this._mapLayers[layer.id] = true;
-        fetch(request)
+        const fetchRequest = makePromiseCancelable(fetch(request));
+
+        fetchRequest
+          .promise
           .then((res) => {
             if (!res.ok) {
               const error = new Error(res.statusText);
@@ -174,6 +183,9 @@ export default class LayerManager {
             console.error(err);
             this._onLayerAddedError && this._onLayerAddedError(layer);
           });
+
+        this._mapRequests[layer.category] = fetchRequest;
+
         break;
       }
 
@@ -187,10 +199,10 @@ export default class LayerManager {
           body: JSON.stringify(body)
         });
 
-        // add to the load layers lists before the fetch
-        // to avoid multiples loads while the layer is loading
-        this._mapLayers[layer.id] = true;
-        fetch(request)
+        const fetchRequest = makePromiseCancelable(fetch(request));
+
+        fetchRequest
+          .promise
           .then((res) => {
             if (!res.ok) {
               const error = new Error(res.statusText);
@@ -216,6 +228,9 @@ export default class LayerManager {
             console.error(err);
             this._onLayerAddedError && this._onLayerAddedError(layer);
           });
+
+        this._mapRequests[layer.category] = fetchRequest;
+
         break;
       }
 
@@ -226,7 +241,10 @@ export default class LayerManager {
           method: 'GET'
         });
 
-        fetch(request)
+        const fetchRequest = makePromiseCancelable(fetch(request));
+
+        fetchRequest
+          .promise
           .then((res) => {
             if (!res.ok) {
               const error = new Error(res.statusText);
@@ -246,6 +264,9 @@ export default class LayerManager {
             console.error('Request failed', err);
             this._onLayerAddedError && this._onLayerAddedError(layer);
           });
+
+        this._mapRequests[layer.category] = fetchRequest;
+
         break;
       }
 
