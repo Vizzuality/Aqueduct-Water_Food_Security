@@ -1,4 +1,5 @@
 import findIndex from 'lodash/findIndex';
+import debounce from 'lodash/debounce';
 import React from 'react';
 import Draggable from 'react-draggable';
 
@@ -17,7 +18,16 @@ class Timeline extends React.Component {
   }
 
   componentDidMount() {
+    this.resizeEvent = () => {
+      this.setXSegment();
+    };
+    window.addEventListener('resize', debounce(this.resizeEvent, 100));
+
     this.setXSegment();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.resizeEvent);
   }
 
   /**
@@ -43,10 +53,12 @@ class Timeline extends React.Component {
    * - setXPosition
   */
   setXSegment() {
-    const segmentX = (this.handleContainer.clientWidth - 18) / (this.props.items.length - 1);
-    this.setState({
-      segmentX
-    });
+    if (this.handleContainer) {
+      const segmentX = (this.handleContainer.clientWidth - 18) / (this.props.items.length - 1);
+      this.setState({
+        segmentX
+      });
+    }
   }
 
   getPosition(i) {

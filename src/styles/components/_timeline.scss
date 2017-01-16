@@ -33,6 +33,11 @@
     &.-selected {
       color: $color-white;
     }
+
+    &:hover {
+      background: darken($color-white, 10%);
+      color: darken($color-white, 10%);
+    }
   }
 
   .timeline-drag-handle-container {
@@ -53,6 +58,7 @@
       background: $color-primary;
       border-radius: 50%;
       box-shadow: 0 0 2px rgba(black, 0.14);
+      cursor: move;
     }
   }
 }
