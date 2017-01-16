@@ -93,7 +93,7 @@ export default class ShareModal extends React.Component {
               onClick={this.triggerPopup}
             >
               <Icon name="icon-twitter" />
-              Twitter
+              <span>Twitter</span>
             </a>
             <a
               href={`https://www.facebook.com/sharer/sharer.php?u=${urlEncoded}&t=${title}`}
@@ -103,7 +103,7 @@ export default class ShareModal extends React.Component {
               onClick={this.triggerPopup}
             >
               <Icon name="icon-facebook" />
-              Facebook
+              <span>Facebook</span>
             </a>
             <a
               href={`https://www.linkedin.com/shareArticle?mini=true&url=${urlEncoded}&title=${title}&summary=&source=`}
@@ -113,7 +113,7 @@ export default class ShareModal extends React.Component {
               onClick={this.triggerPopup}
             >
               <Icon name="icon-linkedin" />
-              Linkedin
+              <span>Linkedin</span>
             </a>
           </div>
         </div>

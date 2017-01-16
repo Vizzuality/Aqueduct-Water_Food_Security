@@ -62,7 +62,7 @@ export default class Sidebar extends React.Component {
         */}
         <button type="button" className="c-btn -white -with-icon btn-share" onClick={this.toggleShareModal}>
           <Icon name="icon-share" />
-          Share
+          <span>Share</span>
         </button>
 
         <div className={`l-sidebar-toggle btn-toggle ${openedClass}`} onClick={this.triggerToggle}>
