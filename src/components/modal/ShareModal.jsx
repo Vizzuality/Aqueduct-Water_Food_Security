@@ -51,6 +51,7 @@ export default class ShareModal extends React.Component {
   }
 
   render() {
+    const title = 'Water and Food Security Analyzer';
     const url = this.props.share.url || location.href;
     const urlEncoded = encodeURIComponent(this.props.share.url || location.href);
 
@@ -95,7 +96,7 @@ export default class ShareModal extends React.Component {
               Twitter
             </a>
             <a
-              href={`https://www.facebook.com/sharer/sharer.php?u=${urlEncoded}&t=Global Cancer Project Map`}
+              href={`https://www.facebook.com/sharer/sharer.php?u=${urlEncoded}&t=${title}`}
               target="_blank"
               rel="noopener noreferrer"
               className="c-btn -primary -with-icon -facebook"
@@ -105,7 +106,7 @@ export default class ShareModal extends React.Component {
               Facebook
             </a>
             <a
-              href={`https://www.linkedin.com/shareArticle?mini=true&url=${urlEncoded}&title=Global Cancer Project Map&summary=&source=`}
+              href={`https://www.linkedin.com/shareArticle?mini=true&url=${urlEncoded}&title=${title}&summary=&source=`}
               target="_blank"
               rel="noopener noreferrer"
               className="c-btn -primary -with-icon -linkedin"
