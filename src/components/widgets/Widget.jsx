@@ -16,20 +16,24 @@ class Widget extends React.Component {
   }
 
   triggerAction(action) {
-    if (action === 'info') {
-      this.props.toggleModal(true, {
-        children: InfoModal,
-        size: '-medium',
-        childrenProps: {
-          filters: this.props.filters,
-          widget: this.props.widget
-        }
-      });
+    switch (action) {
+      case 'info':
+        this.props.toggleModal(true, {
+          children: InfoModal,
+          size: '-medium',
+          childrenProps: {
+            filters: this.props.filters,
+            widget: this.props.widget
+          }
+        });
+        break;
+      default:
+        console.info('The action is not supported by this function');
     }
   }
 
   render() {
-    const { name, description, widgetConfig } = this.props.widget;
+    const { name, description, widgetConfig, queryUrl } = this.props.widget;
     return (
       <div className="c-widget">
         <div>
@@ -38,7 +42,7 @@ class Widget extends React.Component {
               <h2 className="widget-title">{name}</h2>
               <h3 className="widget-description">{description}</h3>
             </div>
-            <WidgetButtons triggerAction={this.triggerAction} />
+            <WidgetButtons queryUrl={queryUrl} triggerAction={this.triggerAction} />
           </header>
           <div className="widget-content">
             {/* WidgetLegend */}

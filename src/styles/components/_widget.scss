@@ -68,14 +68,6 @@
   justify-content: flex-end;
   align-items: center;
 
-  button {
-    border: solid 1px rgba(74, 89, 106, 0.13);
-    border-radius: 50%;
-    padding: 6px;
-    height: 29px;
-    width: 29px;
-  }
-
   > * {
     display: flex;
     list-style: none;
@@ -96,6 +88,11 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    border: solid 1px rgba(74, 89, 106, 0.13);
+    border-radius: 50%;
+    padding: 6px;
+    height: 29px;
+    width: 29px;
 
     svg {
       fill: $color-text-1;
