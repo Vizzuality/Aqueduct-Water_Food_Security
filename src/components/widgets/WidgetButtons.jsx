@@ -28,7 +28,7 @@ class WidgetButtons extends React.Component {
     return (
       <ul className="c-widget-buttons">
         <li>
-          <a href={this.getDownloadUrl()} target="_blank" rel="noopener noreferrer" data-action="download" className="widget-button" onClick={this.triggerAction}>
+          <a href={this.getDownloadUrl()} target="_blank" rel="noopener noreferrer" className="widget-button">
             <Icon name="icon-download" />
           </a>
         </li>
