@@ -5,6 +5,7 @@ import SegmentedUi from 'components/ui/SegmentedUi';
 import Accordion from 'components/ui/Accordion';
 import CountrySelect from 'containers/countries/CountrySelect';
 import Icon from 'components/ui/Icon';
+import Timeline from 'components/ui/Timeline';
 import { SimpleSelect } from 'react-selectize';
 import { Link } from 'react-router';
 // Options
@@ -124,17 +125,22 @@ export default class Filters extends React.Component {
             </div>
             <div className="filters-section">
               <div className="row expanded collapse filters-group">
-                <div className="small-4 columns">
+                <div className="small-12 columns">
                   <div className="filter-item">
                     {/* Year */}
                     <div className="c-select">
                       <span className="title">Timeframe <Icon name="icon-question" className="title-icon" /></span>
-                      <SimpleSelect
+                      <Timeline
+                        items={yearOptions}
+                        selected={yearOptions.find(i => i.value === this.props.filters.year)}
+                        onChange={selected => selected && this.updateFilters(selected.value, 'year')}
+                      />
+                      {/* <SimpleSelect
                         hideResetButton
                         options={yearOptions}
                         defaultValue={yearOptions.find(i => i.value === this.props.filters.year)}
                         onValueChange={selected => selected && this.updateFilters(selected.value, 'year')}
-                      />
+                      /> */}
                     </div>
                   </div>
                 </div>
