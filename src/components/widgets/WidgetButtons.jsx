@@ -10,6 +10,15 @@ class WidgetButtons extends React.Component {
     this.triggerAction = this.triggerAction.bind(this);
   }
 
+  // HELPERS
+  // - getDownloadUrl
+  getDownloadUrl() {
+    const downloadUrl = this.props.queryUrl || '';
+    return `${config.API_URL}/${downloadUrl.replace('query', 'download')}`;
+  }
+
+  // UI EVENTS
+  // - triggerAction
   triggerAction(e) {
     const action = e.currentTarget.dataset.action;
     this.props.triggerAction(action);
@@ -19,22 +28,22 @@ class WidgetButtons extends React.Component {
     return (
       <ul className="c-widget-buttons">
         <li>
+          <a href={this.getDownloadUrl()} target="_blank" rel="noopener noreferrer" data-action="download" className="widget-button" onClick={this.triggerAction}>
+            <Icon name="icon-download" />
+          </a>
+        </li>
+        <li>
           <button data-action="info" className="widget-button" onClick={this.triggerAction}>
             <Icon name="icon-info" />
           </button>
         </li>
-        {/* <li>
-          <button data-action="download" className="widget-button" onClick={this.triggerAction}>
-            <Icon name="icon-download" />
-          </button>
-        </li> */}
       </ul>
     );
   }
 }
 
 WidgetButtons.propTypes = {
-  // PROPS
+  queryUrl: React.PropTypes.string,
   triggerAction: React.PropTypes.func
 };
 
