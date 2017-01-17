@@ -18,29 +18,20 @@
   // Share button
   .btn-share {
     position: absolute;
-    top: 0;
-    right: $space-sidebar;
+    top: 12px;
+    right: $space-sidebar + 20px;
     z-index: 2;
-    height: $space-sidebar;
-    padding: 0 18px;
+    height: 30px;
+    padding: 0 45px;
+    border: 1px solid $color-soft;
     font-size: $font-size-big;
-    font-weight: 500;
+    font-weight: normal;
+    color: $color-soft;
+    border-radius: 25px;
     transition: all $animation-time linear;
 
     &:hover {
-      fill: darken($color-white, 20%);
-      color: darken($color-white, 20%);
-    }
-
-    &:after {
-      content: '';
-      position: absolute;
-      width: 2px;
-      height: 24px;
-      display: inline-block;
-      vertical-align: middle;
-      background: #617db8;
-      right: 0;
+      color: $color-softer;
     }
   }
 
@@ -59,8 +50,16 @@
     background: rgba($color-secondary, .4);
     transition: background $animation-time-2 $ease-in-out-sine;
 
+    span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      background-color: $color-dark;
+    }
+
     svg {
-      margin: 13px 0 0;
       transform: rotate(180deg);
       transition: all $animation-time $ease-in-out-sine,
                   transform $animation-time-2 $ease-in-out-sine $animation-time;

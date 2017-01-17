@@ -70,7 +70,7 @@ export default class Filters extends React.Component {
                 </div>
               </div>
             }
-            <div className="filters-section -separator">
+            <div className="filters-section">
               <div className="row expanded collapse filters-group">
                 <div className="small-4 columns">
                   {/* Crops */}

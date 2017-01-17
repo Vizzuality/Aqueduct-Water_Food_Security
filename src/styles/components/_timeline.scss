@@ -1,4 +1,5 @@
 .c-timeline {
+  margin-top: $space-1 * 1.5;
   padding: 40px 24px 0;
 
   .timeline-list {
@@ -12,53 +13,44 @@
   }
 
   .timeline-list-item {
+    list-style-type: none;
     position: relative;
-    width: 6px;
-    height: 6px;
-    color: $color-deactivate;
-    background: $color-deactivate;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1px solid $color-softer;
+    background-color: #3f65a8;
     top: 50%;
     transform: translate(0%, -50%);
     cursor: pointer;
-
-    .timeline-label {
-      position: absolute;
-      bottom: 100%;
-      left: 50%;
-      transform: translate(-50%, -8px);
-      font-weight: 500;
-
-    }
+    box-sizing: border-box;
+    transition: all .1s $ease-in-cubic;
 
     &.-selected {
-      color: $color-white;
+      background-color: $color-white;
+      border: 5px solid $color-primary;
+      box-shadow: 0 0 2px 1px rgba(black, 0.14);
+      .timeline-label {
+        margin-bottom: 11px;
+        background-color: $color-primary;
+      }
     }
 
     &:hover {
-      background: darken($color-white, 10%);
+      background-color: darken($color-white, 10%);
       color: darken($color-white, 10%);
     }
-  }
 
-  .timeline-drag-handle-container {
-    position: absolute;
-    width: calc(100% + 16px);
-    height: 2px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    .timeline-drag-handle {
+    .timeline-label {
+      font-size: $font-size-big;
+      line-height: $font-size-big;
       position: absolute;
-      width: 18px;
-      height: 18px;
-      top: 50%;
-      left: 0;
-      transform: translate(0,-9px);
-      background: $color-primary;
-      border-radius: 50%;
-      box-shadow: 0 0 2px 1px rgba(black, 0.14);
-      cursor: move;
+      bottom: 100%;
+      margin-bottom: 7px;
+      left: 50%;
+      transform: translate(-50%, -8px);
+      padding: 2px 8px;
     }
+
   }
 }

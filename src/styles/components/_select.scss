@@ -4,7 +4,8 @@
 
   .title {
     color: $color-white;
-    font-size: $font-size-big;
+    font-size: $font-size-extrabig;
+    font-weight: 300;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -14,10 +15,10 @@
     background-color: $color-deactivate;
     fill: $color-secondary;
     border-radius: 50%;
-    width: 16px;
-    height: 16px;
-    padding: 2px;
-    margin-left: $space-1;
+    width: 20px;
+    height: 20px;
+    padding: 3px;
+    margin-left: $space-1 * 2;
     cursor: pointer;
     &:hover {
       // TODO: define hover effect
@@ -43,7 +44,6 @@
     &.default {
       &.root-node {
         color: $color-white;
-        font-weight: 700;
 
         &.open {
           &:after {
@@ -174,7 +174,6 @@
         .simple-option {
           padding: 4px 10px;
           color: $color-tertiary;
-          font-weight: 500;
 
           &:hover {
           }
@@ -197,7 +196,6 @@
       box-shadow: 0 -2px 4px 0 rgba(33, 62, 118, 0.09), 0 2px 4px 0 rgba(33, 62, 118, 0.09);
       font-family: $font-family-roboto;
       font-size: 16px;
-      font-weight: 700;
     }
   }
 }

@@ -20,6 +20,7 @@
 
       &.-active {
         .segmented-ui-btn {
+          color: $color-white;
           &:after {
             width: 100%;
           }
@@ -29,13 +30,12 @@
 
     .segmented-ui-btn {
       position: relative;
-      font-size: $font-size-default;
+      font-size: $font-size-big;
       transition: all $animation-time linear;
       text-transform: uppercase;
       letter-spacing: 1px;
       padding: 14px 0;
-      font-weight: 500;
-      color: $color-white;
+      color: $color-soft;
 
       &:after {
         content: "";
@@ -50,7 +50,7 @@
       }
 
       &:hover {
-        color: darken($color-white, 20%);
+        color: $color-softer;
       }
     }
   }
