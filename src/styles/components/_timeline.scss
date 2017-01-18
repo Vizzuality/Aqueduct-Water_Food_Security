@@ -15,11 +15,12 @@
   .timeline-list-item {
     list-style-type: none;
     position: relative;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    border: 1px solid $color-softer;
+    width: 26px;
+    height: 26px;
     background-color: #3f65a8;
+    box-shadow: 0 0 0px 1px $color-soft inset;
+    border: 5px solid $color-secondary;
+    border-radius: 50%;
     top: 50%;
     transform: translate(0%, -50%);
     cursor: pointer;
@@ -28,16 +29,15 @@
 
     &.-selected {
       background-color: $color-white;
-      border: 5px solid $color-primary;
-      box-shadow: 0 0 2px 1px rgba(black, 0.14);
+      box-shadow: 0 0 0px 4px $color-primary inset;
+
       .timeline-label {
-        margin-bottom: 11px;
         background-color: $color-primary;
       }
     }
 
     &:hover {
-      background-color: darken($color-white, 10%);
+      background-color: $color-white;
       color: darken($color-white, 10%);
     }
 
@@ -46,7 +46,6 @@
       line-height: $font-size-big;
       position: absolute;
       bottom: 100%;
-      margin-bottom: 7px;
       left: 50%;
       transform: translate(-50%, -8px);
       padding: 2px 8px;
