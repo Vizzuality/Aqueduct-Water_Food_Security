@@ -1,5 +1,5 @@
 .c-filters {
-  background: $color-secondary;
+  background: palette(blue);
   box-shadow: inset 0 -3px 2px 0 rgba(0, 0, 0, 0.3);
   .filters-section {
     padding: ($space-1 * 4) 0 ($space-1 * 2) ($space-1 * 4);
@@ -14,7 +14,7 @@
 
 .filters-lead {
   padding-left: ($space-1 * 4);
-  border-bottom: 1px solid $color-dark;
+  border-bottom: 1px solid palette(blue, dark);
 }
 
 .filters-section {
@@ -25,7 +25,7 @@
   }
 
   &.-separator {
-    border-bottom: solid 1px #112e70;
+    border-bottom: solid 1px palette(blue, dark);
   }
 }
 
@@ -53,16 +53,16 @@
   float: right;
   font-size: $font-size-big;
   font-weight: 500;
-  color: $color-white;
+  color: palette(white);
   &:hover {
 
   }
 }
 
 .filters-btn-icon {
-  fill: white;
-  stroke: white;
-  border: 1px solid $color-soft;
+  fill: palette(white);
+  stroke: palette(white);
+  border: 1px solid palette(blue, lighter);
   border-radius: 50%;
   padding: 10px;
   vertical-align: middle;

@@ -1,0 +1,3 @@
+@function palette($palette, $tone: 'primary') {
+    @return map-get(map-get($palettes, $palette), $tone);
+}

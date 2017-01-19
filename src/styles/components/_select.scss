@@ -12,16 +12,17 @@
   }
 
   .title-icon {
-    background-color: $color-deactivate;
-    fill: $color-secondary;
+    background-color: palette(blue, light);
+    fill: palette(blue);
     border-radius: 50%;
     width: 20px;
     height: 20px;
     padding: 3px;
     margin-left: $space-1 * 2;
     cursor: pointer;
+    transition: background-color .1s linear;
     &:hover {
-      // TODO: define hover effect
+      background-color: (blue, lightest);
     }
   }
 }
