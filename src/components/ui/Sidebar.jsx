@@ -68,7 +68,7 @@ export default class Sidebar extends React.Component {
           </span>
         </div>
 
-        <div className="sidebar-content">
+        <div className="l-sidebar-content">
           {this.props.children}
         </div>
       </aside>

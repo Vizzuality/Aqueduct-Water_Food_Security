@@ -42,20 +42,24 @@
     align-items: flex-start;
     position: absolute;
     top: 0;
-    right: 0;
+    left: 100%;
     width: $space-sidebar;
     height: 100%;
     fill: $color-primary;
     cursor: pointer;
-    background: rgba($color-secondary, .4);
     transition: background $animation-time-2 $ease-in-out-sine;
+
+    &:after {
+      content: "";
+      background: rgba($color-secondary, .4);
+    }
 
     span {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 52px;
-      height: 52px;
+      width: $space-sidebar;
+      height: $space-sidebar;
       background-color: $color-dark;
     }
 
