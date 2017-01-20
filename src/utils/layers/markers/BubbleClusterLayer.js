@@ -156,11 +156,12 @@ export default class BubbleClusterLayer {
 
   _getSize(v) {
     const size = (v < 1 && v > -1) ? 1 : Math.abs(v);
-    const multiplicator = 2.5;
+    const reductor = 3.5;
     const constant = 55;
     const border = 10;
 
-    return border + constant + (multiplicator * Math.log2(size));
+    const value = border + constant + (Math.pow(size, 0.5) / reductor);
+    return value;
   }
 
 }

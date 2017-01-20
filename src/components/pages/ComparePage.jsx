@@ -1,9 +1,11 @@
 import React from 'react';
 import CountrySelect from 'containers/countries/CountrySelect';
+import ShareModal from 'containers/modal/ShareModal';
 
 // Components
 import CompareList from 'components/compare/CompareList';
 import Filters from 'components/filters/Filters';
+import Icon from 'components/ui/Icon';
 import { Link } from 'react-router';
 
 export default class ComparePage extends React.Component {
@@ -13,6 +15,9 @@ export default class ComparePage extends React.Component {
     this.state = {
       items: 2
     };
+
+    // bindings
+    this.toggleShareModal = this.toggleShareModal.bind(this);
   }
 
   componentWillMount() {
@@ -22,8 +27,10 @@ export default class ComparePage extends React.Component {
   getCountrySelects() {
     const items = [];
     for (let i = 0; i < this.state.items; i += 1) {
+      const text = i === 0 ? 'Selected country' : 'Compare with...';
       items.push(
-        <div className="small-6 columns" key={i}>
+        <div className="small-6 columns compare-country-wrapper" key={i}>
+          <span className="compare-filters-text">{text}</span>
           <CountrySelect
             className="-fixed"
             defaultValue={this.props.compare.countries[i] || null}
@@ -41,18 +48,25 @@ export default class ComparePage extends React.Component {
     this.props.emptyCompareCountries();
   }
 
+  toggleShareModal() {
+    this.props.toggleModal(true, {
+      children: ShareModal
+    });
+  }
+
   render() {
     return (
       <div className="l-comparepage l-fullheight">
         <div className="compare-header">
-          <Link to="/" className="link">Back</Link>
+          <Link to="/" className="back-link">Back</Link>
+          <button onClick={this.toggleShareModal} className="share-btn" type="button"><Icon name="icon-share" className="medium" />Share</button>
         </div>
         <div className="compare-filters">
           <div className="compare-filters-section -highlighted">
             <div className="row expanded collapse">{this.getCountrySelects()}</div>
           </div>
           <div className="compare-filters-section -collapsed">
-            <Filters className="-compare" filters={this.props.filters} setFilters={this.props.setFilters} />
+            <Filters className="-compare" filters={this.props.filters} setFilters={this.props.setFilters} compare />
           </div>
         </div>
         <CompareList
@@ -78,6 +92,7 @@ ComparePage.propTypes = {
   updateCompareUrl: React.PropTypes.func,
   setCompareCountry: React.PropTypes.func,
   emptyCompareCountries: React.PropTypes.func,
+  toggleModal: React.PropTypes.func,
   widgetsActive: React.PropTypes.array,
   layersActive: React.PropTypes.array
 };

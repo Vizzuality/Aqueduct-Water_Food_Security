@@ -3,24 +3,26 @@
   position: relative;
 
   .title {
-    color: $color-white;
-    font-size: $font-size-big;
+    color: palette(white);
+    font-size: $font-size-extrabig;
+    font-weight: 300;
     display: flex;
     justify-content: flex-start;
     align-items: center;
   }
 
   .title-icon {
-    background-color: $color-deactivate;
-    fill: $color-secondary;
+    background-color: palette(blue, light);
+    fill: palette(blue);
     border-radius: 50%;
-    width: 16px;
-    height: 16px;
-    padding: 2px;
-    margin-left: $space-1;
+    width: 20px;
+    height: 20px;
+    padding: 3px;
+    margin-left: $space-1 * 2;
     cursor: pointer;
+    transition: background-color .1s linear;
     &:hover {
-      // TODO: define hover effect
+      background-color: (blue, lightest);
     }
   }
 }
@@ -42,25 +44,11 @@
   &.react-selectize {
     &.default {
       &.root-node {
-        color: $color-white;
-        font-weight: 700;
+        color: palette(white);
 
         &.open {
-          &:after {
-            position: absolute;
-            z-index: 99;
-            content: '';
-            margin-left: 20px;
-            margin-top: 8px;
-            display: block;
-            width: 0;
-            height: 0;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-bottom: 8px solid $color-white;
-          }
           .react-selectize-control {
-            background-color: $color-secondary;
+            background-color: transparent;
           }
         }
         &:not(.open) {
@@ -94,6 +82,7 @@
 
       .simple-value {
         margin: 0;
+        font-weight: 500;
       }
 
       .react-selectize-control {
@@ -120,6 +109,7 @@
           font-family: $font-family-roboto;
           font-size: 16px;
           max-width: calc(100% - 32px);
+          font-weight: 500;
         }
 
         .react-selectize-toggle-button {
@@ -137,7 +127,6 @@
     }
   }
   .dropdown-menu {
-    margin-top: 10px;
     max-height: 435px;
     z-index: 9999;
     padding: 10px 0;
@@ -148,7 +137,6 @@
 
     &.default {
       border: none;
-      margin-top: 15px;
       background: $color-white;
 
       .no-results-found {
@@ -166,18 +154,14 @@
           background: none;
 
           .simple-option {
-            background: none;
-            color: black;
+            background: palette(blue, lightest);
           }
         }
 
         .simple-option {
           padding: 4px 10px;
-          color: $color-tertiary;
+          color: palette(blue, dark);
           font-weight: 500;
-
-          &:hover {
-          }
         }
       }
     }
@@ -185,7 +169,7 @@
   &.dropdown-menu {
     &.default {
       .no-results-found {
-        color: $color-tertiary !important;
+        color: palette(blue, dark) !important;
       }
     }
   }
@@ -197,7 +181,6 @@
       box-shadow: 0 -2px 4px 0 rgba(33, 62, 118, 0.09), 0 2px 4px 0 rgba(33, 62, 118, 0.09);
       font-family: $font-family-roboto;
       font-size: 16px;
-      font-weight: 700;
     }
   }
 }
