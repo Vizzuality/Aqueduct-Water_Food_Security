@@ -71,7 +71,7 @@ export default class Filters extends React.Component {
                       {/* Country */}
                       <CountrySelect
                         onValueChange={selected => this.updateFilters(selected && selected.value, 'country')}
-                        defaultValue={this.props.filters.country !== 'null' ? this.props.filters.country : null}
+                        value={this.props.filters.country !== 'null' ? this.props.filters.country : null}
                       />
                     </div>
                   </div>

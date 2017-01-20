@@ -33,7 +33,7 @@ export default class ComparePage extends React.Component {
           <span className="compare-filters-text">{text}</span>
           <CountrySelect
             className="-fixed"
-            defaultValue={this.props.compare.countries[i] || null}
+            value={this.props.compare.countries[i] || null}
             onValueChange={(selected) => {
               selected && this.props.setCompareCountry({ index: i, iso: selected.value });
             }}
