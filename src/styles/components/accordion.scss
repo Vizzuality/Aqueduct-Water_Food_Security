@@ -1,11 +1,12 @@
 .c-accordion {
   .filters-collapse-btn {
-    fill: $color-primary;
+    fill: palette(blue, light);
+    transition: fill .1s linear;
+    &:hover {
+      fill: palette(blue, lighter);
+    }
   }
   &.-closed {
-    .filters-collapse-btn {
-      fill: $color-deactivate;
-    }
     .accordion-content {
       display: none;
     }

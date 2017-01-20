@@ -7,31 +7,67 @@
 /* Compare header */
 
 .compare-header {
+  display: flex;
+  justify-content: space-between;;
   padding: 18px 32px;
-  border-bottom: 1px solid $color-secondary;
-  background-color: $color-tertiary;
+  background-color: palette(blue);
 
-  .link {
-    color: $color-deactivate;
+  .back-link {
+    color: palette(blue, light);
     font-size: $font-size-default;
     text-transform: uppercase;
     font-weight: 500;
     letter-spacing: 1px;
     cursor: pointer;
   }
+
+  .share-btn {
+    color: palette(blue, light);
+    font-weight: 500;
+    font-size: $font-size-big;
+    transition: color .1s linear;
+    &:hover {
+      color: palette(blue, lighter);
+      svg {
+        fill: palette(blue, lighter);
+      }
+    }
+    svg {
+      transition: fill .1s linear;
+      fill: palette(blue, light);
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+  }
 }
 /* Compareitem */
 
+.compare-filters-text {
+  font-weight: 300;
+  font-size: $font-size-extrabig;
+  color: palette(white);
+  margin-right: 60px;
+}
+
+.compare-country-wrapper {
+  display: flex;
+  align-items: center;
+}
+
 .compare-filters {
-  background-color: $color-secondary;
+  background-color: palette(blue, dark);
+  box-shadow: inset 0 1px 3px 0 rgba(palette(black), 0.5);
+  .c-filters {
+    .filters-section {
+      background-color: transparent;
+    }
+  }
 }
 .compare-filters-section {
   padding: 24px 32px;
   &.-collapsed {
     padding: 0;
-  }
-  &.-highlighted {
-    background-color: $color-tertiary;
   }
   &:last-child {
     padding-bottom: 0;

@@ -1,5 +1,5 @@
 .c-timeline {
-  margin-top: $space-1;
+  margin-top: 10px;
   padding: 40px 24px 0;
 
   .timeline-list {
@@ -18,7 +18,7 @@
     width: 16px;
     height: 16px;
     background-color: palette(blue);
-    box-shadow: 0 0 0px 1px palette(blue, light) inset, 0 0 0px 5px palette(blue);
+    box-shadow: 0 0 0px 1px palette(blue, light) inset;
     border-radius: 50%;
     top: 50%;
     transform: translate(0%, -50%);

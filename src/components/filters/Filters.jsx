@@ -28,6 +28,22 @@ export default class Filters extends React.Component {
   }
 
   render() {
+    const timeline = (
+      <div className="filter-item">
+        {/* Year */}
+        <div className="c-select">
+          <span className="title">Timeframe <Icon name="icon-question" className="title-icon" /></span>
+          <Timeline
+            items={yearOptions}
+            selected={yearOptions.find(i => i.value === this.props.filters.year)}
+            onChange={selected => selected && this.updateFilters(selected.value, 'year')}
+          />
+        </div>
+      </div>
+    );
+
+    const columnClassName = this.props.compare ? 'small-2 columns' : 'small-4 columns';
+
     return (
       <div className={`c-filters ${this.props.className ? this.props.className : ''}`}>
         {/* Scope */}
@@ -63,7 +79,7 @@ export default class Filters extends React.Component {
                     <div className="filter-item">
                       {/* Compare */}
                       <Link className="filters-btn" to={this.props.filters.country ? `/compare?countries=${this.props.filters.country}` : '/compare'}>
-                        Compare country <Icon className="-big filters-btn-icon" name="icon-plus" />
+                        Compare country
                       </Link>
                     </div>
                   </div>
@@ -72,7 +88,7 @@ export default class Filters extends React.Component {
             }
             <div className="filters-section">
               <div className="row expanded collapse filters-group">
-                <div className="small-4 columns">
+                <div className={columnClassName}>
                   {/* Crops */}
                   <div className="filter-item">
                     <div className="c-select">
@@ -92,7 +108,7 @@ export default class Filters extends React.Component {
                     />
                   </div>
                 </div>
-                <div className="small-4 columns">
+                <div className={columnClassName}>
                   {/* Water */}
                   <div className="filter-item">
                     <div className="c-select">
@@ -106,7 +122,7 @@ export default class Filters extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div className="small-4 columns">
+                <div className={columnClassName}>
                   {/* Food */}
                   <div className="filter-item">
                     <div className="c-select">
@@ -121,31 +137,22 @@ export default class Filters extends React.Component {
                     </div>
                   </div>
                 </div>
+                {this.props.compare &&
+                  <div className="small-6 columns">
+                    {timeline}
+                  </div>
+                }
               </div>
             </div>
-            <div className="filters-section">
-              <div className="row expanded collapse filters-group">
-                <div className="small-12 columns">
-                  <div className="filter-item">
-                    {/* Year */}
-                    <div className="c-select">
-                      <span className="title">Timeframe <Icon name="icon-question" className="title-icon" /></span>
-                      <Timeline
-                        items={yearOptions}
-                        selected={yearOptions.find(i => i.value === this.props.filters.year)}
-                        onChange={selected => selected && this.updateFilters(selected.value, 'year')}
-                      />
-                      {/* <SimpleSelect
-                        hideResetButton
-                        options={yearOptions}
-                        defaultValue={yearOptions.find(i => i.value === this.props.filters.year)}
-                        onValueChange={selected => selected && this.updateFilters(selected.value, 'year')}
-                      /> */}
-                    </div>
+            {this.props.compare ||
+              <div className="filters-section">
+                <div className="row expanded collapse filters-group">
+                  <div className="small-12 columns">
+                    {timeline}
                   </div>
                 </div>
               </div>
-            </div>
+            }
           </div>
         </Accordion>
       </div>
@@ -157,5 +164,6 @@ Filters.propTypes = {
   setFilters: React.PropTypes.func,
   filters: React.PropTypes.object,
   withScope: React.PropTypes.bool,
-  className: React.PropTypes.string
+  className: React.PropTypes.string,
+  compare: React.PropTypes.bool
 };

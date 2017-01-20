@@ -3,7 +3,7 @@
   position: relative;
 
   .title {
-    color: $color-white;
+    color: palette(white);
     font-size: $font-size-extrabig;
     font-weight: 300;
     display: flex;
@@ -44,24 +44,11 @@
   &.react-selectize {
     &.default {
       &.root-node {
-        color: $color-white;
+        color: palette(white);
 
         &.open {
-          &:after {
-            position: absolute;
-            z-index: 99;
-            content: '';
-            margin-left: 20px;
-            margin-top: 8px;
-            display: block;
-            width: 0;
-            height: 0;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-bottom: 8px solid $color-white;
-          }
           .react-selectize-control {
-            background-color: $color-secondary;
+            background-color: transparent;
           }
         }
         &:not(.open) {
@@ -95,6 +82,7 @@
 
       .simple-value {
         margin: 0;
+        font-weight: 500;
       }
 
       .react-selectize-control {
@@ -121,6 +109,7 @@
           font-family: $font-family-roboto;
           font-size: 16px;
           max-width: calc(100% - 32px);
+          font-weight: 500;
         }
 
         .react-selectize-toggle-button {
@@ -138,7 +127,6 @@
     }
   }
   .dropdown-menu {
-    margin-top: 10px;
     max-height: 435px;
     z-index: 9999;
     padding: 10px 0;
@@ -149,7 +137,6 @@
 
     &.default {
       border: none;
-      margin-top: 15px;
       background: $color-white;
 
       .no-results-found {
@@ -167,17 +154,14 @@
           background: none;
 
           .simple-option {
-            background: none;
-            color: black;
+            background: palette(blue, lightest);
           }
         }
 
         .simple-option {
           padding: 4px 10px;
-          color: $color-tertiary;
-
-          &:hover {
-          }
+          color: palette(blue, dark);
+          font-weight: 500;
         }
       }
     }
@@ -185,7 +169,7 @@
   &.dropdown-menu {
     &.default {
       .no-results-found {
-        color: $color-tertiary !important;
+        color: palette(blue, dark) !important;
       }
     }
   }

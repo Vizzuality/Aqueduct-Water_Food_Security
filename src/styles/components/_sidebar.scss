@@ -54,10 +54,10 @@
     transition: background $animation-time-2 $ease-in-out-sine;
     width: 53px;
     height: 53px;
-    background-color: $color-tertiary;
+    background-color: palette(blue, secondary);
 
     svg {
-      fill: $color-primary;
+      fill: palette(white);
       transform: rotate(180deg);
       transition: all $animation-time $ease-in-out-sine,
                   transform $animation-time-2 $ease-in-out-sine $animation-time;
@@ -65,7 +65,7 @@
 
     &:hover {
       svg {
-        fill: darken($color-primary, 10%);
+        fill: palette(blue, light);
       }
     }
 
