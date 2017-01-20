@@ -42,7 +42,7 @@ export default class Filters extends React.Component {
       </div>
     );
 
-    const columnClassName = this.props.compare ? 'small-2 columns' : 'small-4 columns';
+    const columnClassName = 'small-4 columns';
 
     return (
       <div className={`c-filters ${this.props.className ? this.props.className : ''}`}>
@@ -137,22 +137,15 @@ export default class Filters extends React.Component {
                     </div>
                   </div>
                 </div>
-                {this.props.compare &&
-                  <div className="small-6 columns">
-                    {timeline}
-                  </div>
-                }
               </div>
             </div>
-            {this.props.compare ||
-              <div className="filters-section">
-                <div className="row expanded collapse filters-group">
-                  <div className="small-12 columns">
-                    {timeline}
-                  </div>
+            <div className="filters-section">
+              <div className="row expanded collapse filters-group">
+                <div className="small-12 columns">
+                  {timeline}
                 </div>
               </div>
-            }
+            </div>
           </div>
         </Accordion>
       </div>
