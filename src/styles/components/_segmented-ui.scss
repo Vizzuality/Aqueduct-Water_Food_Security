@@ -20,6 +20,7 @@
 
       &.-active {
         .segmented-ui-btn {
+          color: palette(white);
           &:after {
             width: 100%;
           }
@@ -29,13 +30,12 @@
 
     .segmented-ui-btn {
       position: relative;
-      font-size: $font-size-default;
+      font-size: $font-size-big;
       transition: all $animation-time linear;
       text-transform: uppercase;
       letter-spacing: 1px;
       padding: 14px 0;
-      font-weight: 500;
-      color: $color-white;
+      color: palette(blue, light);
 
       &:after {
         content: "";
@@ -44,60 +44,13 @@
         left: 50%;
         width: 0%;
         height: 3px;
-        background: $color-primary;
+        background: palette(blue, secondary);
         transform: translate(-50%,0);
         transition: all $animation-time $ease-in-out-cubic;
       }
 
       &:hover {
-        color: darken($color-white, 20%);
-      }
-    }
-  }
-
-  // Btn theme
-  &.-btn {
-    border: 1px solid #617db8;
-    border-radius: 2px;
-
-    .segmented-ui-item {
-      border-right: 1px solid #617db8;
-
-      &:first-child {
-        .segmented-ui-btn {
-          border-radius: 2px 0 0 2px;
-        }
-      }
-
-      &:last-child {
-        border-right: 0;
-
-        .segmented-ui-btn {
-          border-radius: 0 2px 2px 0;
-        }
-      }
-
-      &.-active {
-        .segmented-ui-btn {
-          background-color: $color-tertiary;
-          color: $color-white;
-        }
-      }
-    }
-
-    .segmented-ui-btn {
-      color: $color-deactivate;
-      font-size: $font-size-big;
-      font-weight: 500;
-      display: block;
-      width: 100%;
-      text-align: center;
-      padding: 7px 15px;
-      background-color: $color-secondary;
-      transition: background-color linear $animation-time;
-
-      &:hover {
-        background-color: lighten($color-secondary, 10);
+        color: palette(blue, lighter);
       }
     }
   }

@@ -1,7 +1,6 @@
 .c-checkbox {
   label {
     font-size: $font-size-big;
-    font-weight: 700;
     display: block;
     padding: 2px 0;
     text-transform: none;
@@ -14,10 +13,11 @@
     left: 0;
     transform: none;
     text-align: left;
-    color: $color-deactivate;
+    color: palette(blue, light);
+    transition: color linear .1s;
 
     &:hover {
-      color: lighten($color-deactivate, 12.5%);
+      color: palette(blue, lighter);
     }
 
     span {
@@ -26,7 +26,7 @@
       left: 0;
       width: 16px;
       height: 16px;
-      border: 1px solid $color-deactivate;
+      border: 1px solid palette(blue, lighter);
       border-radius: 2px;
       transform: translate(0,-50%);
       // transition: all $animation-time $ease-in-out-sine;
@@ -38,7 +38,7 @@
         width: 15px;
         height: 15px;
         border-radius: 1px;
-        fill: $color-secondary;
+        fill: palette(white);
         display: block;
         transform: translate(-50%,-50%) scale(0);
         transition: all $animation-time $ease-in-out-sine;
@@ -54,8 +54,8 @@
     color: $color-white;
 
     span {
-      border-color: $color-primary;
-      background-color: $color-primary;
+      border-color: palette(blue, secondary);
+      background-color: palette(blue, secondary);
       svg {
         transform: translate(-50%,-50%) scale(1);
       }

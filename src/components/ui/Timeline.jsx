@@ -1,7 +1,6 @@
 import findIndex from 'lodash/findIndex';
 import debounce from 'lodash/debounce';
 import React from 'react';
-import Draggable from 'react-draggable';
 
 class Timeline extends React.Component {
 
@@ -71,11 +70,6 @@ class Timeline extends React.Component {
 
   render() {
     const { items, selected } = this.props;
-    const { segmentX } = this.state;
-
-    const i = findIndex(items, { value: selected.value });
-    const position = this.getPosition(i);
-
     return (
       <div className="c-timeline">
         <ul className="timeline-list">
@@ -89,21 +83,6 @@ class Timeline extends React.Component {
               </li>
             );
           })}
-          <div className="timeline-drag-handle-container" ref={(c) => { this.handleContainer = c; }}>
-            <Draggable
-              axis="x"
-              handle=".timeline-drag-handle"
-              position={position}
-              grid={[segmentX, 0]}
-              zIndex={100}
-              bounds="parent"
-              onStart={this.onStart}
-              onStop={this.onStop}
-              // onDrag={this.onDrag}
-            >
-              <div className="timeline-drag-handle" />
-            </Draggable>
-          </div>
         </ul>
       </div>
     );

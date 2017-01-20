@@ -1,32 +1,33 @@
 .c-filters {
-  background: $color-secondary;
-  box-shadow: inset 0 -3px 2px 0 rgba(0, 0, 0, 0.3);
+  background: palette(blue);
   .filters-section {
-    padding: ($space-1 * 3) 0 ($space-1 * 3) ($space-1 * 4);
+    padding: ($space-1 * 4) 0 ($space-1 * 3) ($space-1 * 4);
   }
   &.-compare {
+    background-color: palette(blue, dark);
     .filters-group {
-      max-width: 700px;
       margin: 0;
     }
   }
 }
 
 .filters-lead {
-  background-color: $color-tertiary;
   padding-left: ($space-1 * 4);
+  border-bottom: 1px solid palette(blue, dark);
 }
 
 .filters-section {
   &:last-child {
     border-bottom: 0;
     padding-bottom: 0;
+    padding-top: ($space-1 * 3);
   }
   &.-highlighted {
-    background-color: $color-tertiary;
+    background-color: palette(blue, dark);
+    box-shadow: inset 0 1px 3px 0 rgba(palette(black), 0.5);
   }
   &.-separator {
-    border-bottom: solid 1px #112e70;
+    border-bottom: solid 1px palette(blue, dark);
   }
 }
 
@@ -41,7 +42,7 @@
     padding-right: $space-1 * 4;
 
     > * {
-      margin: 0 0 $space-1 * 2;
+      margin: 0 0 $space-1 * 3;
       &:last-child {
         margin: 0;
       }
@@ -50,22 +51,17 @@
 }
 
 .filters-btn {
-  display: inline-block;
   float: right;
   font-size: $font-size-big;
   font-weight: 500;
-  color: $color-white;
+  color: palette(blue, light);
+  border-radius: 25px;
+  border: 1px solid palette(blue, light);
+  padding: 3px 25px;
+  display: inline-block;
+  transition: all .1s linear;
   &:hover {
-
+    color: palette(blue, lighter);
+    border-color: palette(blue, lighter);
   }
-}
-
-.filters-btn-icon {
-  fill: white;
-  stroke: white;
-  border: 1px solid $color-soft;
-  border-radius: 50%;
-  padding: 10px;
-  vertical-align: middle;
-  margin-left: 14px;
 }
