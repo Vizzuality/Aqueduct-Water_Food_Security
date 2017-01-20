@@ -1,5 +1,4 @@
 import findIndex from 'lodash/findIndex';
-import debounce from 'lodash/debounce';
 import React from 'react';
 
 class Timeline extends React.Component {
@@ -8,25 +7,10 @@ class Timeline extends React.Component {
     super(props);
 
     this.state = {
-      segmentX: 0
     };
 
     // BINDINGS
     this.onClick = this.onClick.bind(this);
-    this.onStop = this.onStop.bind(this);
-  }
-
-  componentDidMount() {
-    this.resizeEvent = () => {
-      this.setXSegment();
-    };
-    window.addEventListener('resize', debounce(this.resizeEvent, 100));
-
-    this.setXSegment();
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.resizeEvent);
   }
 
   /**
@@ -38,34 +22,6 @@ class Timeline extends React.Component {
     // Send object
     const index = findIndex(this.props.items, { value: e.currentTarget.dataset.value });
     this.props.onChange(this.props.items[index]);
-  }
-
-  onStop(e, position) {
-    const { segmentX } = this.state;
-    const index = Math.round(position.lastX / segmentX);
-    this.props.onChange(this.props.items[index]);
-  }
-
-  /**
-   * DRAG HELPERS
-   * - setXSegment
-   * - setXPosition
-  */
-  setXSegment() {
-    if (this.handleContainer) {
-      const segmentX = (this.handleContainer.clientWidth - 18) / (this.props.items.length - 1);
-      this.setState({
-        segmentX
-      });
-    }
-  }
-
-  getPosition(i) {
-    const { segmentX } = this.state;
-    return {
-      x: segmentX * i,
-      y: -9
-    };
   }
 
   render() {
