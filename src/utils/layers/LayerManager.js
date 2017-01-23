@@ -42,6 +42,7 @@ export default class LayerManager {
         this._onLayerAddedSuccess && this._onLayerAddedSuccess();
       })
       .catch(() => {
+        this.layersLoading = {};
         this.rejectLayersLoading = false;
         this._onLayerAddedError && this._onLayerAddedError();
       });
@@ -61,6 +62,7 @@ export default class LayerManager {
         delete this._mapLayers[id];
       }
     });
+    this.layersLoading = {};
   }
 
   /*
@@ -156,7 +158,6 @@ export default class LayerManager {
       newLayer.addTo(this._map);
       this._mapLayers[layer.id] = newLayer;
     } else {
-      delete this.layersLoading[layer.id];
       this.rejectLayersLoading = true;
       throw new Error('"type" specified in layer spec doesn`t exist');
     }
@@ -200,11 +201,9 @@ export default class LayerManager {
                 delete this.layersLoading[layer.id];
               });
               this._mapLayers[layer.id].on('tileerror', () => {
-                delete this.layersLoading[layer.id];
                 this.rejectLayersLoading = true;
               });
             } else {
-              delete this.layersLoading[layer.id];
               this.rejectLayersLoading = true;
             }
           }
@@ -237,11 +236,9 @@ export default class LayerManager {
                 delete this.layersLoading[layer.id];
               });
               this._mapLayers[layer.id].on('tileerror', () => {
-                delete this.layersLoading[layer.id];
                 this.rejectLayersLoading = true;
               });
             } else {
-              delete this.layersLoading[layer.id];
               this.rejectLayersLoading = true;
             }
           }
@@ -271,7 +268,6 @@ export default class LayerManager {
 
               delete this.layersLoading[layer.id];
             } else {
-              delete this.layersLoading[layer.id];
               this.rejectLayersLoading = true;
             }
           }
