@@ -20,8 +20,8 @@ export default class LayerManager {
     this._map = map;
     this._mapLayers = {};
     this._mapRequests = {};
-    this.layersLoading = {};
-    this.rejectLayersLoading = false;
+    this._layersLoading = {};
+    this._rejectLayersLoading = false;
     this._onLayerAddedSuccess = options.onLayerAddedSuccess;
     this._onLayerAddedError = options.onLayerAddedError;
   }
@@ -42,8 +42,8 @@ export default class LayerManager {
         this._onLayerAddedSuccess && this._onLayerAddedSuccess();
       })
       .catch(() => {
-        this.layersLoading = {};
-        this.rejectLayersLoading = false;
+        this._layersLoading = {};
+        this._rejectLayersLoading = false;
         this._onLayerAddedError && this._onLayerAddedError();
       });
   }
@@ -62,7 +62,7 @@ export default class LayerManager {
         delete this._mapLayers[id];
       }
     });
-    this.layersLoading = {};
+    this._layersLoading = {};
   }
 
   /*
@@ -75,8 +75,8 @@ export default class LayerManager {
       timeout = setTimeout(() => reject(), 20000); // if it takes +20s something's wrong: reject the promise
 
       const loop = () => {
-        if(!Object.keys(this.layersLoading).length) return resolve();
-        if(this.rejectLayersLoading) return reject();
+        if(!Object.keys(this._layersLoading).length) return resolve();
+        if(this._rejectLayersLoading) return reject();
         setTimeout(loop);
       };
       setTimeout(loop);
@@ -90,7 +90,7 @@ export default class LayerManager {
     let layer;
 
     layerData.id = layerSpec.id;
-    this.layersLoading[layerData.id] = true;
+    this._layersLoading[layerData.id] = true;
 
     // Transforming data layer
     // TODO: improve this
@@ -110,7 +110,7 @@ export default class LayerManager {
         layer = new L.tileLayer(layerData.url, layerData.body); // eslint-disable-line
         break;
       default:
-        delete this.layersLoading[layerData.id];
+        delete this._layersLoading[layerData.id];
         throw new Error('"type" specified in layer spec doesn`t exist');
     }
 
@@ -118,7 +118,7 @@ export default class LayerManager {
       const eventName = (layerData.type === 'wms' ||
       layerData.type === 'tileLayer') ? 'tileload' : 'load';
       layer.on(eventName, () => {
-        delete this.layersLoading[layerData.id];
+        delete this._layersLoading[layerData.id];
       });
       if (zIndex) {
         layer.setZIndex(zIndex);
@@ -131,7 +131,7 @@ export default class LayerManager {
     const layer = layerSpec.layerConfig;
     layer.id = layerSpec.id;
 
-    this.layersLoading[layer.id] = true;
+    this._layersLoading[layer.id] = true;
     // Transforming layer
     // TODO: change this please @ra
     const bodyStringified = JSON.stringify(layer.body || {})
@@ -148,7 +148,7 @@ export default class LayerManager {
       const newLayer = L.esri[layer.type](layerConfig);
 
       newLayer.on('load', () => {
-        delete this.layersLoading[layer.id];
+        delete this._layersLoading[layer.id];
         const layerElement = this._map.getPane('tilePane').lastChild;
         if (zIndex) {
           layerElement.style.zIndex = zIndex;
@@ -158,7 +158,7 @@ export default class LayerManager {
       newLayer.addTo(this._map);
       this._mapLayers[layer.id] = newLayer;
     } else {
-      this.rejectLayersLoading = true;
+      this._rejectLayersLoading = true;
       throw new Error('"type" specified in layer spec doesn`t exist');
     }
   }
@@ -174,7 +174,7 @@ export default class LayerManager {
       if (this._mapRequests[layer.category].readyState !== 4) {
         this._mapRequests[layer.category].abort();
         delete this._mapRequests[layer.category];
-        delete this.layersLoading[layer.id];
+        delete this._layersLoading[layer.id];
       }
     }
 
@@ -182,7 +182,7 @@ export default class LayerManager {
       case 'mask' : {
         const body = getWaterSql(layer, options);
 
-        this.layersLoading[layer.id] = true;
+        this._layersLoading[layer.id] = true;
         const xmlhttp = new XMLHttpRequest();
         xmlhttp.open('POST', `https://${layer.account}.carto.com/api/v1/map`);
         xmlhttp.setRequestHeader('Content-Type', 'application/json');
@@ -198,13 +198,13 @@ export default class LayerManager {
               this._mapLayers[layer.id] = L.tileLayer(tileUrl).addTo(this._map).setZIndex(999);
 
               this._mapLayers[layer.id].on('load', () => {
-                delete this.layersLoading[layer.id];
+                delete this._layersLoading[layer.id];
               });
               this._mapLayers[layer.id].on('tileerror', () => {
-                this.rejectLayersLoading = true;
+                this._rejectLayersLoading = true;
               });
             } else {
-              this.rejectLayersLoading = true;
+              this._rejectLayersLoading = true;
             }
           }
         };
@@ -217,7 +217,7 @@ export default class LayerManager {
       case 'water': {
         const body = getWaterSql(layer, options);
 
-        this.layersLoading[layer.id] = true;
+        this._layersLoading[layer.id] = true;
         const xmlhttp = new XMLHttpRequest();
         xmlhttp.open('POST', `https://${layer.account}.carto.com/api/v1/map`);
         xmlhttp.setRequestHeader('Content-Type', 'application/json');
@@ -233,13 +233,13 @@ export default class LayerManager {
               this._mapLayers[layer.id] = L.tileLayer(tileUrl).addTo(this._map).setZIndex(998);
 
               this._mapLayers[layer.id].on('load', () => {
-                delete this.layersLoading[layer.id];
+                delete this._layersLoading[layer.id];
               });
               this._mapLayers[layer.id].on('tileerror', () => {
-                this.rejectLayersLoading = true;
+                this._rejectLayersLoading = true;
               });
             } else {
-              this.rejectLayersLoading = true;
+              this._rejectLayersLoading = true;
             }
           }
         };
@@ -252,7 +252,7 @@ export default class LayerManager {
       case 'food': {
         const body = getFoodSql(layer, options);
 
-        this.layersLoading[layer.id] = true;
+        this._layersLoading[layer.id] = true;
         const xmlhttp = new XMLHttpRequest();
         xmlhttp.open('GET', body.url);
         xmlhttp.send();
@@ -266,9 +266,9 @@ export default class LayerManager {
                 geojson, layer
               ).addTo(this._map);
 
-              delete this.layersLoading[layer.id];
+              delete this._layersLoading[layer.id];
             } else {
-              this.rejectLayersLoading = true;
+              this._rejectLayersLoading = true;
             }
           }
         };
