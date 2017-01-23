@@ -7,7 +7,6 @@ import esri from 'esri-leaflet';
 // Layers
 import BubbleClusterLayer from 'utils/layers/markers/BubbleClusterLayer';
 // Functions
-import { makePromiseCancelable } from 'utils/utils';
 import { getWaterSql, getFoodSql } from 'utils/filters/filters';
 
 // adding support for esri
@@ -38,7 +37,7 @@ export default class LayerManager {
 
     method && method.call(this, layer, opts);
     this._execCallback()
-      .then(() =>{
+      .then(() => {
         this._onLayerAddedSuccess && this._onLayerAddedSuccess();
       })
       .catch(() => {
@@ -69,15 +68,14 @@ export default class LayerManager {
     Private methods
   */
   _execCallback() {
-    const ready = new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       const loop = () => {
-        if(!Object.keys(this._layersLoading).length) return resolve();
-        if(this._rejectLayersLoading) return reject();
+        if (!Object.keys(this._layersLoading).length) return resolve();
+        if (this._rejectLayersLoading) return reject();
         setTimeout(loop);
       };
       setTimeout(loop);
     });
-    return ready;
   }
 
   _addLeafletLayer(layerSpec, { zIndex }) {
