@@ -48,3 +48,8 @@ export const irrigationOptions = [
   { value: 'irrigated', label: 'Irrigated' },
   { value: 'rainfed', label: 'Rainfed' }
 ];
+
+export const changeFromBaselineOptions = [
+  { label: 'Absolute value', value: false },
+  { label: 'Change from baseline', value: true }
+];

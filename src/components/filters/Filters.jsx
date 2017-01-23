@@ -6,10 +6,19 @@ import Accordion from 'components/ui/Accordion';
 import CountrySelect from 'containers/countries/CountrySelect';
 import Icon from 'components/ui/Icon';
 import Timeline from 'components/ui/Timeline';
+import RadioGroup from 'components/ui/RadioGroup';
 import { SimpleSelect } from 'react-selectize';
 import { Link } from 'react-router';
-// Options
-import { waterOptions, foodOptions, scopeOptions, yearOptions, cropOptions, irrigationOptions } from 'constants/filters';
+// Filter options
+import {
+  waterOptions,
+  foodOptions,
+  scopeOptions,
+  yearOptions,
+  cropOptions,
+  irrigationOptions,
+  changeFromBaselineOptions
+} from 'constants/filters';
 
 export default class Filters extends React.Component {
 
@@ -36,8 +45,20 @@ export default class Filters extends React.Component {
           <Timeline
             items={yearOptions}
             selected={yearOptions.find(i => i.value === this.props.filters.year)}
-            onChange={selected => selected && this.updateFilters(selected.value, 'year')}
+            onChange={(selected) => {
+              selected && selected.value === 'baseline' && this.updateFilters(false, 'changeFromBaseline');
+              selected && this.updateFilters(selected.value, 'year');
+            }}
           />
+          {this.props.filters.year !== 'baseline' &&
+            <RadioGroup
+              className="-filters"
+              items={changeFromBaselineOptions}
+              name="changeFromBaseline"
+              defaultValue={this.props.filters.changeFromBaseline.toString()}
+              onChange={selected => this.updateFilters(selected.value, 'changeFromBaseline')}
+            />
+          }
         </div>
       </div>
     );
@@ -157,6 +178,5 @@ Filters.propTypes = {
   setFilters: React.PropTypes.func,
   filters: React.PropTypes.object,
   withScope: React.PropTypes.bool,
-  className: React.PropTypes.string,
-  compare: React.PropTypes.bool
+  className: React.PropTypes.string
 };

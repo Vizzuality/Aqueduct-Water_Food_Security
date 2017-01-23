@@ -10,11 +10,11 @@ function getConversion(string, params, sqlParams) {
   return str;
 }
 
-function getWaterColumn({ water, year }, sufix) {
+function getWaterColumn({ water, year, changeFromBaseline }, sufix) {
   const layers = {
     '6c49ae6c-2c73-46ac-93ab-d4ed1b05d44e': {
       indicator: 'ws',
-      dataType: 't'
+      dataType: changeFromBaseline ? 'c' : 't'
     },
     '345cfef3-ee8a-46bc-9bb9-164c406dfd2c': {
       indicator: 'ws',
@@ -22,7 +22,7 @@ function getWaterColumn({ water, year }, sufix) {
     },
     'd9785282-2140-463f-a82d-f7296687055a': {
       indicator: 'ws',
-      dataType: 't'
+      dataType: changeFromBaseline ? 'c' : 't'
     }
   };
 
