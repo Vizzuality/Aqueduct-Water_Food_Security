@@ -66,7 +66,13 @@ export default class Sidebar extends React.Component {
         </button>
 
         <button type="button" className={`l-sidebar-toggle btn-toggle ${openedClass}`} onClick={this.triggerToggle}>
-          <Icon className="-medium" name="icon-arrow-left" />
+
+          { this.state.opened &&
+            <Icon className="-medium" name="icon-cross" />
+          }
+          { !this.state.opened &&
+            <Icon className="-medium" name="icon-arrow-right" />
+          }
         </button>
 
         <div className="l-sidebar-content">
