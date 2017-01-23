@@ -18,17 +18,19 @@
     width: 16px;
     height: 16px;
     background-color: palette(blue);
-    box-shadow: 0 0 0px 1px palette(blue, light) inset;
+    border: 1px solid palette(blue, light);
     border-radius: 50%;
     top: 50%;
     transform: translate(0%, -50%);
     cursor: pointer;
     box-sizing: border-box;
     transition: all .1s $ease-in-cubic;
+    box-shadow: 0 0 0px 7px palette(blue);
 
     &.-selected {
+      border: 1px solid palette(blue, secondary);
       background-color: palette(blue, secondary);
-      box-shadow: 0 0 0px 6px rgba(palette(blue, secondary), .5);
+      box-shadow: 0 0 0px 7px palette(blue), 0 0 0px 3px palette(blue) inset;
 
       .timeline-label {
         color: palette(white);
@@ -42,6 +44,7 @@
     .timeline-label {
       font-size: $font-size-big;
       line-height: $font-size-big;
+      font-weight: 500;
       color: palette(blue, light);
       position: absolute;
       bottom: 100%;
