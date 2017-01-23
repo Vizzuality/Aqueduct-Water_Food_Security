@@ -69,11 +69,7 @@ export default class LayerManager {
     Private methods
   */
   _execCallback() {
-    let timeout;
     const ready = new Promise((resolve, reject) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => reject(), 20000); // if it takes +20s something's wrong: reject the promise
-
       const loop = () => {
         if(!Object.keys(this._layersLoading).length) return resolve();
         if(this._rejectLayersLoading) return reject();
