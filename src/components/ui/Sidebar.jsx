@@ -60,10 +60,6 @@ export default class Sidebar extends React.Component {
           Toggle button
           - I'm using a div instead of a button because I don't want that browser's styles interfere with it
         */}
-        <button type="button" className="c-btn -white -with-icon btn-share" onClick={this.toggleShareModal}>
-          <Icon className="-medium" name="icon-share" />
-          Share
-        </button>
 
         <button type="button" className={`l-sidebar-toggle btn-toggle ${openedClass}`} onClick={this.triggerToggle}>
 
@@ -76,6 +72,10 @@ export default class Sidebar extends React.Component {
         </button>
 
         <div className="l-sidebar-content">
+          <button type="button" className="c-btn -white -with-icon btn-share" onClick={this.toggleShareModal}>
+            <Icon className="-medium" name="icon-share" />
+            Share
+          </button>
           {this.props.children}
         </div>
       </aside>
