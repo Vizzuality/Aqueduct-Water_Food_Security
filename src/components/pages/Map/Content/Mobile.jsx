@@ -3,6 +3,7 @@ import Map from 'components/map/Map';
 import SegmentedUi from 'components/ui/SegmentedUi';
 import WidgetList from 'components/widgets/WidgetList';
 import MobileFilters from 'components/filters/MobileFilters';
+import Legend from 'containers/legend/Legend';
 
 export default class MapPageMobile extends React.Component {
   constructor(props) {
@@ -10,7 +11,20 @@ export default class MapPageMobile extends React.Component {
     this.state = {
       context: 'data'
     };
+
+    // Bindings
+    this.toggle = this.toggle.bind(this);
   }
+
+  toggle() {
+    this.props.toggleModal(true, {
+      children: Legend,
+      childrenProps: {
+        layers: this.props.layersActive
+      }
+    });
+  }
+
   render() {
     const pageContextOptions = [{ label: 'Data', value: 'data' }, { label: 'Map', value: 'map' }];
     const mapConfig = Object.assign({}, this.props.mapConfig, { scrollWheelZoom: true });
@@ -31,6 +45,7 @@ export default class MapPageMobile extends React.Component {
         {/* Map */}
         {this.state.context === 'map' &&
           <div className="l-map-mobile">
+            <button onClick={this.toggle} className="toggle-legend-btn" type="button" />
             <div className="c-map-container">
               <Map mapConfig={mapConfig} filters={this.props.filters} layersActive={this.props.layersActive} setMapParams={this.props.setMapParams} sidebar={this.props.sidebar} />
             </div>
@@ -51,5 +66,6 @@ MapPageMobile.propTypes = {
   widgetsActive: React.PropTypes.array,
   // Actions
   setMapParams: React.PropTypes.func,
-  setFilters: React.PropTypes.func
+  setFilters: React.PropTypes.func,
+  toggleModal: React.PropTypes.func
 };
