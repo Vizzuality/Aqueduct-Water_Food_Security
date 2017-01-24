@@ -27,11 +27,11 @@ export function onEnterMapPage({ location }, replace, done) {
       country,
       crop,
       food,
-      irrigation: (irrigation) ? irrigation.split(',') : undefined,
+      irrigation: (irrigation) ? irrigation.split(',') : false,
       scope,
       year,
       water,
-      changeFromBaseline
+      changeFromBaseline: (changeFromBaseline === 'true')
     };
     dispatch(setFilters(filtersObj));
   }
@@ -59,7 +59,7 @@ export function onEnterComparePage({ location }, replace, done) {
       food,
       water,
       irrigation,
-      changeFromBaseline
+      changeFromBaseline: (changeFromBaseline === 'true')
     };
     dispatch(setFilters(filtersObj));
   }
