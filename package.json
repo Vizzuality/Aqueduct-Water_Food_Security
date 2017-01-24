@@ -57,6 +57,7 @@
     "react-addons-shallow-compare": "^15.3.2",
     "react-dom": "^15.0.2",
     "react-redux": "^4.4.5",
+    "react-responsive": "^1.2.6",
     "react-router": "^2.5.2",
     "react-router-redux": "^4.0.5",
     "react-router-scroll": "^0.2.0",

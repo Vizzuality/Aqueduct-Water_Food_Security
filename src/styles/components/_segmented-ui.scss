@@ -2,15 +2,10 @@
   display: flex;
   list-style-type: none;
 
-  .segmented-ui-item {
-    flex-grow: 1;
-  }
-
   // Component themes
   // Tabs theme
   &.-tabs {
     .segmented-ui-item {
-      flex-grow: 0;
       border: 0;
       margin-right: 28px;
 
@@ -52,6 +47,39 @@
       &:hover {
         color: palette(blue, lighter);
       }
+    }
+  }
+
+  // Pills theme
+  &.-pills {
+    background-color: palette(blue);
+    padding: $space-1 * 2;
+    justify-content: center;
+    .segmented-ui-item {
+      font-size: $font-size-big;
+      color: palette(blue, light);
+      font-weight: 500;
+      background-color: palette(blue, dark);
+      border: 1px solid palette(blue, light);
+      &.-active {
+        background-color: palette(blue, darkest);
+        color: palette(white);
+      }
+      &:first-child {
+        &, .segmented-ui-btn {
+          border-radius: 20px 0 0 20px;
+        }
+      }
+      &:last-child {
+        &, .segmented-ui-btn {
+          border-radius: 0 20px 20px 0;
+        }
+        border-left: none;
+      }
+    }
+    .segmented-ui-btn {
+      padding: 7px 40px;
+      display: inline-block;
     }
   }
 }

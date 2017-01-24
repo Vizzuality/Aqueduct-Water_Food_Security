@@ -63,7 +63,7 @@ export default class Filters extends React.Component {
       </div>
     );
 
-    const columnClassName = 'small-4 columns';
+    const columnClassName = 'small-12 medium-4 columns';
 
     return (
       <div className={`c-filters ${this.props.className ? this.props.className : ''}`}>
@@ -87,7 +87,7 @@ export default class Filters extends React.Component {
             {this.props.withScope && this.props.filters.scope === 'country' &&
               <div className="filters-section -highlighted">
                 <div className="row expanded collapse filters-group">
-                  <div className="small-4 columns">
+                  <div className="small-12 medium-6 columns">
                     <div className="filter-item">
                       {/* Country */}
                       <CountrySelect
@@ -96,7 +96,7 @@ export default class Filters extends React.Component {
                       />
                     </div>
                   </div>
-                  <div className="small-8 columns">
+                  <div className="small-12 medium-6 columns">
                     <div className="filter-item">
                       {/* Compare */}
                       <Link className="filters-btn" to={this.props.filters.country ? `/compare?countries=${this.props.filters.country}` : '/compare'}>
@@ -115,6 +115,7 @@ export default class Filters extends React.Component {
                     <div className="c-select">
                       <span className="title">Crops <Icon name="icon-question" className="title-icon" /></span>
                       <SimpleSelect
+                        className="-no-search"
                         hideResetButton
                         options={cropOptions}
                         defaultValue={cropOptions.find(i => i.value === this.props.filters.crop)}
@@ -135,6 +136,7 @@ export default class Filters extends React.Component {
                     <div className="c-select">
                       <span className="title">Water Risk <Icon name="icon-question" className="title-icon" /></span>
                       <SimpleSelect
+                        className="-no-search"
                         hideResetButton
                         options={waterOptions}
                         defaultValue={waterOptions.find(i => i.value === this.props.filters.water)}
@@ -153,7 +155,7 @@ export default class Filters extends React.Component {
                         options={foodOptions}
                         defaultValue={foodOptions.find(i => i.value === this.props.filters.food)}
                         onValueChange={selected => selected && this.updateFilters(selected.value, 'food')}
-                        className={this.props.filters.scope === 'country' ? '-disabled' : ''}
+                        className={this.props.filters.scope === 'country' ? '-disabled -no-search' : '-no-search'}
                       />
                     </div>
                   </div>

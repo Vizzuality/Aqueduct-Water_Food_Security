@@ -38,6 +38,13 @@
     opacity: .4;
     pointer-events: none;
   }
+  &.-no-search {
+    input[type="input"] {
+      @include only-mobile {
+        display: none !important;
+      }
+    }
+  }
 }
 
 .simple-select {
@@ -127,6 +134,7 @@
     }
   }
   .dropdown-menu {
+
     max-height: 435px;
     z-index: 9999;
     padding: 10px 0;
