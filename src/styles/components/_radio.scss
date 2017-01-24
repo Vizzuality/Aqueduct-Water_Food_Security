@@ -2,7 +2,7 @@
   label {
     display: block;
     padding: 2px 0;
-    font-weight: 700;
+    font-weight: 500;
     text-transform: none;
     position: relative;
     padding-left: 22px;
@@ -13,19 +13,20 @@
     left: 0;
     transform: none;
     text-align: left;
-    color: $color-deactivate;
+    color: palette(blue, light);
+    font-size: $font-size-big;
 
     &:hover {
-      color: lighten($color-deactivate, 12.5%);
+      color: palette(blue, lighter);
     }
 
     span {
       position: absolute;
       top: 50%;
       left: 0;
-      width: 14px;
-      height: 14px;
-      border: 1px solid $color-deactivate;
+      width: 15px;
+      height: 15px;
+      border: 1px solid palette(blue, light);
       border-radius: 50%;
       transform: translate(0,-50%);
 
@@ -34,9 +35,9 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        width: 6px;
-        height: 6px;
-        background: $color-alternative;
+        width: 8px;
+        height: 8px;
+        background: palette(blue, secondary);
         border-radius: 50%;
         display: block;
         transform: translate(-50%,-50%) scale(0);
@@ -50,11 +51,12 @@
   }
 
   input[type=radio]:checked + label {
-    font-weight: 700;
-    color: $color-white;
+    color: palette(white);
 
     span {
-      border-color: $color-alternative;
+      border-color: palette(blue, secondary);
+      width: 16px;
+      height: 16px;
       &:after {
         transform: translate(-50%,-50%) scale(1);
       }
@@ -78,5 +80,9 @@
         margin: 0;
       }
     }
+  }
+
+  &.-filters {
+    margin: ($space-1 * 4) 0 0 ($space-1 * 3);
   }
 }

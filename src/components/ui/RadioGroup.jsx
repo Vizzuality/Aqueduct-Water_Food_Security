@@ -1,11 +1,13 @@
 import React from 'react';
 
-import Checkbox from 'components/ui/Checkbox';
-
-class RadioGroup extends React.Component {
+export default class RadioGroup extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      selected: props.defaultValue
+    };
 
     // BINDINGS
     this.onChange = this.onChange.bind(this);
@@ -15,40 +17,50 @@ class RadioGroup extends React.Component {
    * UI EVENTS
    * - onChange
   */
-  onChange(newSelected) {
-    // Send object
-    const selectedObj = this.props.items.find(item => item.value === newSelected);
-    this.props.onChange(selectedObj);
+  onChange(e) {
+    // Set the current selected object
+    const selectedObj = this.props.items.find(item => item.value.toString() === e.currentTarget.value);
+
+    // Set state
+    this.setState({
+      selected: selectedObj.value.toString()
+    });
+
+    // Trigger change selected if it's needed
+    this.props.onChange && this.props.onChange(selectedObj);
   }
 
   render() {
-    const { name, items, selected } = this.props;
+    const { name, items } = this.props;
+    const { selected } = this.state;
 
     return (
       <div className={`c-radio-box ${this.props.className}`}>
-        {this.props.title && <span className="radio-box-title">{this.props.title}</span>}
-        {items.map((item, i) => {
-          return (<Checkbox
-            key={i}
-            name={name}
-            value={item.value}
-            selected={selected}
-            label={item.label}
-            onChange={newSelected => this.onChange(newSelected)}
-          />);
-        })}
+        {items.map((item, i) => (
+          <div key={i} className="c-radio">
+            <input
+              type="radio"
+              name={name}
+              id={`radio-${name}-${item.value}`}
+              value={item.value}
+              checked={item.value.toString() === selected}
+              onChange={this.onChange}
+            />
+            <label htmlFor={`radio-${name}-${item.value}`}>
+              <span />
+              {item.label}
+            </label>
+          </div>
+        ))}
       </div>
     );
   }
 }
 
 RadioGroup.propTypes = {
-  name: React.PropTypes.string,
-  title: React.PropTypes.string,
-  selected: React.PropTypes.string,
+  items: React.PropTypes.array.isRequired,
+  name: React.PropTypes.string.isRequired,
+  defaultValue: React.PropTypes.string,
   className: React.PropTypes.string,
-  items: React.PropTypes.array,
   onChange: React.PropTypes.func
 };
-
-export default RadioGroup;
