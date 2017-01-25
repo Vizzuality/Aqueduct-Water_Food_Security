@@ -1,5 +1,6 @@
 .l-app {
   position: relative;
+  min-width: 320px;
 }
 .l-main {
   background: white;
@@ -49,7 +50,7 @@
   max-width: $max-width-sidebar;
   display: flex;
   flex-direction: column;
-  z-index: 999;
+  z-index: 9999;
   min-width: 650px;
 
   .l-filters {

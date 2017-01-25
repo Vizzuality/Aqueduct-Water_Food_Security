@@ -50,36 +50,40 @@
     }
   }
 
-  // Pills theme
-  &.-pills {
-    background-color: palette(blue);
-    padding: $space-1 * 2;
+  // Btns theme
+  &.-btns {
+    background-color: palette(white);
+    padding: 11px;
     justify-content: center;
+    max-width: 400px;
+    margin: 0 auto;
     .segmented-ui-item {
+      flex-grow: 1;
+      text-align: center;
       font-size: $font-size-big;
-      color: palette(blue, light);
+      color: palette(gray);
       font-weight: 500;
-      background-color: palette(blue, dark);
-      border: 1px solid palette(blue, light);
+      border: 1px solid palette(gray, light);
       &.-active {
-        background-color: palette(blue, darkest);
+        background-color: palette(blue, secondary);
         color: palette(white);
       }
       &:first-child {
         &, .segmented-ui-btn {
-          border-radius: 20px 0 0 20px;
+          border-radius: 3px 0 0 3px;
         }
       }
       &:last-child {
         &, .segmented-ui-btn {
-          border-radius: 0 20px 20px 0;
+          border-radius: 0 3px 3px 0;
         }
         border-left: none;
       }
     }
     .segmented-ui-btn {
-      padding: 7px 40px;
+      padding: 2px 40px;
       display: inline-block;
+      width: 100%;
     }
   }
 }

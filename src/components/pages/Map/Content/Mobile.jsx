@@ -30,12 +30,14 @@ export default class MapPageMobile extends React.Component {
     const mapConfig = Object.assign({}, this.props.mapConfig, { scrollWheelZoom: true });
     return (
       <div className="mobile-map-wrapper">
-        <SegmentedUi
-          className="-pills"
-          items={pageContextOptions}
-          selected={this.state.context}
-          onChange={selected => this.setState({ context: selected.value })}
-        />
+        <div className="mobile-btns-wrapper">
+          <SegmentedUi
+            className="-btns"
+            items={pageContextOptions}
+            selected={this.state.context}
+            onChange={selected => this.setState({ context: selected.value })}
+          />
+        </div>
         {/* Widget list */}
         {this.state.context === 'data' &&
           <div className="mobile-widgets-container">

@@ -24,7 +24,13 @@
 
 .filters-lead {
   padding-left: ($space-1 * 4);
-  border-bottom: 1px solid palette(blue, dark);
+  @include only-desktop {
+    border-bottom: 1px solid palette(blue, dark);
+  }
+  @include only-mobile {
+    background-color: palette(blue, dark);
+      box-shadow: 0 2px 3px rgba(0,0,0,.2) inset;
+  }
 }
 
 .filters-section {
@@ -66,15 +72,23 @@
 }
 
 .filters-btn {
-  float: right;
-  font-size: $font-size-big;
+  @include only-desktop {
+    float: right;
+  }
+  @include only-mobile {
+    width: 100%;
+  }
+  text-align: center;
+  letter-spacing: .6px;
+  font-size: $font-size-default;
   font-weight: 500;
   color: palette(blue, light);
-  border-radius: 25px;
+  border-radius: 3px;
   border: 1px solid palette(blue, light);
-  padding: 3px 25px;
+  padding: 12px 25px;
   display: inline-block;
   transition: all .1s linear;
+  text-transform: uppercase;
   &:hover {
     color: palette(blue, lighter);
     border-color: palette(blue, lighter);
@@ -97,6 +111,9 @@
   overflow-y: auto;
   &.-opened {
     transform: translateY(0);
+    svg.icon-toggle {
+      transform: rotateX(180deg);
+    }
   }
   .c-filters {
     flex: 1;
@@ -106,10 +123,16 @@
 .mobile-filters-btn {
   text-transform: uppercase;
   color: palette(white);
-  background-color: palette(blue, secondary);
+  background-color: palette(blue);
   display: block;
   width: 100%;
-  padding: 20px 0;
+  padding: 20px 35px;
   font-weight: 500;
   letter-spacing: .6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  svg {
+    fill: palette(white);
+  }
 }
