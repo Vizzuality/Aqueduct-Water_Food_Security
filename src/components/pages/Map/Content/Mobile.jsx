@@ -54,7 +54,7 @@ export default class MapPageMobile extends React.Component {
           </div>
         }
         {/* Filters */}
-        <MobileFilters className="-mobile" filters={this.props.filters} setFilters={this.props.setFilters} />
+        <MobileFilters className="-mobile" withScope filters={this.props.filters} setFilters={this.props.setFilters} />
       </div>
     );
   }

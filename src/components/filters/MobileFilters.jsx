@@ -22,16 +22,23 @@ export default class MobileFilters extends React.Component {
 
   render() {
     const cNames = ['c-mobile-filters'];
+    this.props.className && cNames.push(this.props.className);
     this.state.opened && cNames.push('-opened');
     return (
       <div className={cNames.join(' ')}>
+        {this.props.children}
         <button className="mobile-filters-btn" onClick={this.toggle}>
           <Icon name="icon-filters" className="-medium" />
           <span>Filters</span>
           <Icon name="icon-expand" className="-medium icon-toggle" />
         </button>
-        <Filters withScope {...this.props} />
+        <Filters {...this.props} />
       </div>
     );
   }
 }
+
+MobileFilters.propTypes = {
+  children: React.PropTypes.object,
+  className: React.PropTypes.string
+};

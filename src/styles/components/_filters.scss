@@ -97,6 +97,13 @@
 
 /* Mobile */
 .c-mobile-filters {
+  &.-compare {
+    transform: translateY(calc(100% - 169px));
+    &.-opened {
+    }
+  }
+
+  min-height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -109,17 +116,20 @@
   height: calc(100% - 60px);
   background-color: palette(blue);
   overflow-y: auto;
+
   &.-opened {
-    transform: translateY(0);
+    transform: translateY(60px);
     svg.icon-toggle {
       transform: rotateX(180deg);
     }
   }
+
   .c-filters {
     flex: 1;
     overflow-y: auto;
   }
 }
+
 .mobile-filters-btn {
   text-transform: uppercase;
   color: palette(white);

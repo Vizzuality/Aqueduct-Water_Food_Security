@@ -2,6 +2,10 @@
 /* Compare page */
 .l-comparepage {
   background-color: $color-map;
+  @include only-mobile {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 /* Compare header */
@@ -104,4 +108,13 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+}
+
+/* Compare list */
+.c-comparelist {
+  @include only-mobile {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-bottom: 64px;
+  }
 }
