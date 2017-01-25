@@ -20,7 +20,7 @@ const getActiveLayers = (_datasets, _filters) => {
         name: dataset.name,
         subtitle: dataset.subtitle,
         metadata,
-        ...dataset.layer[0].attributes,
+        ...dataset.layer[0].attributes
       };
       isWater = (dataset.id === _filters.water);
       isFood = (_filters.scope === 'global' && dataset.id === _filters.food);
