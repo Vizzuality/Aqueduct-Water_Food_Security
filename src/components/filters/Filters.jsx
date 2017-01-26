@@ -7,7 +7,7 @@ import CountrySelect from 'containers/countries/CountrySelect';
 import Icon from 'components/ui/Icon';
 import Timeline from 'components/ui/Timeline';
 import RadioGroup from 'components/ui/RadioGroup';
-import { SimpleSelect } from 'react-selectize';
+import CustomSelect from 'components/ui/CustomSelect';
 import { Link } from 'react-router';
 // Filter options
 import {
@@ -114,10 +114,10 @@ export default class Filters extends React.Component {
                   <div className="filter-item">
                     <div className="c-select">
                       <span className="title">Crops <Icon name="icon-question" className="title-icon" /></span>
-                      <SimpleSelect
-                        hideResetButton
+                      <CustomSelect
+                        className="-no-search"
                         options={cropOptions}
-                        defaultValue={cropOptions.find(i => i.value === this.props.filters.crop)}
+                        value={this.props.filters.crop}
                         onValueChange={selected => selected && this.updateFilters(selected.value, 'crop')}
                       />
                     </div>
@@ -134,10 +134,10 @@ export default class Filters extends React.Component {
                   <div className="filter-item">
                     <div className="c-select">
                       <span className="title">Water Risk <Icon name="icon-question" className="title-icon" /></span>
-                      <SimpleSelect
-                        hideResetButton
+                      <CustomSelect
+                        className="-no-search"
                         options={waterOptions}
-                        defaultValue={waterOptions.find(i => i.value === this.props.filters.water)}
+                        value={this.props.filters.water}
                         onValueChange={selected => selected && this.updateFilters(selected.value, 'water')}
                       />
                     </div>
@@ -148,10 +148,9 @@ export default class Filters extends React.Component {
                   <div className="filter-item">
                     <div className="c-select">
                       <span className="title">Country Data <Icon name="icon-question" className="title-icon" /></span>
-                      <SimpleSelect
-                        hideResetButton
+                      <CustomSelect
                         options={foodOptions}
-                        defaultValue={foodOptions.find(i => i.value === this.props.filters.food)}
+                        value={this.props.filters.food}
                         onValueChange={selected => selected && this.updateFilters(selected.value, 'food')}
                         className={this.props.filters.scope === 'country' ? '-disabled' : ''}
                       />
