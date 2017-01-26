@@ -1,4 +1,5 @@
 import React from 'react';
+import isEqual from 'lodash/isEqual';
 
 export default class CustomSelect extends React.Component {
   constructor(props) {
@@ -18,12 +19,11 @@ export default class CustomSelect extends React.Component {
   }
 
   componentWillReceiveProps({ options, value }) {
-    if (options) {
-      this.setState(Object.assign({}, this.state, { filteredOptions: options }), () => {
-        if (value) {
-          this.setState(Object.assign({}, this.state, { selectedItem: this.props.options.find(item => item.value === value) }));
-        }
-      });
+    if (!isEqual(this.props.options, options)) {
+      this.setState(Object.assign({}, this.state, { filteredOptions: options }));
+    }
+    if (this.props.value !== value) {
+      this.setState(Object.assign({}, this.state, { selectedItem: this.props.options.find(item => item.value === value) }));
     }
   }
 
@@ -79,7 +79,10 @@ export default class CustomSelect extends React.Component {
   close() {
     // NOTE: Without setTimeout function, state never mutates to closed: true. Bug?
     setTimeout(() => {
-      this.setState(Object.assign({}, this.state, { closed: true }));
+      this.setState(Object.assign({}, this.state, {
+        closed: true,
+        filteredOptions: this.props.options
+      }));
       if (this.input) {
         this.input.value = '';
       }
