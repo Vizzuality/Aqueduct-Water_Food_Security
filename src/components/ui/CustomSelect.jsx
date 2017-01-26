@@ -16,6 +16,7 @@ export default class CustomSelect extends React.Component {
     this.selectItem = this.selectItem.bind(this);
     this.onType = this.onType.bind(this);
     this.onEnterSearch = this.onEnterSearch.bind(this);
+    this.onScreenClick = this.onScreenClick.bind(this);
   }
 
   componentWillReceiveProps({ options, value }) {
@@ -25,6 +26,10 @@ export default class CustomSelect extends React.Component {
     if (this.props.value !== value) {
       this.setState(Object.assign({}, this.state, { selectedItem: this.props.options.find(item => item.value === value) }));
     }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('click', this.onScreenClick);
   }
 
   // Event handler for event keyup on search input
@@ -59,16 +64,17 @@ export default class CustomSelect extends React.Component {
     this.props.onValueChange && this.props.onValueChange(item);
   }
 
+  onScreenClick(evt) {
+    if (this.el.contains && !this.el.contains(evt.target)) {
+      this.close();
+      window.removeEventListener('click', this.onScreenClick);
+    }
+  }
+
   // Method than shows the option list
   open() {
     // Close select when clicking outside it
-    const self = this;
-    window.addEventListener('click', function onScreenClick(evt) {
-      if (!self.el.contains(evt.target)) {
-        self.close();
-        window.removeEventListener('click', onScreenClick);
-      }
-    });
+    window.addEventListener('click', this.onScreenClick);
 
     this.setState(Object.assign({}, this.state, { closed: false }), () => {
       this.input && this.input.focus();
