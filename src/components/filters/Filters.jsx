@@ -115,7 +115,6 @@ export default class Filters extends React.Component {
                     <div className="c-select">
                       <span className="title">Crops <Icon name="icon-question" className="title-icon" /></span>
                       <CustomSelect
-                        className="-no-search"
                         options={cropOptions}
                         value={this.props.filters.crop}
                         onValueChange={selected => selected && this.updateFilters(selected.value, 'crop')}
@@ -135,7 +134,6 @@ export default class Filters extends React.Component {
                     <div className="c-select">
                       <span className="title">Water Risk <Icon name="icon-question" className="title-icon" /></span>
                       <CustomSelect
-                        className="-no-search"
                         options={waterOptions}
                         value={this.props.filters.water}
                         onValueChange={selected => selected && this.updateFilters(selected.value, 'water')}
