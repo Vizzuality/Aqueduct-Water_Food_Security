@@ -1,7 +1,10 @@
 .c-chart {
-  padding: $space-1;
 
   .chart {
     width: 100%;
+  }
+
+  .vega > svg {
+    display: block;
   }
 }
