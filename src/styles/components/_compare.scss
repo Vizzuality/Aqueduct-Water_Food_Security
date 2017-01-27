@@ -85,6 +85,9 @@
     height: 430px;
   }
   position: relative;
+  > div {
+    height: 100%;
+  }
   .comparelist-item:first-child & {
     @include only-desktop {
       border-right: 3px solid #F5F1E0;
