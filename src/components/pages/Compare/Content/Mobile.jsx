@@ -5,7 +5,7 @@ import ShareModal from 'containers/modal/ShareModal';
 // Components
 import CompareListMobile from 'components/compare/CompareListMobile';
 import MobileFilters from 'components/filters/MobileFilters';
-import MobileSwipe from 'components/ui/MobileSwipe';
+// import MobileSwipe from 'components/ui/MobileSwipe';
 
 export default class ComparePageMobile extends React.Component {
 
@@ -60,7 +60,9 @@ export default class ComparePageMobile extends React.Component {
       <div className="l-comparepage -mobile-fullscreen">
         <div className="compare-filters">
           <MobileFilters className="-compare" filters={this.props.filters} setFilters={this.props.setFilters}>
-            <MobileSwipe items={this.getCountrySelects()} onChange={this.onSwipeItem} />
+            {
+              // <MobileSwipe items={this.getCountrySelects()} onChange={this.onSwipeItem} />
+            }
           </MobileFilters>
         </div>
         <CompareListMobile
