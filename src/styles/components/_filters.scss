@@ -12,7 +12,9 @@
     }
   }
   &.-compare {
-    background-color: palette(blue, dark);
+    @include only-desktop {
+      background-color: palette(blue, dark);
+    }
     .filters-group {
       margin: 0;
     }
