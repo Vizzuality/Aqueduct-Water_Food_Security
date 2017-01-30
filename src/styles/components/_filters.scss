@@ -107,9 +107,8 @@
   bottom: 0;
   left: 0;
   height: calc(100% - 60px);
-  background-color: palette(blue);
+  background-color: palette(blue, dark);
   overflow-y: auto;
-  padding-bottom: $space-1 * 4;
 
   &.-opened {
     transform: translateY(0);
@@ -143,7 +142,7 @@
 
 .mobile-filters-heading-content {
   padding: ($space-1 * 4) ($space-1 * 4);
-  background-color: darken(palette(blue), 5%);
+  background-color: darken(palette(blue), 10%);
 
   .c-select {
     margin-bottom: $space-1 * 3;
