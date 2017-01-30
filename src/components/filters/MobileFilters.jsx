@@ -34,7 +34,12 @@ export default class MobileFilters extends React.Component {
           <span>Filters</span>
           <Icon name="icon-expand" className="-medium icon-toggle" />
         </button>
-        <Filters {...this.props} />
+        <div className="mobile-filters-wrapper">
+          <div className="mobile-filters-heading-content">
+            {this.props.headingContent}
+          </div>
+          <Filters {...this.props} />
+        </div>
       </div>
     );
   }
@@ -42,5 +47,6 @@ export default class MobileFilters extends React.Component {
 
 MobileFilters.propTypes = {
   children: React.PropTypes.object,
-  className: React.PropTypes.string
+  className: React.PropTypes.string,
+  headingContent: React.PropTypes.object
 };

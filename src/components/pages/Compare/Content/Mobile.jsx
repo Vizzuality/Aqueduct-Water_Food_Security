@@ -2,10 +2,11 @@ import React from 'react';
 import ShareModal from 'containers/modal/ShareModal';
 
 // Components
+import { Link } from 'react-router';
 import CompareListMobile from 'components/compare/CompareListMobile';
 import MobileFilters from 'components/filters/MobileFilters';
 import SegmentedUi from 'components/ui/SegmentedUi';
-// import CountrySelect from 'containers/countries/CountrySelect';
+import CountrySelect from 'containers/countries/CountrySelect';
 
 export default class ComparePageMobile extends React.Component {
 
@@ -33,21 +34,30 @@ export default class ComparePageMobile extends React.Component {
     this.setState(Object.assign({}, this.state, { active: +item.value }));
   }
 
-  // getCountrySelects() {
-  //   const items = [];
-  //   for (let i = 0; i < this.state.items; i += 1) {
-  //     items.push(
-  //       <CountrySelect
-  //         key={i}
-  //         value={this.props.compare.countries[i] || null}
-  //         onValueChange={(selected) => {
-  //           selected && this.props.setCompareCountry({ index: i, iso: selected.value });
-  //         }}
-  //       />
-  //     );
-  //   }
-  //   return items;
-  // }
+  getCountrySelects() {
+    const items = [];
+    let props;
+    let title = 'Select country';
+    for (let i = 0; i < this.state.items; i += 1) {
+      props = {
+        value: this.props.compare.countries[i] || null,
+        onValueChange: (selected) => {
+          selected && this.props.setCompareCountry({ index: i, iso: selected.value });
+        }
+      };
+      if (i > 0) {
+        props.placeholder = 'Compare with...';
+        title = 'Compare with...';
+      }
+      items.push(
+        <div className="c-select" key={i}>
+          <span className="title">{title}</span>
+          <CountrySelect {...props} />
+        </div>
+      );
+    }
+    return items;
+  }
 
   getCountries() {
     return this.props.compare.countries.map((item, index) => {
@@ -63,10 +73,21 @@ export default class ComparePageMobile extends React.Component {
   }
 
   render() {
+    const headingContent = (
+      <div>
+        {this.getCountrySelects()}
+        <Link className="c-btn -primary -dark -fluid" to="/">Back</Link>
+      </div>
+    );
     return (
       <div className="l-comparepage -mobile-fullscreen">
         <div className="compare-filters">
-          <MobileFilters className="-compare" filters={this.props.filters} setFilters={this.props.setFilters}>
+          <MobileFilters
+            className="-compare"
+            filters={this.props.filters}
+            setFilters={this.props.setFilters}
+            headingContent={headingContent}
+          >
             <SegmentedUi className="-stacked-tabs" selected="0" items={this.getCountries()} onChange={this.onChangeTab} />
           </MobileFilters>
         </div>
@@ -92,7 +113,7 @@ ComparePageMobile.propTypes = {
   filters: React.PropTypes.object,
   setFilters: React.PropTypes.func,
   updateCompareUrl: React.PropTypes.func,
-  // setCompareCountry: React.PropTypes.func,
+  setCompareCountry: React.PropTypes.func,
   emptyCompareCountries: React.PropTypes.func,
   toggleModal: React.PropTypes.func,
   widgetsActive: React.PropTypes.array,

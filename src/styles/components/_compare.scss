@@ -129,3 +129,22 @@
     padding-bottom: 64px;
   }
 }
+
+.c-compareitem {
+  flex: 1;
+}
+
+.comparelist-item {
+  @include only-mobile {
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+}
+
+.comparelist-content {
+  display: flex;
+  @include only-mobile {
+    height: 100%;
+    flex-direction: column;
+  }
+}

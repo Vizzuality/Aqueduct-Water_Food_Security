@@ -10,17 +10,16 @@ export default class CompareList extends React.Component {
     for (let i = 0; i < this.props.items; i += 1) {
       const filters = Object.assign({}, this.props.filters, { country: this.props.countries[i] });
       items.push(
-        <div key={i} className="comparelist-item small-12 medium-6">
-          <CompareItem
-            filters={filters}
-            loading={this.props.loading}
-            widgetsActive={this.props.widgetsActive}
-            index={i}
-            country={this.props.countries[i]}
-            countryList={this.props.countryList}
-            layersActive={this.props.layersActive}
-          />
-        </div>
+        <CompareItem
+          key={i}
+          filters={filters}
+          loading={this.props.loading}
+          widgetsActive={this.props.widgetsActive}
+          index={i}
+          country={this.props.countries[i]}
+          countryList={this.props.countryList}
+          layersActive={this.props.layersActive}
+        />
       );
     }
     return items;
@@ -30,9 +29,7 @@ export default class CompareList extends React.Component {
     return (
       <div className="c-comparelist">
         <div className="comparelist-content">
-          <div className="row expanded">
-            {this.getItems()}
-          </div>
+          {this.getItems()}
         </div>
       </div>
     );

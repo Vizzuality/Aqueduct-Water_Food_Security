@@ -23,7 +23,10 @@ export default class CustomSelect extends React.Component {
 
   componentWillReceiveProps({ options, value }) {
     if (!isEqual(this.props.options, options)) {
-      this.setState(Object.assign({}, this.state, { filteredOptions: options }));
+      this.setState(Object.assign({}, this.state, {
+        filteredOptions: options,
+        selectedItem: options.find(item => item.value === value)
+      }));
     }
     if (this.props.value !== value) {
       this.setState(Object.assign({}, this.state, { selectedItem: this.props.options.find(item => item.value === value) }));

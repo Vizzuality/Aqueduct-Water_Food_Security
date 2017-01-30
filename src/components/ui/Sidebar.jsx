@@ -72,7 +72,7 @@ export default class Sidebar extends React.Component {
         </button>
 
         <div className="l-sidebar-content">
-          <button type="button" className="c-btn -white -with-icon btn-share" onClick={this.toggleShareModal}>
+          <button type="button" className="-white -with-icon btn-share" onClick={this.toggleShareModal}>
             <Icon className="-medium" name="icon-share" />
             Share
           </button>

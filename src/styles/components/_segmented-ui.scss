@@ -52,7 +52,9 @@
 
   &.-stacked-tabs {
     .segmented-ui-item {
-      flex-grow: 1;
+      flex: 1;
+      // Fix for proper text ellipsis
+      min-width: 0;
       &.-active {
         .segmented-ui-btn {
           color: palette(white);
@@ -69,7 +71,11 @@
       font-weight: 500;
       color: palette(blue, light);
       background-color: palette(blue, dark);
-      padding: 12px 0;
+      padding: 12px 20px;
+      min-height: 48px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 

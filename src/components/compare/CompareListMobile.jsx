@@ -17,7 +17,7 @@ export default class CompareList extends React.Component {
     const items = [];
     const filters = Object.assign({}, this.props.filters, { country: this.props.countries[this.props.active] });
     items.push(
-      <div key={this.props.active} className="comparelist-item small-12 medium-6">
+      <div key={this.props.active} className="comparelist-item">
         <CompareItem
           context={this.state.context}
           filters={filters}
@@ -46,9 +46,7 @@ export default class CompareList extends React.Component {
               onChange={selected => this.setState({ context: selected.value })}
             />
           </div>
-          <div className="row expanded">
-            {this.getItems()}
-          </div>
+          {this.getItems()}
         </div>
       </div>
     );

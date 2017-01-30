@@ -1,4 +1,5 @@
 import React from 'react';
+
 // Components
 import CheckboxGroup from 'components/ui/CheckboxGroup';
 import SegmentedUi from 'components/ui/SegmentedUi';
@@ -9,6 +10,7 @@ import Timeline from 'components/ui/Timeline';
 import RadioGroup from 'components/ui/RadioGroup';
 import CustomSelect from 'components/ui/CustomSelect';
 import { Link } from 'react-router';
+
 // Filter options
 import {
   waterOptions,
@@ -116,7 +118,7 @@ export default class Filters extends React.Component {
                     <div className="filter-item -push">
                       {/* Compare */}
                       {this.state.countryToCompare &&
-                        <Link className="filters-btn" to={`/compare?countries=${this.props.filters.country},${this.state.countryToCompare}`}>
+                        <Link className="c-btn -primary -filters" to={`/compare?countries=${this.props.filters.country},${this.state.countryToCompare}`}>
                           Compare country
                         </Link>
                       }
@@ -176,7 +178,7 @@ export default class Filters extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="filters-section">
+            <div className="filters-section -mobile-spacing">
               <div className="row expanded collapse filters-group">
                 <div className="small-12 columns">
                   {timeline}
