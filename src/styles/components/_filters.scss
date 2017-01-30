@@ -104,6 +104,7 @@
 /* Mobile */
 .c-mobile-filters {
   &.-compare {
+    transform: translateY(calc(100% - 120px));
     &.-opened {
       .mobile-filters-content {
         display: none;
@@ -115,7 +116,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  transform: translateY(calc(100% - 120px));
+  transform: translateY(calc(100% - 64px));
   transition: transform $ease-out-cubic $animation-time;
   position: fixed;
   z-index: 9999;

@@ -1,5 +1,14 @@
 <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <defs>
+<symbol id="icon-legend" viewBox="0 0 32 32">
+<title>legend</title>
+<path class="path1" d="M13.333 12c0 0.736-0.597 1.333-1.333 1.333s-1.333-0.597-1.333-1.333c0-0.736 0.597-1.333 1.333-1.333s1.333 0.597 1.333 1.333z"></path>
+<path class="path2" d="M14.667 11.333h6.667v1.333h-6.667v-1.333z"></path>
+<path class="path3" d="M13.333 16c0 0.736-0.597 1.333-1.333 1.333s-1.333-0.597-1.333-1.333c0-0.736 0.597-1.333 1.333-1.333s1.333 0.597 1.333 1.333z"></path>
+<path class="path4" d="M14.667 15.333h6.667v1.333h-6.667v-1.333z"></path>
+<path class="path5" d="M13.333 20c0 0.736-0.597 1.333-1.333 1.333s-1.333-0.597-1.333-1.333c0-0.736 0.597-1.333 1.333-1.333s1.333 0.597 1.333 1.333z"></path>
+<path class="path6" d="M14.667 19.333h6.667v1.333h-6.667v-1.333z"></path>
+</symbol>
 <symbol id="icon-expand" viewBox="0 0 32 32">
 <title>expand</title>
 <path class="path1" d="M16 10.338l-9.477 9.477 1.723 1.846 7.754-7.754 7.754 7.754 1.723-1.846z"></path>

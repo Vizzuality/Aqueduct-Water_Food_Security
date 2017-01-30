@@ -1,6 +1,7 @@
 import React from 'react';
 import Legend from 'containers/legend/Legend';
 import OnlyOn from 'components/ui/Responsive';
+import Icon from 'components/ui/Icon';
 
 export default function LegendMobile(props) {
   const toggle = () => {
@@ -14,7 +15,9 @@ export default function LegendMobile(props) {
 
   return (
     <OnlyOn device="mobile">
-      <button onClick={toggle} className="toggle-legend-btn" type="button" />
+      <button onClick={toggle} className="toggle-legend-btn" type="button">
+        <Icon name="icon-legend" />
+      </button>
     </OnlyOn>
   );
 }
