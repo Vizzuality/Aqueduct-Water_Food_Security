@@ -109,7 +109,7 @@
   bottom: 0;
   left: 0;
   height: calc(100% - 60px);
-  background-color: palette(blue, dark);
+  background-color: palette(blue);
   overflow-y: auto;
 
   &.-opened {
