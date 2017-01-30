@@ -50,6 +50,29 @@
     }
   }
 
+  &.-stacked-tabs {
+    .segmented-ui-item {
+      flex-grow: 1;
+      &.-active {
+        .segmented-ui-btn {
+          color: palette(white);
+          background-color: palette(blue, darkest);
+          pointer-events: none;
+        }
+      }
+    }
+    .segmented-ui-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      font-size: $font-size-big;
+      font-weight: 500;
+      color: palette(blue, light);
+      background-color: palette(blue, dark);
+      padding: 16px 0;
+    }
+  }
+
   // Btns theme
   &.-btns {
     background-color: palette(white);

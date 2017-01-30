@@ -1,11 +1,10 @@
 import React from 'react';
-import CountrySelect from 'containers/countries/CountrySelect';
 import ShareModal from 'containers/modal/ShareModal';
 
 // Components
 import CompareListMobile from 'components/compare/CompareListMobile';
 import MobileFilters from 'components/filters/MobileFilters';
-// import MobileSwipe from 'components/ui/MobileSwipe';
+import SegmentedUi from 'components/ui/SegmentedUi';
 
 export default class ComparePageMobile extends React.Component {
 
@@ -18,35 +17,42 @@ export default class ComparePageMobile extends React.Component {
 
     // bindings
     this.toggleShareModal = this.toggleShareModal.bind(this);
-    this.onSwipeItem = this.onSwipeItem.bind(this);
+    this.onChangeTab = this.onChangeTab.bind(this);
   }
 
   componentWillMount() {
     this.props.updateCompareUrl();
   }
 
-  onSwipeItem(index) {
-    this.setState(Object.assign({}, this.state, { active: index }));
-  }
-
-  getCountrySelects() {
-    const items = [];
-    for (let i = 0; i < this.state.items; i += 1) {
-      items.push(
-        <CountrySelect
-          key={i}
-          value={this.props.compare.countries[i] || null}
-          onValueChange={(selected) => {
-            selected && this.props.setCompareCountry({ index: i, iso: selected.value });
-          }}
-        />
-      );
-    }
-    return items;
-  }
+  // getCountrySelects() {
+  //   const items = [];
+  //   for (let i = 0; i < this.state.items; i += 1) {
+  //     items.push(
+  //       <CountrySelect
+  //         key={i}
+  //         value={this.props.compare.countries[i] || null}
+  //         onValueChange={(selected) => {
+  //           selected && this.props.setCompareCountry({ index: i, iso: selected.value });
+  //         }}
+  //       />
+  //     );
+  //   }
+  //   return items;
+  // }
 
   componentWillUnmount() {
     this.props.emptyCompareCountries();
+  }
+
+  onChangeTab(item) {
+    this.setState(Object.assign({}, this.state, { active: +item.value }));
+  }
+
+  getCountries() {
+    return this.props.compare.countries.map((item, index) => {
+      const country = this.props.countries.list.find(c => c.id === item);
+      return { label: country ? country.name : '', value: String(index) };
+    });
   }
 
   toggleShareModal() {
@@ -60,9 +66,7 @@ export default class ComparePageMobile extends React.Component {
       <div className="l-comparepage -mobile-fullscreen">
         <div className="compare-filters">
           <MobileFilters className="-compare" filters={this.props.filters} setFilters={this.props.setFilters}>
-            {
-              // <MobileSwipe items={this.getCountrySelects()} onChange={this.onSwipeItem} />
-            }
+            <SegmentedUi className="-stacked-tabs" selected="0" items={this.getCountries()} onChange={this.onChangeTab} />
           </MobileFilters>
         </div>
         <CompareListMobile
@@ -87,7 +91,7 @@ ComparePageMobile.propTypes = {
   filters: React.PropTypes.object,
   setFilters: React.PropTypes.func,
   updateCompareUrl: React.PropTypes.func,
-  setCompareCountry: React.PropTypes.func,
+  // setCompareCountry: React.PropTypes.func,
   emptyCompareCountries: React.PropTypes.func,
   toggleModal: React.PropTypes.func,
   widgetsActive: React.PropTypes.array,

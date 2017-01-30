@@ -26,7 +26,9 @@ export default class MobileFilters extends React.Component {
     this.state.opened && cNames.push('-opened');
     return (
       <div className={cNames.join(' ')}>
-        {this.props.children}
+        <div className="mobile-filters-content">
+          {this.props.children}
+        </div>
         <button className="mobile-filters-btn" onClick={this.toggle}>
           <Icon name="icon-filters" className="-medium" />
           <span>Filters</span>
