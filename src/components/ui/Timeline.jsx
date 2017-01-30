@@ -32,7 +32,7 @@ class Timeline extends React.Component {
           {items.map((item, index) => {
             const selectedClass = (selected.value === item.value) ? '-selected' : '';
             return (
-              <li className={`timeline-list-item ${selectedClass}`} key={index} data-value={item.value} onClick={this.onClick}>
+              <li className={`timeline-list-item ${selectedClass} ${this.props.className}`} key={index} data-value={item.value} onClick={this.onClick}>
                 <div className="timeline-label">
                   {item.label}
                 </div>
@@ -48,7 +48,8 @@ class Timeline extends React.Component {
 Timeline.propTypes = {
   items: React.PropTypes.array.isRequired,
   selected: React.PropTypes.any.isRequired,
-  onChange: React.PropTypes.func
+  onChange: React.PropTypes.func,
+  className: React.PropTypes.string
 };
 
 export default Timeline;
