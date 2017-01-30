@@ -104,7 +104,7 @@
 /* Mobile */
 .c-mobile-filters {
   &.-compare {
-    transform: translateY(calc(100% - 120px));
+    transform: translateY(calc(100% - #{$height-filter-btn + $height-country-tabs}));
     &.-opened {
       .mobile-filters-content {
         display: none;
@@ -116,7 +116,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  transform: translateY(calc(100% - 64px));
+  transform: translateY(calc(100% - #{$height-filter-btn}));
   transition: transform $ease-out-cubic $animation-time;
   position: fixed;
   z-index: 9999;
@@ -145,7 +145,7 @@
   background-color: palette(blue);
   display: block;
   width: 100%;
-  padding: 20px 35px;
+  padding: 14px 35px;
   font-weight: 500;
   letter-spacing: .6px;
   display: flex;

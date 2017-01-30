@@ -5,6 +5,7 @@ import ShareModal from 'containers/modal/ShareModal';
 import CompareListMobile from 'components/compare/CompareListMobile';
 import MobileFilters from 'components/filters/MobileFilters';
 import SegmentedUi from 'components/ui/SegmentedUi';
+// import CountrySelect from 'containers/countries/CountrySelect';
 
 export default class ComparePageMobile extends React.Component {
 
@@ -24,6 +25,14 @@ export default class ComparePageMobile extends React.Component {
     this.props.updateCompareUrl();
   }
 
+  componentWillUnmount() {
+    this.props.emptyCompareCountries();
+  }
+
+  onChangeTab(item) {
+    this.setState(Object.assign({}, this.state, { active: +item.value }));
+  }
+
   // getCountrySelects() {
   //   const items = [];
   //   for (let i = 0; i < this.state.items; i += 1) {
@@ -39,14 +48,6 @@ export default class ComparePageMobile extends React.Component {
   //   }
   //   return items;
   // }
-
-  componentWillUnmount() {
-    this.props.emptyCompareCountries();
-  }
-
-  onChangeTab(item) {
-    this.setState(Object.assign({}, this.state, { active: +item.value }));
-  }
 
   getCountries() {
     return this.props.compare.countries.map((item, index) => {

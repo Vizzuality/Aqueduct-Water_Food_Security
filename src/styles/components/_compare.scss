@@ -79,7 +79,7 @@
 }
 .compareitem-map {
   @include only-mobile {
-    height: calc(100vh - 176px);
+    height: calc(100vh - 212px);
   }
   @include only-desktop {
     height: 430px;
