@@ -68,6 +68,12 @@
     @include only-mobile {
       padding-bottom: $space-1 * 4;
     }
+
+    @include only-desktop {
+      &.-push:not(:empty) {
+        margin-top: $space-1 * 3;
+      }
+    }
   }
 }
 

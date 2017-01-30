@@ -85,7 +85,7 @@
     height: 430px;
   }
   position: relative;
-  > div {
+  & > div {
     height: 100%;
   }
   .comparelist-item:first-child & {

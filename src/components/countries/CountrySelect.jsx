@@ -8,7 +8,7 @@ export default function CountrySelect(props) {
 
   let parsedProps = {
     options: countryList,
-    placeholder: 'Select a Country'
+    placeholder: props.placeholder || 'Select a Country'
   };
 
   if (props.value && countryList.length) {
@@ -28,6 +28,7 @@ export default function CountrySelect(props) {
 
 CountrySelect.propTypes = {
   defaultValue: React.PropTypes.string,
+  placeholder: React.PropTypes.string,
   value: React.PropTypes.string,
   countries: React.PropTypes.object
 };

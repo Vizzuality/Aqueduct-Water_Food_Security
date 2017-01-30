@@ -25,6 +25,11 @@ export default class Filters extends React.Component {
   constructor(props) {
     super(props);
 
+    // State
+    this.state = {
+      countryToCompare: null
+    };
+
     // Bindings
     this.updateFilters = this.updateFilters.bind(this);
   }
@@ -91,17 +96,30 @@ export default class Filters extends React.Component {
                     <div className="filter-item">
                       {/* Country */}
                       <CountrySelect
-                        onValueChange={selected => this.updateFilters(selected && selected.value, 'country')}
                         value={this.props.filters.country !== 'null' ? this.props.filters.country : null}
+                        onValueChange={selected => this.updateFilters(selected && selected.value, 'country')}
                       />
                     </div>
                   </div>
                   <div className="small-12 medium-6 columns">
                     <div className="filter-item">
+                      {/* Country to compare with */}
+                      <CountrySelect
+                        className={this.props.filters.country ? '' : '-disabled'}
+                        placeholder="Compare with..."
+                        value={this.state.countryToCompare}
+                        onValueChange={selected => this.setState({ countryToCompare: selected.value })}
+                      />
+                    </div>
+                  </div>
+                  <div className="small-12 columns">
+                    <div className="filter-item -push">
                       {/* Compare */}
-                      <Link className="filters-btn" to={this.props.filters.country ? `/compare?countries=${this.props.filters.country}` : '/compare'}>
-                        Compare country
-                      </Link>
+                      {this.state.countryToCompare &&
+                        <Link className="filters-btn" to={`/compare?countries=${this.props.filters.country},${this.state.countryToCompare}`}>
+                          Compare country
+                        </Link>
+                      }
                     </div>
                   </div>
                 </div>
