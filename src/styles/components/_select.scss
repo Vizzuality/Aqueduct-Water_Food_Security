@@ -17,6 +17,7 @@
     border-radius: 50%;
     width: 20px;
     height: 20px;
+    padding: 3px;
     margin-left: $space-1 * 2;
     cursor: pointer;
     transition: background-color .1s linear;
@@ -26,168 +27,102 @@
   }
 }
 
-.react-selectize {
-  &.root-node {
-    width: 100%;
-  }
+.c-custom-select {
+  position: relative;
+  border-bottom: 1px solid palette(blue, light);
+  cursor: pointer;
+  width: 100%;
+
   &.-fixed {
-    max-width: 180px;
+    max-width: 200px;
   }
+
   &.-disabled {
-    opacity: .4;
     pointer-events: none;
+    opacity: .4;
   }
-  &.-no-search {
-    input[type="input"] {
-      @include only-mobile {
-        display: none !important;
+
+  &:after {
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid palette(blue, light);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+  }
+
+  &.-closed {
+    .custom-select-search {
+      display: none;
+    }
+
+    &:after {
+      transform: rotate(180deg);
+    }
+  }
+
+  &:not(.-closed).-search {
+    .custom-select-text span {
+      opacity: 0;
+    }
+  }
+
+  .custom-select-text {
+    font-size: $font-size-big;
+    font-weight: 500;
+    line-height: 2;
+    color: palette(white);
+    display: block;
+    width: 100%;
+    position: relative;
+    min-height: 33px;
+  }
+
+  .custom-select-options {
+    list-style-type: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 100%;
+    background-color: palette(white);
+    z-index: 999;
+    box-shadow: 0 -2px 4px 0 rgba(33, 62, 118, 0.09), 0 2px 4px 0 rgba(33, 62, 118, 0.09);
+    max-height: 400px;
+    overflow-y: auto;
+
+    li {
+      color: palette(blue, dark);
+      font-size: $font-size-big;
+      font-weight: 500;
+      line-height: 2;
+      padding: 8px 12px;
+      cursor: pointer;
+      line-height: 1.1;
+
+      &:hover, &.-selected {
+        background-color: palette(blue, lighter);
       }
     }
   }
-}
 
-.simple-select {
-  &.react-selectize {
-    &.default {
-      &.root-node {
-        color: palette(white);
-
-        &.open {
-          .react-selectize-control {
-            background-color: transparent;
-          }
-        }
-        &:not(.open) {
-          .react-selectize-control {
-            background-color: transparent;
-            background-image: none;
-          }
-        }
-      }
-    }
+  .custom-select-search {
+    background-color: transparent;
+    cursor: pointer;
+    color: palette(white);
+    outline: none;
+    border: none;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    padding-bottom: 2px;
+    z-index: 10;
   }
-}
 
-.react-selectize {
-  &.default {
-    font-family: $font-family-roboto;
-    font-size: 16px;
-    &.root-node {
-      &.open {
-        .react-selectize-control {
-          .react-selectize-placeholder {
-            display: none;
-          }
-          .react-selectize-toggle-button {
-            path {
-              fill: $color-soft;
-            }
-          }
-        }
-      }
-
-      .simple-value {
-        margin: 0;
-        font-weight: 500;
-      }
-
-      .react-selectize-control {
-        border: 0;
-        border-bottom: 1px solid rgba($color-white,.3);
-        border-radius: 0;
-        padding: 0;
-
-        .react-selectize-search-field-and-selected-values {
-          padding-left: 0;
-
-          .resizable-input {
-            color: $color-white;
-            margin: 1px 0;
-            position: absolute;
-            top: 0;
-            left: 0;
-          }
-        }
-
-        .react-selectize-placeholder {
-          color: $color-white;
-          text-indent: 2px;
-          font-family: $font-family-roboto;
-          font-size: 16px;
-          max-width: calc(100% - 32px);
-          font-weight: 500;
-        }
-
-        .react-selectize-toggle-button {
-          path {
-            fill: $color-soft;
-          }
-        }
-
-        .react-selectize-reset-button {
-          path {
-            stroke: $color-soft;
-          }
-        }
-      }
-    }
-  }
-  .dropdown-menu {
-
-    max-height: 435px;
-    z-index: 9999;
-    padding: 10px 0;
-
-    .option-wrapper {
-      background: $color-white;
-    }
-
-    &.default {
-      border: none;
-      background: $color-white;
-
-      .no-results-found {
-        background-color: $color-white;
-      }
-
-      &:not(.fliped) {
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-        box-shadow: 0 -2px 4px 0 rgba(33, 62, 118, 0.09), 0 2px 4px 0 rgba(33, 62, 118, 0.09);
-      }
-
-      .option-wrapper {
-        &.highlight {
-          background: none;
-
-          .simple-option {
-            background: palette(blue, lightest);
-          }
-        }
-
-        .simple-option {
-          padding: 4px 10px;
-          color: palette(blue, dark);
-          font-weight: 500;
-        }
-      }
-    }
-  }
-  &.dropdown-menu {
-    &.default {
-      .no-results-found {
-        color: palette(blue, dark) !important;
-      }
-    }
-  }
-}
-
-.react-selectize {
-  .dropdown-menu.default {
-    .no-results-found {
-      box-shadow: 0 -2px 4px 0 rgba(33, 62, 118, 0.09), 0 2px 4px 0 rgba(33, 62, 118, 0.09);
-      font-family: $font-family-roboto;
-      font-size: 16px;
-    }
-  }
 }

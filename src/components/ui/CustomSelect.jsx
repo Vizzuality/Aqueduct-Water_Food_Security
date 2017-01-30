@@ -7,7 +7,8 @@ export default class CustomSelect extends React.Component {
     this.state = {
       selectedItem: props.options ? props.options.find(item => item.value === props.value) : null,
       closed: true,
-      filteredOptions: props.options || []
+      filteredOptions: props.options || [],
+      selectedIndex: -1
     };
 
     // Bindings
@@ -17,6 +18,7 @@ export default class CustomSelect extends React.Component {
     this.onType = this.onType.bind(this);
     this.onEnterSearch = this.onEnterSearch.bind(this);
     this.onScreenClick = this.onScreenClick.bind(this);
+    this.resetSelectedIndex = this.resetSelectedIndex.bind(this);
   }
 
   componentWillReceiveProps({ options, value }) {
@@ -34,20 +36,43 @@ export default class CustomSelect extends React.Component {
 
   // Event handler for event keyup on search input
   onType(evt) {
-    const value = evt.currentTarget.value;
-    const filteredOptions = this.props.options.filter(item => item.label.toLowerCase().match(value.toLowerCase()));
-    this.setState(Object.assign({}, this.state, {
-      filteredOptions
-    }));
+    switch (evt.keyCode) {
+      // key up
+      case 38: {
+        this.state.selectedIndex > 0 && this.setState(Object.assign({}, this.state, { selectedIndex: this.state.selectedIndex - 1 }));
+        break;
+      }
+      // key down
+      case 40: {
+        (this.state.selectedIndex < this.state.filteredOptions.length - 1) && this.setState(Object.assign({}, this.state, { selectedIndex: this.state.selectedIndex + 1 }));
+        break;
+      }
+      // enter key
+      case 13: {
+        if (this.state.selectedIndex !== -1) {
+          const selectedItem = this.state.filteredOptions[this.state.selectedIndex];
+          this.resetSelectedIndex();
+          this.selectItem(selectedItem);
+        }
+        break;
+      }
+      // esc key
+      case 27: {
+        this.close();
+        break;
+      }
+      // Typing text
+      default: {
+        const value = evt.currentTarget.value;
+        const filteredOptions = this.props.options.filter(item => item.label.toLowerCase().match(value.toLowerCase()));
+        this.setState(Object.assign({}, this.state, { filteredOptions }), this.resetSelectedIndex);
+        break;
+      }
+    }
+  }
 
-    // TODO: select item with enter key
-    // TODO: navigate through items with arrow keys
-    // if (evt.keyCode === 13) {
-    //   const item = this.state.filteredOptions.find(i => i.label === this.input.value);
-    //   if (item) {
-    //     this.selectItem(item);
-    //   }
-    // }
+  resetSelectedIndex() {
+    this.setState(Object.assign({}, this.state, { selectedIndex: -1 }));
   }
 
   // Event handler for enter event on search input
@@ -89,6 +114,7 @@ export default class CustomSelect extends React.Component {
         closed: true,
         filteredOptions: this.props.options
       }));
+      this.resetSelectedIndex();
       if (this.input) {
         this.input.value = '';
       }
@@ -119,7 +145,10 @@ export default class CustomSelect extends React.Component {
         </span>
         {this.state.closed ||
           <ul className="custom-select-options">
-            {this.state.filteredOptions.map((item, index) => <li key={index} onMouseDown={() => this.selectItem(item)}>{item.label}</li>)}
+            {this.state.filteredOptions.map((item, index) => {
+              const cName = (this.props.search && index === this.state.selectedIndex) ? '-selected' : '';
+              return <li className={cName} key={index} onMouseEnter={this.resetSelectedIndex} onMouseDown={() => this.selectItem(item)}>{item.label}</li>;
+            })}
           </ul>
         }
       </div>
