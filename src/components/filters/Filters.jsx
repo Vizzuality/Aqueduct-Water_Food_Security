@@ -1,4 +1,5 @@
 import React from 'react';
+
 // Components
 import CheckboxGroup from 'components/ui/CheckboxGroup';
 import SegmentedUi from 'components/ui/SegmentedUi';
@@ -7,8 +8,9 @@ import CountrySelect from 'containers/countries/CountrySelect';
 import Icon from 'components/ui/Icon';
 import Timeline from 'components/ui/Timeline';
 import RadioGroup from 'components/ui/RadioGroup';
-import { SimpleSelect } from 'react-selectize';
+import CustomSelect from 'components/ui/CustomSelect';
 import { Link } from 'react-router';
+
 // Filter options
 import {
   waterOptions,
@@ -24,6 +26,11 @@ export default class Filters extends React.Component {
 
   constructor(props) {
     super(props);
+
+    // State
+    this.state = {
+      countryToCompare: null
+    };
 
     // Bindings
     this.updateFilters = this.updateFilters.bind(this);
@@ -49,6 +56,7 @@ export default class Filters extends React.Component {
               selected && selected.value === 'baseline' && this.updateFilters(false, 'changeFromBaseline');
               selected && this.updateFilters(selected.value, 'year');
             }}
+            className={this.props.className === '-compare' ? '-secondary' : ''}
           />
           {this.props.filters.year !== 'baseline' &&
             <RadioGroup
@@ -63,7 +71,7 @@ export default class Filters extends React.Component {
       </div>
     );
 
-    const columnClassName = 'small-4 columns';
+    const columnClassName = 'small-12 medium-4 columns';
 
     return (
       <div className={`c-filters ${this.props.className ? this.props.className : ''}`}>
@@ -87,21 +95,37 @@ export default class Filters extends React.Component {
             {this.props.withScope && this.props.filters.scope === 'country' &&
               <div className="filters-section -highlighted">
                 <div className="row expanded collapse filters-group">
-                  <div className="small-4 columns">
+                  <div className="small-12 medium-6 columns">
                     <div className="filter-item">
                       {/* Country */}
                       <CountrySelect
-                        onValueChange={selected => this.updateFilters(selected && selected.value, 'country')}
                         value={this.props.filters.country !== 'null' ? this.props.filters.country : null}
+                        onValueChange={selected => this.updateFilters(selected && selected.value, 'country')}
                       />
                     </div>
                   </div>
-                  <div className="small-8 columns">
+                  <div className="small-12 medium-6 columns">
                     <div className="filter-item">
+                      {/* Country to compare with */}
+                      <CountrySelect
+                        className={this.props.filters.country ? '' : '-disabled'}
+                        placeholder="Compare with..."
+                        value={this.state.countryToCompare}
+                        onValueChange={selected => this.setState({ countryToCompare: selected.value })}
+                      />
+                    </div>
+                  </div>
+                  <div className="small-12 columns">
+                    <div className="filter-item -push">
                       {/* Compare */}
-                      <Link className="filters-btn" to={this.props.filters.country ? `/compare?countries=${this.props.filters.country}` : '/compare'}>
-                        Compare country
-                      </Link>
+                      {this.state.countryToCompare &&
+                        <Link
+                          className="c-btn -primary -filters"
+                          to={`/compare?countries=${this.props.filters.country},${this.state.countryToCompare}`}
+                        >
+                          Compare
+                        </Link>
+                      }
                     </div>
                   </div>
                 </div>
@@ -114,10 +138,10 @@ export default class Filters extends React.Component {
                   <div className="filter-item">
                     <div className="c-select">
                       <span className="title">Crops <Icon name="icon-question" className="title-icon" /></span>
-                      <SimpleSelect
-                        hideResetButton
+                      <CustomSelect
+                        className="-no-search"
                         options={cropOptions}
-                        defaultValue={cropOptions.find(i => i.value === this.props.filters.crop)}
+                        value={this.props.filters.crop}
                         onValueChange={selected => selected && this.updateFilters(selected.value, 'crop')}
                       />
                     </div>
@@ -134,10 +158,9 @@ export default class Filters extends React.Component {
                   <div className="filter-item">
                     <div className="c-select">
                       <span className="title">Water Risk <Icon name="icon-question" className="title-icon" /></span>
-                      <SimpleSelect
-                        hideResetButton
+                      <CustomSelect
                         options={waterOptions}
-                        defaultValue={waterOptions.find(i => i.value === this.props.filters.water)}
+                        value={this.props.filters.water}
                         onValueChange={selected => selected && this.updateFilters(selected.value, 'water')}
                       />
                     </div>
@@ -148,19 +171,18 @@ export default class Filters extends React.Component {
                   <div className="filter-item">
                     <div className="c-select">
                       <span className="title">Country Data <Icon name="icon-question" className="title-icon" /></span>
-                      <SimpleSelect
-                        hideResetButton
+                      <CustomSelect
+                        className={this.props.filters.scope === 'country' ? '-disabled -no-search' : '-no-search'}
                         options={foodOptions}
-                        defaultValue={foodOptions.find(i => i.value === this.props.filters.food)}
+                        value={this.props.filters.food}
                         onValueChange={selected => selected && this.updateFilters(selected.value, 'food')}
-                        className={this.props.filters.scope === 'country' ? '-disabled' : ''}
                       />
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="filters-section">
+            <div className="filters-section -mobile-spacing">
               <div className="row expanded collapse filters-group">
                 <div className="small-12 columns">
                   {timeline}

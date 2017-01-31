@@ -27,6 +27,9 @@
     font-weight: normal;
     color: palette(blue, light);
     transition: all $animation-time linear;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
 
     &:hover {
       color: palette(blue, lighter);

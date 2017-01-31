@@ -6,7 +6,7 @@ const datasets = state => state.datasets;
 const filters = state => state.filters;
 const compare = state => state.compare;
 
-// Create a function to compare the current active datasets and the current datasetsIds
+// Create a function to compare the current active datatasets and the current datasetsIds
 const getActiveWidgets = (_datasets, _filters, _compare) => {
   // TODO: filter _datasets using _filters
   const widgetList = [];

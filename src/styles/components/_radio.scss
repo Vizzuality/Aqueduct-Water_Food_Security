@@ -15,6 +15,7 @@
     text-align: left;
     color: palette(blue, light);
     font-size: $font-size-big;
+    transition: color .1s linear;
 
     &:hover {
       color: palette(blue, lighter);

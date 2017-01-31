@@ -8,7 +8,7 @@ import Filters from 'components/filters/Filters';
 import Icon from 'components/ui/Icon';
 import { Link } from 'react-router';
 
-export default class ComparePage extends React.Component {
+export default class ComparePageDesktop extends React.Component {
 
   constructor(props) {
     super(props);
@@ -66,7 +66,7 @@ export default class ComparePage extends React.Component {
             <div className="row expanded collapse">{this.getCountrySelects()}</div>
           </div>
           <div className="compare-filters-section -collapsed">
-            <Filters className="-compare" filters={this.props.filters} setFilters={this.props.setFilters} compare />
+            <Filters className="-compare" filters={this.props.filters} setFilters={this.props.setFilters} />
           </div>
         </div>
         <CompareList
@@ -83,7 +83,7 @@ export default class ComparePage extends React.Component {
   }
 }
 
-ComparePage.propTypes = {
+ComparePageDesktop.propTypes = {
   compare: React.PropTypes.object,
   loading: React.PropTypes.bool,
   countries: React.PropTypes.object,

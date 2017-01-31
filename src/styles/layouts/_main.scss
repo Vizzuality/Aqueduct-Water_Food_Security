@@ -1,6 +1,6 @@
 .l-app {
-  min-width: 960px;
   position: relative;
+  min-width: 320px;
 }
 .l-main {
   background: white;
@@ -9,6 +9,7 @@
 }
 
 .l-header {
+  display: flex;
   position: absolute;
   z-index: 2;
   top: 0;
@@ -21,9 +22,19 @@
   overflow: hidden;
 }
 
+.l-device-wrapper {
+  height: 100%;
+}
+
 // Util class, must override height property value
 .-fullscreen {
   height: calc(100vh - #{$size-header}) !important;
+}
+
+.-mobile-fullscreen {
+  @include only-mobile {
+    height: calc(100vh - #{$size-header}) !important;
+  }
 }
 
 .l-fullheight {
@@ -39,7 +50,7 @@
   max-width: $max-width-sidebar;
   display: flex;
   flex-direction: column;
-  z-index: 999;
+  z-index: 9999;
   min-width: 650px;
 
   .l-filters {
@@ -69,4 +80,9 @@
   width: 100%;
   height: 100%;
   z-index: 1;
+}
+
+.l-map-mobile {
+  flex: 1;
+  position: relative;
 }

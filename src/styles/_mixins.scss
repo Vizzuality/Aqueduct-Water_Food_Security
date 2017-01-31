@@ -1,0 +1,25 @@
+/*
+  Utils
+*/
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+/*
+  Responsive
+*/
+@mixin only-mobile() {
+  @media (max-width: $breakpoint-mobile) {
+    @content;
+  }
+}
+
+@mixin only-desktop() {
+  @media (min-width: $breakpoint-mobile + 1) {
+    @content;
+  }
+}

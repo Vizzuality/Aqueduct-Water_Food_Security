@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import ComparePage from 'components/pages/ComparePage';
+import ComparePage from 'components/pages/Compare/ComparePage';
 import { setCompareCountry, emptyCompareCountries } from 'actions/compare';
 import { setFilters } from 'actions/filters';
 import { updateCompareUrl } from 'actions/url';

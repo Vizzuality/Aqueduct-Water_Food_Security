@@ -2,6 +2,10 @@
 /* Compare page */
 .l-comparepage {
   background-color: $color-map;
+  @include only-mobile {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 /* Compare header */
@@ -74,10 +78,20 @@
   }
 }
 .compareitem-map {
-  height: 430px;
+  @include only-mobile {
+    height: calc(100vh - 212px);
+  }
+  @include only-desktop {
+    height: 430px;
+  }
   position: relative;
+  & > div {
+    height: 100%;
+  }
   .comparelist-item:first-child & {
-    border-right: 3px solid #F5F1E0;
+    @include only-desktop {
+      border-right: 3px solid #F5F1E0;
+    }
   }
 }
 .compareitem-widgets {
@@ -104,4 +118,33 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+}
+
+/* Compare list */
+.c-comparelist {
+  @include only-mobile {
+    flex-grow: 1;
+    overflow-y: auto;
+    height: 100%;
+    padding-bottom: 64px;
+  }
+}
+
+.c-compareitem {
+  flex: 1;
+}
+
+.comparelist-item {
+  @include only-mobile {
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+}
+
+.comparelist-content {
+  display: flex;
+  @include only-mobile {
+    height: 100%;
+    flex-direction: column;
+  }
 }

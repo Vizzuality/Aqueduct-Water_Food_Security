@@ -24,6 +24,13 @@ $palettes: (
   feedback: (
     success: #1c801c,
     error: #de2239
+  ),
+  sand: (
+    primary: #f5f4f0
+  ),
+  gray: (
+    primary: #8a9da6,
+    light: rgba(151, 151, 151, 0.2)
   )
 );
 
@@ -90,3 +97,10 @@ $ease-in-out-sine: cubic-bezier(0.445, 0.050, 0.550, 0.950);
 // Leaflet
 $zoom-margin-top: 10px;
 $zoom-margin-right: 10px;
+
+// Responsive breakpoints
+$breakpoint-mobile: 640px;
+
+// Mobile heights
+$height-country-tabs: 48px;
+$height-filter-btn: 52px;
