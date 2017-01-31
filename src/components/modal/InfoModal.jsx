@@ -3,7 +3,13 @@ import WidgetChart from 'components/widgets/WidgetChart';
 
 export default function InfoModal(props) {
   const notAvailable = 'Not available';
-
+  // Change [] for array map
+  // <ul>
+  //   <li>topic 1</li>
+  //   <li>topic 2</li>
+  //   <li>topic 3</li>
+  // </ul>
+  const topics = props.topics ? [] : null;
   return (
     <div className="c-info">
       <div className="info-header">
@@ -26,15 +32,13 @@ export default function InfoModal(props) {
             <div className="info-description">
               <dl>
                 <dt>Description:</dt>
-                <dd>{props.widget.metadata && props.widget.metadata.description || notAvailable}</dd>
-                <dt>Language:</dt>
-                <dd>{props.widget.metadata && props.widget.metadata.language || notAvailable}</dd>
-                <dt>Source:</dt>
-                <dd>{props.widget.metadata && props.widget.metadata.source || notAvailable}</dd>
-                <dt>Citation:</dt>
-                <dd>{props.widget.metadata && props.widget.metadata.citation || notAvailable}</dd>
-                <dt>License:</dt>
-                <dd>{props.widget.metadata && props.widget.metadata.license || notAvailable}</dd>
+                <dd>{props.description || notAvailable}</dd>
+                <dt>Data source:</dt>
+                <dd>{props.dataSource || notAvailable}</dd>
+                <dt>Topic:</dt>
+                <dd>{topics || notAvailable}</dd>
+                <dt>Area:</dt>
+                <dd className={props.area ? '-highlighted' : ''}>{props.area || notAvailable}</dd>
               </dl>
             </div>
           </div>
@@ -48,4 +52,7 @@ InfoModal.propTypes = {
   widget: React.PropTypes.object,
   filters: React.PropTypes.object,
   topics: React.PropTypes.array,
+  description: React.PropTypes.string,
+  dataSource: React.PropTypes.string,
+  area: React.PropTypes.string
 };
