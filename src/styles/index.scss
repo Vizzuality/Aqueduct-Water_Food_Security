@@ -6,12 +6,10 @@
 @import "reset";
 @import "base";
 @import "animations";
+@import "mixins";
 
 /* LAYOUTS */
 @import "layouts/main";
-
-/* External components */
-@import '../../node_modules/react-selectize/themes/index.css';
 
 /* COMPONENTS */
 @import "components/accordion";
@@ -38,3 +36,4 @@
 @import "components/timeline";
 @import "components/tooltip";
 @import "components/widget";
+@import "components/swipe";

@@ -13,11 +13,27 @@
 
 .leaflet-touch, .leaflet-touch-drag {
   .leaflet-bar {
-    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.26);
+    background-color: transparent;
+    @include only-desktop {
+      box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.26);
+    }
     a {
-      width: 70px;
-      height: 30px;
-      line-height: 30px;
+      @include only-mobile {
+        width: 48px;
+        height: 48px;
+        line-height: 48px;
+        box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.26);
+        font-size: 24px;
+        &:last-child {
+          margin-top: $space-1;
+        }
+      }
+      @include only-desktop {
+        width: 70px;
+        height: 30px;
+        line-height: 30px;
+      }
+      background-color: palette(white);
       font-size: 18px;
       &.leaflet-disabled {
         color: $color-text-1;
@@ -39,7 +55,12 @@
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
   a {
-    display: inline-block;
+    @include only-mobile {
+      display: block;
+    }
+    @include only-desktop {
+      display: inline-block;
+    }
     background-color: transparent;
     color: $color-text-1;
     border: 0;
@@ -79,4 +100,45 @@
 }
 .leaflet-top .leaflet-control {
   margin-top: $zoom-margin-top;
+}
+
+/* Mobile */
+
+.mobile-map-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .mobile-widgets-container {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 61px;
+  }
+}
+
+.mobile-btns-wrapper {
+  background-color: palette(white);
+  box-shadow: 0 2px 3px 0 rgba(palette(black), 0.1);
+  position: relative;
+  z-index: 1;
+}
+
+.toggle-legend-btn {
+  display: block;
+  width: 48px;
+  height: 48px;
+  background-color: palette(white);
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.26);
+  position: absolute;
+  z-index: 999;
+  top: 9px;
+  left: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 50px;
+    height: 50px;
+    fill: #4a596a;
+  }
 }

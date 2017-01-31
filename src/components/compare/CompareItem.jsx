@@ -2,6 +2,7 @@ import React from 'react';
 import WidgetList from 'components/widgets/WidgetList';
 import Map from 'components/map/Map';
 import Icon from 'components/ui/Icon';
+import LegendMobile from 'containers/legend/LegendMobile';
 
 export default class CompareItem extends React.Component {
 
@@ -27,12 +28,23 @@ export default class CompareItem extends React.Component {
       countrySelected = this.props.countryList.find(c => c.id === this.props.country);
       mapConfig.bounds = countrySelected;
     }
+    const showMap = (!this.props.context || (this.props.context && this.props.context === 'map'));
+    const showWidgets = this.props.country && (!this.props.context || (this.props.context && this.props.context === 'data'));
+    const map = (
+      <div>
+        <LegendMobile layersActive={this.props.layersActive} />
+        <Map filters={this.props.filters} mapConfig={mapConfig} layersActive={this.props.layersActive} />
+      </div>
+    );
+
     return (
       <div className="c-compareitem">
-        <section className="compareitem-map">
-          {this.props.country ? <Map filters={this.props.filters} mapConfig={mapConfig} layersActive={this.props.layersActive} /> : emptyPlaceholder}
-        </section>
-        {this.props.country &&
+        {showMap &&
+          <section className="compareitem-map">
+            {this.props.country ? map : emptyPlaceholder}
+          </section>
+        }
+        {showWidgets &&
           <section className="compareitem-widgets">
             <WidgetList filters={this.props.filters} loading={this.props.loading} widgetsActive={this.props.widgetsActive} />
           </section>
@@ -43,6 +55,7 @@ export default class CompareItem extends React.Component {
 }
 
 CompareItem.propTypes = {
+  context: React.PropTypes.string,
   countryList: React.PropTypes.array,
   country: React.PropTypes.string,
   loading: React.PropTypes.bool,

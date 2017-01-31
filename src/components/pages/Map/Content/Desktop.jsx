@@ -7,7 +7,7 @@ import Filters from 'components/filters/Filters';
 import WidgetList from 'components/widgets/WidgetList';
 import Legend from 'containers/legend/Legend';
 
-class MapPage extends React.Component {
+export default class MapPageDesktop extends React.Component {
 
   componentWillMount() {
     this.props.updateMapUrl();
@@ -46,7 +46,7 @@ class MapPage extends React.Component {
   }
 }
 
-MapPage.propTypes = {
+MapPageDesktop.propTypes = {
   mapConfig: React.PropTypes.object,
   filters: React.PropTypes.object,
   countries: React.PropTypes.object,
@@ -58,5 +58,3 @@ MapPage.propTypes = {
   updateMapUrl: React.PropTypes.func,
   setFilters: React.PropTypes.func
 };
-
-export default MapPage;

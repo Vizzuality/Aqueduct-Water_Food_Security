@@ -1,6 +1,8 @@
 .c-widget-list {
   padding: 0 ($space-1 * 2) ($space-1 * 4);
-
+  @include only-mobile {
+    padding-bottom: $height-filter-btn + $height-country-tabs;
+  }
   .column {
     display: flex;
     align-items: flex-end;
@@ -105,4 +107,9 @@
       }
     }
   }
+}
+
+/* Mobile */
+.mobile-widgets-container {
+  background-color: palette(sand);
 }
