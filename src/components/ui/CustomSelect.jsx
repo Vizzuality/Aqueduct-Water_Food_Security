@@ -133,7 +133,7 @@ export default class CustomSelect extends React.Component {
     this.props.search && cNames.push('-search');
     this.state.closed && cNames.push('-closed');
 
-    const noResults = this.props.options.length && !this.state.filteredOptions.length;
+    const noResults = !!(this.props.options.length && !this.state.filteredOptions.length);
 
     return (
       <div ref={(node) => { this.el = node; }} className={cNames.join(' ')}>
