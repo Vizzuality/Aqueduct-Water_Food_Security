@@ -42,7 +42,7 @@ export default class CustomSelect extends React.Component {
     switch (evt.keyCode) {
       // key up
       case 38: {
-        const index = this.state.selectedIndex > 0 ? this.state.selectedIndex - 1 : this.state.filteredOptions.length;
+        const index = this.state.selectedIndex > 0 ? this.state.selectedIndex - 1 : this.state.filteredOptions.length - 1;
         this.setState(Object.assign({}, this.state, { selectedIndex: index }));
         break;
       }
