@@ -8,7 +8,7 @@ export default class CustomSelect extends React.Component {
       selectedItem: props.options ? props.options.find(item => item.value === props.value) : null,
       closed: true,
       filteredOptions: props.options || [],
-      selectedIndex: -1
+      selectedIndex: 0
     };
 
     // Bindings
@@ -42,17 +42,19 @@ export default class CustomSelect extends React.Component {
     switch (evt.keyCode) {
       // key up
       case 38: {
-        this.state.selectedIndex > 0 && this.setState(Object.assign({}, this.state, { selectedIndex: this.state.selectedIndex - 1 }));
+        const index = this.state.selectedIndex > 0 ? this.state.selectedIndex - 1 : this.state.filteredOptions.length;
+        this.setState(Object.assign({}, this.state, { selectedIndex: index }));
         break;
       }
       // key down
       case 40: {
-        (this.state.selectedIndex < this.state.filteredOptions.length - 1) && this.setState(Object.assign({}, this.state, { selectedIndex: this.state.selectedIndex + 1 }));
+        const index = (this.state.selectedIndex < this.state.filteredOptions.length - 1) ? this.state.selectedIndex + 1 : 0;
+        this.setState(Object.assign({}, this.state, { selectedIndex: index }));
         break;
       }
       // enter key
       case 13: {
-        if (this.state.selectedIndex !== -1) {
+        if (this.state.selectedIndex !== -1 && this.state.filteredOptions.length) {
           const selectedItem = this.state.filteredOptions[this.state.selectedIndex];
           this.resetSelectedIndex();
           this.selectItem(selectedItem);
@@ -75,7 +77,7 @@ export default class CustomSelect extends React.Component {
   }
 
   resetSelectedIndex() {
-    this.setState(Object.assign({}, this.state, { selectedIndex: -1 }));
+    this.setState(Object.assign({}, this.state, { selectedIndex: 0 }));
   }
 
   // Event handler for enter event on search input
@@ -131,6 +133,8 @@ export default class CustomSelect extends React.Component {
     this.props.search && cNames.push('-search');
     this.state.closed && cNames.push('-closed');
 
+    const noResults = this.props.options.length && !this.state.filteredOptions.length;
+
     return (
       <div ref={(node) => { this.el = node; }} className={cNames.join(' ')}>
         <span className="custom-select-text" onClick={this.open}>
@@ -142,10 +146,13 @@ export default class CustomSelect extends React.Component {
               type="search"
               onBlur={this.close}
               onFocus={this.onEnterSearch}
-              onKeyUp={this.onType}
+              onKeyDown={this.onType}
             />
           }
         </span>
+        {noResults &&
+          <span className="no-results">No results</span>
+        }
         {this.state.closed ||
           <ul className="custom-select-options">
             {this.state.filteredOptions.map((item, index) => {

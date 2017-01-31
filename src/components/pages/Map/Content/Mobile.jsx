@@ -16,6 +16,10 @@ export default class MapPageMobile extends React.Component {
   render() {
     const pageContextOptions = [{ label: 'Data', value: 'data' }, { label: 'Map', value: 'map' }];
     const mapConfig = Object.assign({}, this.props.mapConfig, { scrollWheelZoom: true });
+    if (this.props.filters.scope === 'country' && this.props.filters.country) {
+      // Obtain country geom
+      mapConfig.bounds = this.props.countries.list.find(c => c.id === this.props.filters.country);
+    }
     return (
       <div className="mobile-map-wrapper">
         <div className="mobile-btns-wrapper">
@@ -54,6 +58,7 @@ MapPageMobile.propTypes = {
   sidebar: React.PropTypes.object,
   layersActive: React.PropTypes.array,
   widgetsActive: React.PropTypes.array,
+  countries: React.PropTypes.object,
   // Actions
   setMapParams: React.PropTypes.func,
   setFilters: React.PropTypes.func

@@ -119,8 +119,11 @@ export default class Filters extends React.Component {
                     <div className="filter-item -push">
                       {/* Compare */}
                       {this.state.countryToCompare &&
-                        <Link className="c-btn -primary -filters" to={`/compare?countries=${this.props.filters.country},${this.state.countryToCompare}`}>
-                          Compare country
+                        <Link
+                          className="c-btn -primary -filters"
+                          to={`/compare?countries=${this.props.filters.country},${this.state.countryToCompare}`}
+                        >
+                          Compare
                         </Link>
                       }
                     </div>
