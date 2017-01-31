@@ -49,6 +49,7 @@ export default class Filters extends React.Component {
               selected && selected.value === 'baseline' && this.updateFilters(false, 'changeFromBaseline');
               selected && this.updateFilters(selected.value, 'year');
             }}
+            className={this.props.className === '-compare' ? '-secondary' : ''}
           />
           {this.props.filters.year !== 'baseline' &&
             <RadioGroup

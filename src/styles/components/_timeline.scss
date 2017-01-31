@@ -35,10 +35,27 @@
       .timeline-label {
         color: palette(white);
       }
+
+      &:hover {
+        border: 1px solid palette(blue, secondary);
+        background-color: palette(blue, secondary);
+        box-shadow: 0 0 0px 7px palette(blue), 0 0 0px 3px palette(blue) inset;
+
+        .timeline-label {
+          color: palette(white);
+        }
+      }
     }
 
-    &:hover {
-      color: darken(palette(white), 10%);
+    &.-secondary {
+      background-color: palette(blue, dark);
+      box-shadow: 0 0 0px 7px palette(blue, dark), 0 0 0px 3px palette(blue, dark) inset;
+
+      &.-selected {
+        background-color: palette(blue, secondary);
+        box-shadow: 0 0 0px 7px palette(blue, dark), 0 0 0px 3px palette(blue, dark) inset;
+      }
+
     }
 
     .timeline-label {
@@ -53,8 +70,25 @@
       transform: translate(-50%, -8px);
       padding: 2px 8px;
       transition: color .1s linear;
+
       &:hover {
-        color: palette(blue, lighter)
+        color: palette(white)
+      }
+    }
+
+    &:hover {
+      border-color: palette(white);
+
+      .timeline-label {
+        color: palette(white)
+      }
+    }
+
+    &:active {
+      border-color:  palette(blue, secondary);
+
+      .timeline-label {
+        color: palette(white)
       }
     }
   }

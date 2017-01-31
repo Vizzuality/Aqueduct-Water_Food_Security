@@ -54,13 +54,21 @@
   font-size: $font-size-big;
   font-weight: 500;
   color: palette(blue, light);
-  border-radius: 25px;
+  border-radius: 3px;
   border: 1px solid palette(blue, light);
   padding: 3px 25px;
   display: inline-block;
   transition: all .1s linear;
+
   &:hover {
-    color: palette(blue, lighter);
-    border-color: palette(blue, lighter);
+    color: palette(blue);
+    border-color: palette(white);
+    background-color: palette(white);
+  }
+
+  &:focus {
+    color: palette(white);
+    border-color: palette(blue,light);
+    background-color: palette(blue, darkest);
   }
 }
