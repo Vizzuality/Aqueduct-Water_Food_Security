@@ -288,7 +288,6 @@ export function getWidgetSql(widgetConfig, filters) {
       })
     };
   });
-
   return Object.assign({}, widgetConfig, {
     data: JSON.parse(getConversion(JSON.stringify(widgetConfig.data), params, sqlParams))
   });

@@ -1,4 +1,5 @@
 import React from 'react';
+import WidgetText from 'components/widgets/WidgetText';
 import VegaChart from 'components/widgets/VegaChart';
 import { getWidgetSql } from 'utils/filters/filters';
 
@@ -7,8 +8,7 @@ class WidgetChart extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-    };
+    this.state = {};
   }
 
   componentDidMount() {
@@ -17,9 +17,12 @@ class WidgetChart extends React.Component {
 
   render() {
     const widgetConfig = getWidgetSql(this.props.config, this.props.filters);
-    return (
-      <VegaChart data={widgetConfig} />
-    );
+
+    if(widgetConfig.type === 'text') {
+      return <WidgetText widgetConfig={widgetConfig}/>;
+    }
+
+    return <VegaChart data={widgetConfig} />;
   }
 }
 
