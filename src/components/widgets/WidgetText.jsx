@@ -14,13 +14,18 @@ class WidgetText extends React.Component {
 
   componentWillMount() {
     const url =  this.props.widgetConfig ? this.props.widgetConfig.data.url : null;
-    fetch(url)
-      .then((response) => {
-        if (response.ok) return response.json();
-      })
-      .then((data) => {
-        setState({ data: data.rows });
-      })
+    if(url) {
+      fetch(url)
+        .then((response) => {
+          if(response.ok) response.json();
+        })
+        .then((data) => {
+          this.setState({ data: data.rows });
+        })
+        .catch((err) => {
+          throw new Error(err)
+        });
+    }
   }
 
   render() {
