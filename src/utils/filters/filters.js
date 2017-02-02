@@ -238,6 +238,11 @@ export function getWidgetSql(widgetConfig, filters) {
           key: param.key,
           value: (filters.scope === 'country' && filters.country) ? filters.country : null
         };
+      case 'commodity':
+        return {
+          key: param.key,
+          value: filters.crop
+        };
       case 'crops.iso':
         return {
           key: param.key,
@@ -288,7 +293,6 @@ export function getWidgetSql(widgetConfig, filters) {
       })
     };
   });
-
   return Object.assign({}, widgetConfig, {
     data: JSON.parse(getConversion(JSON.stringify(widgetConfig.data), params, sqlParams))
   });

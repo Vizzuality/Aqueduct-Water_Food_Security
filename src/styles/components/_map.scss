@@ -54,13 +54,16 @@
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
+
   a {
     @include only-mobile {
       display: block;
     }
+
     @include only-desktop {
       display: inline-block;
     }
+
     background-color: transparent;
     color: $color-text-1;
     border: 0;
@@ -98,6 +101,7 @@
 .leaflet-right .leaflet-control {
   margin-right: $zoom-margin-right;
 }
+
 .leaflet-top .leaflet-control {
   margin-top: $zoom-margin-top;
 }
@@ -108,9 +112,11 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+
   .mobile-widgets-container {
     flex: 1;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     padding-bottom: 61px;
   }
 }
