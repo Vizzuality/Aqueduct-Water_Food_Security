@@ -1,6 +1,5 @@
 import React from 'react';
-import 'whatwg-fetch';
-import d3 from 'd3';
+import * as d3 from 'd3';
 
 class WidgetText extends React.Component {
 
@@ -13,35 +12,47 @@ class WidgetText extends React.Component {
   }
 
   componentWillMount() {
-    const url =  this.props.widgetConfig ? this.props.widgetConfig.data.url : null;
-    if(url) {
-      fetch(url)
-        .then((response) => {
-          if(response.ok) response.json();
-        })
-        .then((data) => {
-          this.setState({ data: data.rows });
-        })
-        .catch((err) => {
-          throw new Error(err)
-        });
-    }
+    this.getWidgetData();
   }
 
+  componentWillUpdate() {
+    // this.getWidgetData();
+  }
+
+  getWidgetData() {
+    const url = this.props.widgetConfig ? this.props.widgetConfig.data.url : null;
+    const xmlhttp = new XMLHttpRequest();
+    xmlhttp.open('GET', url);
+    xmlhttp.send();
+
+    xmlhttp.onreadystatechange = function onStateChange() {
+      if (xmlhttp.readyState === 4) {
+        if (xmlhttp.status === 200) {
+          const data = JSON.parse(xmlhttp.responseText);
+          this.setState({ data: data.rows[0] });
+        } else {
+          console.error('error');
+        }
+      }
+    }.bind(this);
+  }
+
+
   render() {
-    let { template, templateConfig } = this.props.widgetConfig;
+    const { templateConfig } = this.props.widgetConfig;
+    let { template } = this.props.widgetConfig;
+
     if (this.state.data) {
       templateConfig.forEach((param) => {
         let value = this.state.data[param.key];
-        if(param.format) {
-          const format = d3.format(param.format);
-          value = format(value);
+        if (param.format) {
+          value = d3.format(param.format)(value);
         }
         template = template.replace(new RegExp(`{{${param.key}}}`, 'g'), `<span class="widget-text-${param.key}">${value}</span>`);
       });
 
       return (
-        <div className="c-widget-text" dangerouslySetInnerHTML={{ __html: template }}></div>
+        <div className="c-widget-text" dangerouslySetInnerHTML={{ __html: template }} />
       );
     }
 
