@@ -48,10 +48,13 @@ class WidgetText extends React.Component {
     if (this.state.data) {
       templateConfig.forEach((param) => {
         let value = this.state.data[param.key];
+        let suffix = param.suffix || '';
+
         if (param.format) {
           value = format(param.format)(value);
         }
-        const span = value !== '' ? `<span class="widget-text-token -${param.key}">${value}</span>` : '';
+
+        const span = value !== '' ? `<span class="widget-text-token -${param.key}">${value}${suffix}</span>` : '';
         template = template.replace(new RegExp(`{{${param.key}}}`, 'g'), span);
       });
 
