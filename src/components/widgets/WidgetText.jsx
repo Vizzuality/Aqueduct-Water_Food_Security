@@ -51,7 +51,7 @@ class WidgetText extends React.Component {
         const suffix = param.suffix || '';
 
         if (param.format) {
-          value = (!isNaN(value)) ? format(param.format)(value) : value;
+          value = (!isNaN(parseInt(value))) ? format(param.format)(parseInt(value)) : value;
         }
 
         const span = value !== '' ? `<span class="widget-text-token -${param.key}">${value}${suffix}</span>` : '';
