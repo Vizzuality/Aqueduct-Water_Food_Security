@@ -1,5 +1,5 @@
 import React from 'react';
-import * as d3 from 'd3';
+import { format } from 'd3-format';
 
 class WidgetText extends React.Component {
 
@@ -9,32 +9,35 @@ class WidgetText extends React.Component {
     this.state = {
       data: null
     };
+
+    this.xhr = new XMLHttpRequest();
   }
 
   componentWillMount() {
     this.getWidgetData();
   }
 
-  componentWillUpdate() {
-    // this.getWidgetData();
+  componentDidUpdate(prevProps) {
+    if(this.props.widgetConfig.data.url !== prevProps.widgetConfig.data.url) this.getWidgetData();
   }
 
   getWidgetData() {
     const url = this.props.widgetConfig ? this.props.widgetConfig.data.url : null;
-    const xmlhttp = new XMLHttpRequest();
-    xmlhttp.open('GET', url);
-    xmlhttp.send();
 
-    xmlhttp.onreadystatechange = function onStateChange() {
-      if (xmlhttp.readyState === 4) {
-        if (xmlhttp.status === 200) {
-          const data = JSON.parse(xmlhttp.responseText);
+    if(this.xhr.readyState !== 4) this.xhr.abort();
+    this.xhr.open('GET', url);
+    this.xhr.send();
+
+    this.xhr.onreadystatechange = () => {
+      if (this.xhr.readyState === 4) {
+        if (this.xhr.status === 200) {
+          const data = JSON.parse(this.xhr.responseText);
           this.setState({ data: data.rows[0] });
         } else {
           console.error('error');
         }
       }
-    }.bind(this);
+    };
   }
 
 
@@ -46,13 +49,16 @@ class WidgetText extends React.Component {
       templateConfig.forEach((param) => {
         let value = this.state.data[param.key];
         if (param.format) {
-          value = d3.format(param.format)(value);
+          value = format(param.format)(value);
         }
-        template = template.replace(new RegExp(`{{${param.key}}}`, 'g'), `<span class="widget-text-${param.key}">${value}</span>`);
+        const span = value !== '' ? `<span class="widget-text-token -${param.key}">${value}</span>` : '';
+        template = template.replace(new RegExp(`{{${param.key}}}`, 'g'), span);
       });
 
       return (
-        <div className="c-widget-text" dangerouslySetInnerHTML={{ __html: template }} />
+        <div className="c-widget-text">
+          <p dangerouslySetInnerHTML={{ __html: template }} />
+        </div>
       );
     }
 
