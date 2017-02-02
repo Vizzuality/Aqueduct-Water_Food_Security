@@ -48,10 +48,10 @@ class WidgetText extends React.Component {
     if (this.state.data) {
       templateConfig.forEach((param) => {
         let value = this.state.data[param.key];
-        let suffix = param.suffix || '';
+        const suffix = param.suffix || '';
 
         if (param.format) {
-          value = format(param.format)(value);
+          value = (!isNaN(value)) ? format(param.format)(value) : value;
         }
 
         const span = value !== '' ? `<span class="widget-text-token -${param.key}">${value}${suffix}</span>` : '';
