@@ -24,7 +24,7 @@ export function concatenation(string, params) {
       return null;
     })).join(' AND ')}`;
     if (sql && param.key.startsWith('where')) sql = `WHERE ${sql}`;
-    else if(sql && param.key.startsWith('and')) sql = `AND ${sql}`;
+    else if (sql && param.key.startsWith('and')) sql = `AND ${sql}`;
     else sql = '';
 
     str = str.replace(new RegExp(`{{${param.key}}}`, 'g'), sql);
