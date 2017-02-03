@@ -1,17 +1,38 @@
 .c-filters {
   background: palette(blue);
+
   .filters-section {
     padding: ($space-1 * 4) 0 ($space-1 * 3) ($space-1 * 4);
+
     @include only-mobile {
       padding-bottom: 0;
     }
+
     &:last-child {
       @include only-mobile {
         padding-top: 0;
       }
     }
+
   }
+
+  &.-sidebar {
+
+    .filters-section {
+
+      .filter-item > .title {
+        color: palette(white);
+        font-size: 18px;
+        font-weight: 300;
+        display: flex;
+        align-items: center;
+        margin: 0;
+      }
+    }
+  }
+
   &.-compare {
+
     @include only-desktop {
       background-color: palette(blue, dark);
     }
@@ -19,8 +40,16 @@
       margin: 0;
     }
   }
+
   &.-mobile {
     padding-bottom: $space-1 * 4;
+
+    .filters-section {
+
+      .filter-item > .title {
+        display: none;
+      }
+    }
   }
 }
 
@@ -31,7 +60,7 @@
   }
   @include only-mobile {
     background-color: palette(blue, dark);
-      box-shadow: 0 2px 3px rgba(0,0,0,.2) inset;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, .2) inset;
   }
 }
 

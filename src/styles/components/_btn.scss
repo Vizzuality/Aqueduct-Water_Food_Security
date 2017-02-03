@@ -6,6 +6,11 @@
   display: flex;
   align-items: center;
 
+  &.-disabled {
+    pointer-events: none;
+    opacity: .4;
+  }
+
   &.-primary {
     color: palette(blue, light);
     text-transform: uppercase;
@@ -22,7 +27,7 @@
 
   &.-filters {
     @include only-desktop {
-      float: right;
+      width: 100%;
     }
     @include only-mobile {
       width: 100%;
