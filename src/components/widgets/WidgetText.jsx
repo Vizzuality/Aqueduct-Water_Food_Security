@@ -18,15 +18,18 @@ class WidgetText extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if(this.props.widgetConfig.data.url !== prevProps.widgetConfig.data.url) this.getWidgetData();
+    if (this.props.widgetConfig.data.url !== prevProps.widgetConfig.data.url) this.getWidgetData();
   }
 
   getWidgetData() {
     const url = this.props.widgetConfig ? this.props.widgetConfig.data.url : null;
 
-    if(this.xhr.readyState !== 4) this.xhr.abort();
+    if (this.xhr.readyState !== 4) this.xhr.abort();
     this.xhr.open('GET', url);
     this.xhr.send();
+
+    // Toggle loading
+    this.props.toggleLoading(true);
 
     this.xhr.onreadystatechange = () => {
       if (this.xhr.readyState === 4) {
@@ -36,6 +39,7 @@ class WidgetText extends React.Component {
         } else {
           console.error('error');
         }
+        this.props.toggleLoading(false);
       }
     };
   }
@@ -70,7 +74,8 @@ class WidgetText extends React.Component {
 }
 
 WidgetText.propTypes = {
-  widgetConfig: React.PropTypes.object
+  widgetConfig: React.PropTypes.object,
+  toggleLoading: React.PropTypes.func
 };
 
 export default WidgetText;

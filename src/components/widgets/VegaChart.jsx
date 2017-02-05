@@ -44,7 +44,9 @@ class VegaChart extends React.Component {
     };
     const data = Object.assign({}, this.props.data, size);
 
+    this.props.toggleLoading(true);
     vega.parse.spec(data, defaultTheme, (err, chart) => {
+      this.props.toggleLoading(false);
       if (!err) {
         const chartVis = chart({
           el: this.chart,
@@ -75,7 +77,8 @@ class VegaChart extends React.Component {
 
 VegaChart.propTypes = {
   // Define the chart data
-  data: React.PropTypes.any.isRequired
+  data: React.PropTypes.any.isRequired,
+  toggleLoading: React.PropTypes.func
 };
 
 export default VegaChart;
