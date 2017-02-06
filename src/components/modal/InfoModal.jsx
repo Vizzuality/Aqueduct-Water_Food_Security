@@ -1,12 +1,13 @@
 import React from 'react';
 import WidgetChart from 'components/widgets/WidgetChart';
+import Spinner from 'components/ui/Spinner';
 
 export default class InfoModal extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      loading: false
+      loading: true
     };
     // BINDINGS
     this.toggleLoading = this.toggleLoading.bind(this);
@@ -42,7 +43,10 @@ export default class InfoModal extends React.Component {
           <div className="row expanded">
             <div className="small-12 medium-8 columns">
               <div className="info-widget">
-                <WidgetChart config={this.props.widget.widgetConfig} filters={this.props.filters} toggleLoading={this.toggleLoading} />
+                <div className="widget-content">
+                  <Spinner isLoading={this.state.loading} />
+                  <WidgetChart config={this.props.widget.widgetConfig} filters={this.props.filters} toggleLoading={this.toggleLoading} />
+                </div>
               </div>
             </div>
             <div className="small-12 medium-4 columns">
