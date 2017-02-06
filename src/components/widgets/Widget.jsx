@@ -15,6 +15,7 @@ class Widget extends React.Component {
 
     // BINDINGS
     this.triggerAction = this.triggerAction.bind(this);
+    this.toggleLoading = this.toggleLoading.bind(this);
   }
 
   triggerAction(action) {
@@ -34,8 +35,16 @@ class Widget extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.mounted = true;
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   toggleLoading(bool) {
-    this.setState({ loading: bool });
+    this.mounted && this.setState({ loading: bool });
   }
 
   render() {
@@ -52,7 +61,7 @@ class Widget extends React.Component {
           </header>
           <div className="widget-content">
             <Spinner isLoading={this.state.loading} />
-            <WidgetChart config={widgetConfig} filters={this.props.filters} toggleLoading={bool => this.toggleLoading(bool)} />
+            <WidgetChart config={widgetConfig} filters={this.props.filters} toggleLoading={this.toggleLoading} />
           </div>
         </div>
       </div>
