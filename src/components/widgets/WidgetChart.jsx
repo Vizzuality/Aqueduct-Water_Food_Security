@@ -18,33 +18,18 @@ class WidgetChart extends React.Component {
   render() {
     const widgetConfig = getWidgetSql(this.props.config, this.props.filters);
 
-    if(widgetConfig.type === 'text') {
-      return <WidgetText widgetConfig={widgetConfig}/>;
+    if (widgetConfig.type === 'text') {
+      return <WidgetText widgetConfig={widgetConfig} toggleLoading={bool => this.props.toggleLoading(bool)} />;
     }
 
-    return <VegaChart data={widgetConfig} />;
+    return <VegaChart data={widgetConfig} toggleLoading={bool => this.props.toggleLoading(bool)} />;
   }
 }
 
 WidgetChart.propTypes = {
   config: React.PropTypes.object,
-  filters: React.PropTypes.object
-  // /**
-  //  * Define the slug of the widget
-  //  */
-  // slug: React.PropTypes.any.isRequired,
-  // /**
-  //  * Define the function to get the widget slug data
-  //  */
-  // getWidgetBySlug: React.PropTypes.func.isRequired,
-  // /**
-  //  * Define the function to get the widget slug data
-  //  */
-  // data: React.PropTypes.object,
-  // /**
-  //  * Remove the min-height in component
-  //  */
-  // small: React.PropTypes.bool
+  filters: React.PropTypes.object,
+  toggleLoading: React.PropTypes.func
 };
 
 export default WidgetChart;

@@ -2,6 +2,7 @@ import React from 'react';
 import WidgetButtons from 'components/widgets/WidgetButtons';
 import WidgetChart from 'components/widgets/WidgetChart';
 import InfoModal from 'components/modal/InfoModal';
+import Spinner from 'components/ui/Spinner';
 
 class Widget extends React.Component {
 
@@ -9,6 +10,7 @@ class Widget extends React.Component {
     super(props);
 
     this.state = {
+      loading: true
     };
 
     // BINDINGS
@@ -32,6 +34,10 @@ class Widget extends React.Component {
     }
   }
 
+  toggleLoading(bool) {
+    this.setState({ loading: bool });
+  }
+
   render() {
     const { name, description, widgetConfig, queryUrl } = this.props.widget;
     return (
@@ -45,9 +51,8 @@ class Widget extends React.Component {
             <WidgetButtons queryUrl={queryUrl} triggerAction={this.triggerAction} />
           </header>
           <div className="widget-content">
-            {/* WidgetLegend */}
-            <WidgetChart config={widgetConfig} filters={this.props.filters} />
-            {/* WidgetBaseline */}
+            <Spinner isLoading={this.state.loading} />
+            <WidgetChart config={widgetConfig} filters={this.props.filters} toggleLoading={bool => this.toggleLoading(bool)} />
           </div>
         </div>
       </div>

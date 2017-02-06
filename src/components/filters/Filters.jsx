@@ -72,7 +72,6 @@ export default class Filters extends React.Component {
     );
 
     const columnClassName = 'small-12 medium-4 columns';
-
     return (
       <div className={`c-filters ${this.props.className ? this.props.className : ''}`}>
         {/* Scope */}
@@ -95,32 +94,34 @@ export default class Filters extends React.Component {
             {this.props.withScope && this.props.filters.scope === 'country' &&
               <div className="filters-section -highlighted">
                 <div className="row expanded collapse filters-group">
-                  <div className="small-12 medium-6 columns">
+                  <div className="small-12 medium-4 columns">
                     <div className="filter-item">
                       {/* Country */}
+                      <span className="title">Select a Country</span>
                       <CountrySelect
                         value={this.props.filters.country !== 'null' ? this.props.filters.country : null}
                         onValueChange={selected => this.updateFilters(selected && selected.value, 'country')}
                       />
                     </div>
                   </div>
-                  <div className="small-12 medium-6 columns">
+                  <div className="small-12 medium-4 columns">
                     <div className="filter-item">
                       {/* Country to compare with */}
+                      <span className="title">Compare With</span>
                       <CountrySelect
                         className={this.props.filters.country ? '' : '-disabled'}
-                        placeholder="Compare with..."
+                        placeholder={this.props.className === '-mobile' ? 'Compare with...' : 'Country name...'}
                         value={this.state.countryToCompare}
                         onValueChange={selected => this.setState({ countryToCompare: selected.value })}
                       />
                     </div>
                   </div>
-                  <div className="small-12 columns">
+                  <div className="small-12 medium-4 columns">
                     <div className="filter-item -push">
                       {/* Compare */}
-                      {this.state.countryToCompare &&
+                      {
                         <Link
-                          className="c-btn -primary -filters"
+                          className={this.state.countryToCompare ? 'c-btn -primary -filters' : 'c-btn -primary -filters -disabled'}
                           to={`/compare?countries=${this.props.filters.country},${this.state.countryToCompare}`}
                         >
                           Compare

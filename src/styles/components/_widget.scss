@@ -58,7 +58,8 @@
   }
 
   .widget-content {
-    // min-height: 200px;
+    position: relative;
+    min-height: 100px;
     background: white;
     box-shadow: 0 1px 0 0 #dbdfe5;
   }
