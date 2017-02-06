@@ -9,6 +9,9 @@
   z-index: 1000; // Just to be sure that is over all the content
   visibility: visible;
   opacity: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   // Active styles
   &.-hidden {
@@ -17,16 +20,12 @@
   }
 
   .modal-container {
-    position: absolute;
     display: flex;
-    top: 50%;
-    left: 50%;
+    position: relative;
     width: calc(100% - 50px);
     max-width: $max-width-modal;
     background: white;
     box-shadow: 0 1px 1px rgba(0,0,0,.15);
-
-    transform: translate(-50%, -50%);
     z-index: 1;
   }
 

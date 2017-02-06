@@ -48,11 +48,11 @@ class VegaChart extends React.Component {
     vega.parse.spec(data, defaultTheme, (err, chart) => {
       this.props.toggleLoading(false);
       if (!err) {
-        const chartVis = chart({
+        this.vis = chart({
           el: this.chart,
           renderer: 'svg'
         });
-        chartVis.update();
+        this.vis.update();
       }
     });
   }
