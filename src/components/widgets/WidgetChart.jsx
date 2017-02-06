@@ -19,10 +19,10 @@ class WidgetChart extends React.Component {
     const widgetConfig = getWidgetSql(this.props.config, this.props.filters);
 
     if (widgetConfig.type === 'text') {
-      return <WidgetText widgetConfig={widgetConfig} toggleLoading={bool => this.props.toggleLoading(bool)} />;
+      return <WidgetText widgetConfig={widgetConfig} toggleLoading={this.props.toggleLoading} />;
     }
 
-    return <VegaChart data={widgetConfig} toggleLoading={bool => this.props.toggleLoading(bool)} />;
+    return <VegaChart data={widgetConfig} toggleLoading={this.props.toggleLoading} />;
   }
 }
 
