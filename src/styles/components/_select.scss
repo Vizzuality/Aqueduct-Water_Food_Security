@@ -89,6 +89,16 @@
     }
   }
 
+  &:not(.-search) {
+    .custom-select-options {
+      li {
+        &:hover {
+          background-color: palette(blue, lighter);
+        }
+      }
+    }
+  }
+
   .no-results {
     position: absolute;
     top: 100%;
@@ -135,7 +145,7 @@
       cursor: pointer;
       line-height: 1.1;
 
-      &:hover, &.-selected {
+      &.-selected {
         background-color: palette(blue, lighter);
       }
     }
