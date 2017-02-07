@@ -5,12 +5,25 @@ class LegendGraph extends React.Component {
   getLegendGraph() {
     const config = this.props.config;
     switch (config.type) {
-      case 'basic': {
+      case 'mask': {
         return null;
       }
 
-      case 'mask': {
-        return null;
+      case 'basic': {
+        return (
+          <div className={`graph -${config.type}`}>
+            <div className="graph-list">
+              {config.items.map((item, i) => {
+                return (
+                  <div className="graph-list-item" key={i}>
+                    <span className="color" style={{ background: item.color }} />
+                    <span className="label">{item.name}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
       }
 
       case 'cluster': {

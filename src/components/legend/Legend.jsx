@@ -47,8 +47,8 @@ class LegendItem extends React.Component {
       this.props.toggleModal(true, {
         children: SourceModal,
         childrenProps: {
-          layer: this.props.layer,
-        },
+          layer: this.props.layer
+        }
       });
     }
   }
@@ -58,7 +58,7 @@ class LegendItem extends React.Component {
       <li className="c-legend-item">
         <header className="legend-item-header">
           <h3>
-            <span className="category">{this.props.layer.category} -</span>
+            {this.props.layer.category && <span className="category">{this.props.layer.category} -</span>}
             <span className="name">{this.props.layer.name}</span>
           </h3>
           <LegendButtons triggerAction={this.triggerAction} />
