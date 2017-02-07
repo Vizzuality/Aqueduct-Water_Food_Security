@@ -26,6 +26,8 @@
   }
 
   &.-filters {
+    padding: 8px 25px;
+
     @include only-desktop {
       width: 100%;
     }

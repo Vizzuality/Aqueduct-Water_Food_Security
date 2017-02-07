@@ -24,28 +24,30 @@ export default class ComparePageDesktop extends React.Component {
     this.props.updateCompareUrl();
   }
 
+  componentWillUnmount() {
+    this.props.emptyCompareCountries();
+  }
+
   getCountrySelects() {
     const items = [];
     for (let i = 0; i < this.state.items; i += 1) {
       const text = i === 0 ? 'Selected country' : 'Compare with...';
       items.push(
-        <div className="small-6 columns compare-country-wrapper" key={i}>
-          <span className="compare-filters-text">{text}</span>
-          <CountrySelect
-            className="-fixed"
-            value={this.props.compare.countries[i] || null}
-            onValueChange={(selected) => {
-              selected && this.props.setCompareCountry({ index: i, iso: selected.value });
-            }}
-          />
+        <div className="small-6 columns" key={i}>
+          <div className="compare-country-wrapper">
+            <span className="compare-filters-text">{text}</span>
+            <CountrySelect
+              className="-fixed"
+              value={this.props.compare.countries[i] || null}
+              onValueChange={(selected) => {
+                selected && this.props.setCompareCountry({ index: i, iso: selected.value });
+              }}
+            />
+          </div>
         </div>
       );
     }
     return items;
-  }
-
-  componentWillUnmount() {
-    this.props.emptyCompareCountries();
   }
 
   toggleShareModal() {
@@ -65,8 +67,10 @@ export default class ComparePageDesktop extends React.Component {
           <div className="compare-filters-section -highlighted">
             <div className="row expanded collapse">{this.getCountrySelects()}</div>
           </div>
-          <div className="compare-filters-section -collapsed">
-            <Filters className="-compare" filters={this.props.filters} setFilters={this.props.setFilters} />
+          <div className="compare-filters-wrapper">
+            <div className="compare-filters-section -collapsed">
+              <Filters className="-compare" filters={this.props.filters} setFilters={this.props.setFilters} />
+            </div>
           </div>
         </div>
         <CompareList
