@@ -43,5 +43,11 @@
     "id": "e844accd-9e65-414b-84e7-efc5bd65aa17",
     "name": "Country mask",
     "category": "mask"
+  },
+
+  {
+    "id": "b7bf012f-4b8b-4478-b5c9-6af3075ca1e4",
+    "name": "All crops",
+    "category": "mask"
   }
 ]
