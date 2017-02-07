@@ -98,7 +98,15 @@
     font-weight: 500;
   }
 
+  &.-social {
+    svg {
+      fill: palette(white);
+    }
+  }
+
   &.-with-icon {
+    display: flex;
+    align-items: center;
     > * {
       margin: 0 5px 0 0;
       &:last-child { margin: 0;}

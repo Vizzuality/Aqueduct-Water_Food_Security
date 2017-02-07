@@ -89,7 +89,7 @@ export default class ShareModal extends React.Component {
               href={`https://twitter.com/share?url=${urlEncoded}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="c-btn -primary -with-icon -twitter"
+              className="c-btn -primary -with-icon -twitter -social"
               onClick={this.triggerPopup}
             >
               <Icon name="icon-twitter" />
@@ -99,7 +99,7 @@ export default class ShareModal extends React.Component {
               href={`https://www.facebook.com/sharer/sharer.php?u=${urlEncoded}&t=${title}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="c-btn -primary -with-icon -facebook"
+              className="c-btn -primary -with-icon -facebook -social"
               onClick={this.triggerPopup}
             >
               <Icon name="icon-facebook" />
@@ -109,7 +109,7 @@ export default class ShareModal extends React.Component {
               href={`https://www.linkedin.com/shareArticle?mini=true&url=${urlEncoded}&title=${title}&summary=&source=`}
               target="_blank"
               rel="noopener noreferrer"
-              className="c-btn -primary -with-icon -linkedin"
+              className="c-btn -primary -with-icon -linkedin -social"
               onClick={this.triggerPopup}
             >
               <Icon name="icon-linkedin" />
