@@ -212,7 +212,7 @@ export function widgetsFilter(widget, { scope, crop, country, water }, compare, 
   // - empty
   const isWater = !(water === 'none');
 
-  return datasetTags && isWater && datasetTags.includes(_crop) && datasetTags.includes(_country);
+  return datasetTags && datasetTags.includes(_crop) && datasetTags.includes(_country);
 }
 
 export function getWidgetSql(widgetConfig, filters) {
