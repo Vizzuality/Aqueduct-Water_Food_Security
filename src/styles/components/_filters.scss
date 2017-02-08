@@ -91,8 +91,10 @@
     margin-bottom: 0;
   }
 
-  &.-commodities {
-    align-items: flex-end;
+  @include only-desktop {
+    &.-commodities {
+      align-items: flex-end;
+    }
   }
 
   .filter-item {
