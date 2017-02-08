@@ -31,8 +31,9 @@ class Timeline extends React.Component {
         <ul className="timeline-list">
           {items.map((item, index) => {
             const selectedClass = (selected.value === item.value) ? '-selected' : '';
+            const customClass = (this.props.className === undefined) ? '' : this.props.className;
             return (
-              <li className={`timeline-list-item ${selectedClass} ${this.props.className}`} key={index} data-value={item.value} onClick={this.onClick}>
+              <li className={`timeline-list-item ${selectedClass} ${customClass}`} key={index} data-value={item.value} onClick={this.onClick}>
                 <div className="timeline-label">
                   {item.label}
                 </div>

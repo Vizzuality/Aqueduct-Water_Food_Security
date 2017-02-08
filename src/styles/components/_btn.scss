@@ -26,6 +26,8 @@
   }
 
   &.-filters {
+    padding: 8px 25px;
+
     @include only-desktop {
       width: 100%;
     }
@@ -45,6 +47,7 @@
 
   // SOCIAL STATES
   &.-facebook {
+    display: inline-flex;
     background: #3b5998;
     color: $color-white;
     border-color: #3b5998;
@@ -55,6 +58,7 @@
   }
 
   &.-twitter {
+    display: inline-flex;
     background: #55acee;
     color: $color-white;
     border-color: #55acee;
@@ -65,6 +69,8 @@
   }
 
   &.-linkedin {
+    display: inline-flex;
+    align-items: flex-start;
     background: #007bb5;
     color: $color-white;
     border-color: #007bb5;
@@ -98,7 +104,15 @@
     font-weight: 500;
   }
 
+  &.-social {
+    svg {
+      fill: palette(white);
+    }
+  }
+
   &.-with-icon {
+    display: flex;
+    align-items: center;
     > * {
       margin: 0 5px 0 0;
       &:last-child { margin: 0;}

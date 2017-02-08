@@ -11,7 +11,7 @@
 
 .c-widget {
   width: 100%;
-  padding: ($space-1 * 4) ($space-1 * 2) 0;
+  padding: ($space-1 * 6) ($space-1 * 2) 0;
 
   .widget-header {
     display: flex;
@@ -33,8 +33,8 @@
 
     .widget-title {
       text-transform: uppercase;
-      font-weight: 500;
-      letter-spacing: 1px;
+      font-weight: 400;
+      letter-spacing: .9px;
     }
 
     .widget-description {
