@@ -1,3 +1,4 @@
+import find from 'lodash/find';
 import { substitution, concatenation } from 'utils/utils';
 
 // Util functions
@@ -202,10 +203,16 @@ export function getFoodSql(layer = {}, filters = {}) {
 
 // WIDGET FUNCTIONS
 
-export function widgetsFilter(widget, { scope, crop, country }, compare, datasetTags) {
+export function widgetsFilter(widget, { scope, crop, country, water }, compare, datasetTags) {
   const _crop = crop === 'all' ? 'all_crops' : 'one_crop';
   const _country = ((scope === 'country' && country) || compare.countries.length) ? 'country' : 'global';
-  return datasetTags && datasetTags.includes(_crop) && datasetTags.includes(_country);
+  // 3 OPTIONS
+  // - const isWater = !(water === 'none' && find(widget.widgetConfig.paramsConfig, { key: 'water_column' }));
+  // - const isWater = !(water === 'none');
+  // - empty
+  const isWater = !(water === 'none');
+
+  return datasetTags && isWater && datasetTags.includes(_crop) && datasetTags.includes(_country);
 }
 
 export function getWidgetSql(widgetConfig, filters) {
