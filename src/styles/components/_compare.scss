@@ -48,31 +48,44 @@
 /* Compareitem */
 
 .compare-filters-text {
+  margin: 0;
   font-weight: 300;
   font-size: $font-size-extrabig;
   color: palette(white);
-  margin-right: 60px;
 }
 
 .compare-country-wrapper {
-  display: flex;
-  align-items: center;
+  max-width: 200px;
+  margin: 0 auto;
+
+  @include only-desktop {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.compare-filters-wrapper {
+  background-color: palette(blue);
 }
 
 .compare-filters {
   background-color: palette(blue, dark);
+
   .c-filters {
     .filters-section {
       background-color: transparent;
-      max-width: 700px;
     }
   }
 }
 .compare-filters-section {
-  padding: 24px 32px;
+  padding: 24px 0;
+
   &.-collapsed {
     padding: 0;
+    margin: 0 auto;
+    max-width: $max-width-sidebar;
   }
+
   &:last-child {
     padding-bottom: 0;
   }

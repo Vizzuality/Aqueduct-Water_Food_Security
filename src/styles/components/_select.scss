@@ -30,8 +30,8 @@
       margin-left: $space-1 * 2;
     }
 
-    fill: palette(blue, light);
-    border: 1px solid palette(blue, light);
+    fill: $color-softer;
+    border: 1px solid rgba($color-softer, .3);
     margin-right: $space-1 * 2;
     border-radius: 50%;
     cursor: pointer;
