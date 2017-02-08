@@ -24,6 +24,13 @@ export const waterOptions = filter(layerSpec, { category: 'water' }).map((layer)
   };
 });
 
+// Add 'none' option
+waterOptions.push({
+  label: 'None',
+  value: 'none'
+});
+
+
 export const scopeOptions = [
   { value: 'global', label: 'Global' },
   { value: 'country', label: 'Country' }

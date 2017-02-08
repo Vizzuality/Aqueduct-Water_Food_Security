@@ -1,3 +1,4 @@
+import find from 'lodash/find';
 import { substitution, concatenation } from 'utils/utils';
 
 // Util functions
@@ -21,6 +22,10 @@ function getWaterColumn({ water, year, changeFromBaseline }, sufix, widget) {
       dataType: 'u'
     },
     'd9785282-2140-463f-a82d-f7296687055a': {
+      indicator: 'ws',
+      dataType: changeFromBaseline && !widget ? 'c' : 't'
+    },
+    none: {
       indicator: 'ws',
       dataType: changeFromBaseline && !widget ? 'c' : 't'
     }
@@ -198,9 +203,15 @@ export function getFoodSql(layer = {}, filters = {}) {
 
 // WIDGET FUNCTIONS
 
-export function widgetsFilter(widget, { scope, crop, country }, compare, datasetTags) {
+export function widgetsFilter(widget, { scope, crop, country, water }, compare, datasetTags) {
   const _crop = crop === 'all' ? 'all_crops' : 'one_crop';
   const _country = ((scope === 'country' && country) || compare.countries.length) ? 'country' : 'global';
+  // 3 OPTIONS
+  // - const isWater = !(water === 'none' && find(widget.widgetConfig.paramsConfig, { key: 'water_column' }));
+  // - const isWater = !(water === 'none');
+  // - empty
+  const isWater = !(water === 'none');
+
   return datasetTags && datasetTags.includes(_crop) && datasetTags.includes(_country);
 }
 

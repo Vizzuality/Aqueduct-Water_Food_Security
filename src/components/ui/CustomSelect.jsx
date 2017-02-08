@@ -43,13 +43,13 @@ export default class CustomSelect extends React.Component {
       // key up
       case 38: {
         const index = this.state.selectedIndex > 0 ? this.state.selectedIndex - 1 : this.state.filteredOptions.length - 1;
-        this.setState(Object.assign({}, this.state, { selectedIndex: index }));
+        this.setSelectedIndex(index);
         break;
       }
       // key down
       case 40: {
         const index = (this.state.selectedIndex < this.state.filteredOptions.length - 1) ? this.state.selectedIndex + 1 : 0;
-        this.setState(Object.assign({}, this.state, { selectedIndex: index }));
+        this.setSelectedIndex(index);
         break;
       }
       // enter key
@@ -77,7 +77,11 @@ export default class CustomSelect extends React.Component {
   }
 
   resetSelectedIndex() {
-    this.setState(Object.assign({}, this.state, { selectedIndex: 0 }));
+    this.setSelectedIndex(0);
+  }
+
+  setSelectedIndex(index) {
+    this.setState(Object.assign({}, this.state, { selectedIndex: index }));
   }
 
   // Event handler for enter event on search input
@@ -157,7 +161,7 @@ export default class CustomSelect extends React.Component {
           <ul className="custom-select-options">
             {this.state.filteredOptions.map((item, index) => {
               const cName = (this.props.search && index === this.state.selectedIndex) ? '-selected' : '';
-              return <li className={cName} key={index} onMouseEnter={this.resetSelectedIndex} onMouseDown={() => this.selectItem(item)}>{item.label}</li>;
+              return <li className={cName} key={index} onMouseEnter={() => { this.setSelectedIndex(index); }} onMouseDown={() => this.selectItem(item)}>{item.label}</li>;
             })}
           </ul>
         }

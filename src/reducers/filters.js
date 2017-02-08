@@ -8,7 +8,7 @@ const initialState = {
   country: undefined,
   year: 'baseline',
   food: 'none',
-  water: '6c49ae6c-2c73-46ac-93ab-d4ed1b05d44e',
+  water: 'none',
   irrigation: ['irrigated'],
   changeFromBaseline: false
 };

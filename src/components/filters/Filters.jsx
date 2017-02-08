@@ -56,7 +56,6 @@ export default class Filters extends React.Component {
               selected && selected.value === 'baseline' && this.updateFilters(false, 'changeFromBaseline');
               selected && this.updateFilters(selected.value, 'year');
             }}
-            className={this.props.className === '-compare' ? '-secondary' : ''}
           />
           {this.props.filters.year !== 'baseline' &&
             <RadioGroup
@@ -93,7 +92,7 @@ export default class Filters extends React.Component {
           <div>
             {this.props.withScope && this.props.filters.scope === 'country' &&
               <div className="filters-section -highlighted">
-                <div className="row expanded collapse filters-group">
+                <div className="row expanded collapse filters-group -commodities">
                   <div className="small-12 medium-4 columns">
                     <div className="filter-item">
                       {/* Country */}
@@ -117,7 +116,7 @@ export default class Filters extends React.Component {
                     </div>
                   </div>
                   <div className="small-12 medium-4 columns">
-                    <div className="filter-item -push">
+                    <div className="filter-item">
                       {/* Compare */}
                       {
                         <Link
