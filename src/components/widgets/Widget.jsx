@@ -1,7 +1,7 @@
 import React from 'react';
 import WidgetButtons from 'components/widgets/WidgetButtons';
 import WidgetChart from 'components/widgets/WidgetChart';
-import InfoModal from 'components/modal/InfoModal';
+import WidgetModal from 'components/modal/WidgetModal';
 import Spinner from 'components/ui/Spinner';
 
 class Widget extends React.Component {
@@ -18,11 +18,19 @@ class Widget extends React.Component {
     this.toggleLoading = this.toggleLoading.bind(this);
   }
 
+  componentDidMount() {
+    this.mounted = true;
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   triggerAction(action) {
     switch (action) {
       case 'info':
         this.props.toggleModal(true, {
-          children: InfoModal,
+          children: WidgetModal,
           size: '-medium',
           childrenProps: {
             filters: this.props.filters,
@@ -33,14 +41,6 @@ class Widget extends React.Component {
       default:
         console.info('The action is not supported by this function');
     }
-  }
-
-  componentDidMount() {
-    this.mounted = true;
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
   }
 
   toggleLoading(bool) {
@@ -74,6 +74,5 @@ Widget.propTypes = {
   filters: React.PropTypes.object,
   toggleModal: React.PropTypes.func
 };
-
 
 export default Widget;

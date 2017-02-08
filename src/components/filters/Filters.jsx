@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 // Components
 import CheckboxGroup from 'components/ui/CheckboxGroup';
 import SegmentedUi from 'components/ui/SegmentedUi';
@@ -9,6 +10,8 @@ import Icon from 'components/ui/Icon';
 import Timeline from 'components/ui/Timeline';
 import RadioGroup from 'components/ui/RadioGroup';
 import CustomSelect from 'components/ui/CustomSelect';
+import InfoModal from 'components/modal/InfoModal';
+import AppDefinitions from 'data/app-definitions.json';
 import { Link } from 'react-router';
 
 // Filter options
@@ -43,12 +46,32 @@ export default class Filters extends React.Component {
     this.props.setFilters(newFilter);
   }
 
+  openModal(slug) {
+    this.props.toggleModal(true, {
+      children: InfoModal,
+      childrenProps: {
+        info: AppDefinitions[slug]
+      }
+    });
+  }
+
   render() {
     const timeline = (
       <div className="filter-item">
         {/* Year */}
         <div className="c-select">
-          <span className="title">Timeframe <Icon name="icon-question" className="title-icon" /></span>
+          <div className="select-header">
+            <span className="title">Timeframe</span>
+            <span
+              className="icon-container"
+              onClick={() => this.openModal('timeframe')}
+            >
+              <Icon
+                name="icon-question"
+                className="title-icon"
+              />
+            </span>
+          </div>
           <Timeline
             items={yearOptions}
             selected={yearOptions.find(i => i.value === this.props.filters.year)}
@@ -137,7 +160,18 @@ export default class Filters extends React.Component {
                   {/* Crops */}
                   <div className="filter-item">
                     <div className="c-select">
-                      <span className="title">Crops <Icon name="icon-question" className="title-icon" /></span>
+                      <div className="select-header">
+                        <span className="title">Crops</span>
+                        <span
+                          className="icon-container"
+                          onClick={() => this.openModal('crops')}
+                        >
+                          <Icon
+                            name="icon-question"
+                            className="title-icon"
+                          />
+                        </span>
+                      </div>
                       <CustomSelect
                         className="-no-search"
                         options={cropOptions}
@@ -157,7 +191,18 @@ export default class Filters extends React.Component {
                   {/* Water */}
                   <div className="filter-item">
                     <div className="c-select">
-                      <span className="title">Water Risk <Icon name="icon-question" className="title-icon" /></span>
+                      <div className="select-header">
+                        <span className="title">Water Risk</span>
+                        <span
+                          className="icon-container"
+                          onClick={() => this.openModal('water-risk')}
+                        >
+                          <Icon
+                            name="icon-question"
+                            className="title-icon"
+                          />
+                        </span>
+                      </div>
                       <CustomSelect
                         options={waterOptions}
                         value={this.props.filters.water}
@@ -170,7 +215,18 @@ export default class Filters extends React.Component {
                   {/* Food */}
                   <div className="filter-item">
                     <div className="c-select">
-                      <span className="title">Country Data <Icon name="icon-question" className="title-icon" /></span>
+                      <div className="select-header">
+                        <span className="title">Country-data</span>
+                        <span
+                          className="icon-container"
+                          onClick={() => this.openModal('country-data')}
+                        >
+                          <Icon
+                            name="icon-question"
+                            className="title-icon"
+                          />
+                        </span>
+                      </div>
                       <CustomSelect
                         className={this.props.filters.scope === 'country' ? '-disabled -no-search' : '-no-search'}
                         options={foodOptions}
@@ -200,5 +256,6 @@ Filters.propTypes = {
   setFilters: React.PropTypes.func,
   filters: React.PropTypes.object,
   withScope: React.PropTypes.bool,
-  className: React.PropTypes.string
+  className: React.PropTypes.string,
+  toggleModal: React.PropTypes.func
 };
