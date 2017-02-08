@@ -114,14 +114,19 @@
   }
 
   .custom-select-text {
+    overflow-y: hidden;
+    position: relative;
+    display: block;
+    width: 100%;
+    min-height: 33px;
+    max-width: 90%;
+
     font-size: $font-size-big;
     font-weight: 500;
     line-height: 2;
     color: palette(white);
-    display: block;
-    width: 100%;
-    position: relative;
-    min-height: 33px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .custom-select-options {

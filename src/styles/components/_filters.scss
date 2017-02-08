@@ -91,6 +91,12 @@
     margin-bottom: 0;
   }
 
+  @include only-desktop {
+    &.-commodities {
+      align-items: flex-end;
+    }
+  }
+
   .filter-item {
     padding-right: $space-1 * 4;
     @include clearfix;
@@ -108,12 +114,6 @@
 
     @include only-mobile {
       padding-bottom: $space-1 * 4;
-    }
-
-    @include only-desktop {
-      &.-push {
-        margin-top: 14px;
-      }
     }
   }
 }
