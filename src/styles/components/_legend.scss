@@ -21,7 +21,7 @@
         align-items: center;
         flex: 1;
         height: 30px;
-        padding: 0 0 0 $space-1 * 3;
+        padding: 1px 0 0 14px;
 
         background-color: rgba(245, 243, 240, .9);
         box-shadow: 0 0 2px rgba(palette(black), .25);
@@ -281,7 +281,79 @@
 
     // BASIC
     &.-basic {
-      display: none;
+      .graph-list {
+        display: flex;
+        flex-wrap: wrap;
+
+        .graph-list-item {
+          display: flex;
+          width: calc(25% - #{$space-1});
+          margin: 0 $space-1 5px 0;
+
+          &:last-child {
+            margin: 0;
+          }
+
+          .color {
+            display: block;
+            width: 12px;
+            height: 12px;
+            border: 1px solid $border-color-2;
+          }
+
+          .label {
+            display: block;
+            line-height: 1.25;
+            color: $color-text-1;
+            font-size: $font-size-small;
+            font-weight: 500;
+            margin: 0 0 0 5px;
+          }
+        }
+      }
+    }
+
+    &.-group {
+
+      .graph-group {
+        margin: 0 0 10px;
+        &:last-child { margin: 0; }
+
+        .graph-group-name {
+          color: $color-text-1;
+        }
+      }
+
+      .graph-list {
+        display: flex;
+        flex-wrap: wrap;
+
+        .graph-list-item {
+          display: flex;
+          width: calc(25% - #{$space-1});
+          margin: 5px $space-1 0 0;
+
+          &:last-child {
+            margin: 5px 0 0;
+          }
+
+          .color {
+            display: block;
+            width: 12px;
+            height: 12px;
+            border: 1px solid $border-color-2;
+          }
+
+          .label {
+            display: block;
+            line-height: 1.25;
+            color: $color-text-1;
+            font-size: $font-size-small;
+            font-weight: 500;
+            margin: 0 0 0 5px;
+          }
+        }
+      }
     }
   }
 }

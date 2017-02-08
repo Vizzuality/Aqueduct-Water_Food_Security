@@ -23,6 +23,10 @@ function getWaterColumn({ water, year, changeFromBaseline }, sufix, widget) {
     'd9785282-2140-463f-a82d-f7296687055a': {
       indicator: 'ws',
       dataType: changeFromBaseline && !widget ? 'c' : 't'
+    },
+    none: {
+      indicator: 'ws',
+      dataType: changeFromBaseline && !widget ? 'c' : 't'
     }
   };
 

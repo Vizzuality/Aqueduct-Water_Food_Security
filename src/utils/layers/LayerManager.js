@@ -173,41 +173,6 @@ export default class LayerManager {
     }
 
     switch (layer.category) {
-      case 'mask' : {
-        const body = getWaterSql(layer, options);
-
-        this._layersLoading[layer.id] = true;
-        const xmlhttp = new XMLHttpRequest();
-        xmlhttp.open('POST', `https://${layer.account}.carto.com/api/v1/map`);
-        xmlhttp.setRequestHeader('Content-Type', 'application/json');
-        xmlhttp.send(JSON.stringify(body));
-
-        xmlhttp.onreadystatechange = () => {
-          if (xmlhttp.readyState === 4) {
-            if (xmlhttp.status === 200) {
-              const data = JSON.parse(xmlhttp.responseText);
-              // we can switch off the layer while it is loading
-              const tileUrl = `https://${layer.account}.carto.com/api/v1/map/${data.layergroupid}/{z}/{x}/{y}.png`;
-
-              this._mapLayers[layer.id] = L.tileLayer(tileUrl).addTo(this._map).setZIndex(999);
-
-              this._mapLayers[layer.id].on('load', () => {
-                delete this._layersLoading[layer.id];
-              });
-              this._mapLayers[layer.id].on('tileerror', () => {
-                this._rejectLayersLoading = true;
-              });
-            } else {
-              this._rejectLayersLoading = true;
-            }
-          }
-        };
-
-        this._mapRequests[layer.category] = xmlhttp;
-
-        break;
-      }
-
       case 'water': {
         const body = getWaterSql(layer, options);
 
@@ -271,8 +236,38 @@ export default class LayerManager {
         break;
       }
 
-      default:
-        throw new Error('"category" specified in layer spec doesn`t exist');
+      default: {
+        const body = getWaterSql(layer, options);
+
+        this._layersLoading[layer.id] = true;
+        const xmlhttp = new XMLHttpRequest();
+        xmlhttp.open('POST', `https://${layer.account}.carto.com/api/v1/map`);
+        xmlhttp.setRequestHeader('Content-Type', 'application/json');
+        xmlhttp.send(JSON.stringify(body));
+
+        xmlhttp.onreadystatechange = () => {
+          if (xmlhttp.readyState === 4) {
+            if (xmlhttp.status === 200) {
+              const data = JSON.parse(xmlhttp.responseText);
+              // we can switch off the layer while it is loading
+              const tileUrl = `https://${layer.account}.carto.com/api/v1/map/${data.layergroupid}/{z}/{x}/{y}.png`;
+
+              this._mapLayers[layer.id] = L.tileLayer(tileUrl).addTo(this._map).setZIndex(999);
+
+              this._mapLayers[layer.id].on('load', () => {
+                delete this._layersLoading[layer.id];
+              });
+              this._mapLayers[layer.id].on('tileerror', () => {
+                this._rejectLayersLoading = true;
+              });
+            } else {
+              this._rejectLayersLoading = true;
+            }
+          }
+        };
+
+        this._mapRequests[layer.category] = xmlhttp;
+      }
     }
   }
 }
