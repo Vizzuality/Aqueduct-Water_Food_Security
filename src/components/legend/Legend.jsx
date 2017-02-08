@@ -24,9 +24,9 @@ export default class Legend extends React.Component {
     const layers = orderBy(this.props.layers, ['category'], ['desc']);
     return (
       <div className={`c-legend ${this.props.className} ${this.state.expanded ? '-expanded' : ''}`}>
-        <div className="legend-header">
+        <div className="legend-header" onClick={() => this.toggleExpand()}>
           <span className="legend-header-title">View Legend</span>
-          <button className="legend-btn" onClick={() => this.toggleExpand()}>
+          <button className="legend-btn">
             <Icon name="icon-arrow-up-2" className="legend-open-icon" />
             <Icon name="icon-cross" className="legend-close-icon" />
           </button>
