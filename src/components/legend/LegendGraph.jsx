@@ -26,6 +26,30 @@ class LegendGraph extends React.Component {
         );
       }
 
+      case 'group': {
+        return (
+          <div className={`graph -${config.type}`}>
+            {config.items.map((item, i) => {
+              return (
+                <div key={i} className="graph-group">
+                  <div className="graph-group-name">{item.name}</div>
+                  <div className="graph-list">
+                    {item.items.map((it, j) => {
+                      return (
+                        <div className="graph-list-item" key={j}>
+                          <span className="color" style={{ background: it.color }} />
+                          <span className="label">{it.name}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        );
+      }
+
       case 'cluster': {
         return (
           <div className={`graph -${config.type}`}>
