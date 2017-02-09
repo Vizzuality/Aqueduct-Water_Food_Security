@@ -17,12 +17,13 @@ class WidgetText extends React.Component {
     this.getWidgetData();
   }
 
-  componentWillUnmount() {
-    this.xhr.abort();
-  }
 
   componentDidUpdate(prevProps) {
     if (this.props.widgetConfig.data.url !== prevProps.widgetConfig.data.url) this.getWidgetData();
+  }
+
+  componentWillUnmount() {
+    this.xhr.abort();
   }
 
   getWidgetData() {

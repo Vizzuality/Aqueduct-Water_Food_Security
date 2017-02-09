@@ -184,37 +184,61 @@
     // CHOROPLETH
     &.-choropleth {
       .graph-list {
-        display: flex;
+        @include only-desktop {
+          display: flex;
+        }
+
+        @include only-mobile {
+          margin: 0 0 0 10px;
+        }
 
         .graph-list-item {
+          @include only-mobile {
+            display: flex;
+            margin: 10px 0 0;
+            &:first-child { margin: 0; }
+          }
+
           .color {
             display: block;
-            border-top: 1px solid $border-color-2;
-            border-bottom: 1px solid $border-color-2;
+
             @include only-mobile {
-              height: 11px;
+              width: 12px;
+              height: 12px;
+              border: 1px solid $border-color-2;
             }
+
             @include only-desktop {
+              border-top: 1px solid $border-color-2;
+              border-bottom: 1px solid $border-color-2;
               height: 7px;
             }
           }
 
           .label {
             display: block;
-            margin: 5px 5px 0 0;
+            margin: 0px 5px 0;
             line-height: 1.25;
             color: $color-text-1;
             font-size: $font-size-small;
             font-weight: 500;
+
+            @include only-desktop {
+              margin: 5px 5px 0 0;
+            }
           }
 
           .value {
             display: block;
-            margin: 3px 5px 0 0;
+            margin: 1px 5px 0 0;
             line-height: 1.25;
             color: $color-text-1;
             font-size: 11px;
             font-weight: 400;
+
+            @include only-desktop {
+              margin: 3px 5px 0 0;
+            }
           }
 
           &:first-child {
@@ -288,11 +312,18 @@
 
         .graph-list-item {
           display: flex;
-          width: calc(25% - #{$space-1});
+          width: calc(50% - #{$space-1});
           margin: 0 $space-1 5px 0;
 
           &:last-child {
             margin: 0;
+          }
+
+          @include only-desktop {
+            width: calc(25% - #{$space-1});
+            &:last-child {
+              margin: 0;
+            }
           }
 
           .color {
