@@ -85,9 +85,5 @@
 
   &.-filters {
     margin: ($space-1 * 4) 0 0 ($space-1 * 3);
-
-    @include only-desktop {
-      margin: ($space-1 * 4) 0 0 0;
-    }
   }
 }
