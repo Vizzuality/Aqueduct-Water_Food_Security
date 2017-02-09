@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon from 'components/ui/Icon';
+import { Icon } from 'aqueduct-components';
 import debounce from 'lodash/debounce';
 import ShareModal from 'containers/modal/ShareModal';
 

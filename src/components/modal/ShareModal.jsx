@@ -1,7 +1,6 @@
 import React from 'react';
 import Clipboard from 'clipboard';
-
-import Icon from 'components/ui/Icon';
+import { Icon } from 'aqueduct-components';
 
 export default class ShareModal extends React.Component {
 

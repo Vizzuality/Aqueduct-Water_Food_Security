@@ -2,16 +2,17 @@ import React from 'react';
 
 
 // Components
-import CheckboxGroup from 'components/ui/CheckboxGroup';
-import SegmentedUi from 'components/ui/SegmentedUi';
-import Accordion from 'components/ui/Accordion';
-import CountrySelect from 'containers/countries/CountrySelect';
-import Icon from 'components/ui/Icon';
-import Timeline from 'components/ui/Timeline';
-import RadioGroup from 'components/ui/RadioGroup';
-import CustomSelect from 'components/ui/CustomSelect';
 import InfoModal from 'components/modal/InfoModal';
 import AppDefinitions from 'data/app-definitions.json';
+import {
+  CheckboxGroup,
+  SegmentedUi,
+  Accordion,
+  Icon,
+  Timeline,
+  RadioGroup,
+  CustomSelect
+} from 'aqueduct-components';
 import { Link } from 'react-router';
 
 // Filter options
@@ -24,6 +25,8 @@ import {
   irrigationOptions,
   changeFromBaselineOptions
 } from 'constants/filters';
+
+import CountrySelect from 'containers/countries/CountrySelect';
 
 export default class Filters extends React.Component {
 
@@ -62,7 +65,7 @@ export default class Filters extends React.Component {
         <div className="c-select">
           <div className="select-header">
             <span className="title">Timeframe</span>
-            <span
+            <button
               className="icon-container"
               onClick={() => this.openModal('timeframe')}
             >
@@ -70,7 +73,7 @@ export default class Filters extends React.Component {
                 name="icon-question"
                 className="title-icon"
               />
-            </span>
+          </button>
           </div>
           <Timeline
             items={yearOptions}
@@ -162,7 +165,7 @@ export default class Filters extends React.Component {
                     <div className="c-select">
                       <div className="select-header">
                         <span className="title">Crops</span>
-                        <span
+                        <button
                           className="icon-container"
                           onClick={() => this.openModal('crops')}
                         >
@@ -170,7 +173,7 @@ export default class Filters extends React.Component {
                             name="icon-question"
                             className="title-icon"
                           />
-                        </span>
+                      </button>
                       </div>
                       <CustomSelect
                         className="-no-search"
@@ -193,7 +196,7 @@ export default class Filters extends React.Component {
                     <div className="c-select">
                       <div className="select-header">
                         <span className="title">Water Risk</span>
-                        <span
+                        <button
                           className="icon-container"
                           onClick={() => this.openModal('water-risk')}
                         >
@@ -201,7 +204,7 @@ export default class Filters extends React.Component {
                             name="icon-question"
                             className="title-icon"
                           />
-                        </span>
+                        </button>
                       </div>
                       <CustomSelect
                         options={waterOptions}
@@ -217,7 +220,7 @@ export default class Filters extends React.Component {
                     <div className="c-select">
                       <div className="select-header">
                         <span className="title">Country data</span>
-                        <span
+                        <button
                           className="icon-container"
                           onClick={() => this.openModal('country-data')}
                         >
@@ -225,7 +228,7 @@ export default class Filters extends React.Component {
                             name="icon-question"
                             className="title-icon"
                           />
-                        </span>
+                        </button>
                       </div>
                       <CustomSelect
                         className={this.props.filters.scope === 'country' ? '-disabled -no-search' : '-no-search'}

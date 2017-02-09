@@ -1,7 +1,7 @@
 import React from 'react';
 import OnlyOn from 'components/ui/Responsive';
 import { Link } from 'react-router';
-import Icon from 'components/ui/Icon';
+import { Icon } from 'aqueduct-components';
 
 // Components
 import HeaderTools from './HeaderTools';

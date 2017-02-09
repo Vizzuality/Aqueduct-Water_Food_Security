@@ -1,7 +1,7 @@
 import React from 'react';
 import Legend from 'containers/legend/Legend';
 import OnlyOn from 'components/ui/Responsive';
-import Icon from 'components/ui/Icon';
+import { Icon } from 'aqueduct-components';
 
 export default function LegendMobile(props) {
   const toggle = () => {

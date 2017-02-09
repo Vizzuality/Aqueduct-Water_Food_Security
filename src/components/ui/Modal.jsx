@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon from 'components/ui/Icon';
+import { Icon } from 'aqueduct-components';
 import Spinner from 'components/ui/Spinner';
 
 export default class Modal extends React.Component {

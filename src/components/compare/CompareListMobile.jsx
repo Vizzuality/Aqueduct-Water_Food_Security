@@ -2,7 +2,7 @@ import React from 'react';
 
 // Components
 import CompareItem from 'components/compare/CompareItem';
-import SegmentedUi from 'components/ui/SegmentedUi';
+import { SegmentedUi } from 'aqueduct-components';
 
 export default class CompareList extends React.Component {
 
