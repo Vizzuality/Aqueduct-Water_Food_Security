@@ -216,7 +216,7 @@ export default class Filters extends React.Component {
                   <div className="filter-item">
                     <div className="c-select">
                       <div className="select-header">
-                        <span className="title">Country-data</span>
+                        <span className="title">Country data</span>
                         <span
                           className="icon-container"
                           onClick={() => this.openModal('country-data')}
