@@ -1,6 +1,6 @@
 import React from 'react';
 import Filters from 'components/filters/Filters';
-import Icon from 'components/ui/Icon';
+import { Icon } from 'aqueduct-components';
 
 export default class MobileFilters extends React.Component {
 

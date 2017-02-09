@@ -5,7 +5,7 @@ import ShareModal from 'containers/modal/ShareModal';
 import { Link } from 'react-router';
 import CompareListMobile from 'components/compare/CompareListMobile';
 import MobileFilters from 'components/filters/MobileFilters';
-import SegmentedUi from 'components/ui/SegmentedUi';
+import { SegmentedUi } from 'aqueduct-components';
 import CountrySelect from 'containers/countries/CountrySelect';
 
 export default class ComparePageMobile extends React.Component {
