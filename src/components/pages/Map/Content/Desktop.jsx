@@ -28,7 +28,13 @@ export default class MapPageDesktop extends React.Component {
         <Sidebar>
           {/* Filters */}
           <div className="l-filters">
-            <Filters className="-sidebar" filters={this.props.filters} setFilters={this.props.setFilters} withScope />
+            <Filters
+              className="-sidebar"
+              filters={this.props.filters}
+              setFilters={this.props.setFilters}
+              toggleModal={this.props.toggleModal}
+              withScope
+            />
           </div>
           {/* Widget List */}
           <div className="l-sidebar-content">
@@ -56,5 +62,6 @@ MapPageDesktop.propTypes = {
   // Actions
   setMapParams: React.PropTypes.func,
   updateMapUrl: React.PropTypes.func,
-  setFilters: React.PropTypes.func
+  setFilters: React.PropTypes.func,
+  toggleModal: React.PropTypes.func
 };

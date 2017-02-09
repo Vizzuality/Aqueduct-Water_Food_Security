@@ -1,0 +1,26 @@
+{
+  "crops": {
+    "title": "Crops",
+    "instructions": "Select a single crop of interest or \"all crops\" to learn about the current and future water risk in areas where crops are grown.",
+    "description": "The map displays the level of water risk in areas producing the crop(s) selected. This set of crops was selected based on their importance in the global commodities market and for food security. \"All crops\" represent all of these crops that are included in the tool as displayed in the menu.",
+    "citation": "IFPRI IMPACT Model and SPAM"
+  },
+  "water-risk": {
+    "title": "Water Risk",
+    "instructions": "Select an indicator to learn about current and future water risks in areas where crops are currently produced.",
+    "description": "Water stress measures the ratio of total annual water withdrawals to total available annual renewable supply, accounting for upstream consumptive use. Higher values indicate more competition among users. / Interannual variability measures the variability in water supply from year to year. / Seasonal variability measures the variation in water supply between months of the year. / Drought severity estimates the average of the length times the dryness of droughts from 1901 to 2008. Drought is defined as a continuous period where soil moisture remains below the 20th percentile, length is measured in months, and dryness is the number of percentage points below the 20th percentile. / Groundwater stress measures the relative ratio of groundwater withdrawal to recharge rate. Values above one indicate where unsustainable groundwater consumption could affect groundwater availability and groundwater-dependent ecosystems.",
+    "citation": "See WRI Aqueduct Water Risk Atlas"
+  },
+  "country-data": {
+    "title": "Country Data",
+    "instructions": "Select a country-level dataset to learn about the demand, production, and trade for food as well as the country's risk of food insecurity.",
+    "description": "Food demand represents the demand for, or availability of, food in the domestic sector. / Production represents crop area harvested * crop yield. / Net trade represents the amount traded, where positive values indicate greater exports than imports. / Kilocalories per person represents the availability of calories per person. / Population at risk of hunger represents the population at risk of suffering from malnourishment.",
+    "citation": "IFPRI IMPACT Model"
+  },
+  "timeframe": {
+    "title": "Timeframe",
+    "instructions": "Select baseline or future years 2020, 2030, or 2040 to learn about water risk over time. In future years, select \"absolute value\" to see the projected water risk in the selected year or \"change from baselne\" to see the degree to which water risk is expected to increase or decrease over time.",
+    "description": "Baseline represents the most recent data on crop production and water risk: 2005 crop area and 2014 water risk. Future projections use a \"business as usual\" scenario (SSP2 RCP8.5), representing a world with stable economic development and steadily rising global carbon emissions.",
+    "citation": "-"
+  }
+}

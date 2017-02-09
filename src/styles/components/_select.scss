@@ -2,43 +2,58 @@
 .c-select {
   position: relative;
 
-  .title {
-    color: palette(white);
-    font-size: $font-size-extrabig;
-    font-weight: 300;
+  .select-header  {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    padding: 0 $space-1 * 2 0 0;
+
     @include only-desktop {
       justify-content: flex-start;
+      padding: 0;
     }
-    @include only-mobile {
-      justify-content: space-between;
+
+    > .title {
+      color: palette(white);
+      font-size: $font-size-extrabig;
+      font-weight: 300;
+      display: flex;
+      align-items: center;
     }
-  }
 
-  .title-icon {
-
-    @include only-mobile {
+    > .icon-container {
+      display: inline-flex;
       width: 29px;
       height: 29px;
-      padding: 2px;
-    }
+      border-radius: 50%;
 
-    @include only-desktop {
-      width: 20px;
-      height: 20px;
-      margin-left: $space-1 * 2;
-    }
+      @include only-desktop {
+        width: 20px;
+        height: 20px;
+        margin: 0 0 0 $space-1 * 2;
+      }
 
-    fill: $color-softer;
-    border: 1px solid rgba($color-softer, .3);
-    margin-right: $space-1 * 2;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background-color .1s linear;
+      > .title-icon {
+        width: 100%;
+        height: 100%;
+        padding: 2px;
+        margin: 0;
 
-    &:hover {
-      background-color: (blue, lightest);
+        border: 1px solid rgba($color-softer, .3);
+        border-radius: 50%;
+
+        fill: $color-softer;
+        cursor: pointer;
+        transition: background-color .1s linear;
+
+        @include only-desktop {
+          padding: 0;
+        }
+
+        &:hover {
+          background-color: (blue, lightest);
+        }
+      }
     }
   }
 }
