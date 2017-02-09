@@ -3,7 +3,7 @@ import MapPage from 'components/pages/Map/MapPage';
 import { setMapLocation } from 'actions/map';
 import { setFilters } from 'actions/filters';
 import { updateMapUrl } from 'actions/url';
-import { toggleModal } from 'actions/modal';
+import { toggleModal } from 'aqueduct-components';
 import getActiveLayers from 'selectors/layers_active';
 import getActiveWidgets from 'selectors/widgets_active';
 

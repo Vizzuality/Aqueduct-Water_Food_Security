@@ -1,5 +1,5 @@
 import React from 'react';
-import Spinner from 'components/ui/Spinner';
+import { Spinner } from 'aqueduct-components';
 
 export default class Tooltip extends React.Component {
 
