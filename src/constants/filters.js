@@ -24,6 +24,13 @@ export const waterOptions = filter(layerSpec, { category: 'water' }).map((layer)
   };
 });
 
+// Add 'none' option
+waterOptions.push({
+  label: 'None',
+  value: 'none'
+});
+
+
 export const scopeOptions = [
   { value: 'global', label: 'Global' },
   { value: 'country', label: 'Country' }
@@ -47,4 +54,9 @@ export const cropOptions = [
 export const irrigationOptions = [
   { value: 'irrigated', label: 'Irrigated' },
   { value: 'rainfed', label: 'Rainfed' }
+];
+
+export const changeFromBaselineOptions = [
+  { label: 'Absolute value', value: false },
+  { label: 'Change from baseline', value: true }
 ];

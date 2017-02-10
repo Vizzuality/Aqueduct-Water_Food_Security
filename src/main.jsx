@@ -21,7 +21,7 @@ import './styles/index.scss';
 if (config.opbeatOrgId && config.opbeatAppId) {
   initOpbeat({
     orgId: config.opbeatOrgId,
-    appId: config.opbeatAppId,
+    appId: config.opbeatAppId
   });
 }
 

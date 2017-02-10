@@ -2,46 +2,109 @@
 /* Compare page */
 .l-comparepage {
   background-color: $color-map;
+  @include only-mobile {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 /* Compare header */
 
 .compare-header {
-  padding: 18px 32px;
-  border-bottom: 1px solid $color-secondary;
-  background-color: $color-tertiary;
+  display: flex;
+  justify-content: space-between;;
+  padding: 14px 32px;
+  background-color: palette(blue);
 
-  .link {
-    color: $color-deactivate;
+  .back-link {
+    color: palette(blue, light);
     font-size: $font-size-default;
     text-transform: uppercase;
     font-weight: 500;
     letter-spacing: 1px;
     cursor: pointer;
   }
+
+  .share-btn {
+    color: palette(blue, light);
+    font-weight: 500;
+    font-size: $font-size-big;
+    transition: color .1s linear;
+    &:hover {
+      color: palette(blue, lighter);
+      svg {
+        fill: palette(blue, lighter);
+      }
+    }
+    svg {
+      transition: fill .1s linear;
+      fill: palette(blue, light);
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+  }
 }
 /* Compareitem */
 
+.compare-filters-text {
+  margin: 0;
+  font-weight: 300;
+  font-size: $font-size-extrabig;
+  color: palette(white);
+}
+
+.compare-country-wrapper {
+  max-width: 200px;
+  margin: 0 auto;
+
+  @include only-desktop {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.compare-filters-wrapper {
+  background-color: palette(blue);
+}
+
 .compare-filters {
-  background-color: $color-secondary;
+  background-color: palette(blue, dark);
+
+  .c-filters {
+    .filters-section {
+      background-color: transparent;
+    }
+  }
 }
 .compare-filters-section {
-  padding: 24px 32px;
+  padding: 24px 0;
+
   &.-collapsed {
     padding: 0;
+    margin: 0 auto;
+    max-width: $max-width-sidebar;
   }
-  &.-highlighted {
-    background-color: $color-tertiary;
-  }
+
   &:last-child {
     padding-bottom: 0;
   }
 }
 .compareitem-map {
-  height: 430px;
+  @include only-mobile {
+    height: calc(100vh - 212px);
+  }
+  @include only-desktop {
+    height: 430px;
+  }
   position: relative;
+  & > div {
+    height: 100%;
+  }
   .comparelist-item:first-child & {
-    border-right: 3px solid #F5F1E0;
+    @include only-desktop {
+      border-right: 3px solid #F5F1E0;
+    }
   }
 }
 .compareitem-widgets {
@@ -68,4 +131,33 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+}
+
+/* Compare list */
+.c-comparelist {
+  @include only-mobile {
+    flex-grow: 1;
+    overflow-y: auto;
+    height: 100%;
+    padding-bottom: 64px;
+  }
+}
+
+.c-compareitem {
+  flex: 1;
+}
+
+.comparelist-item {
+  @include only-mobile {
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+}
+
+.comparelist-content {
+  display: flex;
+  @include only-mobile {
+    height: 100%;
+    flex-direction: column;
+  }
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import Clipboard from 'clipboard';
-
-import Icon from 'components/ui/Icon';
+import { Icon } from 'aqueduct-components';
 
 export default class ShareModal extends React.Component {
 
@@ -51,6 +50,7 @@ export default class ShareModal extends React.Component {
   }
 
   render() {
+    const title = 'Water and Food Security Analyzer';
     const url = this.props.share.url || location.href;
     const urlEncoded = encodeURIComponent(this.props.share.url || location.href);
 
@@ -88,31 +88,31 @@ export default class ShareModal extends React.Component {
               href={`https://twitter.com/share?url=${urlEncoded}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="c-btn -primary -with-icon -twitter"
+              className="c-btn -primary -with-icon -twitter -social"
               onClick={this.triggerPopup}
             >
               <Icon name="icon-twitter" />
-              Twitter
+              <span>Twitter</span>
             </a>
             <a
-              href={`https://www.facebook.com/sharer/sharer.php?u=${urlEncoded}&t=Global Cancer Project Map`}
+              href={`https://www.facebook.com/sharer/sharer.php?u=${urlEncoded}&t=${title}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="c-btn -primary -with-icon -facebook"
+              className="c-btn -primary -with-icon -facebook -social"
               onClick={this.triggerPopup}
             >
               <Icon name="icon-facebook" />
-              Facebook
+              <span>Facebook</span>
             </a>
             <a
-              href={`https://www.linkedin.com/shareArticle?mini=true&url=${urlEncoded}&title=Global Cancer Project Map&summary=&source=`}
+              href={`https://www.linkedin.com/shareArticle?mini=true&url=${urlEncoded}&title=${title}&summary=&source=`}
               target="_blank"
               rel="noopener noreferrer"
-              className="c-btn -primary -with-icon -linkedin"
+              className="c-btn -primary -with-icon -linkedin -social"
               onClick={this.triggerPopup}
             >
               <Icon name="icon-linkedin" />
-              Linkedin
+              <span>Linkedin</span>
             </a>
           </div>
         </div>

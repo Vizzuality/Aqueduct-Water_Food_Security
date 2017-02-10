@@ -1,5 +1,5 @@
+import { CountrySelect } from 'aqueduct-components';
 import { connect } from 'react-redux';
-import CountrySelect from 'components/countries/CountrySelect';
 
 const mapStateToProps = ({ countries }) => ({
   countries

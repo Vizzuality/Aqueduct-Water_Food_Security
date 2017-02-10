@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Widget from 'components/widgets/Widget';
-import { toggleModal } from 'actions/modal';
+import { toggleModal } from 'aqueduct-components';
 
 export default connect(null, {
   toggleModal

@@ -1,7 +1,8 @@
 import React from 'react';
 import WidgetList from 'components/widgets/WidgetList';
-import Map from 'components/map/Map';
-import Icon from 'components/ui/Icon';
+import { Map, Icon } from 'aqueduct-components';
+import LegendMobile from 'containers/legend/LegendMobile';
+import LayerManager from 'utils/layers/LayerManager';
 
 export default class CompareItem extends React.Component {
 
@@ -9,7 +10,7 @@ export default class CompareItem extends React.Component {
     const emptyPlaceholder = (
       <div className="country-placeholder">
         <div>
-          <Icon className="-huge country-placeholder-icon" name="icon-country_illustration" />
+          <Icon className="-huge country-placeholder-icon" name="icon-country" />
           <p className="country-placeholder-text">Choose a country first</p>
         </div>
       </div>
@@ -27,12 +28,23 @@ export default class CompareItem extends React.Component {
       countrySelected = this.props.countryList.find(c => c.id === this.props.country);
       mapConfig.bounds = countrySelected;
     }
+    const showMap = (!this.props.context || (this.props.context && this.props.context === 'map'));
+    const showWidgets = this.props.country && (!this.props.context || (this.props.context && this.props.context === 'data'));
+    const map = (
+      <div>
+        <LegendMobile layersActive={this.props.layersActive} />
+        <Map LayerManager={LayerManager} filters={this.props.filters} mapConfig={mapConfig} layersActive={this.props.layersActive} />
+      </div>
+    );
+
     return (
       <div className="c-compareitem">
-        <section className="compareitem-map">
-          {this.props.country ? <Map filters={this.props.filters} mapConfig={mapConfig} layersActive={this.props.layersActive} /> : emptyPlaceholder}
-        </section>
-        {this.props.country &&
+        {showMap &&
+          <section className="compareitem-map">
+            {this.props.country ? map : emptyPlaceholder}
+          </section>
+        }
+        {showWidgets &&
           <section className="compareitem-widgets">
             <WidgetList filters={this.props.filters} loading={this.props.loading} widgetsActive={this.props.widgetsActive} />
           </section>
@@ -43,6 +55,7 @@ export default class CompareItem extends React.Component {
 }
 
 CompareItem.propTypes = {
+  context: React.PropTypes.string,
   countryList: React.PropTypes.array,
   country: React.PropTypes.string,
   loading: React.PropTypes.bool,

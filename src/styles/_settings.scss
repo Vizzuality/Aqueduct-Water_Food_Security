@@ -4,15 +4,47 @@ $max-width-sidebar: 700px;
 $max-width-modal: 700px;
 $max-width-modal-medium: 1130px;
 // Colors
+
+$palettes: (
+  blue: (
+    primary : #2E57B8,
+    secondary: #00A0E1,
+    dark: #2146A5,
+    darkest: #223E76,
+    light: #AFC7FF,
+    lighter: #DBE3F7,
+    lightest: rgba(#DBE3F7, .5)
+  ),
+  white: (
+    primary: #FFFFFF
+  ),
+  black: (
+    primary: #000000
+  ),
+  feedback: (
+    success: #1c801c,
+    error: #de2239
+  ),
+  sand: (
+    primary: #f5f4f0
+  ),
+  gray: (
+    primary: #8a9da6,
+    light: rgba(151, 151, 151, 0.2)
+  )
+);
+
 $color-primary: #03a1de;
 $color-secondary: #3559a1;
 $color-tertiary: #294d94;
 $color-alternative: #fbbc22;
 $color-gray: #eff3f8;
 $color-white: white;
-$color-deactivate: #a6c3ff;
-$color-soft: #c2d7ff;
+$color-deactivate: #8CACEE;
+$color-soft: #8CACEE;
 $color-map: #f5f4f0;
+$color-softer: #c2d7ff;
+$color-dark: #123671;
 
 $color-success: #1c801c;
 $color-error: #de2239;
@@ -27,6 +59,7 @@ $font-size-extra-small:   10px;
 $font-size-small:   12px;
 $font-size-default: 14px;
 $font-size-big:     16px;
+$font-size-extrabig: 18px;
 $font-size-huge:  22px;
 
 // Grays
@@ -41,7 +74,7 @@ $border-color-2: #ccc;
 
 // Margins & Paddings
 $space-1: 8px;
-$space-sidebar: 50px;
+$space-sidebar: 54px;
 
 // Sizes
 $size-header: 60px;
@@ -64,3 +97,10 @@ $ease-in-out-sine: cubic-bezier(0.445, 0.050, 0.550, 0.950);
 // Leaflet
 $zoom-margin-top: 10px;
 $zoom-margin-right: 10px;
+
+// Responsive breakpoints
+$breakpoint-mobile: 640px;
+
+// Mobile heights
+$height-country-tabs: 48px;
+$height-filter-btn: 52px;

@@ -1,3 +1,4 @@
+import find from 'lodash/find';
 import { substitution, concatenation } from 'utils/utils';
 
 // Util functions
@@ -10,11 +11,11 @@ function getConversion(string, params, sqlParams) {
   return str;
 }
 
-function getWaterColumn({ water, year }, sufix) {
+function getWaterColumn({ water, year, changeFromBaseline }, sufix, widget) {
   const layers = {
     '6c49ae6c-2c73-46ac-93ab-d4ed1b05d44e': {
       indicator: 'ws',
-      dataType: 't'
+      dataType: changeFromBaseline && !widget ? 'c' : 't'
     },
     '345cfef3-ee8a-46bc-9bb9-164c406dfd2c': {
       indicator: 'ws',
@@ -22,7 +23,11 @@ function getWaterColumn({ water, year }, sufix) {
     },
     'd9785282-2140-463f-a82d-f7296687055a': {
       indicator: 'ws',
-      dataType: 't'
+      dataType: changeFromBaseline && !widget ? 'c' : 't'
+    },
+    none: {
+      indicator: 'ws',
+      dataType: changeFromBaseline && !widget ? 'c' : 't'
     }
   };
 
@@ -198,9 +203,15 @@ export function getFoodSql(layer = {}, filters = {}) {
 
 // WIDGET FUNCTIONS
 
-export function widgetsFilter(widget, { scope, crop, country }, compare, datasetTags) {
+export function widgetsFilter(widget, { scope, crop, country, water }, compare, datasetTags) {
   const _crop = crop === 'all' ? 'all_crops' : 'one_crop';
   const _country = ((scope === 'country' && country) || compare.countries.length) ? 'country' : 'global';
+  // 3 OPTIONS
+  // - const isWater = !(water === 'none' && find(widget.widgetConfig.paramsConfig, { key: 'water_column' }));
+  // - const isWater = !(water === 'none');
+  // - empty
+  const isWater = !(water === 'none');
+
   return datasetTags && datasetTags.includes(_crop) && datasetTags.includes(_country);
 }
 
@@ -219,7 +230,7 @@ export function getWidgetSql(widgetConfig, filters) {
       case 'water_column':
         return {
           key: param.key,
-          value: getWaterColumn(filters, param.sufix)
+          value: getWaterColumn(filters, param.sufix, true)
         };
       case 'year': {
         return {
@@ -237,6 +248,11 @@ export function getWidgetSql(widgetConfig, filters) {
         return {
           key: param.key,
           value: (filters.scope === 'country' && filters.country) ? filters.country : null
+        };
+      case 'commodity':
+        return {
+          key: param.key,
+          value: filters.crop
         };
       case 'crops.iso':
         return {
@@ -288,7 +304,6 @@ export function getWidgetSql(widgetConfig, filters) {
       })
     };
   });
-
   return Object.assign({}, widgetConfig, {
     data: JSON.parse(getConversion(JSON.stringify(widgetConfig.data), params, sqlParams))
   });

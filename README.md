@@ -14,6 +14,8 @@ For the different indicators, this tool is using the IFPRI IMPACT Model: [https:
 Requirements:
 
 * NodeJs 6.0+ [How to install](https://nodejs.org/download/)
+* pkg-config (probably this one is already installed, if not: `brew install pkg-config`)
+* Cairo (`brew install cairo`)
 
 Install dependencies:
 

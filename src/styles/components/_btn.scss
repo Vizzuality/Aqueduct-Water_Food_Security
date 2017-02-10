@@ -1,32 +1,53 @@
 .c-btn {
-  display: inline-flex;
-  font-family: $font-family-roboto;
-  padding: 0 $space-1 * 4;
-  border-radius: 0px;
-  height: 49px;
+  text-align: center;
+  letter-spacing: .6px;
+  font-size: $font-size-default;
+  transition: all .1s linear;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-weight: 500;
-  fill: $color-white;
+
+  &.-disabled {
+    pointer-events: none;
+    opacity: .4;
+  }
 
   &.-primary {
-    font-family: $font-family-roboto;
-    font-size: $font-size-big;
-    color: $color-primary;
-    border: 1px solid $color-primary;
-    background-color: $color-white;
-    font-weight: 500;
-    transition: all .16s linear;
+    color: palette(blue, light);
     text-transform: uppercase;
+    border: 1px solid palette(blue, light);
+    font-weight: 500;
+    border-radius: 3px;
+    padding: 12px 25px;
+    display: inline-block;
 
-    &:hover {
-      color: $color-white;
-      background-color: $color-primary;
+    &.-dark {
+      background-color: palette(blue, darkest);
     }
+  }
+
+  &.-filters {
+    padding: 8px 25px;
+
+    @include only-desktop {
+      width: 100%;
+    }
+    @include only-mobile {
+      width: 100%;
+    }
+  }
+
+  &.-fluid {
+    width: 100%;
+  }
+
+  &:hover {
+    color: palette(blue, lighter);
+    border-color: palette(blue, lighter);
   }
 
   // SOCIAL STATES
   &.-facebook {
+    display: inline-flex;
     background: #3b5998;
     color: $color-white;
     border-color: #3b5998;
@@ -37,6 +58,7 @@
   }
 
   &.-twitter {
+    display: inline-flex;
     background: #55acee;
     color: $color-white;
     border-color: #55acee;
@@ -47,6 +69,8 @@
   }
 
   &.-linkedin {
+    display: inline-flex;
+    align-items: flex-start;
     background: #007bb5;
     color: $color-white;
     border-color: #007bb5;
@@ -77,10 +101,18 @@
     height: $space-sidebar;
     padding: 0 18px;
     font-size: $font-size-big;
-    font-weight: 500;    
+    font-weight: 500;
+  }
+
+  &.-social {
+    svg {
+      fill: palette(white);
+    }
   }
 
   &.-with-icon {
+    display: flex;
+    align-items: center;
     > * {
       margin: 0 5px 0 0;
       &:last-child { margin: 0;}

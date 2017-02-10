@@ -1,6 +1,8 @@
 .c-widget-list {
   padding: 0 ($space-1 * 2) ($space-1 * 4);
-
+  @include only-mobile {
+    padding-bottom: $height-filter-btn + $height-country-tabs;
+  }
   .column {
     display: flex;
     align-items: flex-end;
@@ -9,7 +11,7 @@
 
 .c-widget {
   width: 100%;
-  padding: ($space-1 * 4) ($space-1 * 2) 0;
+  padding: ($space-1 * 6) ($space-1 * 2) 0;
 
   .widget-header {
     display: flex;
@@ -31,8 +33,8 @@
 
     .widget-title {
       text-transform: uppercase;
-      font-weight: 500;
-      letter-spacing: 1px;
+      font-weight: 400;
+      letter-spacing: .9px;
     }
 
     .widget-description {
@@ -56,7 +58,8 @@
   }
 
   .widget-content {
-    // min-height: 200px;
+    position: relative;
+    min-height: 80px;
     background: white;
     box-shadow: 0 1px 0 0 #dbdfe5;
   }
@@ -67,14 +70,6 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-
-  button {
-    border: solid 1px rgba(74, 89, 106, 0.13);
-    border-radius: 50%;
-    padding: 6px;
-    height: 29px;
-    width: 29px;
-  }
 
   > * {
     display: flex;
@@ -96,6 +91,11 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    border: solid 1px rgba(74, 89, 106, 0.13);
+    border-radius: 50%;
+    padding: 6px;
+    height: 29px;
+    width: 29px;
 
     svg {
       fill: $color-text-1;
@@ -108,4 +108,9 @@
       }
     }
   }
+}
+
+/* Mobile */
+.mobile-widgets-container {
+  background-color: palette(sand);
 }
