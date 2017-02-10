@@ -1,8 +1,9 @@
 import React from 'react';
 import orderBy from 'lodash/orderBy';
+import OnlyOn from 'components/ui/Responsive';
 
 import LegendItem from 'components/legend/LegendItem';
-import Icon from 'components/ui/Icon';
+import { Icon } from 'aqueduct-components';
 
 export default class Legend extends React.Component {
   constructor(props) {
@@ -24,13 +25,15 @@ export default class Legend extends React.Component {
     const layers = orderBy(this.props.layers, ['category'], ['desc']);
     return (
       <div className={`c-legend ${this.props.className} ${this.state.expanded ? '-expanded' : ''}`}>
-        <div className="legend-header" onClick={() => this.toggleExpand()}>
-          <span className="legend-header-title">View Legend</span>
-          <button className="legend-btn">
-            <Icon name="icon-arrow-up-2" className="legend-open-icon" />
-            <Icon name="icon-cross" className="legend-close-icon" />
-          </button>
-        </div>
+        <OnlyOn device="desktop">
+          <div className="legend-header" onClick={() => this.toggleExpand()}>
+            <span className="legend-header-title">View Legend</span>
+            <button className="legend-btn">
+              <Icon name="icon-arrow-up-2" className="legend-open-icon" />
+              <Icon name="icon-cross" className="legend-close-icon" />
+            </button>
+          </div>
+        </OnlyOn>
         <div className="legend-content">
           <ul>
             {layers.map((layer, index) =>

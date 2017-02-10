@@ -1,11 +1,11 @@
 import React from 'react';
-import CountrySelect from 'containers/countries/CountrySelect';
 import ShareModal from 'containers/modal/ShareModal';
 
 // Components
 import CompareList from 'components/compare/CompareList';
 import Filters from 'components/filters/Filters';
-import Icon from 'components/ui/Icon';
+import CountrySelect from 'containers/countries/CountrySelect';
+import { Icon } from 'aqueduct-components';
 import { Link } from 'react-router';
 
 export default class ComparePageDesktop extends React.Component {

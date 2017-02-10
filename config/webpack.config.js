@@ -28,22 +28,36 @@ const config = {
   module: {
     loaders: [
       {
+        // Aqueduct-components is not transpiled, so it's needed
+        include: [
+          path.resolve('node_modules/aqueduct-components')
+        ],
+        test: /\.jsx?$/,
+        loader: 'babel-loader',
+        query: { compact: false }
+      },
+      {
         test: /\.jsx?$/,
         loader: 'babel-loader',
         exclude: /node_modules/
-      }, {
+      },
+      {
         test: /\.css$/,
         loader: 'style-loader!css-loader'
-      }, {
+      },
+      {
         test: /\.(scss|sass)$/,
         loader: 'style-loader!css-loader!sass-loader!postcss-loader'
-      }, {
+      },
+      {
         test: /\.json$/,
         loader: 'json'
-      }, {
+      },
+      {
         test: /\.(eot|ttf|woff2|woff)$/,
         loader: 'url-loader?prefix=fonts/&context=/src/fonts'
-      }, {
+      },
+      {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'url-loader?prefix=image/&limit=5000&context=/src/images'
       }
@@ -52,21 +66,9 @@ const config = {
 
   resolve: {
     root: [
-      rootPath
+      path.join(rootPath, 'src')
     ],
-    alias: {
-      actions: 'src/actions',
-      components: 'src/components',
-      constants: 'src/constants',
-      containers: 'src/containers',
-      data: 'src/data',
-      fonts: 'src/fonts',
-      main: 'src/main',
-      reducers: 'src/reducers',
-      selectors: 'src/selectors',
-      utils: 'src/utils'
-    },
-    extensions: ['', '.js', '.jsx', '.json', 'css', '.scss']
+    extensions: ['', '.js', '.jsx', '.json', '.css', '.scss']
   },
 
   plugins: [

@@ -2,7 +2,7 @@ import React from 'react';
 import WidgetButtons from 'components/widgets/WidgetButtons';
 import WidgetChart from 'components/widgets/WidgetChart';
 import WidgetModal from 'components/modal/WidgetModal';
-import Spinner from 'components/ui/Spinner';
+import { Spinner } from 'aqueduct-components';
 
 class Widget extends React.Component {
 

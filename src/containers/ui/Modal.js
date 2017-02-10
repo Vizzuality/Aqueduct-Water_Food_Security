@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
-import Modal from 'components/ui/Modal';
-import { toggleModal, setModalOptions } from 'actions/modal';
+import { Modal, toggleModal, setModalOptions } from 'aqueduct-components';
 
 const mapStateToProps = ({ modal }) => ({
   modal
