@@ -28,15 +28,6 @@ const config = {
   module: {
     loaders: [
       {
-        // Aqueduct-components is not transpiled, so it's needed
-        include: [
-          path.resolve('node_modules/aqueduct-components')
-        ],
-        test: /\.jsx?$/,
-        loader: 'babel-loader',
-        query: { compact: false }
-      },
-      {
         test: /\.jsx?$/,
         loader: 'babel-loader',
         exclude: /node_modules/
