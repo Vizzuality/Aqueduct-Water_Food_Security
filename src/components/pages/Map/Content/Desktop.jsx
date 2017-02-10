@@ -45,8 +45,19 @@ export default class MapPageDesktop extends React.Component {
 
         {/* Map */}
         <div className="c-map-container">
-          <Map LayerManager={LayerManager} mapConfig={mapConfig} filters={this.props.filters} layersActive={this.props.layersActive} setMapParams={this.props.setMapParams} sidebar={this.props.sidebar} />
-          <Legend className="-map" layers={this.props.layersActive} />
+          <Map
+            LayerManager={LayerManager}
+            mapConfig={mapConfig}
+            filters={this.props.filters}
+            layersActive={this.props.layersActive}
+            setMapParams={this.props.setMapParams}
+            sidebar={this.props.sidebar}
+          />
+          <Legend
+            className="-map"
+            expanded
+            layers={this.props.layersActive}
+          />
         </div>
       </div>
     );
