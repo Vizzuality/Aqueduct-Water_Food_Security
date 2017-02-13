@@ -1,0 +1,42 @@
+
+.c-summary {
+  padding: ($space-1 * 6) ($space-1 * 4) 0;
+  color: palette(gray, dark);
+
+  .summary-title {
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: .9px;
+    padding-left: $space-1 * 2;
+    margin-bottom: $space-1 * 2;
+  }
+
+  .summary-list {
+    padding: $space-1 * 2;
+    background: palette(white);
+    box-shadow: 0 1px 0 0 #dbdfe5;
+    @include clearfix;
+    font-size: $font-size-big;
+
+    dt {
+      float: left;
+      clear: left;
+      width: 150px;
+
+      &:after {
+        content: ":";
+      }
+    }
+
+    dd {
+      float: left;
+      margin-bottom: $space-1;
+      font-weight: bold;
+      color: palette(blue);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

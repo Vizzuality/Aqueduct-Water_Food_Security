@@ -5,6 +5,7 @@ import Sidebar from 'containers/ui/Sidebar';
 import { Map } from 'aqueduct-components';
 import Filters from 'components/filters/Filters';
 import WidgetList from 'components/widgets/WidgetList';
+import Summary from 'components/summary/Summary';
 import Legend from 'containers/legend/Legend';
 import LayerManager from 'utils/layers/LayerManager';
 
@@ -39,6 +40,7 @@ export default class MapPageDesktop extends React.Component {
           </div>
           {/* Widget List */}
           <div className="l-sidebar-content">
+            <Summary filters={this.props.filters} />
             <WidgetList filters={this.props.filters} widgetsActive={this.props.widgetsActive} />
           </div>
         </Sidebar>

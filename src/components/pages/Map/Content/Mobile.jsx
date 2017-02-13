@@ -4,6 +4,7 @@ import WidgetList from 'components/widgets/WidgetList';
 import MobileFilters from 'components/filters/MobileFilters';
 import LegendMobile from 'containers/legend/LegendMobile';
 import LayerManager from 'utils/layers/LayerManager';
+import Summary from 'components/summary/Summary';
 
 export default class MapPageMobile extends React.Component {
   constructor(props) {
@@ -33,6 +34,7 @@ export default class MapPageMobile extends React.Component {
         {/* Widget list */}
         {this.state.context === 'data' &&
           <div className="mobile-widgets-container">
+            <Summary filters={this.props.filters} />
             <WidgetList filters={this.props.filters} widgetsActive={this.props.widgetsActive} />
           </div>
         }
