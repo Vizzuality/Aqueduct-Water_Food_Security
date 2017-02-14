@@ -4,6 +4,7 @@
 import React from 'react';
 import L from 'leaflet/dist/leaflet';
 import isEqual from 'lodash/isEqual';
+import LayerManager from 'utils/layers/LayerManager';
 import { Spinner } from 'aqueduct-components';
 
 import { MAP_CONFIG } from 'constants/map';
@@ -32,34 +33,15 @@ class Map extends React.Component {
       this.fitBounds(this.props.mapConfig.bounds.geometry);
     }
 
-    const stopLoading = () => {
-      // Don't execute callback if component has been unmounted
-      this._mounted && this.setState({
-        loading: false
-      });
-    };
+    // SETTERS
+    this.setAttribution();
+    this.setZoomControl();
+    this.setBasemap();
+    this.setMapEventListeners();
 
-    this.layerManager = new this.props.LayerManager(this.map, {
-      onLayerAddedSuccess: stopLoading,
-      onLayerAddedError: stopLoading
-    });
 
-    this.map.attributionControl.addAttribution('&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>');
-    this.map.zoomControl && this.map.zoomControl.setPosition('topright');
-
-    this.tileLayer = L.tileLayer(config.BASEMAP_TILE_URL, {})
-                      .addTo(this.map)
-                      .setZIndex(0);
-
-    this.labelLayer = L.tileLayer(config.BASEMAP_LABEL_URL, {})
-                       .addTo(this.map)
-                       .setZIndex(1000);
-
-    if (this.props.setMapParams) {
-      // Listen to leaflet events
-      this.addMapEventListeners();
-    }
-
+    // Add layers
+    this.setLayerManager();
     this.addLayers(this.props.layersActive, this.props.filters);
   }
 
@@ -101,14 +83,53 @@ class Map extends React.Component {
     this.map.remove();
   }
 
+
+  // SETTERS
+  setLayerManager() {
+    const stopLoading = () => {
+      // Don't execute callback if component has been unmounted
+      this._mounted && this.setState({
+        loading: false
+      });
+    };
+
+    this.layerManager = new LayerManager(this.map, {
+      onLayerAddedSuccess: stopLoading,
+      onLayerAddedError: stopLoading
+    });
+  }
+
+  setAttribution() {
+    this.map.attributionControl.addAttribution('&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>');
+  }
+
+  setZoomControl() {
+    this.map.zoomControl && this.map.zoomControl.setPosition('topright');
+  }
+
+  setBasemap() {
+    this.tileLayer = L.tileLayer(config.BASEMAP_TILE_URL, {})
+                      .addTo(this.map)
+                      .setZIndex(0);
+
+    this.labelLayer = L.tileLayer(config.BASEMAP_LABEL_URL, {})
+                       .addTo(this.map)
+                       .setZIndex(1000);
+  }
+
   // GETTERS
   getMapParams() {
     const params = {
-      zoom: this.map.getZoom(),
-      latLng: this.map.getCenter()
+      zoom: this.getZoom(),
+      latLng: this.getCenter()
     };
     return params;
   }
+
+  // MAP FUNCTIONS
+  getCenter() { return this.map.getCenter(); }
+
+  getZoom() { return this.map.getCenter(); }
 
   fitBounds(geoJson, sidebarWidth) {
     const geojsonLayer = L.geoJson(geoJson);
@@ -118,14 +139,18 @@ class Map extends React.Component {
     });
   }
 
+
   // MAP LISTENERS
-  addMapEventListeners() {
+  setMapEventListeners() {
     function mapChangeHandler() {
       // Dispatch the action to set the params
       this.props.setMapParams(this.getMapParams());
     }
-    this.map.on('zoomend', mapChangeHandler.bind(this));
-    this.map.on('dragend', mapChangeHandler.bind(this));
+
+    if (this.props.setMapParams) {
+      this.map.on('zoomend', mapChangeHandler.bind(this));
+      this.map.on('dragend', mapChangeHandler.bind(this));
+    }
   }
 
   removeMapEventListeners() {
@@ -133,7 +158,7 @@ class Map extends React.Component {
     this.map.off('dragend');
   }
 
-  // Layer methods
+  // LAYER METHODS
   addLayer(layer, filters) {
     this.setState({
       loading: true
@@ -156,6 +181,7 @@ class Map extends React.Component {
     this.layerManager.removeLayers();
   }
 
+
   // RENDER
   render() {
     const spinnerStyles = { marginLeft: this.props.sidebar && +this.props.sidebar.width ? `${+this.props.sidebar.width / 2}px` : 0 };
@@ -173,6 +199,7 @@ Map.propTypes = {
   mapConfig: React.PropTypes.object,
   filters: React.PropTypes.object,
   sidebar: React.PropTypes.object,
+  LayerManager: React.PropTypes.func,
   layersActive: React.PropTypes.array,
   // ACTIONS
   setMapParams: React.PropTypes.func

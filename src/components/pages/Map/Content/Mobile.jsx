@@ -4,7 +4,6 @@ import Map from 'components/map/Map';
 import WidgetList from 'components/widgets/WidgetList';
 import MobileFilters from 'components/filters/MobileFilters';
 import LegendMobile from 'containers/legend/LegendMobile';
-import LayerManager from 'utils/layers/LayerManager';
 
 export default class MapPageMobile extends React.Component {
   constructor(props) {
@@ -42,7 +41,7 @@ export default class MapPageMobile extends React.Component {
           <div className="l-map-mobile">
             <LegendMobile layersActive={this.props.layersActive} />
             <div className="c-map-container">
-              <Map LayerManager={LayerManager} mapConfig={mapConfig} filters={this.props.filters} layersActive={this.props.layersActive} setMapParams={this.props.setMapParams} sidebar={this.props.sidebar} />
+              <Map mapConfig={mapConfig} filters={this.props.filters} layersActive={this.props.layersActive} setMapParams={this.props.setMapParams} sidebar={this.props.sidebar} />
             </div>
           </div>
         }
