@@ -57,7 +57,7 @@ export default class SummaryCountry extends React.Component {
     .then((data) => {
       this.setState({
         loading: false,
-        yield: `${format('.3s')(data.rows[0].value)} ton`,
+        yield: `${format('.3s')(data.rows[0].value)} tons/ha`,
         area: `${format('.3s')(data.rows[1].value)} ha`
       });
     });
@@ -66,15 +66,19 @@ export default class SummaryCountry extends React.Component {
   render() {
     return (
       <div className="c-summary">
-        <span className="summary-title">{this.state.country}</span>
         <div className="summary-content">
+          <span className="summary-title">{`${this.state.country} summary`}</span>
           <Spinner isLoading={this.state.loading} />
-          <dl className="summary-list">
-            <dt>Yield</dt>
-            <dd>{this.state.yield}</dd>
-            <dt>Area</dt>
-            <dd>{this.state.area}</dd>
-          </dl>
+          <ul className="summary-list">
+            <li>
+              <span className="title">Yield</span>
+              <span className="amount">{this.state.yield}</span>
+            </li>
+            <li>
+              <span className="title">Area</span>
+              <span className="amount">{this.state.area}</span>
+            </li>
+          </ul>
         </div>
       </div>
     );
