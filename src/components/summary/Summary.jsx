@@ -57,7 +57,7 @@ export default class SummaryCountry extends React.Component {
     .then((data) => {
       this.setState({
         loading: false,
-        yield: format('.3s')(data.rows[0].value),
+        yield: `${format('.3s')(data.rows[0].value)} ton`,
         area: `${format('.3s')(data.rows[1].value)} ha`
       });
     });
