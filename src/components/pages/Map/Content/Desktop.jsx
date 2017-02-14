@@ -2,7 +2,7 @@ import React from 'react';
 
 // Components
 import Sidebar from 'containers/ui/Sidebar';
-import { Map } from 'aqueduct-components';
+import Map from 'components/map/Map';
 import Filters from 'components/filters/Filters';
 import WidgetList from 'components/widgets/WidgetList';
 import Legend from 'containers/legend/Legend';
