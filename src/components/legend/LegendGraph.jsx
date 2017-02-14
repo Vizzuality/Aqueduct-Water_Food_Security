@@ -74,32 +74,34 @@ class LegendGraph extends React.Component {
         return (
           <div className={`graph -${config.type}`}>
             <OnlyOn device="desktop">
-              <div className="graph-list">
-                {config.items.map((item, i) => {
-                  return (
-                    <div className="graph-list-item" style={{ width: `${100 / config.items.length}%` }} key={i}>
-                      <span className="color" style={{ background: item.color }} />
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="graph-list">
-                {config.items.map((item, i) => {
-                  return (
-                    <div className="graph-list-item" style={{ width: `${100 / config.items.length}%` }} key={i}>
-                      <span className="label">{item.name}</span>
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="graph-list">
-                {config.items.map((item, i) => {
-                  return (
-                    <div className="graph-list-item" style={{ width: `${100 / config.items.length}%` }} key={i}>
-                      <span className="value">{item.value}</span>
-                    </div>
-                  );
-                })}
+              <div>
+                <div className="graph-list">
+                  {config.items.map((item, i) => {
+                    return (
+                      <div className="graph-list-item" style={{ width: `${100 / config.items.length}%` }} key={i}>
+                        <span className="color" style={{ background: item.color }} />
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="graph-list">
+                  {config.items.map((item, i) => {
+                    return (
+                      <div className="graph-list-item" style={{ width: `${100 / config.items.length}%` }} key={i}>
+                        <span className="label">{item.name}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="graph-list">
+                  {config.items.map((item, i) => {
+                    return (
+                      <div className="graph-list-item" style={{ width: `${100 / config.items.length}%` }} key={i}>
+                        <span className="value">{item.value}</span>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </OnlyOn>
             <OnlyOn device="mobile">
