@@ -1,6 +1,7 @@
 import React from 'react';
 import WidgetList from 'components/widgets/WidgetList';
-import { Map, Icon } from 'aqueduct-components';
+import { Icon } from 'aqueduct-components';
+import Map from 'components/map/Map';
 import LegendMobile from 'containers/legend/LegendMobile';
 import LayerManager from 'utils/layers/LayerManager';
 

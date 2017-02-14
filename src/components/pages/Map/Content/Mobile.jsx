@@ -1,5 +1,6 @@
 import React from 'react';
-import { Map, SegmentedUi } from 'aqueduct-components';
+import { SegmentedUi } from 'aqueduct-components';
+import Map from 'components/map/Map';
 import WidgetList from 'components/widgets/WidgetList';
 import MobileFilters from 'components/filters/MobileFilters';
 import LegendMobile from 'containers/legend/LegendMobile';
