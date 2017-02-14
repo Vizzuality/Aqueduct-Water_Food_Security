@@ -1,8 +1,8 @@
 import React from 'react';
 import WidgetList from 'components/widgets/WidgetList';
-import { Map, Icon } from 'aqueduct-components';
+import { Icon } from 'aqueduct-components';
+import Map from 'components/map/Map';
 import LegendMobile from 'containers/legend/LegendMobile';
-import LayerManager from 'utils/layers/LayerManager';
 import Summary from 'components/summary/Summary';
 
 export default class CompareItem extends React.Component {
@@ -34,7 +34,7 @@ export default class CompareItem extends React.Component {
     const map = (
       <div>
         <LegendMobile layersActive={this.props.layersActive} />
-        <Map LayerManager={LayerManager} filters={this.props.filters} mapConfig={mapConfig} layersActive={this.props.layersActive} />
+        <Map filters={this.props.filters} mapConfig={mapConfig} layersActive={this.props.layersActive} />
       </div>
     );
 

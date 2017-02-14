@@ -2,12 +2,11 @@ import React from 'react';
 
 // Components
 import Sidebar from 'containers/ui/Sidebar';
-import { Map } from 'aqueduct-components';
+import Map from 'components/map/Map';
 import Filters from 'components/filters/Filters';
 import WidgetList from 'components/widgets/WidgetList';
 import Summary from 'components/summary/Summary';
 import Legend from 'containers/legend/Legend';
-import LayerManager from 'utils/layers/LayerManager';
 
 export default class MapPageDesktop extends React.Component {
 
@@ -50,7 +49,6 @@ export default class MapPageDesktop extends React.Component {
         {/* Map */}
         <div className="c-map-container">
           <Map
-            LayerManager={LayerManager}
             mapConfig={mapConfig}
             filters={this.props.filters}
             layersActive={this.props.layersActive}
