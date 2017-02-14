@@ -16,7 +16,8 @@ export default class SummaryCountry extends React.Component {
   }
 
   componentWillMount() {
-    this.getData();
+    const country = this.props.countries.length ? this.props.countries.find(c => c.id === this.props.filters.country).name : '';
+    this.setState({ country }, this.getData);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -68,7 +69,7 @@ export default class SummaryCountry extends React.Component {
       <div className="c-summary">
         <div className="summary-content">
           <span className="summary-title">{`${this.state.country} summary`}</span>
-          <Spinner isLoading={this.state.loading} />
+          <Spinner isLoading={this.state.loading} className="-transparent" />
           <ul className="summary-list">
             <li>
               <span className="title">Yield</span>
