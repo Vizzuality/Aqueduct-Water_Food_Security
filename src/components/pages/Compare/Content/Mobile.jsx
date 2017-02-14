@@ -31,7 +31,7 @@ export default class ComparePageMobile extends React.Component {
   }
 
   onChangeTab(item) {
-    this.setState(Object.assign({}, this.state, { active: +item.value }));
+    this.setState({ active: +item.value });
   }
 
   getCountrySelects() {
