@@ -11,10 +11,14 @@
     margin-bottom: $space-1 * 2;
   }
 
-  .summary-list {
+  .summary-content {
+    position: relative;
     padding: $space-1 * 2;
     background: palette(white);
     box-shadow: 0 1px 0 0 #dbdfe5;
+  }
+
+  .summary-list {
     @include clearfix;
     font-size: $font-size-big;
 

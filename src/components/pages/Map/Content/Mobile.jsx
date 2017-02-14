@@ -34,7 +34,9 @@ export default class MapPageMobile extends React.Component {
         {/* Widget list */}
         {this.state.context === 'data' &&
           <div className="mobile-widgets-container">
-            <Summary filters={this.props.filters} />
+            {this.props.filters.scope === 'country' && this.props.filters.country &&
+              <Summary filters={this.props.filters} countries={this.props.countries.list} />
+            }
             <WidgetList filters={this.props.filters} widgetsActive={this.props.widgetsActive} />
           </div>
         }

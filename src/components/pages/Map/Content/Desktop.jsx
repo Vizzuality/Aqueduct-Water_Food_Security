@@ -40,7 +40,9 @@ export default class MapPageDesktop extends React.Component {
           </div>
           {/* Widget List */}
           <div className="l-sidebar-content">
-            <Summary filters={this.props.filters} />
+            {this.props.filters.scope === 'country' && this.props.filters.country &&
+              <Summary filters={this.props.filters} countries={this.props.countries.list} />
+            }
             <WidgetList filters={this.props.filters} widgetsActive={this.props.widgetsActive} />
           </div>
         </Sidebar>
