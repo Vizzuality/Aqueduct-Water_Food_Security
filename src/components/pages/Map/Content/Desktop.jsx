@@ -5,6 +5,7 @@ import Sidebar from 'containers/ui/Sidebar';
 import Map from 'components/map/Map';
 import Filters from 'components/filters/Filters';
 import WidgetList from 'components/widgets/WidgetList';
+import Summary from 'components/summary/Summary';
 import Legend from 'containers/legend/Legend';
 
 export default class MapPageDesktop extends React.Component {
@@ -38,6 +39,9 @@ export default class MapPageDesktop extends React.Component {
           </div>
           {/* Widget List */}
           <div className="l-sidebar-content">
+            {this.props.filters.scope === 'country' && this.props.filters.country &&
+              <Summary filters={this.props.filters} countries={this.props.countries.list} />
+            }
             <WidgetList filters={this.props.filters} widgetsActive={this.props.widgetsActive} />
           </div>
         </Sidebar>

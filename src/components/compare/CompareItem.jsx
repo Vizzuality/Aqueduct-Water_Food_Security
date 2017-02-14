@@ -3,6 +3,7 @@ import WidgetList from 'components/widgets/WidgetList';
 import { Icon } from 'aqueduct-components';
 import Map from 'components/map/Map';
 import LegendMobile from 'containers/legend/LegendMobile';
+import Summary from 'components/summary/Summary';
 
 export default class CompareItem extends React.Component {
 
@@ -46,6 +47,7 @@ export default class CompareItem extends React.Component {
         }
         {showWidgets &&
           <section className="compareitem-widgets">
+            <Summary filters={this.props.filters} countries={this.props.countryList} />
             <WidgetList filters={this.props.filters} loading={this.props.loading} widgetsActive={this.props.widgetsActive} />
           </section>
         }
