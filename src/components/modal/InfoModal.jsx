@@ -16,8 +16,8 @@ export default class InfoModal extends React.Component {
           <dl>
             <dt>Instructions:</dt>
             <dd>{this.props.info.instructions || notAvailable}</dd>
-            <dt>Description:</dt>
-            <dd>{this.props.info.description || notAvailable}</dd>
+            <dt>Description:</dt><br />
+            <dd dangerouslySetInnerHTML={{ __html: this.props.info.description || notAvailable }} />
             <dt>Citation:</dt>
             <dd>{this.props.info.citation || notAvailable}</dd>
           </dl>
