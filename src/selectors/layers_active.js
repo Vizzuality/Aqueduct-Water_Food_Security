@@ -22,16 +22,9 @@ const getActiveLayers = (_datasets, _filters) => {
       isMask = (_filters.scope === 'country' && _filters.country && dataset.id === 'e844accd-9e65-414b-84e7-efc5bd65aa17');
       isAll = (_filters.water === 'none' && dataset.id === 'b7bf012f-4b8b-4478-b5c9-6af3075ca1e4');
 
-
-      if (isWater && _filters.changeFromBaseline) {
-        currentLayer = dataset.layer.find((l) => {
-          return l.attributes.layerConfig.fromBaseline;
-        });
-      } else {
-        currentLayer = dataset.layer.find((l) => {
-          return l.attributes.default;
-        });
-      }
+      currentLayer = dataset.layer.find((l) => {
+        return isWater && _filters.changeFromBaseline ? l.attributes.layerConfig.fromBaseline : l.attributes.default;
+      });
 
       const metadata = dataset.metadata.length ? dataset.metadata[0].attributes : null;
       layer = {
