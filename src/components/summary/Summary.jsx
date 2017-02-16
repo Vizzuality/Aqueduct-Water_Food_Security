@@ -13,6 +13,15 @@ export default class SummaryCountry extends React.Component {
       yield: '',
       area: ''
     };
+    this._mounted = false;
+  }
+
+  componentDidMount() {
+    this._mounted = true;
+  }
+
+  componentWillUnmount() {
+    this._mounted = false;
   }
 
   componentWillMount() {
@@ -52,11 +61,11 @@ export default class SummaryCountry extends React.Component {
     fetch(new Request(config.data.url))
     .then((response) => {
       if (response.ok) return response.json();
-      this.setState({ loading: false });
+      this._mounted && this.setState({ loading: false });
       throw new Error(response.statusText);
     })
     .then((data) => {
-      this.setState({
+      this._mounted && this.setState({
         loading: false,
         yield: `${format('.3s')(data.rows[0].value)} tons/ha`,
         area: `${format('.3s')(data.rows[1].value)} ha`
