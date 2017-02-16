@@ -129,7 +129,7 @@ class Map extends React.Component {
   // MAP FUNCTIONS
   getCenter() { return this.map.getCenter(); }
 
-  getZoom() { return this.map.getCenter(); }
+  getZoom() { return this.map.getZoom(); }
 
   fitBounds(geoJson, sidebarWidth) {
     const geojsonLayer = L.geoJson(geoJson);
