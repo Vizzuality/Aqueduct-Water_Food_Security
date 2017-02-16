@@ -12,9 +12,9 @@
   }
 
   &.-primary {
-    color: palette(blue, light);
+    color: palette(blue, secondary);
     text-transform: uppercase;
-    border: 1px solid palette(blue, light);
+    border: 1px solid palette(blue, secondary);
     font-weight: 500;
     border-radius: 3px;
     padding: 12px 25px;
@@ -22,6 +22,10 @@
 
     &.-dark {
       background-color: palette(blue, darkest);
+    }
+
+    &:hover {
+      opacity: .7;
     }
   }
 
@@ -40,10 +44,6 @@
     width: 100%;
   }
 
-  &:hover {
-    color: palette(blue, lighter);
-    border-color: palette(blue, lighter);
-  }
 
   // SOCIAL STATES
   &.-facebook {
