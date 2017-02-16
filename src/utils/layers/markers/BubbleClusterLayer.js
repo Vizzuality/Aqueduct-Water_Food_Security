@@ -6,6 +6,7 @@
 
 import L from 'leaflet/dist/leaflet';
 import { format } from 'd3-format';
+import { store } from 'main';
 import { PruneCluster, PruneClusterForLeaflet } from '../../../../lib/PruneCluster';
 
 /**
@@ -75,9 +76,10 @@ export default class BubbleClusterLayer {
             new L.LatLng(b.maxLat, b.minLng));
 
           // We should check if the sidebar is opened
+          const sidebarWidth = store.getState().sidebar.width + 25;
           pruneCluster._map.fitBounds(bounds, {
-            paddingTopLeft: [600, 25],
-            paddingBottomRight: [60, 25]
+            paddingTopLeft: [sidebarWidth, 25],
+            paddingBottomRight: [50, 25]
           });
         }
       });
