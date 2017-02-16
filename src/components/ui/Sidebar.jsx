@@ -27,6 +27,7 @@ export default class Sidebar extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.resizeEvent);
+    this.props.setSidebarWidth(0);
   }
 
   /**
