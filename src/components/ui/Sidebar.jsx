@@ -27,6 +27,7 @@ export default class Sidebar extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.resizeEvent);
+    this.props.setSidebarWidth(0);
   }
 
   /**
@@ -37,12 +38,12 @@ export default class Sidebar extends React.Component {
     this.sidebarNode && this.setState({
       opened: !this.state.opened
     }, () => {
-      this.props.setSidebarWidth((this.state.opened) ? this.sidebarNode.offsetWidth : '50');
+      this.props.setSidebarWidth((this.state.opened) ? this.sidebarNode.offsetWidth : 50);
     });
   }
 
   triggerResize() {
-    this.sidebarNode && this.props.setSidebarWidth((this.state.opened) ? this.sidebarNode.offsetWidth : '50');
+    this.sidebarNode && this.props.setSidebarWidth((this.state.opened) ? this.sidebarNode.offsetWidth : 50);
   }
 
   toggleShareModal() {
