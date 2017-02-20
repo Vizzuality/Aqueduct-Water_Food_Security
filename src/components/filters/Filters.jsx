@@ -146,7 +146,7 @@ export default class Filters extends React.Component {
                       {/* Compare */}
                       {
                         <Link
-                          className={this.state.countryToCompare ? 'c-btn -primary -filters' : 'c-btn -primary -filters -disabled'}
+                          className={`c-btn -filters -fluid ${this.state.countryToCompare ? '' : '-disabled'}`}
                           to={`/compare?countries=${this.props.filters.country},${this.state.countryToCompare}`}
                         >
                           Compare
