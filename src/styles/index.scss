@@ -17,12 +17,10 @@
 @import "components/chart";
 @import "components/compare";
 @import "components/filters";
-@import "components/header";
 @import "components/info";
 @import "components/infowindow";
 @import "components/legend";
 @import "components/share";
-@import "components/sidebar";
 @import "components/switch";
 @import "components/tooltip";
 @import "components/widget";
@@ -41,3 +39,5 @@
 @import "~aqueduct-components/styles/checkbox";
 @import "~aqueduct-components/styles/modal";
 @import "~aqueduct-components/styles/spinner";
+@import "~aqueduct-components/styles/header";
+@import "~aqueduct-components/styles/sidebar";
