@@ -1,10 +1,16 @@
 .c-btn {
+  display: inline-block;
   text-align: center;
   letter-spacing: .6px;
   font-size: $font-size-default;
   transition: all .1s linear;
-  display: flex;
   align-items: center;
+  font-weight: 500;
+  border-radius: 3px;
+  padding: 12px 25px;
+  text-transform: uppercase;
+  border-width: 1px;
+  border-style: solid;
 
   &.-disabled {
     pointer-events: none;
@@ -12,38 +18,28 @@
   }
 
   &.-primary {
-    color: palette(blue, light);
-    text-transform: uppercase;
-    border: 1px solid palette(blue, light);
-    font-weight: 500;
-    border-radius: 3px;
-    padding: 12px 25px;
-    display: inline-block;
+    border-color: palette(blue, secondary);
+    color: palette(blue, secondary);
 
     &.-dark {
       background-color: palette(blue, darkest);
+    }
+
+    &:hover {
+      opacity: .7;
     }
   }
 
   &.-filters {
     padding: 8px 25px;
-
-    @include only-desktop {
-      width: 100%;
-    }
-    @include only-mobile {
-      width: 100%;
-    }
+    border-color: palette(blue, light);
+    color: palette(blue, light);
   }
 
   &.-fluid {
     width: 100%;
   }
 
-  &:hover {
-    color: palette(blue, lighter);
-    border-color: palette(blue, lighter);
-  }
 
   // SOCIAL STATES
   &.-facebook {
@@ -82,15 +78,15 @@
 
   // ACTION STATES
   &.-success {
-    color: $color-white !important;
-    border: 1px solid $color-success !important;
-    background-color: $color-success !important;
+    color: palette(white) !important;
+    border-color: palette(feedback, success) !important;
+    background-color: palette(feedback, success) !important;
   }
 
   &.-error {
-    color: $color-white !important;
-    border: 1px solid $color-error !important;
-    background-color: $color-error !important;
+    color: palette(white) !important;
+    border-color: palette(feedback, error) !important;
+    background-color: palette(feedback, error) !important;
   }
 
   &.-share {

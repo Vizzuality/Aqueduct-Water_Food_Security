@@ -2,16 +2,31 @@ import React from 'react';
 
 // Components
 import Sidebar from 'containers/ui/Sidebar';
-import Map from 'components/map/Map';
 import Filters from 'components/filters/Filters';
 import WidgetList from 'components/widgets/WidgetList';
 import Summary from 'components/summary/Summary';
 import Legend from 'containers/legend/Legend';
+import ShareModal from 'containers/modal/ShareModal';
+import LayerManager from 'utils/layers/LayerManager';
+import { Map, Icon } from 'aqueduct-components';
 
 export default class MapPageDesktop extends React.Component {
 
+  constructor(props) {
+    super(props);
+
+    // BINDINGS
+    this.toggleShareModal = this.toggleShareModal.bind(this);
+  }
+
   componentWillMount() {
     this.props.updateMapUrl();
+  }
+
+  toggleShareModal() {
+    this.props.toggleModal(true, {
+      children: ShareModal
+    });
   }
 
   render() {
@@ -27,6 +42,11 @@ export default class MapPageDesktop extends React.Component {
 
         {/* Sidebar */}
         <Sidebar>
+          {/* Share button */}
+          <button type="button" className="-white -with-icon btn-share" onClick={this.toggleShareModal}>
+            <Icon className="-medium" name="icon-share" />
+            Share
+          </button>
           {/* Filters */}
           <div className="l-filters">
             <Filters
@@ -54,6 +74,7 @@ export default class MapPageDesktop extends React.Component {
             layersActive={this.props.layersActive}
             setMapParams={this.props.setMapParams}
             sidebar={this.props.sidebar}
+            LayerManager={LayerManager}
           />
           <Legend
             className="-map"

@@ -1,7 +1,8 @@
 import React from 'react';
 import WidgetText from 'components/widgets/WidgetText';
-import VegaChart from 'components/widgets/VegaChart';
+import { VegaChart } from 'aqueduct-components';
 import { getWidgetSql } from 'utils/filters/filters';
+import theme from 'data/vega-theme.json';
 
 class WidgetChart extends React.Component {
 
@@ -22,7 +23,7 @@ class WidgetChart extends React.Component {
       return <WidgetText widgetConfig={widgetConfig} toggleLoading={this.props.toggleLoading} />;
     }
 
-    return <VegaChart data={widgetConfig} toggleLoading={this.props.toggleLoading} />;
+    return <VegaChart theme={theme} data={widgetConfig} toggleLoading={this.props.toggleLoading} />;
   }
 }
 
