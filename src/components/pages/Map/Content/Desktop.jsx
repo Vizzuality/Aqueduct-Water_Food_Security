@@ -2,13 +2,13 @@ import React from 'react';
 
 // Components
 import Sidebar from 'containers/ui/Sidebar';
-import Map from 'components/map/Map';
 import Filters from 'components/filters/Filters';
 import WidgetList from 'components/widgets/WidgetList';
 import Summary from 'components/summary/Summary';
 import Legend from 'containers/legend/Legend';
 import ShareModal from 'containers/modal/ShareModal';
-import { Icon } from 'aqueduct-components';
+import LayerManager from 'utils/layers/LayerManager';
+import { Map, Icon } from 'aqueduct-components';
 
 export default class MapPageDesktop extends React.Component {
 
@@ -74,6 +74,7 @@ export default class MapPageDesktop extends React.Component {
             layersActive={this.props.layersActive}
             setMapParams={this.props.setMapParams}
             sidebar={this.props.sidebar}
+            LayerManager={LayerManager}
           />
           <Legend
             className="-map"
