@@ -12,16 +12,13 @@ function getConversion(string, params, sqlParams) {
 
 function getWaterColumn({ water, year, changeFromBaseline }, sufix, widget) {
   const layers = {
+    // Wayer stress
     '6c49ae6c-2c73-46ac-93ab-d4ed1b05d44e': {
       indicator: 'ws',
       dataType: changeFromBaseline && !widget ? 'c' : 't',
       sufix: changeFromBaseline && !widget ? 'l' : 'r'
     },
-    '345cfef3-ee8a-46bc-9bb9-164c406dfd2c': {
-      indicator: 'ws',
-      dataType: 'u',
-      sufix: changeFromBaseline && !widget ? 'l' : 'r'
-    },
+    // Seasonal variability
     'd9785282-2140-463f-a82d-f7296687055a': {
       indicator: 'ws',
       dataType: changeFromBaseline && !widget ? 'c' : 't',
