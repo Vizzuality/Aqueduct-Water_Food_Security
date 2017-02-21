@@ -1,5 +1,5 @@
 import React from 'react';
-import OnlyOn from 'components/ui/Responsive';
+import { OnlyOn } from 'aqueduct-components';
 
 class LegendGraph extends React.Component {
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from 'components/header/Header';
+import { Header } from 'aqueduct-components';
 import Modal from 'containers/ui/Modal';
 import Tooltip from 'containers/ui/Tooltip';
 

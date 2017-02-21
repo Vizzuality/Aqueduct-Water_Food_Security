@@ -102,8 +102,13 @@
 // ITEM
 .c-legend-item {
   list-style: none;
-  padding: 18px 14px;
+  padding: 24px;
   border-bottom: 1px solid $border-color-2;
+
+  @include only-desktop {
+    padding: 18px 14px;
+  }
+
 
   &:last-child {
     border-bottom: none;
@@ -364,11 +369,18 @@
 
         .graph-list-item {
           display: flex;
-          width: calc(25% - #{$space-1});
+          width: calc(50% - #{$space-1});
           margin: 5px $space-1 0 0;
 
           &:last-child {
             margin: 5px 0 0;
+          }
+
+          @include only-desktop {
+            width: calc(25% - #{$space-1});
+            &:last-child {
+              margin-right: 0;
+            }
           }
 
           .color {

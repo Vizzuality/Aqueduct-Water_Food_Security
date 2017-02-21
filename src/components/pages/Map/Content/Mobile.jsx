@@ -3,6 +3,7 @@ import { Map, SegmentedUi } from 'aqueduct-components';
 import WidgetList from 'components/widgets/WidgetList';
 import MobileFilters from 'components/filters/MobileFilters';
 import LegendMobile from 'containers/legend/LegendMobile';
+import Summary from 'components/summary/Summary';
 import LayerManager from 'utils/layers/LayerManager';
 
 export default class MapPageMobile extends React.Component {
@@ -33,6 +34,9 @@ export default class MapPageMobile extends React.Component {
         {/* Widget list */}
         {this.state.context === 'data' &&
           <div className="mobile-widgets-container">
+            {this.props.filters.scope === 'country' && this.props.filters.country &&
+              <Summary filters={this.props.filters} countries={this.props.countries.list} />
+            }
             <WidgetList filters={this.props.filters} widgetsActive={this.props.widgetsActive} />
           </div>
         }
@@ -41,7 +45,14 @@ export default class MapPageMobile extends React.Component {
           <div className="l-map-mobile">
             <LegendMobile layersActive={this.props.layersActive} />
             <div className="c-map-container">
-              <Map LayerManager={LayerManager} mapConfig={mapConfig} filters={this.props.filters} layersActive={this.props.layersActive} setMapParams={this.props.setMapParams} sidebar={this.props.sidebar} />
+              <Map
+                mapConfig={mapConfig}
+                filters={this.props.filters}
+                layersActive={this.props.layersActive}
+                setMapParams={this.props.setMapParams}
+                sidebar={this.props.sidebar}
+                LayerManager={LayerManager}
+              />
             </div>
           </div>
         }
