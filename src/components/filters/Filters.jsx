@@ -59,6 +59,9 @@ export default class Filters extends React.Component {
   }
 
   render() {
+    cropOptions.sort((c1, c2) => {
+      return c1.label > c2.label ? 1 : -1;
+    });
     const timeline = (
       <div className="filter-item">
         {/* Year */}
@@ -73,7 +76,7 @@ export default class Filters extends React.Component {
                 name="icon-question"
                 className="title-icon"
               />
-          </button>
+            </button>
           </div>
           <Timeline
             items={yearOptions}
@@ -173,10 +176,10 @@ export default class Filters extends React.Component {
                             name="icon-question"
                             className="title-icon"
                           />
-                      </button>
+                        </button>
                       </div>
                       <CustomSelect
-                        className="-no-search"
+                        search
                         options={cropOptions}
                         value={this.props.filters.crop}
                         onValueChange={selected => selected && this.updateFilters(selected.value, 'crop')}
