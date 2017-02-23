@@ -45,7 +45,7 @@ export const yearOptions = [
 
 export const cropOptions = [
   { value: 'all', label: 'All crops' },
-  { value: 'all pulses', label: 'All pulses' },
+  { value: 'all pulses', label: 'Other pulses' },
   { value: 'wheat', label: 'Wheat' },
   { value: 'lentils', label: 'Lentils' },
   { value: 'cowpeas', label: 'Cowpeas' },
@@ -56,7 +56,7 @@ export const cropOptions = [
   { value: 'pigeonpeas', label: 'Pigeonpeas' },
   { value: 'sweet potato', label: 'Sweet potato' },
   { value: 'soybean', label: 'Soybean' },
-  { value: 'all cereals', label: 'All cereals' },
+  { value: 'all cereals', label: 'Other cereals' },
   { value: 'cassava', label: 'Cassava' },
   { value: 'rice', label: 'Rice' },
   { value: 'groundnut', label: 'Groundnut' },
