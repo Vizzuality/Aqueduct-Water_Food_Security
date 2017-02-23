@@ -45,10 +45,27 @@ export const yearOptions = [
 
 export const cropOptions = [
   { value: 'all', label: 'All crops' },
-  { value: 'maize', label: 'Maize' },
-  { value: 'rice', label: 'Rice' },
+  { value: 'all pulses', label: 'Other pulses' },
+  { value: 'wheat', label: 'Wheat' },
+  { value: 'lentils', label: 'Lentils' },
+  { value: 'cowpeas', label: 'Cowpeas' },
+  { value: 'barley', label: 'Barley' },
+  { value: 'beans', label: 'Beans' },
+  { value: 'potato', label: 'Potato' },
+  { value: 'sorghum', label: 'Sorghum' },
+  { value: 'pigeonpeas', label: 'Pigeonpeas' },
+  { value: 'sweet potato', label: 'Sweet potato' },
   { value: 'soybean', label: 'Soybean' },
-  { value: 'wheat', label: 'Wheat' }
+  { value: 'all cereals', label: 'Other cereals' },
+  { value: 'cassava', label: 'Cassava' },
+  { value: 'rice', label: 'Rice' },
+  { value: 'groundnut', label: 'Groundnut' },
+  { value: 'chickpeas', label: 'Chickpeas' },
+  { value: 'plantain', label: 'Plantain' },
+  { value: 'banana', label: 'Banana' },
+  { value: 'millet', label: 'Millet' },
+  { value: 'maize', label: 'Maize' },
+  { value: 'yams', label: 'Yams' }
 ];
 
 export const irrigationOptions = [
