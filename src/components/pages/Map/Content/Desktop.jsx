@@ -2,6 +2,7 @@ import React from 'react';
 
 // Components
 import Sidebar from 'containers/ui/Sidebar';
+import Sticky from 'components/ui/Sticky';
 import Filters from 'components/filters/Filters';
 import WidgetList from 'components/widgets/WidgetList';
 import Summary from 'components/summary/Summary';
@@ -57,6 +58,16 @@ export default class MapPageDesktop extends React.Component {
               withScope
             />
           </div>
+          <Sticky
+            onScrollElem=".l-sidebar-content"
+            topLimit={377}
+            bottomLimit={700}
+            onFixed={() => { console.log('sticky') }}
+            onNoFixed={() => { console.log('no sticky') }}
+            className="my-custom-class"
+          >
+            <div ref={(elem) => { this.comp = elem; }} className="my-component">COMPONENT</div>
+          </Sticky>
           {/* Widget List */}
           <div className="l-sidebar-content">
             {this.props.filters.scope === 'country' && this.props.filters.country &&
