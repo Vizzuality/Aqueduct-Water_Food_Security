@@ -4,6 +4,7 @@ import React from 'react';
 import Sidebar from 'containers/ui/Sidebar';
 import Sticky from 'components/ui/Sticky';
 import Filters from 'components/filters/Filters';
+import StickyFilters from 'components/filters/StickyFilters';
 import WidgetList from 'components/widgets/WidgetList';
 import Summary from 'components/summary/Summary';
 import Legend from 'containers/legend/Legend';
@@ -48,6 +49,15 @@ export default class MapPageDesktop extends React.Component {
             <Icon className="-medium" name="icon-share" />
             Share
           </button>
+          <Sticky
+            className="-filters"
+            topLimit={0}
+            onFixed={() => { console.log('fixed'); }}
+            onNoFixed={() => { console.log('onNoFixed'); }}
+            onScrollElem=".l-sidebar-content"
+          >
+            <StickyFilters ref={(elem) => { this.comp = elem; }} />
+          </Sticky>
           {/* Filters */}
           <div className="l-filters">
             <Filters
@@ -58,16 +68,6 @@ export default class MapPageDesktop extends React.Component {
               withScope
             />
           </div>
-          <Sticky
-            onScrollElem=".l-sidebar-content"
-            topLimit={377}
-            bottomLimit={700}
-            onFixed={() => { console.log('sticky') }}
-            onNoFixed={() => { console.log('no sticky') }}
-            className="my-custom-class"
-          >
-            <div ref={(elem) => { this.comp = elem; }} className="my-component">COMPONENT</div>
-          </Sticky>
           {/* Widget List */}
           <div className="l-sidebar-content">
             {this.props.filters.scope === 'country' && this.props.filters.country &&

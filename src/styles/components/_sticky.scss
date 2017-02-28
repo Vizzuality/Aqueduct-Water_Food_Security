@@ -4,4 +4,14 @@
     position: fixed;
     top: 0;
   }
+
+  &.-filters {
+    width: 100%;
+    transition: transform .25s ease;
+    transform: translate(0, 0);
+
+    &.-open {
+      transform: translate(0, 40px);
+    }
+  }
 }

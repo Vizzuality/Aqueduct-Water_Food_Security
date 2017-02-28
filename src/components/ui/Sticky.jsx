@@ -8,13 +8,27 @@ class Sticky extends React.Component {
     super(props);
 
     this.state = {
-      isFixed: false
+      isFixed: this.props.isFixed
     };
   }
 
   componentDidMount() {
     this._setVars();
     this._setEventListeners();
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.state.isFixed !== nextState.isFixed;
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextState.isFixed === true && this.props.onFixed !== undefined) {
+      this.props.onFixed();
+    }
+
+    if (nextState.isFixed === false && this.props.onNoFixed !== undefined) {
+      this.props.onNoFixed();
+    }
   }
 
   componentWillUnmount() {
@@ -35,58 +49,40 @@ class Sticky extends React.Component {
   _onScroll() {
     const currentScroll = this.onScrollElem.scrollTop;
 
-    if (this.state.isFixed === false) {
-
-    }
-
-    if (currentScroll >= this.props.topLimit && this.state.isFixed === false) {
-      this.setState({
-        isFixed: true
-      });
-
-      if (this.props.onFixed) {
-        this.props.onFixed();
-      }
-    }
 
     if (this.props.bottomLimit) {
+      if (currentScroll >= this.props.topLimit && currentScroll < this.props.bottomLimit
+        && this.state.isFixed === false) {
+        this.setState({
+          isFixed: true
+        });
+      }
+
       if (currentScroll >= this.props.bottomLimit && this.state.isFixed === true) {
-        console.log('no sticky')
+        this.setState({
+          isFixed: false
+        });
+      }
+    } else {
+      if (currentScroll >= this.props.topLimit && this.state.isFixed === false) {
+        this.setState({
+          isFixed: true
+        });
+      }
+      if (currentScroll < this.props.topLimit && this.state.isFixed === true) {
         this.setState({
           isFixed: false
         });
       }
     }
-
-
-    // if (this.state.isFixed === true) {
-    //   console.log('!!!!')
-    //   if (this.props.bottomLimit) {
-    //     if (currentScroll >= this.props.bottomLimit) {
-    //       console.log('?????')
-    //       this.setState({
-    //         isFixed: false
-    //       });
-    //
-    //       if (this.props.onNoFixed) {
-    //         this.props.onNoFixed();
-    //       }
-    //     }
-    //   } else {
-    //     this.setState({
-    //       isFixed: false
-    //     });
-    //
-    //     if (this.props.onNoFixed) {
-    //       this.props.onNoFixed();
-    //     }
-    //   }
-    // }
   }
 
   render() {
     return (
-      <div className={`c-sticky ${this.props.className} ${this.state.isFixed ? this.props.customFixedClassName : ''}`}>
+      <div
+        className={`c-sticky ${this.props.className}
+          ${this.state.isFixed ? this.props.customFixedClassName : ''}`}
+      >
         {this.props.children}
       </div>
     );
@@ -94,13 +90,16 @@ class Sticky extends React.Component {
 }
 
 Sticky.defaultProps = {
-  customFixedClassName: '-fixed'
+  customFixedClassName: '-fixed',
+  isFixed: false
 };
 
 Sticky.propTypes = {
   bottomLimit: React.PropTypes.number,
   className: React.PropTypes.string,
+  children: React.PropTypes.any,
   customFixedClassName: React.PropTypes.string,
+  isFixed: React.PropTypes.bool,
   onFixed: React.PropTypes.func,
   onNoFixed: React.PropTypes.func,
   onScrollElem: React.PropTypes.string,
