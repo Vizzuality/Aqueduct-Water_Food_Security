@@ -17,12 +17,22 @@ export default class MapPageDesktop extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      showStickyFilters: false
+    };
+
     // BINDINGS
     this.toggleShareModal = this.toggleShareModal.bind(this);
   }
 
   componentWillMount() {
     this.props.updateMapUrl();
+  }
+
+  onSticky(isSticky) {
+    this.setState({
+      showStickyFilters: isSticky
+    });
   }
 
   toggleShareModal() {
@@ -41,7 +51,6 @@ export default class MapPageDesktop extends React.Component {
 
     return (
       <div className="l-map -fullscreen">
-
         {/* Sidebar */}
         <Sidebar>
           {/* Share button */}
@@ -49,15 +58,6 @@ export default class MapPageDesktop extends React.Component {
             <Icon className="-medium" name="icon-share" />
             Share
           </button>
-          <Sticky
-            className="-filters"
-            topLimit={0}
-            onFixed={() => { console.log('fixed'); }}
-            onNoFixed={() => { console.log('onNoFixed'); }}
-            onScrollElem=".l-sidebar-content"
-          >
-            <StickyFilters ref={(elem) => { this.comp = elem; }} />
-          </Sticky>
           {/* Filters */}
           <div className="l-filters">
             <Filters
@@ -68,6 +68,15 @@ export default class MapPageDesktop extends React.Component {
               withScope
             />
           </div>
+          <Sticky
+            className="-filter"
+            topLimit={373}
+            onStick={(isSticky) => { this.onSticky(isSticky); }}
+            ScrollElem=".l-sidebar-content"
+          >
+            {this.state.showStickyFilters &&
+              <StickyFilters />}
+          </Sticky>
           {/* Widget List */}
           <div className="l-sidebar-content">
             {this.props.filters.scope === 'country' && this.props.filters.country &&

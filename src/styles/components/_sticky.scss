@@ -1,17 +1,18 @@
 .c-sticky {
 
-  &.-fixed {
+  &.-sticked {
     position: fixed;
     top: 0;
+    animation: appear $animation-time 0s forwards;
   }
 
-  &.-filters {
-    width: 100%;
-    transition: transform .25s ease;
-    transform: translate(0, 0);
+  &.-filter {
+    z-index: 10;
 
-    &.-open {
-      transform: translate(0, 40px);
+    &.-sticked {
+      left: 0;
+      width: 100%;
+      height: 40px;
     }
   }
 }

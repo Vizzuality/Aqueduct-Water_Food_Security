@@ -8,7 +8,7 @@ class Sticky extends React.Component {
     super(props);
 
     this.state = {
-      isFixed: this.props.isFixed
+      isSticked: this.props.isSticked
     };
   }
 
@@ -17,61 +17,47 @@ class Sticky extends React.Component {
     this._setEventListeners();
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return this.state.isFixed !== nextState.isFixed;
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    if (nextState.isFixed === true && this.props.onFixed !== undefined) {
-      this.props.onFixed();
-    }
-
-    if (nextState.isFixed === false && this.props.onNoFixed !== undefined) {
-      this.props.onNoFixed();
-    }
-  }
-
   componentWillUnmount() {
-    this.onScrollElem.removeEventListener('scroll', this.throttledScroll);
+    this.ScrollElem.removeEventListener('scroll', this.throttledScroll);
   }
 
   _setVars() {
-    this.onScrollElem = this.props.onScrollElem ?
-      document.querySelector(this.props.onScrollElem) : window;
+    this.ScrollElem = this.props.ScrollElem ?
+      document.querySelector(this.props.ScrollElem) : window;
 
     this.throttledScroll = _.throttle(() => this._onScroll(), 300);
   }
 
   _setEventListeners() {
-    this.onScrollElem.addEventListener('scroll', this.throttledScroll);
+    this.ScrollElem.addEventListener('scroll', this.throttledScroll);
   }
 
   _onScroll() {
-    const currentScroll = this.onScrollElem.scrollTop;
+    const currentScroll = this.ScrollElem.scrollTop;
 
 
     if (this.props.bottomLimit) {
       if (currentScroll >= this.props.topLimit && currentScroll < this.props.bottomLimit
-        && this.state.isFixed === false) {
-        this.setState({
-          isFixed: true
+        && this.state.isSticked === false) {
+        this.setState({ isSticked: true }, () => {
+          this.props.onStick(this.state.isSticked);
         });
       }
 
-      if (currentScroll >= this.props.bottomLimit && this.state.isFixed === true) {
-        this.setState({
-          isFixed: false
+      if (currentScroll >= this.props.bottomLimit && this.state.isSticked === true) {
+        this.setState({ isSticked: false }, () => {
+          this.props.onStick(this.state.isSticked);
         });
       }
     } else {
-      if (currentScroll >= this.props.topLimit && this.state.isFixed === false) {
-        this.setState({
-          isFixed: true
+      if (currentScroll >= this.props.topLimit && this.state.isSticked === false) {
+        this.setState({ isSticked: true }, () => {
+          this.props.onStick(this.state.isSticked);
         });
       }
-      if (currentScroll < this.props.topLimit && this.state.isFixed === true) {
-        this.setState({
-          isFixed: false
+      if (currentScroll < this.props.topLimit && this.state.isSticked === true) {
+        this.setState({ isSticked: false }, () => {
+          this.props.onStick(this.state.isSticked)
         });
       }
     }
@@ -81,7 +67,7 @@ class Sticky extends React.Component {
     return (
       <div
         className={`c-sticky ${this.props.className}
-          ${this.state.isFixed ? this.props.customFixedClassName : ''}`}
+          ${this.state.isSticked ? this.props.customFixedClassName : ''}`}
       >
         {this.props.children}
       </div>
@@ -90,8 +76,8 @@ class Sticky extends React.Component {
 }
 
 Sticky.defaultProps = {
-  customFixedClassName: '-fixed',
-  isFixed: false
+  customFixedClassName: '-sticked',
+  isSticked: false
 };
 
 Sticky.propTypes = {
@@ -99,10 +85,9 @@ Sticky.propTypes = {
   className: React.PropTypes.string,
   children: React.PropTypes.any,
   customFixedClassName: React.PropTypes.string,
-  isFixed: React.PropTypes.bool,
-  onFixed: React.PropTypes.func,
-  onNoFixed: React.PropTypes.func,
-  onScrollElem: React.PropTypes.string,
+  isSticked: React.PropTypes.bool,
+  onStick: React.PropTypes.func,
+  ScrollElem: React.PropTypes.string,
   topLimit: React.PropTypes.number
 };
 
