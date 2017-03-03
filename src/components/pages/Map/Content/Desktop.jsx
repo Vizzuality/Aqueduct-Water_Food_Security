@@ -29,9 +29,21 @@ export default class MapPageDesktop extends React.Component {
     this.props.updateMapUrl();
   }
 
+  componentDidMount() {
+    this.calculateStickyFilterPosition();
+  }
+
   onSticky(isSticky) {
     this.setState({
       showStickyFilters: isSticky
+    });
+  }
+
+  calculateStickyFilterPosition() {
+    const stickyFilterTopPosition = this.filtersElem.getBoundingClientRect().height;
+
+    this.setState({
+      stickyFilterTopPosition
     });
   }
 
@@ -59,7 +71,7 @@ export default class MapPageDesktop extends React.Component {
             Share
           </button>
           {/* Filters */}
-          <div className="l-filters">
+          <div className="l-filters" ref={(elem) => { this.filtersElem = elem; }}>
             <Filters
               className="-sidebar"
               filters={this.props.filters}
@@ -70,7 +82,7 @@ export default class MapPageDesktop extends React.Component {
           </div>
           <Sticky
             className="-filter"
-            topLimit={373}
+            topLimit={this.state.stickyFilterTopPosition}
             onStick={(isSticky) => { this.onSticky(isSticky); }}
             ScrollElem=".l-sidebar-content"
           >
