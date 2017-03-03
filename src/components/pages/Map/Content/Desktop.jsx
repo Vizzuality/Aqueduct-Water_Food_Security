@@ -2,7 +2,9 @@ import React from 'react';
 
 // Components
 import Sidebar from 'containers/ui/Sidebar';
+import Sticky from 'components/ui/Sticky';
 import Filters from 'components/filters/Filters';
+import StickyFilters from 'components/filters/StickyFilters';
 import WidgetList from 'components/widgets/WidgetList';
 import Summary from 'components/summary/Summary';
 import Legend from 'containers/legend/Legend';
@@ -15,12 +17,34 @@ export default class MapPageDesktop extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      showStickyFilters: false
+    };
+
     // BINDINGS
     this.toggleShareModal = this.toggleShareModal.bind(this);
   }
 
   componentWillMount() {
     this.props.updateMapUrl();
+  }
+
+  componentDidMount() {
+    this.calculateStickyFilterPosition();
+  }
+
+  onSticky(isSticky) {
+    this.setState({
+      showStickyFilters: isSticky
+    });
+  }
+
+  calculateStickyFilterPosition() {
+    const stickyFilterTopPosition = this.filtersElem.getBoundingClientRect().height;
+
+    this.setState({
+      stickyFilterTopPosition
+    });
   }
 
   toggleShareModal() {
@@ -39,7 +63,6 @@ export default class MapPageDesktop extends React.Component {
 
     return (
       <div className="l-map -fullscreen">
-
         {/* Sidebar */}
         <Sidebar>
           {/* Share button */}
@@ -48,7 +71,7 @@ export default class MapPageDesktop extends React.Component {
             Share
           </button>
           {/* Filters */}
-          <div className="l-filters">
+          <div className="l-filters" ref={(elem) => { this.filtersElem = elem; }}>
             <Filters
               className="-sidebar"
               filters={this.props.filters}
@@ -57,6 +80,15 @@ export default class MapPageDesktop extends React.Component {
               withScope
             />
           </div>
+          <Sticky
+            className="-filter"
+            topLimit={this.state.stickyFilterTopPosition}
+            onStick={(isSticky) => { this.onSticky(isSticky); }}
+            ScrollElem=".l-sidebar-content"
+          >
+            {this.state.showStickyFilters &&
+              <StickyFilters />}
+          </Sticky>
           {/* Widget List */}
           <div className="l-sidebar-content">
             {this.props.filters.scope === 'country' && this.props.filters.country &&
