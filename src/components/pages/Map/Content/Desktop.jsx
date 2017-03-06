@@ -86,8 +86,15 @@ export default class MapPageDesktop extends React.Component {
             onStick={(isSticky) => { this.onSticky(isSticky); }}
             ScrollElem=".l-sidebar-content"
           >
-            {this.state.showStickyFilters &&
-              <StickyFilters />}
+            {
+              this.state.showStickyFilters &&
+                <StickyFilters
+                  filters={this.props.filters}
+                  setFilters={this.props.setFilters}
+                  toggleModal={this.props.toggleModal}
+                  withScope
+                />
+            }
           </Sticky>
           {/* Widget List */}
           <div className="l-sidebar-content">

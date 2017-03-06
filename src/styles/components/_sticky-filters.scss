@@ -1,7 +1,42 @@
-
 .c-sticky-filters {
   display: inline-block;
   width: 100%;
-  background-color: palette(blue);
   height: 100%;
+  background-color: palette(sand);
+  box-shadow: 0 1px 0 0 #dbdfe5;
+
+  .filters-lead {
+    background-color: palette(blue);
+  }
+
+  .global-filters,
+  .country-filters {
+    display: flex;
+    padding: $space-1 ($space-1 * 3);
+
+    > div {
+      flex-grow: 1;
+      margin-right: ($space-1 * 3);
+      &:last-of-type { margin-right: 0; }
+
+      .c-custom-select + .c-custom-select {
+        margin-left: ($space-1 * 2);
+      }
+
+      .c-btn {
+        color: palette(gray);
+        border-color: palette(gray);
+      }
+    }
+
+    .title {
+      display: block;
+      height: 18px;
+      opacity: .5;
+      color: palette(gray, 'dark');
+      line-height: 22px;
+      text-transform: uppercase;
+      letter-spacing: .9px;
+    }
+  }
 }
