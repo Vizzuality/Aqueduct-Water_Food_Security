@@ -1,10 +1,13 @@
 import React from 'react';
 import classnames from 'classnames';
+import html2canvas from 'html2canvas';
+import snakeCase from 'lodash/snakeCase';
 import WidgetButtons from 'components/widgets/WidgetButtons';
 import WidgetChart from 'components/widgets/WidgetChart';
 import WidgetModal from 'components/modal/WidgetModal';
 import EmbedModal from 'components/modal/EmbedModal';
 import { Spinner } from 'aqueduct-components';
+import { saveAsFile } from 'utils/utils';
 
 class Widget extends React.Component {
 
@@ -40,6 +43,7 @@ class Widget extends React.Component {
           }
         });
         break;
+<<<<<<< HEAD
       case 'embed':
         this.props.toggleModal(true, {
           children: EmbedModal,
@@ -51,6 +55,16 @@ class Widget extends React.Component {
         });
         break;
 
+=======
+      case 'download-png': {
+        const { name } = this.props.widget;
+
+        html2canvas(this.widgetElem).then((canvas) => {
+          saveAsFile(canvas, 'image/png', `${snakeCase(name)}.png`);
+        });
+        break;
+      }
+>>>>>>> Downloads widget canvas as png image
       default:
         console.info('The action is not supported by this function');
     }
