@@ -99,7 +99,7 @@ class StickyFilters extends React.Component {
             />
           </div>
           <div>
-            <span className="title">Country data</span>
+            <span className="title">Food security</span>
             <CustomSelect
               className={`-mini ${this.props.filters.scope === 'country' ? '-disabled -no-search' : '-no-search'}`}
               options={foodOptions}
