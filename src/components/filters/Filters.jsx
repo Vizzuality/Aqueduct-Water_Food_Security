@@ -234,7 +234,6 @@ export default class Filters extends React.Component {
                         </button>
                       </div>
                       <CustomSelect
-                        className={this.props.filters.scope === 'country' ? '-disabled -no-search' : '-no-search'}
                         options={foodOptions}
                         value={this.props.filters.food}
                         onValueChange={selected => selected && this.updateFilters(selected.value, 'food')}
