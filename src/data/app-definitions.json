@@ -12,7 +12,7 @@
     "citation": "See WRI Aqueduct Water Risk Atlas"
   },
   "country-data": {
-    "title": "Country Data",
+    "title": "Food security",
     "instructions": "Select a country-level dataset to learn about the demand, production, and trade for food as well as the country's risk of food insecurity.",
     "description": "<ul><li>Food demand represents the demand for, or availability of, food in the domestic sector.</li> <li>Production represents crop area harvested * crop yield.</li> <li>Net trade represents the amount traded, where positive values indicate greater exports than imports.</li> <li>Kilocalories per person represents the availability of calories per person.</li> <li>Population at risk of hunger represents the population at risk of suffering from malnourishment.</li></ul>",
     "citation": "IFPRI IMPACT Model"

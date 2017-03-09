@@ -1,22 +1,22 @@
 [
   {
     "id": "76f53ba4-b1d9-4385-8bab-f56aa707d961",
-    "name": "Food demand",
+    "name": "Food demand for crop",
     "category": "food"
   },
   {
     "id": "0eb7ef57-037b-4356-8902-04a39cf4bd24",
-    "name": "Food production",
+    "name": "Total crop production",
     "category": "food"
   },
   {
     "id": "bc60a695-ab95-4264-8058-bd61d13c4918",
-    "name": "Net trade",
+    "name": "Crop net trade",
     "category": "food"
   },
   {
     "id": "ccdaede2-5343-49d6-8ea9-769528c3ab92",
-    "name": "Kcal per capita",
+    "name": "Kilocalories per person",
     "category": "food"
   },
   {

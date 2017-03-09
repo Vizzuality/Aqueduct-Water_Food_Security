@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from 'aqueduct-components';
+import { Icon, DropdownButton } from 'aqueduct-components';
 
 class WidgetButtons extends React.Component {
 
@@ -8,6 +8,21 @@ class WidgetButtons extends React.Component {
 
     // BINDINGS
     this.triggerAction = this.triggerAction.bind(this);
+  }
+
+  /**
+   * Event handler executed when the user selects a format in which to
+   * download the widget's data
+   * @param {string} format
+   */
+  onDownload(format) {
+    if (format === 'json' || format === 'csv') {
+      const link = document.createElement('a');
+      link.href = `${config.API_URL}/${(this.props.queryUrl || '').replace('query', 'download')}&format=${format}`;
+      link.click();
+    } else {
+      // Logic to download the widget as an image
+    }
   }
 
   // HELPERS
@@ -25,12 +40,20 @@ class WidgetButtons extends React.Component {
   }
 
   render() {
+    const downloadOptions = [
+      { label: 'Download CSV', value: 'csv' },
+      { label: 'Download JSON', value: 'json' },
+      { label: 'Download image', value: 'image' }
+    ];
+
     return (
       <ul className="c-widget-buttons">
         <li>
-          <a href={this.getDownloadUrl()} target="_blank" rel="noopener noreferrer" className="widget-button">
-            <Icon name="icon-download" />
-          </a>
+          <DropdownButton left options={downloadOptions} onSelect={item => this.onDownload(item.value)}>
+            <button className="widget-button">
+              <Icon name="icon-download" />
+            </button>
+          </DropdownButton>
         </li>
         <li>
           <button data-action="info" className="widget-button" onClick={this.triggerAction}>

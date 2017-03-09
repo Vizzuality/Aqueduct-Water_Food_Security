@@ -132,7 +132,11 @@ export default class BubbleClusterLayer {
 
 
   _setMarkerHtml(value) {
-    const _value = format('.3s')(value);
+    let _value = format('.3s')(value);
+    // TODO: find a way to do this using d3 format
+    if (_value[_value.length - 1] === 'm') {
+      _value = `${_value.substring(0, _value.length - 1)} 10${'-3'.sup()}`;
+    }
     return (`
       <div class="marker-bubble-inner">
       ${_value}
