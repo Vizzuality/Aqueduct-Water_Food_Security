@@ -50,6 +50,7 @@ const store = createStore(
     /* Redux dev tool, install chrome extension in
      * https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en */
     typeof window === 'object' &&
+      process.env.NODE_ENV === 'development' &&
       typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : f => f
   )
 );
