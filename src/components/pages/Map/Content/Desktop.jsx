@@ -33,6 +33,10 @@ export default class MapPageDesktop extends React.Component {
     this.calculateStickyFilterPosition();
   }
 
+  componentDidUpdate() {
+    this.calculateStickyFilterPosition();
+  }
+
   onSticky(isSticky) {
     this.setState({
       showStickyFilters: isSticky
@@ -41,6 +45,8 @@ export default class MapPageDesktop extends React.Component {
 
   calculateStickyFilterPosition() {
     const stickyFilterTopPosition = this.filtersElem.getBoundingClientRect().height;
+
+    if (this.state.stickyFilterTopPosition === stickyFilterTopPosition) return;
 
     this.setState({
       stickyFilterTopPosition

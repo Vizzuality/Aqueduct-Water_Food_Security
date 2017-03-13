@@ -25,7 +25,7 @@ class Sticky extends React.Component {
     this.ScrollElem = this.props.ScrollElem ?
       document.querySelector(this.props.ScrollElem) : window;
 
-    this.throttledScroll = _.throttle(() => this._onScroll(), 300);
+    this.throttledScroll = _.throttle(() => this._onScroll(), 50);
   }
 
   _setEventListeners() {
