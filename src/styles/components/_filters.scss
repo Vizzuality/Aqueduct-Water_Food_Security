@@ -119,10 +119,8 @@
 }
 
 .c-custom-select {
-  &.-mini {
+  &.-gray {
     display: inline-block;
-    width: auto;
-    padding-right: ($space-1 * 3);
     border-bottom: 0;
 
     &::after {
@@ -132,6 +130,8 @@
     .custom-select-text {
       max-height: 22px;
       min-height: 22px;
+      padding-right: ($space-1 * 2);
+
       line-height: 22px;
       font-size: $font-size-default;
       color: palette(gray, 'dark');
