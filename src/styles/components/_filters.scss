@@ -135,6 +135,10 @@
       line-height: 22px;
       font-size: $font-size-default;
       color: palette(gray, 'dark');
+
+      > input {
+        color: palette(gray, 'dark');
+      }
     }
   }
 }
