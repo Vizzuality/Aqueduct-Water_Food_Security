@@ -27,14 +27,15 @@ const getActiveLayers = (_datasets, _filters) => {
       });
 
       const metadata = dataset.metadata.length ? dataset.metadata[0].attributes : null;
-      layer = {
-        name: dataset.name,
-        subtitle: dataset.subtitle,
-        metadata,
-        ...currentLayer.attributes
-      };
 
       if (isWater || isFood || isMask || isAll) {
+        layer = {
+          name: dataset.name,
+          subtitle: dataset.subtitle,
+          metadata,
+          ...currentLayer.attributes
+        };
+
         layerList.push(Object.assign({}, {
           category: find(layerSpec, { id: dataset.id }).category
         }, layer));
