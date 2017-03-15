@@ -54,7 +54,7 @@ class StickyFilters extends React.Component {
             <div>
               <span className="title">Select a country</span>
               <CountrySelect
-                className="-mini"
+                className="-gray"
                 value={this.props.filters.country !== 'null' ? this.props.filters.country : null}
                 onValueChange={selected => this.updateFilters(selected && selected.value, 'country')}
               />
@@ -62,7 +62,7 @@ class StickyFilters extends React.Component {
             <div>
               <span className="title">Compare With</span>
               <CountrySelect
-                className={`-mini ${this.props.filters.country ? '' : '-disabled'}`}
+                className={`-gray ${this.props.filters.country ? '' : '-disabled'}`}
                 placeholder="Country name..."
                 value={this.state.countryToCompare}
                 onValueChange={selected => this.setState({ countryToCompare: selected.value })}
@@ -83,7 +83,7 @@ class StickyFilters extends React.Component {
             <span className="title">Crops</span>
             <CustomSelect
               search
-              className="-mini"
+              className="-gray"
               options={cropOptions}
               value={this.props.filters.crop}
               onValueChange={selected => selected && this.updateFilters(selected.value, 'crop')}
@@ -92,7 +92,7 @@ class StickyFilters extends React.Component {
           <div>
             <span className="title">Water Risk</span>
             <CustomSelect
-              className="-mini"
+              className="-gray"
               options={waterOptions}
               value={this.props.filters.water}
               onValueChange={selected => selected && this.updateFilters(selected.value, 'water')}
@@ -101,7 +101,7 @@ class StickyFilters extends React.Component {
           <div>
             <span className="title">Food security</span>
             <CustomSelect
-              className={`-mini ${this.props.filters.scope === 'country' ? '-disabled -no-search' : '-no-search'}`}
+              className="-gray"
               options={foodOptions}
               value={this.props.filters.food}
               onValueChange={selected => selected && this.updateFilters(selected.value, 'food')}
@@ -110,7 +110,7 @@ class StickyFilters extends React.Component {
           <div>
             <span className="title">Timeframe</span>
             <CustomSelect
-              className="-mini"
+              className="-gray"
               options={yearOptions}
               value={yearOptions.find(i => i.value === this.props.filters.year).value}
               onValueChange={(selected) => {
@@ -120,7 +120,7 @@ class StickyFilters extends React.Component {
             />
             {this.props.filters.year !== 'baseline' &&
               <CustomSelect
-                className="-mini"
+                className="-gray"
                 options={changeFromBaselineOptions.map(option => Object.assign({}, option, { value: option.value.toString() }))}
                 value={this.props.filters.changeFromBaseline.toString()}
                 onValueChange={selected => this.updateFilters(selected.value, 'changeFromBaseline')}

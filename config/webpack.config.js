@@ -62,6 +62,10 @@ const config = {
     extensions: ['', '.js', '.jsx', '.json', '.css', '.scss']
   },
 
+  resolveLoader: {
+    root: path.join(rootPath, 'node_modules')
+  },
+
   plugins: [
     new HtmlWebpackPlugin({
       template: 'src/index.html',
