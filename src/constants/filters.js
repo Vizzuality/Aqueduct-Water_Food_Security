@@ -36,6 +36,13 @@ export const scopeOptions = [
   { value: 'country', label: 'Country' }
 ];
 
+// this will be used once new format is implemented
+export const PeriodTypes = [
+  { value: 'month', label: 'Month' },
+  { value: 'quarter', label: 'Quarter' },
+  { value: 'year', label: 'Year' }
+];
+
 export const yearOptions = [
   { value: 'baseline', label: 'Baseline' },
   { value: '2020', label: '2020' },
@@ -73,7 +80,7 @@ export const irrigationOptions = [
   { value: 'rainfed', label: 'Rainfed' }
 ];
 
-export const changeFromBaselineOptions = [
-  { label: 'Absolute value', value: false },
-  { label: 'Change from baseline', value: true }
+export const dataTypeOptions = [
+  { label: 'Absolute value', value: 'absolute' },
+  { label: 'Change from baseline', value: 'change_from_baseline' }
 ];

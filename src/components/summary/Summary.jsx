@@ -1,6 +1,7 @@
 import React from 'react';
-import { getWidgetSql } from 'utils/filters/filters';
+import { getObjectConversion } from 'utils/filters/filters';
 import { Spinner } from 'aqueduct-components';
+import { isEqual } from 'lodash';
 import { format } from 'd3-format';
 
 export default class SummaryCountry extends React.Component {
@@ -30,12 +31,10 @@ export default class SummaryCountry extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if ((nextProps.filters.country !== this.props.filters.country) || (nextProps.countries.length !== this.props.countries.length)) {
-      const country = nextProps.countries.length ? nextProps.countries.find(c => c.id === nextProps.filters.country).name : '';
-      this.setState({ country });
-    }
+    if (isEqual(nextProps.filters, this.props.filters)) return;
 
-    this.getData();
+    const country = nextProps.countries.length ? nextProps.countries.find(c => c.id === nextProps.filters.country).name : '';
+    this.setState({ country }, this.getData);
   }
 
   getData() {
@@ -54,17 +53,26 @@ export default class SummaryCountry extends React.Component {
       SELECT impactparameter AS name, sum(value) AS value
       FROM combined01_prepared WHERE impactparameter in ('Area', 'Yield')
       {{and}} group by impactparameter`;
-    const config = getWidgetSql({ sqlConfig, paramsConfig: [], data: { url } }, this.props.filters);
+
+    const widgetConfig = Object.assign({}, {
+      sqlConfig,
+      paramsConfig: [],
+      data: { url }
+    });
+
+    const widgetConfigParsed = getObjectConversion(widgetConfig, this.props.filters, 'widget');
 
     this.setState({ loading: true });
 
-    fetch(new Request(config.data.url))
+    fetch(new Request(widgetConfigParsed.data.url))
     .then((response) => {
       if (response.ok) return response.json();
       this._mounted && this.setState({ loading: false });
       throw new Error(response.statusText);
     })
     .then((data) => {
+      if (data.rows[0] === undefined) return;
+
       this._mounted && this.setState({
         loading: false,
         yield: `${format('.3s')(data.rows[0].value)} tons/ha`,
