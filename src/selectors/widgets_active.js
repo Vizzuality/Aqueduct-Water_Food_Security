@@ -13,9 +13,9 @@ const getActiveWidgets = (_datasets, _filters, _compare) => {
   let widget;
 
   _datasets.list.forEach((dataset) => {
-    if (dataset.widget.length) {
+    if (dataset.widget && dataset.widget.length) {
       widget = Object.assign({}, dataset.widget[0].attributes, {
-        metadata: dataset.metadata.length ? dataset.metadata[0].attributes : null
+        metadata: (dataset.metadata && dataset.metadata.length) ? dataset.metadata[0].attributes : null
       });
       // Vega type widget doesn't have 'type' property
       if (!!widget.widgetConfig && (!Object.prototype.hasOwnProperty.call(widget.widgetConfig, 'type') || widget.widgetConfig.type === 'text') && widgetsFilter(widget, _filters, _compare, dataset.tags)) {
