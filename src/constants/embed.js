@@ -1,0 +1,3 @@
+export const SET_EMBED = 'SET_EMBED';
+export const GET_WIDGET_SUCCESS = 'GET_WIDGET_SUCCESS';
+export const GET_WIDGET_ERROR = 'GET_WIDGET_ERROR';

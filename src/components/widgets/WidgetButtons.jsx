@@ -20,6 +20,8 @@ class WidgetButtons extends React.Component {
       const link = document.createElement('a');
       link.href = `${config.API_URL}/${(this.props.queryUrl || '').replace('query', 'download')}&format=${format}`;
       link.click();
+    } else if (format === 'embed') {
+      this.props.triggerAction(format);
     } else {
       // Logic to download the widget as an image
     }
@@ -41,6 +43,7 @@ class WidgetButtons extends React.Component {
 
   render() {
     const downloadOptions = [
+      { label: 'Embed widget', value: 'embed' },
       { label: 'Download CSV', value: 'csv' },
       { label: 'Download JSON', value: 'json' },
       { label: 'Download image', value: 'image' }
