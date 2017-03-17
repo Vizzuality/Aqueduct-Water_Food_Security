@@ -17,8 +17,10 @@ const getActiveWidgets = (_datasets, _filters, _compare) => {
       widget = Object.assign({}, dataset.widget[0].attributes, {
         metadata: (dataset.metadata && dataset.metadata.length) ? dataset.metadata[0].attributes : null
       });
+
+      const datasetTags = (dataset.vocabulary && dataset.vocabulary.length) ? dataset.vocabulary[0].attributes.tags : [];
       // Vega type widget doesn't have 'type' property
-      if (!!widget.widgetConfig && (!Object.prototype.hasOwnProperty.call(widget.widgetConfig, 'type') || widget.widgetConfig.type === 'text') && widgetsFilter(widget, _filters, _compare, dataset.tags)) {
+      if (!!widget.widgetConfig && (!Object.prototype.hasOwnProperty.call(widget.widgetConfig, 'type') || widget.widgetConfig.type === 'text') && widgetsFilter(widget, _filters, _compare, datasetTags)) {
         widgetList.push(widget);
       }
     }
