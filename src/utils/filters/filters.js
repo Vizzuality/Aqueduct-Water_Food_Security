@@ -219,11 +219,6 @@ export function getFoodSql(layer = {}, filters = {}) {
 export function widgetsFilter(widget, { scope, crop, country, water }, compare, datasetTags) {
   const _crop = crop === 'all' ? 'all_crops' : 'one_crop';
   const _country = ((scope === 'country' && country) || compare.countries.length) ? 'country' : 'global';
-  // 3 OPTIONS
-  // - const isWater = !(water === 'none' && find(widget.widgetConfig.paramsConfig, { key: 'water_column' }));
-  // - const isWater = !(water === 'none');
-  // - empty
-  const isWater = !(water === 'none');
 
   return datasetTags && datasetTags.includes(_crop) && datasetTags.includes(_country);
 }
