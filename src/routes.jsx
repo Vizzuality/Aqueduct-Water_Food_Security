@@ -4,18 +4,23 @@ import { IndexRoute, Router, Route } from 'react-router';
 
 // Components
 import App from 'containers/app/App';
+import { Header } from 'aqueduct-components';
 import MapPage from 'containers/pages/MapPage';
 import ComparePage from 'containers/pages/ComparePage';
+import EmbedPage from 'containers/pages/EmbedPage';
 
 // Routing actions
-import { onEnterMapPage, onEnterComparePage } from 'actions/route';
+import { onEnterMapPage, onEnterComparePage, onEnterEmbedPage } from 'actions/route';
 
 const Routes = ({ history }) => (
   <Router history={history}>
     <Route path="/" component={App}>
-      <IndexRoute component={MapPage} onEnter={onEnterMapPage} />
+      <IndexRoute components={{ header: Header, main: MapPage }} onEnter={onEnterMapPage} />
       <Route path="compare">
-        <IndexRoute component={ComparePage} onEnter={onEnterComparePage} />
+        <IndexRoute components={{ header: Header, main: ComparePage }} onEnter={onEnterComparePage} />
+      </Route>
+      <Route path="embed">
+        <IndexRoute components={{ main: EmbedPage }} onEnter={onEnterEmbedPage} />
       </Route>
     </Route>
   </Router>

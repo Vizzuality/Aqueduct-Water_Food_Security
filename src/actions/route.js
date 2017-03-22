@@ -3,6 +3,7 @@ import { dispatch } from 'main';
 import { setMapLocation } from 'actions/map';
 import { setFilters } from 'actions/filters';
 import { setCompareCountry } from 'actions/compare';
+import { setEmbed } from 'actions/embed';
 
 export function onEnterMapPage({ location }, replace, done) {
   // TODO: this check is not as consistent as it should be. The right solution could be grouping all map params inside "map"
@@ -63,5 +64,18 @@ export function onEnterComparePage({ location }, replace, done) {
     };
     dispatch(setFilters(filtersObj));
   }
+  done();
+}
+
+export function onEnterEmbedPage({ location }, replace, done) {
+  if (location.query.state) {
+    let state;
+    try {
+      state = JSON.parse(atob(location.query.state));
+      dispatch(setFilters(state.filters));
+      dispatch(setEmbed(state.embed));
+    } catch (e) {} // eslint-disable-line no-empty
+  }
+
   done();
 }

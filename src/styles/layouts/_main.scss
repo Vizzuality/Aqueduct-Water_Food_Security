@@ -2,10 +2,15 @@
   position: relative;
   min-width: 320px;
 }
+
 .l-main {
   background: white;
   box-shadow: 0 0 5px rgba(black, 0.1);
   padding-top: $size-header;
+
+  &.-no-header {
+    padding-top: 0;
+  }
 }
 
 .l-header {
@@ -85,4 +90,9 @@
 .l-map-mobile {
   flex: 1;
   position: relative;
+}
+
+.l-embed {
+  display: flex;
+  align-items: center;
 }
