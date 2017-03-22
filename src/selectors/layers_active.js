@@ -16,7 +16,7 @@ const getActiveLayers = (_datasets, _filters) => {
   let isAll;
   let currentLayer;
   _datasets.list.forEach((dataset) => {
-    if (dataset.layer.length) {
+    if (dataset.layer && dataset.layer.length) {
       isWater = (dataset.id === _filters.water);
       isFood = (dataset.id === _filters.food);
       isMask = (_filters.scope === 'country' && _filters.country && dataset.id === 'e844accd-9e65-414b-84e7-efc5bd65aa17');
@@ -26,7 +26,7 @@ const getActiveLayers = (_datasets, _filters) => {
         return isWater && _filters.changeFromBaseline ? l.attributes.layerConfig.fromBaseline : l.attributes.default;
       });
 
-      const metadata = dataset.metadata.length ? dataset.metadata[0].attributes : null;
+      const metadata = (dataset.metadata && dataset.metadata.length) ? dataset.metadata[0].attributes : null;
 
       if (isWater || isFood || isMask || isAll) {
         layer = {
