@@ -49,6 +49,13 @@ export default class EmbedModal extends React.Component {
 
     this.setState({
       copyError: !successful
+    }, () => {
+      setTimeout(() => {
+        if (this.code) {
+          this.setState({ copyError: null });
+          selection.removeAllRanges();
+        }
+      }, 2500);
     });
   }
 

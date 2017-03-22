@@ -1,4 +1,5 @@
 import React from 'react';
+import classnames from 'classnames';
 import Modal from 'containers/ui/Modal';
 
 export default class App extends React.Component {
@@ -13,13 +14,16 @@ export default class App extends React.Component {
   }
 
   render() {
-    const classes = ['l-main', 'l-content'];
-    if (!this.props.header) classes.push('-no-header');
+    const mainClass = classnames({
+      'l-main': true,
+      'l-content': true,
+      '-no-header': !this.props.header
+    });
 
     return (
       <div className="l-app">
         {this.props.header}
-        <main role="main" className={classes.join(' ')}>
+        <main role="main" className={mainClass}>
           {this.props.main}
         </main>
         <Modal />

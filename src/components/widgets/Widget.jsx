@@ -1,4 +1,5 @@
 import React from 'react';
+import classnames from 'classnames';
 import WidgetButtons from 'components/widgets/WidgetButtons';
 import WidgetChart from 'components/widgets/WidgetChart';
 import WidgetModal from 'components/modal/WidgetModal';
@@ -61,8 +62,13 @@ class Widget extends React.Component {
 
   render() {
     const { name, description, widgetConfig, queryUrl } = this.props.widget;
+
+    const className = classnames({
+      [this.props.className]: !!this.props.className
+    });
+
     return (
-      <div className={`c-widget ${this.props.className ? this.props.className : ''}`}>
+      <div className={`c-widget ${className}`}>
         <div>
           <header className="widget-header">
             <div className="widget-titles">
