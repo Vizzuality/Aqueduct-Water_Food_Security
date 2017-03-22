@@ -139,7 +139,6 @@ export function getObjectConversion(obj = {}, filters = {}, category) {
     commodity: (key, isSql) => ({
       key: (isSql) ? `lower(${key})` : key,
       value: filters.crop !== 'all' ? filters.crop : null
-      // value: filters.crop || null
     }),
     crop_scenario: key => ({
       key,
@@ -156,7 +155,6 @@ export function getObjectConversion(obj = {}, filters = {}, category) {
     // Old params. Keep them to add compatibility with old format
     water_column: (param, isWidget = false) => ({
       key: param.key,
-      // value: getWaterColumn(filters, param.sufix, false)
       value: getWaterColumn(filters, param.sufix, isWidget)
     })
   };
