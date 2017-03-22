@@ -30,6 +30,7 @@ const getActiveLayers = (_datasets, _filters) => {
 
       if (isWater || isFood || isMask || isAll) {
         layer = {
+          id: currentLayer.id,
           name: dataset.name,
           subtitle: dataset.subtitle,
           metadata,
