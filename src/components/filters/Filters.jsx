@@ -59,6 +59,9 @@ export default class Filters extends React.Component {
   }
 
   render() {
+    cropOptions.sort((c1, c2) => {
+      return c1.label > c2.label ? 1 : -1;
+    });
     const timeline = (
       <div className="filter-item">
         {/* Year */}
@@ -73,7 +76,7 @@ export default class Filters extends React.Component {
                 name="icon-question"
                 className="title-icon"
               />
-          </button>
+            </button>
           </div>
           <Timeline
             items={yearOptions}
@@ -146,7 +149,7 @@ export default class Filters extends React.Component {
                       {/* Compare */}
                       {
                         <Link
-                          className={this.state.countryToCompare ? 'c-btn -primary -filters' : 'c-btn -primary -filters -disabled'}
+                          className={`c-btn -filters -fluid ${this.state.countryToCompare ? '' : '-disabled'}`}
                           to={`/compare?countries=${this.props.filters.country},${this.state.countryToCompare}`}
                         >
                           Compare
@@ -173,10 +176,10 @@ export default class Filters extends React.Component {
                             name="icon-question"
                             className="title-icon"
                           />
-                      </button>
+                        </button>
                       </div>
                       <CustomSelect
-                        className="-no-search"
+                        search
                         options={cropOptions}
                         value={this.props.filters.crop}
                         onValueChange={selected => selected && this.updateFilters(selected.value, 'crop')}
@@ -219,7 +222,7 @@ export default class Filters extends React.Component {
                   <div className="filter-item">
                     <div className="c-select">
                       <div className="select-header">
-                        <span className="title">Country data</span>
+                        <span className="title">Food security</span>
                         <button
                           className="icon-container"
                           onClick={() => this.openModal('country-data')}
@@ -231,7 +234,6 @@ export default class Filters extends React.Component {
                         </button>
                       </div>
                       <CustomSelect
-                        className={this.props.filters.scope === 'country' ? '-disabled -no-search' : '-no-search'}
                         options={foodOptions}
                         value={this.props.filters.food}
                         onValueChange={selected => selected && this.updateFilters(selected.value, 'food')}

@@ -2,16 +2,61 @@ import React from 'react';
 
 // Components
 import Sidebar from 'containers/ui/Sidebar';
-import Map from 'components/map/Map';
+import Sticky from 'components/ui/Sticky';
 import Filters from 'components/filters/Filters';
+import StickyFilters from 'components/filters/StickyFilters';
 import WidgetList from 'components/widgets/WidgetList';
 import Summary from 'components/summary/Summary';
 import Legend from 'containers/legend/Legend';
+import ShareModal from 'containers/modal/ShareModal';
+import LayerManager from 'utils/layers/LayerManager';
+import { Map, Icon } from 'aqueduct-components';
 
 export default class MapPageDesktop extends React.Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showStickyFilters: false
+    };
+
+    // BINDINGS
+    this.toggleShareModal = this.toggleShareModal.bind(this);
+  }
+
   componentWillMount() {
     this.props.updateMapUrl();
+  }
+
+  componentDidMount() {
+    this.setStickyFilterPosition();
+  }
+
+  componentDidUpdate() {
+    this.setStickyFilterPosition();
+  }
+
+  onSticky(isSticky) {
+    this.setState({
+      showStickyFilters: isSticky
+    });
+  }
+
+  setStickyFilterPosition() {
+    const stickyFilterTopPosition = this.filtersElem.getBoundingClientRect().height;
+
+    if (this.state.stickyFilterTopPosition === stickyFilterTopPosition) return;
+
+    this.setState({
+      stickyFilterTopPosition
+    });
+  }
+
+  toggleShareModal() {
+    this.props.toggleModal(true, {
+      children: ShareModal
+    });
   }
 
   render() {
@@ -24,11 +69,15 @@ export default class MapPageDesktop extends React.Component {
 
     return (
       <div className="l-map -fullscreen">
-
         {/* Sidebar */}
         <Sidebar>
+          {/* Share button */}
+          <button type="button" className="-white -with-icon btn-share" onClick={this.toggleShareModal}>
+            <Icon className="-medium" name="icon-share" />
+            Share
+          </button>
           {/* Filters */}
-          <div className="l-filters">
+          <div className="l-filters" ref={(elem) => { this.filtersElem = elem; }}>
             <Filters
               className="-sidebar"
               filters={this.props.filters}
@@ -37,6 +86,22 @@ export default class MapPageDesktop extends React.Component {
               withScope
             />
           </div>
+          <Sticky
+            className="-filter"
+            topLimit={this.state.stickyFilterTopPosition}
+            onStick={(isSticky) => { this.onSticky(isSticky); }}
+            ScrollElem=".l-sidebar-content"
+          >
+            {
+              this.state.showStickyFilters &&
+                <StickyFilters
+                  filters={this.props.filters}
+                  setFilters={this.props.setFilters}
+                  toggleModal={this.props.toggleModal}
+                  withScope
+                />
+            }
+          </Sticky>
           {/* Widget List */}
           <div className="l-sidebar-content">
             {this.props.filters.scope === 'country' && this.props.filters.country &&
@@ -54,6 +119,7 @@ export default class MapPageDesktop extends React.Component {
             layersActive={this.props.layersActive}
             setMapParams={this.props.setMapParams}
             sidebar={this.props.sidebar}
+            LayerManager={LayerManager}
           />
           <Legend
             className="-map"

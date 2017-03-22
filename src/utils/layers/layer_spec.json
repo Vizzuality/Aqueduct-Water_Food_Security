@@ -1,26 +1,31 @@
 [
   {
     "id": "76f53ba4-b1d9-4385-8bab-f56aa707d961",
-    "name": "Food demand",
+    "layerId": "0699ced2-960f-4f06-8792-62f6c34b4e39",
+    "name": "Food demand for crop",
     "category": "food"
   },
   {
     "id": "0eb7ef57-037b-4356-8902-04a39cf4bd24",
-    "name": "Food production",
+    "layerId": "efafaa9f-37ec-4f51-be7d-999f58e6823b",
+    "name": "Total crop production",
     "category": "food"
   },
   {
     "id": "bc60a695-ab95-4264-8058-bd61d13c4918",
-    "name": "Net trade",
+    "layerId": "b8e135d2-b64f-4ea3-93e9-9f8d1245fb2a",
+    "name": "Crop net trade",
     "category": "food"
   },
   {
     "id": "ccdaede2-5343-49d6-8ea9-769528c3ab92",
-    "name": "Kcal per capita",
+    "layerId": "c29b190b-6801-49ed-a101-6770525467c4",
+    "name": "Kilocalories per person",
     "category": "food"
   },
   {
     "id": "1c9a1e4f-455b-4c03-ac88-dd2242a2e4b1",
+    "layerId": "63976c45-d991-4495-a318-45950912510a",
     "name": "Population at risk of hunger",
     "category": "food"
   },
@@ -29,11 +34,15 @@
 
   {
     "id": "6c49ae6c-2c73-46ac-93ab-d4ed1b05d44e",
+    "layerId": "1b10e099-ece8-4183-9e6e-3a64a05b2979",
+    "layerProjectedId": "b2d7cc23-8697-413e-9091-c3e9f787ceab",
     "name": "Water stress",
     "category": "water"
   },
   {
     "id": "d9785282-2140-463f-a82d-f7296687055a",
+    "layerId": "e35cdf8e-0601-477c-9a0d-8d4874d296a7",
+    "layerProjectedId": "83b9c999-22f3-4413-9793-5eb806630117",
     "name": "Seasonal variability",
     "category": "water"
   },
@@ -41,12 +50,14 @@
 
   {
     "id": "e844accd-9e65-414b-84e7-efc5bd65aa17",
+    "layerId": "87e294b1-80fe-4ddc-baac-d2e2e28d9894",
     "name": "Country mask",
     "category": "mask"
   },
 
   {
     "id": "b7bf012f-4b8b-4478-b5c9-6af3075ca1e4",
+    "layerId": "7a46cc6f-a54d-4385-be60-46a18c437a3b",
     "name": "All crops"
   }
 ]

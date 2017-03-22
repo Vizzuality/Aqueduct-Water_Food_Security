@@ -379,7 +379,7 @@
           @include only-desktop {
             width: calc(25% - #{$space-1});
             &:last-child {
-              margin: 0;
+              margin-right: 0;
             }
           }
 

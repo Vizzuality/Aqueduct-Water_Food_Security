@@ -17,16 +17,17 @@
 @import "components/chart";
 @import "components/compare";
 @import "components/filters";
-@import "components/header";
 @import "components/info";
+@import "components/embed";
 @import "components/infowindow";
 @import "components/legend";
 @import "components/share";
-@import "components/sidebar";
 @import "components/switch";
 @import "components/tooltip";
 @import "components/widget";
 @import "components/widget-text";
+@import "components/sticky";
+@import "components/sticky-filters";
 @import "components/swipe";
 @import "components/summary";
 
@@ -41,3 +42,6 @@
 @import "~aqueduct-components/styles/checkbox";
 @import "~aqueduct-components/styles/modal";
 @import "~aqueduct-components/styles/spinner";
+@import "~aqueduct-components/styles/header";
+@import "~aqueduct-components/styles/sidebar";
+@import "~aqueduct-components/styles/dropdown";

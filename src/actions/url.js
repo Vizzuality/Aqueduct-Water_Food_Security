@@ -1,4 +1,4 @@
-import { push } from 'react-router-redux';
+import { replace } from 'react-router-redux';
 
 export function updateMapUrl() {
   return (dispatch, state) => {
@@ -20,7 +20,7 @@ export function updateMapUrl() {
         changeFromBaseline
       }
     };
-    dispatch(push(locationDescriptor));
+    dispatch(replace(locationDescriptor));
   };
 }
 
@@ -41,6 +41,6 @@ export function updateCompareUrl() {
         changeFromBaseline
       }
     };
-    dispatch(push(locationDescriptor));
+    dispatch(replace(locationDescriptor));
   };
 }

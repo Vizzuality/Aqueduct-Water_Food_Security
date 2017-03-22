@@ -118,6 +118,31 @@
   }
 }
 
+.c-custom-select {
+  &.-gray {
+    display: inline-block;
+    border-bottom: 0;
+
+    &::after {
+      border-bottom-color: palette(gray, 'light');
+    }
+
+    .custom-select-text {
+      max-height: 22px;
+      min-height: 22px;
+      padding-right: ($space-1 * 2);
+
+      line-height: 22px;
+      font-size: $font-size-default;
+      color: palette(gray, 'dark');
+
+      > input {
+        color: palette(gray, 'dark');
+      }
+    }
+  }
+}
+
 /* Mobile */
 .c-mobile-filters {
   &.-compare {

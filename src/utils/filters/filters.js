@@ -1,4 +1,3 @@
-import find from 'lodash/find';
 import { substitution, concatenation } from 'utils/utils';
 
 // Util functions
@@ -13,21 +12,22 @@ function getConversion(string, params, sqlParams) {
 
 function getWaterColumn({ water, year, changeFromBaseline }, sufix, widget) {
   const layers = {
+    // Wayer stress
     '6c49ae6c-2c73-46ac-93ab-d4ed1b05d44e': {
       indicator: 'ws',
-      dataType: changeFromBaseline && !widget ? 'c' : 't'
+      dataType: changeFromBaseline && !widget ? 'c' : 't',
+      sufix: changeFromBaseline && !widget ? 'l' : 'r'
     },
-    '345cfef3-ee8a-46bc-9bb9-164c406dfd2c': {
-      indicator: 'ws',
-      dataType: 'u'
-    },
+    // Seasonal variability
     'd9785282-2140-463f-a82d-f7296687055a': {
-      indicator: 'ws',
-      dataType: changeFromBaseline && !widget ? 'c' : 't'
+      indicator: 'sv',
+      dataType: changeFromBaseline && !widget ? 'c' : 't',
+      sufix: changeFromBaseline && !widget ? 'l' : 'r'
     },
     none: {
       indicator: 'ws',
-      dataType: changeFromBaseline && !widget ? 'c' : 't'
+      dataType: changeFromBaseline && !widget ? 'c' : 't',
+      sufix: changeFromBaseline && !widget ? 'l' : 'r'
     }
   };
 
@@ -40,12 +40,25 @@ function getWaterColumn({ water, year, changeFromBaseline }, sufix, widget) {
     2050: '50'
   };
 
-  const _indicator = layers[water].indicator;
+  let _indicator = layers[water].indicator;
   const _year = yearOptions[year];
   const _dataType = layers[water].dataType;
   const _scenario = (year === 'baseline') ? '00' : '28';
+  const _sufix = sufix || layers[water].sufix;
 
-  return `${_indicator}${_year}${_scenario}${_dataType}${sufix || 'r'}`;
+
+  /**
+   * A bomb has been planted!
+   *
+   * For Seasonal Variability-based widgets, their table name
+   * don't match with its dataset one, that's why we have to changed it
+   * manually. This should be REMOVED in the future.
+   **/
+  if (layers[water].indicator === 'sv' && widget === true) {
+    _indicator = 'ws';
+  }
+
+  return `${_indicator}${_year}${_scenario}${_dataType}${_sufix}`;
 }
 
 // LAYER FUNCTIONS
@@ -206,11 +219,6 @@ export function getFoodSql(layer = {}, filters = {}) {
 export function widgetsFilter(widget, { scope, crop, country, water }, compare, datasetTags) {
   const _crop = crop === 'all' ? 'all_crops' : 'one_crop';
   const _country = ((scope === 'country' && country) || compare.countries.length) ? 'country' : 'global';
-  // 3 OPTIONS
-  // - const isWater = !(water === 'none' && find(widget.widgetConfig.paramsConfig, { key: 'water_column' }));
-  // - const isWater = !(water === 'none');
-  // - empty
-  const isWater = !(water === 'none');
 
   return datasetTags && datasetTags.includes(_crop) && datasetTags.includes(_country);
 }

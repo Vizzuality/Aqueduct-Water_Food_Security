@@ -1,9 +1,7 @@
 import React from 'react';
 import orderBy from 'lodash/orderBy';
-import OnlyOn from 'components/ui/Responsive';
-
 import LegendItem from 'components/legend/LegendItem';
-import { Icon } from 'aqueduct-components';
+import { Icon, OnlyOn } from 'aqueduct-components';
 
 export default class Legend extends React.Component {
   constructor(props) {

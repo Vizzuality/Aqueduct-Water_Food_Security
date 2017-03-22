@@ -1,31 +1,40 @@
 import React from 'react';
-import Header from 'components/header/Header';
+import classnames from 'classnames';
 import Modal from 'containers/ui/Modal';
-import Tooltip from 'containers/ui/Tooltip';
 
 export default class App extends React.Component {
 
   componentWillMount() {
+    // We assume the only page that doesn't have the header is the embed
+    // For the embed, we don't need to fetch the list of datasets nor countries
+    if (!this.props.header) return;
+
     this.props.getDatasets();
     this.props.getCountries();
   }
 
   render() {
+    const mainClass = classnames({
+      'l-main': true,
+      'l-content': true,
+      '-no-header': !this.props.header
+    });
+
     return (
       <div className="l-app">
-        <Header />
-        <main role="main" className="l-main l-content">
-          {this.props.children}
+        {this.props.header}
+        <main role="main" className={mainClass}>
+          {this.props.main}
         </main>
         <Modal />
-        <Tooltip />
       </div>
     );
   }
 }
 
 App.propTypes = {
-  children: React.PropTypes.object,
+  header: React.PropTypes.element,
+  main: React.PropTypes.element,
   getCountries: React.PropTypes.func,
   getDatasets: React.PropTypes.func
 };

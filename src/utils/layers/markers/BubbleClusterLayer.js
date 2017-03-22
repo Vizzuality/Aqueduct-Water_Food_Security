@@ -6,6 +6,7 @@
 
 import L from 'leaflet/dist/leaflet';
 import { format } from 'd3-format';
+import { store } from 'main';
 import { PruneCluster, PruneClusterForLeaflet } from '../../../../lib/PruneCluster';
 
 /**
@@ -75,9 +76,10 @@ export default class BubbleClusterLayer {
             new L.LatLng(b.maxLat, b.minLng));
 
           // We should check if the sidebar is opened
+          const sidebarWidth = store.getState().sidebar.width + 25;
           pruneCluster._map.fitBounds(bounds, {
-            paddingTopLeft: [600, 25],
-            paddingBottomRight: [60, 25]
+            paddingTopLeft: [sidebarWidth, 25],
+            paddingBottomRight: [50, 25]
           });
         }
       });
@@ -130,7 +132,12 @@ export default class BubbleClusterLayer {
 
 
   _setMarkerHtml(value) {
-    const _value = format('.3s')(value);
+    let _value;
+    if (value < 0.001 && value > 0) {
+      _value = '< 0.001';
+    } else {
+      _value = format((value < 1 && value > -1) ? '.3f' : '.3s')(value);
+    }
     return (`
       <div class="marker-bubble-inner">
       ${_value}
