@@ -7,7 +7,7 @@ import esri from 'esri-leaflet';
 // Layers
 import BubbleClusterLayer from 'utils/layers/markers/BubbleClusterLayer';
 // Functions
-import { getWaterSql, getFoodSql } from 'utils/filters/filters';
+import { getObjectConversion } from 'utils/filters/filters';
 
 // adding support for esri
 L.esri = esri;
@@ -76,44 +76,60 @@ export default class LayerManager {
     });
   }
 
+  _getLayerConfigParsed(_layerConfig) {
+    return {
+      layers: _layerConfig.body.layers.map((l) => {
+        return Object.assign({}, l, {
+          options: Object.assign({}, l.options, {
+            user_name: _layerConfig.account,
+            cartocss_version: l.options.cartocssVersion
+          })
+        });
+      })
+    };
+  }
+
   _addCartoLayer(layerSpec, opts) {
-    const layer = Object.assign({}, layerSpec.layerConfig, {
+    const layerConfig = Object.assign({}, layerSpec.layerConfig, {
       id: layerSpec.id,
       category: layerSpec.category
     });
     const options = opts;
 
-    if (this._mapRequests[layer.category]) {
-      if (this._mapRequests[layer.category].readyState !== 4) {
-        this._mapRequests[layer.category].abort();
-        delete this._mapRequests[layer.category];
-        delete this._layersLoading[layer.id];
+    if (this._mapRequests[layerConfig.category]) {
+      if (this._mapRequests[layerConfig.category].readyState !== 4) {
+        this._mapRequests[layerConfig.category].abort();
+        delete this._mapRequests[layerConfig.category];
+        delete this._layersLoading[layerConfig.id];
       }
     }
 
-    switch (layer.category) {
+    switch (layerConfig.category) {
       case 'water': {
-        const body = getWaterSql(layer, options);
+        const layerConfigConverted = getObjectConversion(layerConfig, options, 'water');
+        const layerConfigParsed = Object.assign({}, layerConfigConverted, Object.assign({
+          body: this._getLayerConfigParsed(layerConfigConverted)
+        }));
 
-        this._layersLoading[layer.id] = true;
+        this._layersLoading[layerConfig.id] = true;
         const xmlhttp = new XMLHttpRequest();
-        xmlhttp.open('POST', `https://${layer.account}.carto.com/api/v1/map`);
+        xmlhttp.open('POST', `https://${layerConfig.account}.carto.com/api/v1/map`);
         xmlhttp.setRequestHeader('Content-Type', 'application/json');
-        xmlhttp.send(JSON.stringify(body));
+        xmlhttp.send(JSON.stringify(layerConfigParsed.body));
 
         xmlhttp.onreadystatechange = () => {
           if (xmlhttp.readyState === 4) {
             if (xmlhttp.status === 200) {
               const data = JSON.parse(xmlhttp.responseText);
 
-              const tileUrl = `https://${layer.account}.carto.com/api/v1/map/${data.layergroupid}/{z}/{x}/{y}.png`;
+              const tileUrl = `https://${layerConfig.account}.carto.com/api/v1/map/${data.layergroupid}/{z}/{x}/{y}.png`;
 
-              this._mapLayers[layer.id] = L.tileLayer(tileUrl).addTo(this._map).setZIndex(998);
+              this._mapLayers[layerConfig.id] = L.tileLayer(tileUrl).addTo(this._map).setZIndex(998);
 
-              this._mapLayers[layer.id].on('load', () => {
-                delete this._layersLoading[layer.id];
+              this._mapLayers[layerConfig.id].on('load', () => {
+                delete this._layersLoading[layerConfig.id];
               });
-              this._mapLayers[layer.id].on('tileerror', () => {
+              this._mapLayers[layerConfig.id].on('tileerror', () => {
                 this._rejectLayersLoading = true;
               });
             } else {
@@ -122,17 +138,17 @@ export default class LayerManager {
           }
         };
 
-        this._mapRequests[layer.category] = xmlhttp;
+        this._mapRequests[layerConfig.category] = xmlhttp;
 
         break;
       }
 
       case 'food': {
-        const body = getFoodSql(layer, options);
+        const layerConfigConverted = getObjectConversion(layerConfig, options, 'food');
 
-        this._layersLoading[layer.id] = true;
+        this._layersLoading[layerConfig.id] = true;
         const xmlhttp = new XMLHttpRequest();
-        xmlhttp.open('GET', body.url);
+        xmlhttp.open('GET', layerConfigConverted.body.url);
         xmlhttp.send();
 
         xmlhttp.onreadystatechange = () => {
@@ -140,43 +156,46 @@ export default class LayerManager {
             if (xmlhttp.status === 200) {
               const data = JSON.parse(xmlhttp.responseText);
               const geojson = data.rows[0].data.features || [];
-              this._mapLayers[layer.id] = new BubbleClusterLayer(
-                geojson, layer
+              this._mapLayers[layerConfig.id] = new BubbleClusterLayer(
+                geojson, layerConfig
               ).addTo(this._map);
 
-              delete this._layersLoading[layer.id];
+              delete this._layersLoading[layerConfig.id];
             } else {
               this._rejectLayersLoading = true;
             }
           }
         };
 
-        this._mapRequests[layer.category] = xmlhttp;
+        this._mapRequests[layerConfig.category] = xmlhttp;
         break;
       }
 
       default: {
-        const body = getWaterSql(layer, options);
+        const layerConfigConverted = getObjectConversion(layerConfig, options, 'water');
+        const layerConfigParsed = Object.assign({}, layerConfigConverted, Object.assign({
+          body: this._getLayerConfigParsed(layerConfigConverted)
+        }));
 
-        this._layersLoading[layer.id] = true;
+        this._layersLoading[layerConfig.id] = true;
         const xmlhttp = new XMLHttpRequest();
-        xmlhttp.open('POST', `https://${layer.account}.carto.com/api/v1/map`);
+        xmlhttp.open('POST', `https://${layerConfig.account}.carto.com/api/v1/map`);
         xmlhttp.setRequestHeader('Content-Type', 'application/json');
-        xmlhttp.send(JSON.stringify(body));
+        xmlhttp.send(JSON.stringify(layerConfigParsed.body));
 
         xmlhttp.onreadystatechange = () => {
           if (xmlhttp.readyState === 4) {
             if (xmlhttp.status === 200) {
               const data = JSON.parse(xmlhttp.responseText);
               // we can switch off the layer while it is loading
-              const tileUrl = `https://${layer.account}.carto.com/api/v1/map/${data.layergroupid}/{z}/{x}/{y}.png`;
+              const tileUrl = `https://${layerConfig.account}.carto.com/api/v1/map/${data.layergroupid}/{z}/{x}/{y}.png`;
 
-              this._mapLayers[layer.id] = L.tileLayer(tileUrl).addTo(this._map).setZIndex(999);
+              this._mapLayers[layerConfig.id] = L.tileLayer(tileUrl).addTo(this._map).setZIndex(999);
 
-              this._mapLayers[layer.id].on('load', () => {
-                delete this._layersLoading[layer.id];
+              this._mapLayers[layerConfig.id].on('load', () => {
+                delete this._layersLoading[layerConfig.id];
               });
-              this._mapLayers[layer.id].on('tileerror', () => {
+              this._mapLayers[layerConfig.id].on('tileerror', () => {
                 this._rejectLayersLoading = true;
               });
             } else {
@@ -185,7 +204,7 @@ export default class LayerManager {
           }
         };
 
-        this._mapRequests[layer.category] = xmlhttp;
+        this._mapRequests[layerConfig.category] = xmlhttp;
       }
     }
   }
