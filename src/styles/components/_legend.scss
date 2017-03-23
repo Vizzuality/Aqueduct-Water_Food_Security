@@ -59,7 +59,7 @@
     }
 
     > .legend-content {
-      max-height: 0;
+      display: none;
       background-color: rgba(245, 243, 240, .9);
       box-shadow: 0 0 2px rgba(palette(black), .25);
     }
@@ -93,7 +93,7 @@
       }
 
       > .legend-content {
-        max-height: none;
+        display: inline-block;
       }
     }
   }

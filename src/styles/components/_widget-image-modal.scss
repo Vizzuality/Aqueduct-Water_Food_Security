@@ -1,0 +1,15 @@
+.c-widget-image-modal {
+  @extend .c-embed;
+
+  .canvas-content {
+    background-color: palette(white);
+
+    .c-widget {
+      padding: 0;
+
+      .widget-content {
+        box-shadow: none;
+      }
+    }
+  }
+}
