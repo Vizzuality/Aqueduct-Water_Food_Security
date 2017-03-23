@@ -33,11 +33,15 @@
   }
 
   .sidebar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     position: relative;
     padding: $space-1 * 2;
     background-color: palette(sand);
 
-    @include only-desktop {
+    @media screen and (min-width: 64em) {
+      display: inline-block;
       padding: $space-1 * 7;
       min-height: 450px;
     }
@@ -61,8 +65,13 @@
       }
 
       .custom-select-text {
+        width: auto;
         padding-left: $space-1 * 2;
         color: palette(gray, 'dark');
+
+        @media screen and (min-width: 64em) {
+          width: 100%;
+        }
       }
     }
 
@@ -73,7 +82,7 @@
     }
 
     .c-btn {
-      @include only-desktop {
+      @media screen and (min-width: 64em) {
         width: 100%;
       }
     }

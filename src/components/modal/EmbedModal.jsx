@@ -104,7 +104,7 @@ export default class EmbedModal extends React.Component {
     return (
       <div className="c-embed">
         <div className="row expanded">
-          <div className="small-12 medium-8 columns">
+          <div className="small-12 large-8 columns">
             <div className="title">
               {this.props.widget.name}
               {this.props.widget.subtitle && <span className="subtitle">{this.props.widget.subtitle}</span>}
@@ -114,7 +114,7 @@ export default class EmbedModal extends React.Component {
               <WidgetChart config={this.props.widget.widgetConfig} filters={this.props.filters} toggleLoading={this.toggleLoading} />
             </div>
           </div>
-          <div className="small-12 medium-4 columns sidebar">
+          <div className="small-12 large-4 columns sidebar">
             <h2>Embed size</h2>
             <CustomSelect
               options={embedOptions}
@@ -124,7 +124,7 @@ export default class EmbedModal extends React.Component {
             <textareara className="code" ref={node => this.code = node} readOnly>
               {this.getCode()}
             </textareara>
-            <button className="c-btn -primary -light -fluid" type="button" onClick={() => this.onCopy()}>
+            <button className="c-btn -primary -light" type="button" onClick={() => this.onCopy()}>
               {copyButtonContent}
             </button>
           </div>

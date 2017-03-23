@@ -20,10 +20,10 @@ class WidgetButtons extends React.Component {
       const link = document.createElement('a');
       link.href = `${config.API_URL}/${(this.props.queryUrl || '').replace('query', 'download')}&format=${format}`;
       link.click();
-    } else if (format === 'embed') {
+    } else if (format === 'embed' || format === 'image') {
       this.props.triggerAction(format);
     } else {
-      // Logic to download the widget as an image
+      // Reserved for other formats.
     }
   }
 
