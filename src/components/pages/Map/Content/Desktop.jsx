@@ -7,6 +7,7 @@ import Filters from 'components/filters/Filters';
 import StickyFilters from 'components/filters/StickyFilters';
 import WidgetList from 'components/widgets/WidgetList';
 import Summary from 'components/summary/Summary';
+import DownloadButton from 'components/map/DownloadButton';
 import Legend from 'containers/legend/Legend';
 import ShareModal from 'containers/modal/ShareModal';
 import LayerManager from 'utils/layers/LayerManager';
@@ -40,6 +41,14 @@ export default class MapPageDesktop extends React.Component {
   onSticky(isSticky) {
     this.setState({
       showStickyFilters: isSticky
+    });
+  }
+
+  setMapElement(mapElem) {
+    if (this.state.mapElem) return;
+
+    this.setState({
+      mapElem
     });
   }
 
@@ -112,7 +121,7 @@ export default class MapPageDesktop extends React.Component {
         </Sidebar>
 
         {/* Map */}
-        <div className="c-map-container">
+        <div className="c-map-container" ref={(el) => { this.setMapElement(el); }}>
           <Map
             mapConfig={mapConfig}
             filters={this.props.filters}
@@ -126,6 +135,8 @@ export default class MapPageDesktop extends React.Component {
             expanded
             layers={this.props.layersActive}
           />
+          {this.state.mapElem &&
+            <DownloadButton mapElem={this.state.mapElem} />}
         </div>
       </div>
     );

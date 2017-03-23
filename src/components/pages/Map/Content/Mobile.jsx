@@ -2,6 +2,7 @@ import React from 'react';
 import { Map, SegmentedUi } from 'aqueduct-components';
 import WidgetList from 'components/widgets/WidgetList';
 import MobileFilters from 'components/filters/MobileFilters';
+import DownloadButton from 'components/map/DownloadButton';
 import LegendMobile from 'containers/legend/LegendMobile';
 import Summary from 'components/summary/Summary';
 import LayerManager from 'utils/layers/LayerManager';
@@ -12,6 +13,14 @@ export default class MapPageMobile extends React.Component {
     this.state = {
       context: 'data'
     };
+  }
+
+  setMapElement(mapElem) {
+    if (this.state.mapElem) return;
+
+    this.setState({
+      mapElem
+    });
   }
 
   render() {
@@ -44,7 +53,7 @@ export default class MapPageMobile extends React.Component {
         {this.state.context === 'map' &&
           <div className="l-map-mobile">
             <LegendMobile layersActive={this.props.layersActive} />
-            <div className="c-map-container">
+            <div className="c-map-container" ref={(el) => { this.setMapElement(el); }}>
               <Map
                 mapConfig={mapConfig}
                 filters={this.props.filters}
@@ -53,6 +62,8 @@ export default class MapPageMobile extends React.Component {
                 sidebar={this.props.sidebar}
                 LayerManager={LayerManager}
               />
+              {this.state.mapElem &&
+                <DownloadButton mapElem={this.state.mapElem} />}
             </div>
           </div>
         }

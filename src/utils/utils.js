@@ -72,8 +72,7 @@ export function dataURItoBlob(dataURI) {
 }
 
 export function saveAsFile(obj, type, fileName) {
-  const data = obj.toDataURL();
-  const dataToBlob = dataURItoBlob(data, type);
+  const dataToBlob = dataURItoBlob(obj, type);
   const url = window.URL.createObjectURL(dataToBlob);
   // emulates trigger of download creating a link in memory and clicking on it
   const a = document.createElement('a');

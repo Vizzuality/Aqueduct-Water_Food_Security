@@ -1,5 +1,5 @@
 import React from 'react';
-import html2canvas from 'html2canvas';
+import domtoimage from 'dom-to-image';
 import snakeCase from 'lodash/snakeCase';
 import { saveAsFile } from 'utils/utils';
 import { Spinner } from 'aqueduct-components';
@@ -27,9 +27,10 @@ export default class WidgetImageModal extends React.Component {
   getCanvas() {
     const { name } = this.props.widget;
 
-    html2canvas(this.canvasContent).then((canvas) => {
-      saveAsFile(canvas, 'image/png', `${snakeCase(name)}.png`);
-    });
+    domtoimage.toPng(this.canvasContent)
+      .then((png) => {
+        saveAsFile(png, 'image/png', `${snakeCase(name)}.png`);
+      });
   }
 
   toggleLoading(bool) {
