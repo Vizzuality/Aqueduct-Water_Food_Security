@@ -1,8 +1,9 @@
 import React from 'react';
+import isEqual from 'lodash/isEqual';
+import { format } from 'd3-format';
+import { capitalizeFirstLetter } from 'utils/utils';
 import { getObjectConversion } from 'utils/filters/filters';
 import { Spinner } from 'aqueduct-components';
-import { isEqual } from 'lodash';
-import { format } from 'd3-format';
 
 export default class SummaryCountry extends React.Component {
 
@@ -17,27 +18,29 @@ export default class SummaryCountry extends React.Component {
     this._mounted = false;
   }
 
+  componentWillMount() {
+    const country = this.props.countries.length ? this.props.countries.find(c => c.id === this.props.filters.country).name : '';
+    this.setState({ country }, () => {
+      this.getData(this.props);
+    });
+  }
+
   componentDidMount() {
     this._mounted = true;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (isEqual(nextProps.filters, this.props.filters) && nextProps.countries.length === this.props.countries.length) return;
+
+    const country = nextProps.countries.length ? nextProps.countries.find(c => c.id === nextProps.filters.country).name : '';
+    this.setState({ country }, this.getData);
   }
 
   componentWillUnmount() {
     this._mounted = false;
   }
 
-  componentWillMount() {
-    const country = this.props.countries.length ? this.props.countries.find(c => c.id === this.props.filters.country).name : '';
-    this.setState({ country }, this.getData);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (isEqual(nextProps.filters, this.props.filters)) return;
-
-    const country = nextProps.countries.length ? nextProps.countries.find(c => c.id === nextProps.filters.country).name : '';
-    this.setState({ country }, this.getData);
-  }
-
-  getData() {
+  getData(props) {
     const sqlConfig = [
       {
         key: 'and',
@@ -65,27 +68,35 @@ export default class SummaryCountry extends React.Component {
     this.setState({ loading: true });
 
     fetch(new Request(widgetConfigParsed.data.url))
-    .then((response) => {
-      if (response.ok) return response.json();
-      this._mounted && this.setState({ loading: false });
-      throw new Error(response.statusText);
-    })
-    .then((data) => {
-      if (data.rows[0] === undefined) return;
+      .then((response) => {
+        if (response.ok) return response.json();
+        this._mounted && this.setState({ loading: false });
+        throw new Error(response.statusText);
+      })
+      .then((data) => {
+        const yieldData = (data.rows[0]) ? format('.3s')(data.rows[0].value) : '-';
+        const areaData = (data.rows[1]) ? format('.3s')(data.rows[1].value) : '-';
 
-      this._mounted && this.setState({
-        loading: false,
-        yield: `${format('.3s')(data.rows[0].value)} tons/ha`,
-        area: `${format('.3s')(data.rows[1].value)} ha`
+        this._mounted && this.setState({
+          loading: false,
+          yield: `${yieldData} tons/ha`,
+          area: `${areaData} ha`
+        });
       });
-    });
+  }
+
+  getTitle() {
+    let { crop } = this.props.filters;
+    const { country } = this.state;
+    crop = (crop !== 'all') ? `(${capitalizeFirstLetter(crop)})` : '';
+    return `${country} summary ${crop}`;
   }
 
   render() {
     return (
       <div className="c-summary">
         <div className="summary-content">
-          <span className="summary-title">{`${this.state.country} summary`}</span>
+          <span className="summary-title">{this.getTitle()}</span>
           <Spinner isLoading={this.state.loading} className="-transparent" />
           <ul className="summary-list">
             <li>
