@@ -18,7 +18,7 @@ export default class DownloadButton extends React.Component {
     if (this.state.loading) return;
 
     this.toggleLoading(true);
-    console.log(this.props.mapElem);
+
     domtoimage.toPng(this.props.mapElem)
       .then((png) => {
         this.toggleLoading(false);
