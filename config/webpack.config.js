@@ -105,7 +105,7 @@ if (process.env.NODE_ENV === 'production') {
     comments: false
   }));
 } else {
-  config.devtool = 'eval-source-map';
+  config.devtool = 'source-map';
 }
 
 module.exports = config;

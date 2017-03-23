@@ -4,6 +4,11 @@ import LegendButtons from 'components/legend/LegendButtons';
 import LegendGraph from 'components/legend/LegendGraph';
 import SourceModal from 'components/modal/SourceModal';
 
+const categories = {
+  water: 'Water risk',
+  food: 'Food security'
+};
+
 class LegendItem extends React.Component {
   constructor(props) {
     super(props);
@@ -30,7 +35,7 @@ class LegendItem extends React.Component {
       <li className="c-legend-item">
         <header className="legend-item-header">
           <h3>
-            {this.props.layer.category && <span className="category">{this.props.layer.category} -</span>}
+            {this.props.layer.category && <span className="category">{categories[this.props.layer.category]} -</span>}
             <span className="name">{this.props.layer.name}</span>
           </h3>
           <LegendButtons triggerAction={this.triggerAction} />

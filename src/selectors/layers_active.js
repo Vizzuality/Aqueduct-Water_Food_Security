@@ -23,23 +23,23 @@ const getActiveLayers = (_datasets, _filters) => {
       isAll = (_filters.water === 'none' && dataset.id === 'b7bf012f-4b8b-4478-b5c9-6af3075ca1e4');
 
       currentLayer = dataset.layer.find((l) => {
-        return isWater && _filters.changeFromBaseline ? l.attributes.layerConfig.fromBaseline : l.attributes.default;
+        return isWater && _filters.data_type === 'change_from_baseline' ? l.attributes.layerConfig.fromBaseline : l.attributes.default;
       });
 
       const metadata = (dataset.metadata && dataset.metadata.length) ? dataset.metadata[0].attributes : null;
 
       if (isWater || isFood || isMask || isAll) {
+        const layerSpecAttrs = find(layerSpec, { id: dataset.id }) || {};
+
         layer = {
+          ...currentLayer.attributes,
           id: currentLayer.id,
-          name: dataset.name,
-          subtitle: dataset.subtitle,
-          metadata,
-          ...currentLayer.attributes
+          name: layerSpecAttrs.name,
+          category: layerSpecAttrs.category,
+          metadata
         };
 
-        layerList.push(Object.assign({}, {
-          category: find(layerSpec, { id: dataset.id }).category
-        }, layer));
+        layerList.push(layer);
       }
     }
   });

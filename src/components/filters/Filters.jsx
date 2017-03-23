@@ -23,7 +23,7 @@ import {
   yearOptions,
   cropOptions,
   irrigationOptions,
-  changeFromBaselineOptions
+  dataTypeOptions
 } from 'constants/filters';
 
 import CountrySelect from 'containers/countries/CountrySelect';
@@ -46,6 +46,7 @@ export default class Filters extends React.Component {
     const newFilter = {
       [field]: value
     };
+
     this.props.setFilters(newFilter);
   }
 
@@ -82,17 +83,17 @@ export default class Filters extends React.Component {
             items={yearOptions}
             selected={yearOptions.find(i => i.value === this.props.filters.year)}
             onChange={(selected) => {
-              selected && selected.value === 'baseline' && this.updateFilters(false, 'changeFromBaseline');
+              selected && selected.value === 'baseline' && this.updateFilters('absolute', 'data_type');
               selected && this.updateFilters(selected.value, 'year');
             }}
           />
           {this.props.filters.year !== 'baseline' &&
             <RadioGroup
               className="-filters"
-              items={changeFromBaselineOptions}
-              name="changeFromBaseline"
-              defaultValue={this.props.filters.changeFromBaseline.toString()}
-              onChange={selected => this.updateFilters(selected.value, 'changeFromBaseline')}
+              items={dataTypeOptions}
+              name="data_type"
+              defaultValue={this.props.filters.data_type}
+              onChange={selected => this.updateFilters(selected.value, 'data_type')}
             />
           }
         </div>
