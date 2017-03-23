@@ -29,17 +29,17 @@ const getActiveLayers = (_datasets, _filters) => {
       const metadata = (dataset.metadata && dataset.metadata.length) ? dataset.metadata[0].attributes : null;
 
       if (isWater || isFood || isMask || isAll) {
+        const layerSpecAttrs = find(layerSpec, { id: dataset.id }) || {};
+
         layer = {
+          ...currentLayer.attributes,
           id: currentLayer.id,
-          name: dataset.name,
-          subtitle: dataset.subtitle,
-          metadata,
-          ...currentLayer.attributes
+          name: layerSpecAttrs.name,
+          category: layerSpecAttrs.category,
+          metadata
         };
 
-        layerList.push(Object.assign({}, {
-          category: find(layerSpec, { id: dataset.id }).category
-        }, layer));
+        layerList.push(layer);
       }
     }
   });
