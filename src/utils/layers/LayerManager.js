@@ -111,11 +111,18 @@ export default class LayerManager {
           body: this._getLayerConfigParsed(layerConfigConverted)
         }));
 
+        const layerTpl = {
+          version: '1.3.0',
+          stat_tag: 'API',
+          layers: layerConfigParsed.body.layers
+        };
+
+        const params = `?stat_tag=API&config=${encodeURIComponent(JSON.stringify(layerTpl))}`;
+
         this._layersLoading[layerConfig.id] = true;
         const xmlhttp = new XMLHttpRequest();
-        xmlhttp.open('POST', `https://${layerConfig.account}.carto.com/api/v1/map`);
-        xmlhttp.setRequestHeader('Content-Type', 'application/json');
-        xmlhttp.send(JSON.stringify(layerConfigParsed.body));
+        xmlhttp.open('GET', `https://${layerConfig.account}.carto.com/api/v1/map${params}`);
+        xmlhttp.send(null);
 
         xmlhttp.onreadystatechange = () => {
           if (xmlhttp.readyState === 4) {
@@ -177,11 +184,18 @@ export default class LayerManager {
           body: this._getLayerConfigParsed(layerConfigConverted)
         }));
 
+        const layerTpl = {
+          version: '1.3.0',
+          stat_tag: 'API',
+          layers: layerConfigParsed.body.layers
+        };
+
+        const params = `?stat_tag=API&config=${encodeURIComponent(JSON.stringify(layerTpl))}`;
+
         this._layersLoading[layerConfig.id] = true;
         const xmlhttp = new XMLHttpRequest();
-        xmlhttp.open('POST', `https://${layerConfig.account}.carto.com/api/v1/map`);
-        xmlhttp.setRequestHeader('Content-Type', 'application/json');
-        xmlhttp.send(JSON.stringify(layerConfigParsed.body));
+        xmlhttp.open('GET', `https://${layerConfig.account}.carto.com/api/v1/map${params}`);
+        xmlhttp.send(null);
 
         xmlhttp.onreadystatechange = () => {
           if (xmlhttp.readyState === 4) {
