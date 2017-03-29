@@ -87,7 +87,7 @@ export function getObjectConversion(obj = {}, filters = {}, category) {
   const dictionaries = {
     water: {
       yearOptions: {
-        baseline: 'bs',
+        baseline: 2014,
         2020: 2020,
         2030: 2030,
         2040: 2040,
@@ -159,11 +159,11 @@ export function getObjectConversion(obj = {}, filters = {}, category) {
     }),
     indicator: key => ({
       key,
-      value: getIndicator(filters) || null
+      value: getIndicator(filters)
     }),
     model: key => ({
       key,
-      value: filters.model || 'bau'
+      value: filters.year === 'baseline' ? 'historic' : 'bau'
     }),
     // Old params. Keep them to add compatibility with old format
     water_column: (param, isWidget = false) => ({
