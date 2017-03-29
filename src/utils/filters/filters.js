@@ -13,25 +13,38 @@ function getConversion(obj, params, sqlParams) {
   return isObject ? JSON.parse(str) : str;
 }
 
+function getIndicator({ indicator }) {
+  const layers = {
+    // Water stress
+    '6c49ae6c-2c73-46ac-93ab-d4ed1b05d44e': 'water_stress',
+    // Seasonal variability
+    'd9785282-2140-463f-a82d-f7296687055a': 'seasonal_variability',
+    // none
+    none: 'water_stress'
+  };
+
+  return layers[indicator] || 'water_stress';
+}
+
 // Keep this function by now to add compatibility. REMOVE in the future.
-function getWaterColumn({ water, year, data_type }, sufix, widget) {
+function getWaterColumn({ indicator, year, type }, sufix, widget) {
   const layers = {
     // Water stress
     '6c49ae6c-2c73-46ac-93ab-d4ed1b05d44e': {
       indicator: 'ws',
-      dataType: data_type === 'change_from_baseline' && !widget ? 'c' : 't',
-      sufix: data_type === 'change_from_baseline' && !widget ? 'l' : 'r'
+      dataType: type === 'change_from_baseline' && !widget ? 'c' : 't',
+      sufix: type === 'change_from_baseline' && !widget ? 'l' : 'r'
     },
     // Seasonal variability
     'd9785282-2140-463f-a82d-f7296687055a': {
       indicator: 'sv',
-      dataType: data_type === 'change_from_baseline' && !widget ? 'c' : 't',
-      sufix: data_type === 'change_from_baseline' && !widget ? 'l' : 'r'
+      dataType: type === 'change_from_baseline' && !widget ? 'c' : 't',
+      sufix: type === 'change_from_baseline' && !widget ? 'l' : 'r'
     },
     none: {
       indicator: 'ws',
-      dataType: data_type === 'change_from_baseline' && !widget ? 'c' : 't',
-      sufix: data_type === 'change_from_baseline' && !widget ? 'l' : 'r'
+      dataType: type === 'change_from_baseline' && !widget ? 'c' : 't',
+      sufix: type === 'change_from_baseline' && !widget ? 'l' : 'r'
     }
   };
 
@@ -44,11 +57,11 @@ function getWaterColumn({ water, year, data_type }, sufix, widget) {
     2050: '50'
   };
 
-  let _indicator = layers[water].indicator;
+  let _indicator = layers[indicator].indicator;
   const _year = yearOptions[year];
-  const _dataType = layers[water].dataType;
+  const _dataType = layers[indicator].dataType;
   const _scenario = (year === 'baseline') ? '00' : '28';
-  const _sufix = sufix || layers[water].sufix;
+  const _sufix = sufix || layers[indicator].sufix;
 
 
   /**
@@ -58,7 +71,7 @@ function getWaterColumn({ water, year, data_type }, sufix, widget) {
    * don't match with its dataset one, that's why we have to changed it
    * manually. This should be REMOVED in the future.
    **/
-  if (layers[water].indicator === 'sv' && widget === true) {
+  if (layers[indicator].indicator === 'sv' && widget === true) {
     _indicator = 'ws';
   }
 
@@ -75,10 +88,10 @@ export function getObjectConversion(obj = {}, filters = {}, category) {
     water: {
       yearOptions: {
         baseline: 'bs',
-        2020: '20',
-        2030: '30',
-        2040: '40',
-        2050: '50'
+        2020: 2020,
+        2030: 2030,
+        2040: 2040,
+        2050: 2050
       }
     },
     food: {
@@ -115,13 +128,13 @@ export function getObjectConversion(obj = {}, filters = {}, category) {
       key,
       value: filters.crop !== 'all' ? filters.crop : null
     }),
-    data_type: key => ({
+    type: key => ({
       key,
-      value: filters.data_type || 'absolute'
+      value: filters.type || 'absolute'
     }),
-    period_type: key => ({
+    period: key => ({
       key,
-      value: filters.period_type || 'year'
+      value: filters.period || 'year'
     }),
     period_value: key => ({
       key,
@@ -146,11 +159,11 @@ export function getObjectConversion(obj = {}, filters = {}, category) {
     }),
     indicator: key => ({
       key,
-      value: filters.indicator || null
+      value: getIndicator(filters) || null
     }),
-    scenario: key => ({
+    model: key => ({
       key,
-      value: filters.scenario || 'bau'
+      value: filters.model || 'bau'
     }),
     // Old params. Keep them to add compatibility with old format
     water_column: (param, isWidget = false) => ({
@@ -190,7 +203,7 @@ export function getObjectConversion(obj = {}, filters = {}, category) {
   return getConversion(obj, params, sqlParams);
 }
 
-export function widgetsFilter(widget, { scope, crop, country, water }, compare, datasetTags) {
+export function widgetsFilter(widget, { scope, crop, country, indicator }, compare, datasetTags) {
   const _crop = crop === 'all' ? 'all_crops' : 'one_crop';
   const _country = ((scope === 'country' && country) || compare.countries.length) ? 'country' : 'global';
 

@@ -23,18 +23,18 @@ export function onEnterMapPage({ location }, replace, done) {
   // if there are filter params
   // I really don't like this...
   if (location.query.crop) {
-    const { crop, country, food, irrigation, scope, period_type, period_value, year, water, data_type } = location.query;
+    const { crop, country, food, irrigation, scope, period, period_value, year, indicator, type } = location.query;
     const filtersObj = {
       country,
       crop,
       food,
       irrigation: (irrigation) ? irrigation.split(',') : false,
       scope,
-      period_type,
+      period,
       period_value,
       year,
-      water,
-      data_type
+      indicator,
+      type
     };
     dispatch(setFilters(filtersObj));
   }
@@ -52,19 +52,19 @@ export function onEnterComparePage({ location }, replace, done) {
   }
   // If there are filter params
   if (location.query.crop) {
-    const { crop, food, period_type, period_value, year, water, data_type } = location.query;
+    const { crop, food, period, period_value, year, indicator, type } = location.query;
     let { irrigation } = location.query;
     irrigation = irrigation.split(',');
     const filtersObj = {
       crop,
       scope: 'country',
-      period_type,
+      period,
       period_value,
       year,
       food,
-      water,
+      indicator,
       irrigation,
-      data_type
+      type
     };
     dispatch(setFilters(filtersObj));
   }
