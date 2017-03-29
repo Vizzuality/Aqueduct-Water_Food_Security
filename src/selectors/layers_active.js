@@ -35,7 +35,7 @@ const getActiveLayers = (_datasets, _filters) => {
         });
       }
 
-      if (isFood) {
+      if (isFood || isMask) {
         currentLayer = dataset.layer.find((l) => {
           return l.attributes.default;
         });
