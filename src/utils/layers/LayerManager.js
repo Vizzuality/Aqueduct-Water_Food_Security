@@ -1,13 +1,12 @@
-/* eslint import/no-unresolved: 0 */
-/* eslint import/extensions: 0 */
 
-import 'whatwg-fetch';
 import L from 'leaflet/dist/leaflet';
 import esri from 'esri-leaflet';
+import template from 'lodash/template';
 // Layers
 import BubbleClusterLayer from 'utils/layers/markers/BubbleClusterLayer';
 // Functions
 import { getObjectConversion } from 'utils/filters/filters';
+import { cropOptions } from 'constants/filters';
 
 // adding support for esri
 L.esri = esri;
@@ -74,6 +73,79 @@ export default class LayerManager {
       };
       setTimeout(loop);
     });
+  }
+
+  _generateCartoCSS(_layerConfig, params) {
+    const { bucket, crop } = params;
+    const cartoCss = _layerConfig.body.layers[0].options.cartocss;
+    const cartoCssTemplate = template(cartoCss, { interpolate: /{{([\s\S]+?)}}/g });
+    const color = cropOptions.find(c => c.value === crop).color;
+
+    return cartoCssTemplate({ bucket, color });
+  }
+
+  _getLegendValues(layerConfigConverted, _legendConfig, { crop }) {
+    const legendValueQuery = _legendConfig.sqlQuery;
+    this._layersLoading[layerConfigConverted.id] = true;
+
+    const xmlhttp = new XMLHttpRequest();
+    xmlhttp.open('GET', `https://${layerConfigConverted.account}.carto.com/api/v2/sql?q=${legendValueQuery}`);
+    xmlhttp.send(null);
+
+    xmlhttp.onreadystatechange = () => {
+      if (xmlhttp.readyState === 4) {
+        if (xmlhttp.status === 200) {
+          const data = JSON.parse(xmlhttp.responseText);
+          const bucket = data.rows[0].bucket;
+          if (bucket === null || !bucket) {
+            throw 'No buckets available';
+          }
+          const parsedCartocss = this._generateCartoCSS(layerConfigConverted, { bucket, crop });
+          const layerConfigParsed = Object.assign({}, layerConfigConverted, Object.assign({
+            body: this._getLayerConfigParsed(layerConfigConverted)
+          }));
+
+          layerConfigParsed.body.layers[0].options.cartocss = parsedCartocss;
+
+          const layerTpl = {
+            version: '1.3.0',
+            stat_tag: 'API',
+            layers: layerConfigParsed.body.layers
+          };
+
+          const params = `?stat_tag=API&config=${encodeURIComponent(JSON.stringify(layerTpl))}`;
+
+          const layerRequest = new XMLHttpRequest();
+          layerRequest.open('GET', `https://${layerConfigParsed.account}.carto.com/api/v1/map${params}`);
+          layerRequest.send(null);
+
+          layerRequest.onreadystatechange = () => {
+            if (layerRequest.readyState === 4) {
+              if (layerRequest.status === 200) {
+                const layerData = JSON.parse(layerRequest.responseText);
+                // we can switch off the layer while it is loading
+                const tileUrl = `https://${layerConfigParsed.account}.carto.com/api/v1/map/${layerData.layergroupid}/{z}/{x}/{y}.png`;
+
+                this._mapLayers[layerConfigParsed.id] = L.tileLayer(tileUrl).addTo(this._map).setZIndex(999);
+
+                this._mapLayers[layerConfigParsed.id].on('load', () => {
+                  delete this._layersLoading[layerConfigParsed.id];
+                });
+                this._mapLayers[layerConfigParsed.id].on('tileerror', () => {
+                  this._rejectLayersLoading = true;
+                });
+              } else {
+                this._rejectLayersLoading = true;
+              }
+            }
+          };
+
+          this._mapRequests[layerConfigParsed.category] = xmlhttp;
+        } else {
+          this._rejectLayersLoading = true;
+        }
+      }
+    };
   }
 
   _getLayerConfigParsed(_layerConfig) {
@@ -179,10 +251,16 @@ export default class LayerManager {
       }
 
       default: {
+        let layerConfigParsed = {};
         const layerConfigConverted = getObjectConversion(layerConfig, options, 'water');
-        const layerConfigParsed = Object.assign({}, layerConfigConverted, Object.assign({
-          body: this._getLayerConfigParsed(layerConfigConverted)
-        }));
+        if (layerConfigConverted.generatedCartocss) {
+          const legendConfigConverted = getObjectConversion(layerSpec.legendConfig, options, 'water');
+          return this._getLegendValues(layerConfigConverted, legendConfigConverted, options);
+        } else {
+          layerConfigParsed = Object.assign({}, layerConfigConverted, Object.assign({
+            body: this._getLayerConfigParsed(layerConfigConverted)
+          }));
+        }
 
         const layerTpl = {
           version: '1.3.0',
