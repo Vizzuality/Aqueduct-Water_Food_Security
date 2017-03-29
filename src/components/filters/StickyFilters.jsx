@@ -95,8 +95,8 @@ class StickyFilters extends React.Component {
             <CustomSelect
               className="-gray"
               options={waterOptions}
-              value={this.props.filters.water}
-              onValueChange={selected => selected && this.updateFilters(selected.value, 'water')}
+              value={this.props.filters.indicator}
+              onValueChange={selected => selected && this.updateFilters(selected.value, 'indicator')}
             />
           </div>
           <div>
@@ -116,7 +116,7 @@ class StickyFilters extends React.Component {
               value={yearOptions.find(i => i.value === this.props.filters.year).value}
               onValueChange={(selected) => {
                 selected && selected.value === 'baseline' && this.updateFilters(
-                  'absolute', 'data_type');
+                  'absolute', 'type');
                 selected && this.updateFilters(selected.value, 'year');
               }}
             />
@@ -124,7 +124,7 @@ class StickyFilters extends React.Component {
               <CustomSelect
                 className="-gray"
                 options={dataTypeOptions.map(option => Object.assign({}, option, { value: option.value }))}
-                value={this.props.filters.data_type}
+                value={this.props.filters.type}
                 onValueChange={selected => this.updateFilters(selected.value, 'change_from_baseline')}
               />
             }
