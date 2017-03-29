@@ -17,18 +17,18 @@ const getActiveLayers = (_datasets, _filters) => {
   let currentLayer;
   _datasets.list.forEach((dataset) => {
     if (dataset.layer && dataset.layer.length) {
-      isWater = (dataset.id === _filters.water);
+      isWater = (dataset.id === _filters.indicator);
       isFood = (dataset.id === _filters.food);
       isMask = (_filters.scope === 'country' && _filters.country && dataset.id === 'e844accd-9e65-414b-84e7-efc5bd65aa17');
-      isAll = (_filters.water === 'none' && dataset.id === 'b7bf012f-4b8b-4478-b5c9-6af3075ca1e4');
+      isAll = (_filters.indicator === 'none' && dataset.id === 'b7bf012f-4b8b-4478-b5c9-6af3075ca1e4');
 
       currentLayer = dataset.layer.find((l) => {
-        return isWater && _filters.data_type === 'change_from_baseline' ? l.attributes.layerConfig.fromBaseline : l.attributes.default;
+        return isWater && _filters.type === 'change_from_baseline' ? l.attributes.layerConfig.fromBaseline : l.attributes.default;
       });
 
       const metadata = (dataset.metadata && dataset.metadata.length) ? dataset.metadata[0].attributes : null;
 
-      if (isWater || isFood || isMask || isAll) {
+      if (currentLayer && (isWater || isFood || isMask || isAll)) {
         const layerSpecAttrs = find(layerSpec, { id: dataset.id }) || {};
 
         layer = {

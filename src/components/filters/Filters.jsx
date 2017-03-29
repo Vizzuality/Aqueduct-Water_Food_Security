@@ -83,7 +83,7 @@ export default class Filters extends React.Component {
             items={yearOptions}
             selected={yearOptions.find(i => i.value === this.props.filters.year)}
             onChange={(selected) => {
-              selected && selected.value === 'baseline' && this.updateFilters('absolute', 'data_type');
+              selected && selected.value === 'baseline' && this.updateFilters('absolute', 'type');
               selected && this.updateFilters(selected.value, 'year');
             }}
           />
@@ -91,9 +91,9 @@ export default class Filters extends React.Component {
             <RadioGroup
               className="-filters"
               items={dataTypeOptions}
-              name="data_type"
-              defaultValue={this.props.filters.data_type}
-              onChange={selected => this.updateFilters(selected.value, 'data_type')}
+              name="type"
+              defaultValue={this.props.filters.type}
+              onChange={selected => this.updateFilters(selected.value, 'type')}
             />
           }
         </div>
@@ -212,8 +212,8 @@ export default class Filters extends React.Component {
                       </div>
                       <CustomSelect
                         options={waterOptions}
-                        value={this.props.filters.water}
-                        onValueChange={selected => selected && this.updateFilters(selected.value, 'water')}
+                        value={this.props.filters.indicator}
+                        onValueChange={selected => selected && this.updateFilters(selected.value, 'indicator')}
                       />
                     </div>
                   </div>
