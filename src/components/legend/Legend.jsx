@@ -36,7 +36,7 @@ export default class Legend extends React.Component {
           <ul>
             {layers.map((layer, index) =>
               layer.category !== 'mask' &&
-              <LegendItem toggleModal={this.props.toggleModal} layer={layer} key={index} />
+              <LegendItem filters={this.props.filters} toggleModal={this.props.toggleModal} layer={layer} key={index} />
             )}
           </ul>
         </div>
@@ -53,5 +53,6 @@ Legend.propTypes = {
   layers: React.PropTypes.array,
   className: React.PropTypes.string,
   expanded: React.PropTypes.bool,
+  filters: React.PropTypes.object,
   toggleModal: React.PropTypes.func
 };
