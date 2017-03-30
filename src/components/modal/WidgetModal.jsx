@@ -1,5 +1,5 @@
 import React from 'react';
-import WidgetChart from 'components/widgets/WidgetChart';
+import WidgetChart from 'containers/widgets/WidgetChart';
 import { Spinner } from 'aqueduct-components';
 
 export default class InfoModal extends React.Component {

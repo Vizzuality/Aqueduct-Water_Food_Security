@@ -3,7 +3,7 @@ import domtoimage from 'dom-to-image';
 import snakeCase from 'lodash/snakeCase';
 import { saveAsFile } from 'utils/utils';
 import { Spinner } from 'aqueduct-components';
-import WidgetChart from 'components/widgets/WidgetChart';
+import WidgetChart from 'containers/widgets/WidgetChart';
 
 export default class WidgetImageModal extends React.Component {
 
