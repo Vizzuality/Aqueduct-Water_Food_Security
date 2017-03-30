@@ -1,6 +1,7 @@
 import React from 'react';
 import orderBy from 'lodash/orderBy';
 import LegendItem from 'components/legend/LegendItem';
+import DynamicHeader from 'components/map/DynamicHeader';
 import { Icon, OnlyOn } from 'aqueduct-components';
 
 export default class Legend extends React.Component {
@@ -24,12 +25,19 @@ export default class Legend extends React.Component {
     return (
       <div className={`c-legend ${this.props.className} ${this.state.expanded ? '-expanded' : ''}`}>
         <OnlyOn device="desktop">
-          <div className="legend-header" onClick={() => this.toggleExpand()}>
-            <span className="legend-header-title">View Legend</span>
-            <button className="legend-btn">
-              <Icon name="icon-arrow-up-2" className="legend-open-icon" />
-              <Icon name="icon-cross" className="legend-close-icon" />
-            </button>
+          <div>
+            {this.props.countries.list.length &&
+              <DynamicHeader
+                countries={this.props.countries.list}
+                filters={this.props.filters}
+              />}
+            <div className="legend-header" onClick={() => this.toggleExpand()}>
+              <span className="legend-header-title">{this.state.expanded ? 'Legend' : 'View Legend'}</span>
+              <button className="legend-btn">
+                <Icon name="icon-arrow-up-2" className="legend-open-icon" />
+                <Icon name="icon-arrow-down-2" className="legend-close-icon" />
+              </button>
+            </div>
           </div>
         </OnlyOn>
         <div className="legend-content">
@@ -52,7 +60,8 @@ Legend.defaultProps = {
 Legend.propTypes = {
   layers: React.PropTypes.array,
   className: React.PropTypes.string,
-  expanded: React.PropTypes.bool,
+  countries: React.PropTypes.object,
   filters: React.PropTypes.object,
+  expanded: React.PropTypes.bool,
   toggleModal: React.PropTypes.func
 };

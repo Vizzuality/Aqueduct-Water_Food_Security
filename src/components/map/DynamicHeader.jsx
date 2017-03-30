@@ -25,8 +25,8 @@ const dictionary = {
   scope(scope, iso) {
     return !iso || scope === 'global' ? scopeOptions.find(v => v.value === 'global').label : '';
   },
-  water(water) {
-    return water !== 'none' ? waterOptions.find(v => v.value === water).label : '';
+  indicator(indicator) {
+    return indicator !== 'none' ? waterOptions.find(v => v.value === indicator).label : '';
   }
 };
 
@@ -36,7 +36,8 @@ export default class DynamicHeader extends React.Component {
     super(props);
 
     this.state = {
-      text: null
+      text: null,
+      filters: props.filters
     };
   }
 
@@ -55,13 +56,13 @@ export default class DynamicHeader extends React.Component {
   getDynamicText() {
     const { filters } = this.state;
 
-    const water = dictionary.water(filters.water);
+    const indicator = dictionary.indicator(filters.indicator);
     const scope = dictionary.scope(filters.scope, filters.country);
     const irrigation = dictionary.irrigation(filters.irrigation);
     const crop = dictionary.crop(filters.crop);
     const country = dictionary.country.call(this, filters.scope, filters.country);
 
-    const text = `${scope} ${country} ${water} ${irrigation} ${crop} Producing Areas`;
+    const text = `${scope} ${country} ${indicator} ${irrigation} ${crop} Producing Areas`;
 
     this.setState({
       text
@@ -72,7 +73,7 @@ export default class DynamicHeader extends React.Component {
     return (
       <div className="c-dynamic-map-header">
         {this.state.text &&
-          <p>{this.state.text}</p>
+          <span className="title">{this.state.text}</span>
         }
       </div>
     );
