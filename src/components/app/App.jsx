@@ -1,6 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import Modal from 'containers/ui/Modal';
+import Tooltip from 'containers/ui/Tooltip';
 
 export default class App extends React.Component {
 
@@ -27,6 +28,7 @@ export default class App extends React.Component {
           {this.props.main}
         </main>
         <Modal />
+        <Tooltip />
       </div>
     );
   }

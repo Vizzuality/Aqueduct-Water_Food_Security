@@ -1,9 +1,31 @@
 .c-tooltip {
-  position: absolute;
-  z-index: 999;
+  position: fixed;
   background-color: $color-white;
-  min-height: 50px;
-  &.-hidden {
-    display: none;
+  box-shadow: 0 0 4px rgba(0, 0, 0, .5);
+  padding: $space-1 * 2;
+  z-index: 10001;
+  pointer-events: none;
+
+  .tooltip-list {
+    list-style: none;
+
+    .tooltip-list-item {
+      list-style: none;
+      color: $color-text-1;
+
+      .title {
+        font-weight: 500;
+      }
+
+      .value {
+        font-weight: 500;
+      }
+    }
   }
+}
+
+.c-tooltip-invisible-div {
+  position: absolute;
+  width: 1px;
+  height: 1px;
 }
