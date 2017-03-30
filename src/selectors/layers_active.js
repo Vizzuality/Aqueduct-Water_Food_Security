@@ -13,28 +13,44 @@ const getActiveLayers = (_datasets, _filters) => {
   let isWater;
   let isFood;
   let isMask;
-  let isAll;
+  let isCrop;
   let currentLayer;
   _datasets.list.forEach((dataset) => {
     if (dataset.layer && dataset.layer.length) {
       isWater = (dataset.id === _filters.indicator);
       isFood = (dataset.id === _filters.food);
       isMask = (_filters.scope === 'country' && _filters.country && dataset.id === 'e844accd-9e65-414b-84e7-efc5bd65aa17');
-      isAll = (_filters.indicator === 'none' && dataset.id === 'b7bf012f-4b8b-4478-b5c9-6af3075ca1e4');
+      isCrop = (_filters.indicator === 'none' && dataset.id === 'b7bf012f-4b8b-4478-b5c9-6af3075ca1e4');
 
-      currentLayer = dataset.layer.find((l) => {
-        return isWater && _filters.type === 'change_from_baseline' ? l.attributes.layerConfig.fromBaseline : l.attributes.default;
-      });
+      if (isWater) {
+        currentLayer = dataset.layer.find((l) => {
+          return _filters.type === 'change_from_baseline' ? l.attributes.layerConfig.fromBaseline : l.attributes.default;
+        });
+      }
+
+      if (isCrop) {
+        currentLayer = dataset.layer.find((l) => {
+          return _filters.crop !== 'all' ?
+            l.attributes.legendConfig.sqlQuery : l.attributes.default;
+        });
+      }
+
+      if (isFood || isMask) {
+        currentLayer = dataset.layer.find((l) => {
+          return l.attributes.default;
+        });
+      }
+
 
       const metadata = (dataset.metadata && dataset.metadata.length) ? dataset.metadata[0].attributes : null;
 
-      if (currentLayer && (isWater || isFood || isMask || isAll)) {
+      if (currentLayer && (isWater || isFood || isMask || isCrop)) {
         const layerSpecAttrs = find(layerSpec, { id: dataset.id }) || {};
 
         layer = {
           ...currentLayer.attributes,
           id: currentLayer.id,
-          name: layerSpecAttrs.name,
+          name: currentLayer.attributes.name,
           category: layerSpecAttrs.category,
           metadata
         };

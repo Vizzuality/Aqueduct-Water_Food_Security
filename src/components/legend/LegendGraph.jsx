@@ -3,6 +3,7 @@ import { OnlyOn } from 'aqueduct-components';
 
 class LegendGraph extends React.Component {
 
+
   getLegendGraph() {
     const config = this.props.config;
     switch (config.type) {
