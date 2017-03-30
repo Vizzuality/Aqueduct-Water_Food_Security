@@ -6,11 +6,13 @@ const initialState = {
   crop: 'all',
   scope: 'global',
   country: undefined,
+  period: 'year',
+  period_value: 'baseline',
   year: 'baseline',
   food: 'none',
-  water: 'none',
+  indicator: 'none',
   irrigation: ['irrigated'],
-  changeFromBaseline: false
+  type: 'absolute'
 };
 
 export default function (state = initialState, action) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import WidgetText from 'components/widgets/WidgetText';
 import { VegaChart } from 'aqueduct-components';
-import { getWidgetSql } from 'utils/filters/filters';
+import { getObjectConversion } from 'utils/filters/filters';
 import theme from 'data/vega-theme.json';
 
 class WidgetChart extends React.Component {
@@ -17,7 +17,7 @@ class WidgetChart extends React.Component {
   }
 
   render() {
-    const widgetConfig = getWidgetSql(this.props.config, this.props.filters);
+    const widgetConfig = getObjectConversion(this.props.config, this.props.filters, 'widget');
 
     if (widgetConfig.type === 'text') {
       return <WidgetText widgetConfig={widgetConfig} toggleLoading={this.props.toggleLoading} />;

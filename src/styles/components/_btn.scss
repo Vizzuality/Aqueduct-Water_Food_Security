@@ -25,6 +25,11 @@
       background-color: palette(blue, darkest);
     }
 
+    &.-light {
+      color: palette(white);
+      background-color: palette(blue, 'secondary');
+    }
+
     &:hover {
       opacity: .7;
     }

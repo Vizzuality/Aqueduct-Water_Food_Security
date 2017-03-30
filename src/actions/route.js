@@ -3,6 +3,7 @@ import { dispatch } from 'main';
 import { setMapLocation } from 'actions/map';
 import { setFilters } from 'actions/filters';
 import { setCompareCountry } from 'actions/compare';
+import { setEmbed } from 'actions/embed';
 
 export function onEnterMapPage({ location }, replace, done) {
   // TODO: this check is not as consistent as it should be. The right solution could be grouping all map params inside "map"
@@ -22,16 +23,18 @@ export function onEnterMapPage({ location }, replace, done) {
   // if there are filter params
   // I really don't like this...
   if (location.query.crop) {
-    const { crop, country, food, irrigation, scope, year, water, changeFromBaseline } = location.query;
+    const { crop, country, food, irrigation, scope, period, period_value, year, indicator, type } = location.query;
     const filtersObj = {
       country,
       crop,
       food,
       irrigation: (irrigation) ? irrigation.split(',') : false,
       scope,
+      period,
+      period_value,
       year,
-      water,
-      changeFromBaseline: (changeFromBaseline === 'true')
+      indicator,
+      type
     };
     dispatch(setFilters(filtersObj));
   }
@@ -49,19 +52,34 @@ export function onEnterComparePage({ location }, replace, done) {
   }
   // If there are filter params
   if (location.query.crop) {
-    const { crop, food, year, water, changeFromBaseline } = location.query;
+    const { crop, food, period, period_value, year, indicator, type } = location.query;
     let { irrigation } = location.query;
     irrigation = irrigation.split(',');
     const filtersObj = {
       crop,
       scope: 'country',
+      period,
+      period_value,
       year,
       food,
-      water,
+      indicator,
       irrigation,
-      changeFromBaseline: (changeFromBaseline === 'true')
+      type
     };
     dispatch(setFilters(filtersObj));
   }
+  done();
+}
+
+export function onEnterEmbedPage({ location }, replace, done) {
+  if (location.query.state) {
+    let state;
+    try {
+      state = JSON.parse(atob(location.query.state));
+      dispatch(setFilters(state.filters));
+      dispatch(setEmbed(state.embed));
+    } catch (e) {} // eslint-disable-line no-empty
+  }
+
   done();
 }

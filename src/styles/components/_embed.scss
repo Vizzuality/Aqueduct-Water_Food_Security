@@ -1,0 +1,90 @@
+.c-embed {
+  .title {
+    padding-top: $space-1 * 2;
+    padding-left: $space-1 * 2;
+    font-family: $font-family-roboto;
+    font-size: $font-size-default;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: palette(gray, 'dark');
+
+    @include only-desktop {
+      padding-top: $space-1 * 7;
+      padding-left: $space-1 * 7;
+    }
+
+    > .subtitle {
+      font-family: $font-family-roboto;
+      font-size: $font-size-default;
+      text-transform: none;
+      letter-spacing: initial;
+    }
+  }
+
+  .widget {
+    padding-left: $space-1 * 2;
+    padding-bottom: $space-1 * 2;
+
+    @include only-desktop {
+      padding-left: $space-1 * 7;
+      padding-bottom: $space-1 * 7;
+    }
+  }
+
+  .sidebar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    padding: $space-1 * 2;
+    background-color: palette(sand);
+
+    @media screen and (min-width: 64em) {
+      display: inline-block;
+      padding: $space-1 * 7;
+      min-height: 450px;
+    }
+
+    h2 {
+      margin: 0 0 $space-1;
+      text-transform: uppercase;
+      font-size: $font-size-default;
+      font-weight: 500;
+      color: rgba(palette(gray, 'dark'), .5);
+      letter-spacing: .9px;
+    }
+
+    .c-custom-select {
+      margin-bottom: $space-1 * 4;
+      border-color: $border-color-2;
+      background: palette(white);
+
+      &::after {
+        right: $space-1 * 2;
+      }
+
+      .custom-select-text {
+        width: auto;
+        padding-left: $space-1 * 2;
+        color: palette(gray, 'dark');
+
+        @media screen and (min-width: 64em) {
+          width: 100%;
+        }
+      }
+    }
+
+    .code {
+      display: block;
+      margin-bottom: $space-1 * 4;
+      word-break: break-word;
+    }
+
+    .c-btn {
+      @media screen and (min-width: 64em) {
+        width: 100%;
+      }
+    }
+  }
+}

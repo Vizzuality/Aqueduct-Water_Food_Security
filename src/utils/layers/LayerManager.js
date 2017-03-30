@@ -1,13 +1,12 @@
-/* eslint import/no-unresolved: 0 */
-/* eslint import/extensions: 0 */
-
-import 'whatwg-fetch';
 import L from 'leaflet/dist/leaflet';
 import esri from 'esri-leaflet';
+import template from 'lodash/template';
 // Layers
 import BubbleClusterLayer from 'utils/layers/markers/BubbleClusterLayer';
 // Functions
-import { getWaterSql, getFoodSql } from 'utils/filters/filters';
+import { get } from 'utils/request';
+import { getObjectConversion } from 'utils/filters/filters';
+import { cropOptions } from 'constants/filters';
 
 // adding support for esri
 L.esri = esri;
@@ -19,7 +18,7 @@ export default class LayerManager {
     this._map = map;
     this._mapLayers = {};
     this._mapRequests = {};
-    this._layersLoading = {};
+    this._mapLayersLoading = {};
     this._rejectLayersLoading = false;
     this._onLayerAddedSuccess = options.onLayerAddedSuccess;
     this._onLayerAddedError = options.onLayerAddedError;
@@ -30,21 +29,10 @@ export default class LayerManager {
   */
   addLayer(layer, opts = {}) {
     const method = {
-      leaflet: this._addLeafletLayer,
-      arcgis: this._addEsriLayer,
       cartodb: this._addCartoLayer
     }[layer.provider];
 
     method && method.call(this, layer, opts);
-    this._execCallback()
-      .then(() => {
-        this._onLayerAddedSuccess && this._onLayerAddedSuccess();
-      })
-      .catch(() => {
-        this._layersLoading = {};
-        this._rejectLayersLoading = false;
-        this._onLayerAddedError && this._onLayerAddedError();
-      });
   }
 
   removeLayer(layerId) {
@@ -61,212 +49,228 @@ export default class LayerManager {
         delete this._mapLayers[id];
       }
     });
-    this._layersLoading = {};
+    this._mapLayersLoading = {};
   }
 
-  /*
-    Private methods
+  /**
+   * PRIVATE METHODS
+   * - _addLoader
+   * - _removeLoader
   */
-  _execCallback() {
-    return new Promise((resolve, reject) => {
-      const loop = () => {
-        if (!Object.keys(this._layersLoading).length) return resolve();
-        if (this._rejectLayersLoading) return reject();
-        setTimeout(loop);
-      };
-      setTimeout(loop);
+  _addLoader(id) {
+    this._mapLayersLoading[id] = true;
+  }
+
+  _deleteLoader(id) {
+    delete this._mapLayersLoading[id];
+    // Check if all the layers are loaded
+    if (!Object.keys(this._mapLayersLoading).length) {
+      this._onLayerAddedSuccess && this._onLayerAddedSuccess();
+    }
+  }
+
+  _generateCartoCSS(_layerConfig, params) {
+    const { bucket, crop } = params;
+    const cartoCss = _layerConfig.body.layers[0].options.cartocss;
+    const cartoCssTemplate = template(cartoCss, { interpolate: /{{([\s\S]+?)}}/g });
+    const color = cropOptions.find(c => c.value === crop).color;
+
+    return cartoCssTemplate({ bucket, color });
+  }
+
+  _getLegendValues(layerConfig, legendConfig, options) {
+    const layerConfigConverted = getObjectConversion(layerConfig, options, 'water');
+    const legendConfigConverted = getObjectConversion(legendConfig, options, 'water');
+
+    // Save loader
+    this._addLoader(layerConfig.id);
+
+    // Save request && send
+    this._mapRequests[layerConfig.category] = get({
+      url: `https://${layerConfig.account}.carto.com/api/v2/sql?q=${legendConfigConverted.sqlQuery}`,
+      onSuccess: (data) => {
+        const bucket = data.rows[0].bucket;
+        if (bucket === null || !bucket) {
+          throw Error('No buckets available');
+        }
+
+        const layerConfigParsed = {
+          ...layerConfigConverted,
+          ...{ body: this._getLayerConfigParsed(layerConfigConverted) }
+        };
+
+        layerConfigParsed.body.layers[0].options.cartocss = this._generateCartoCSS(layerConfig, { bucket, crop: options.crop });
+
+        const layerTpl = {
+          version: '1.3.0',
+          stat_tag: 'API',
+          layers: layerConfigParsed.body.layers
+        };
+
+        // Save request && send
+        this._mapRequests[layerConfig.category] = get({
+          url: `https://${layerConfigParsed.account}.carto.com/api/v1/map?stat_tag=API&config=${encodeURIComponent(JSON.stringify(layerTpl))}`,
+          onSuccess: (layerData) => {
+            const tileUrl = `https://${layerConfigParsed.account}.carto.com/api/v1/map/${layerData.layergroupid}/{z}/{x}/{y}.png`;
+
+            this._mapLayers[layerConfigParsed.id] = L.tileLayer(tileUrl).addTo(this._map).setZIndex(999);
+
+            this._mapLayers[layerConfigParsed.id].on('load', () => {
+              this._deleteLoader(layerConfigParsed.id);
+            });
+
+            this._mapLayers[layerConfigParsed.id].on('tileerror', () => {
+              this._deleteLoader(layerConfigParsed.id);
+            });
+          },
+          onError: (layerData) => {
+            console.error(layerData);
+            this._deleteLoader(layerConfig.id);
+          }
+        });
+      },
+      onError: (data) => {
+        console.error(data);
+        this._deleteLoader(layerConfig.id);
+      }
     });
   }
 
-  _addLeafletLayer(layerSpec, { zIndex }) {
-    const layerData = layerSpec.layerConfig;
-
-    let layer;
-
-    layerData.id = layerSpec.id;
-    this._layersLoading[layerData.id] = true;
-
-    // Transforming data layer
-    // TODO: improve this
-    if (layerData.body.crs && L.CRS[layerData.body.crs]) {
-      layerData.body.crs = L.CRS[layerData.body.crs.replace(':', '')];
-      layerData.body.pane = 'tilePane';
-    }
-
-    switch (layerData.type) {
-      case 'wms':
-        layer = new L.tileLayer.wms(layerData.url, layerData.body); // eslint-disable-line
-        break;
-      case 'tileLayer':
-        if (layerData.body.indexOf('style: "function') >= 0) {
-          layerData.body.style = eval(`(${layerData.body.style})`); // eslint-disable-line
-        }
-        layer = new L.tileLayer(layerData.url, layerData.body); // eslint-disable-line
-        break;
-      default:
-        delete this._layersLoading[layerData.id];
-        throw new Error('"type" specified in layer spec doesn`t exist');
-    }
-
-    if (layer) {
-      const eventName = (layerData.type === 'wms' ||
-      layerData.type === 'tileLayer') ? 'tileload' : 'load';
-      layer.on(eventName, () => {
-        delete this._layersLoading[layerData.id];
-      });
-      if (zIndex) {
-        layer.setZIndex(zIndex);
-      }
-      this._mapLayers[layerData.id] = layer;
-    }
-  }
-
-  _addEsriLayer(layerSpec, { zIndex }) {
-    const layer = layerSpec.layerConfig;
-    layer.id = layerSpec.id;
-
-    this._layersLoading[layer.id] = true;
-    // Transforming layer
-    // TODO: change this please @ra
-    const bodyStringified = JSON.stringify(layer.body || {})
-      .replace(/"mosaic-rule":/g, '"mosaicRule":')
-      .replace(/"use-cors"/g, '"useCors"');
-
-    if (L.esri[layer.type]) {
-      const layerConfig = JSON.parse(bodyStringified);
-      layerConfig.pane = 'tilePane';
-      if (layerConfig.style &&
-        layerConfig.style.indexOf('function') >= 0) {
-        layerConfig.style = eval(`(${layerConfig.style})`); // eslint-disable-line
-      }
-      const newLayer = L.esri[layer.type](layerConfig);
-
-      newLayer.on('load', () => {
-        delete this._layersLoading[layer.id];
-        const layerElement = this._map.getPane('tilePane').lastChild;
-        if (zIndex) {
-          layerElement.style.zIndex = zIndex;
-        }
-        layerElement.id = layer.id;
-      });
-      newLayer.addTo(this._map);
-      this._mapLayers[layer.id] = newLayer;
-    } else {
-      this._rejectLayersLoading = true;
-      throw new Error('"type" specified in layer spec doesn`t exist');
-    }
+  _getLayerConfigParsed(_layerConfig) {
+    return {
+      layers: _layerConfig.body.layers.map((l) => {
+        const newOptions = { user_name: _layerConfig.account, cartocss_version: l.options.cartocssVersion };
+        const options = { ...l.options, ...newOptions };
+        return { ...l, options };
+      })
+    };
   }
 
   _addCartoLayer(layerSpec, opts) {
-    const layer = Object.assign({}, layerSpec.layerConfig, {
-      id: layerSpec.id,
-      category: layerSpec.category
-    });
+    const layerConfig = {
+      ...layerSpec.layerConfig,
+      ...{ id: layerSpec.id, category: layerSpec.category }
+    };
+    const legendConfig = layerSpec.legendConfig;
+
     const options = opts;
 
-    if (this._mapRequests[layer.category]) {
-      if (this._mapRequests[layer.category].readyState !== 4) {
-        this._mapRequests[layer.category].abort();
-        delete this._mapRequests[layer.category];
-        delete this._layersLoading[layer.id];
+    if (this._mapRequests[layerConfig.category]) {
+      if (this._mapRequests[layerConfig.category].readyState !== 4) {
+        this._mapRequests[layerConfig.category].abort();
+        delete this._mapRequests[layerConfig.category];
+        this._deleteLoader(layerConfig.id);
       }
     }
 
-    switch (layer.category) {
+    switch (layerConfig.category) {
       case 'water': {
-        const body = getWaterSql(layer, options);
-
-        this._layersLoading[layer.id] = true;
-        const xmlhttp = new XMLHttpRequest();
-        xmlhttp.open('POST', `https://${layer.account}.carto.com/api/v1/map`);
-        xmlhttp.setRequestHeader('Content-Type', 'application/json');
-        xmlhttp.send(JSON.stringify(body));
-
-        xmlhttp.onreadystatechange = () => {
-          if (xmlhttp.readyState === 4) {
-            if (xmlhttp.status === 200) {
-              const data = JSON.parse(xmlhttp.responseText);
-
-              const tileUrl = `https://${layer.account}.carto.com/api/v1/map/${data.layergroupid}/{z}/{x}/{y}.png`;
-
-              this._mapLayers[layer.id] = L.tileLayer(tileUrl).addTo(this._map).setZIndex(998);
-
-              this._mapLayers[layer.id].on('load', () => {
-                delete this._layersLoading[layer.id];
-              });
-              this._mapLayers[layer.id].on('tileerror', () => {
-                this._rejectLayersLoading = true;
-              });
-            } else {
-              this._rejectLayersLoading = true;
-            }
-          }
+        // Parse config
+        const layerConfigConverted = getObjectConversion(layerConfig, options, 'water');
+        const layerConfigParsed = {
+          ...layerConfigConverted,
+          ...{ body: this._getLayerConfigParsed(layerConfigConverted) }
         };
 
-        this._mapRequests[layer.category] = xmlhttp;
+        const layerTpl = {
+          version: '1.3.0',
+          stat_tag: 'API',
+          layers: layerConfigParsed.body.layers
+        };
 
+        // Save loader
+        this._addLoader(layerConfig.id);
+
+        // Save request && send
+        this._mapRequests[layerConfig.category] = get({
+          url: `https://${layerConfig.account}.carto.com/api/v1/map?stat_tag=API&config=${encodeURIComponent(JSON.stringify(layerTpl))}`,
+          onSuccess: (data) => {
+            const tileUrl = `https://${layerConfig.account}.carto.com/api/v1/map/${data.layergroupid}/{z}/{x}/{y}.png`;
+
+            this._mapLayers[layerConfig.id] = L.tileLayer(tileUrl).addTo(this._map).setZIndex(998);
+
+            this._mapLayers[layerConfig.id].on('load', () => {
+              this._deleteLoader(layerConfig.id);
+            });
+            this._mapLayers[layerConfig.id].on('tileerror', () => {
+              this._deleteLoader(layerConfig.id);
+            });
+          },
+          onError: (data) => {
+            console.error(data);
+            this._deleteLoader(layerConfig.id);
+          }
+        });
         break;
       }
 
       case 'food': {
-        const body = getFoodSql(layer, options);
+        // Parse config
+        const layerConfigConverted = getObjectConversion(layerConfig, options, 'food');
 
-        this._layersLoading[layer.id] = true;
-        const xmlhttp = new XMLHttpRequest();
-        xmlhttp.open('GET', body.url);
-        xmlhttp.send();
+        // Save loader
+        this._addLoader(layerConfig.id);
 
-        xmlhttp.onreadystatechange = () => {
-          if (xmlhttp.readyState === 4) {
-            if (xmlhttp.status === 200) {
-              const data = JSON.parse(xmlhttp.responseText);
-              const geojson = data.rows[0].data.features || [];
-              this._mapLayers[layer.id] = new BubbleClusterLayer(
-                geojson, layer
-              ).addTo(this._map);
+        // Save request && send
+        this._mapRequests[layerConfig.category] = get({
+          url: layerConfigConverted.body.url,
+          onSuccess: (data) => {
+            const geojson = data.rows[0].data.features || [];
 
-              delete this._layersLoading[layer.id];
-            } else {
-              this._rejectLayersLoading = true;
-            }
+            this._mapLayers[layerConfig.id] = new BubbleClusterLayer(
+              geojson, layerConfig
+            ).addTo(this._map);
+
+            this._deleteLoader(layerConfig.id);
+          },
+          onError: (data) => {
+            console.error(data);
+            this._deleteLoader(layerConfig.id);
           }
-        };
-
-        this._mapRequests[layer.category] = xmlhttp;
+        });
         break;
       }
 
       default: {
-        const body = getWaterSql(layer, options);
-
-        this._layersLoading[layer.id] = true;
-        const xmlhttp = new XMLHttpRequest();
-        xmlhttp.open('POST', `https://${layer.account}.carto.com/api/v1/map`);
-        xmlhttp.setRequestHeader('Content-Type', 'application/json');
-        xmlhttp.send(JSON.stringify(body));
-
-        xmlhttp.onreadystatechange = () => {
-          if (xmlhttp.readyState === 4) {
-            if (xmlhttp.status === 200) {
-              const data = JSON.parse(xmlhttp.responseText);
-              // we can switch off the layer while it is loading
-              const tileUrl = `https://${layer.account}.carto.com/api/v1/map/${data.layergroupid}/{z}/{x}/{y}.png`;
-
-              this._mapLayers[layer.id] = L.tileLayer(tileUrl).addTo(this._map).setZIndex(999);
-
-              this._mapLayers[layer.id].on('load', () => {
-                delete this._layersLoading[layer.id];
-              });
-              this._mapLayers[layer.id].on('tileerror', () => {
-                this._rejectLayersLoading = true;
-              });
-            } else {
-              this._rejectLayersLoading = true;
-            }
-          }
+        if (legendConfig.sqlQuery) {
+          return this._getLegendValues(layerConfig, legendConfig, options);
+        }
+        const layerConfigConverted = getObjectConversion(layerConfig, options, 'water');
+        const layerConfigParsed = {
+          ...layerConfigConverted,
+          ...{ body: this._getLayerConfigParsed(layerConfigConverted) }
         };
 
-        this._mapRequests[layer.category] = xmlhttp;
+        const layerTpl = {
+          version: '1.3.0',
+          stat_tag: 'API',
+          layers: layerConfigParsed.body.layers
+        };
+
+        // Save loader
+        this._addLoader(layerConfig.id);
+
+        // Save request && send
+        this._mapRequests[layerConfig.category] = get({
+          url: `https://${layerConfig.account}.carto.com/api/v1/map?stat_tag=API&config=${encodeURIComponent(JSON.stringify(layerTpl))}`,
+          onSuccess: (data) => {
+            const tileUrl = `https://${layerConfig.account}.carto.com/api/v1/map/${data.layergroupid}/{z}/{x}/{y}.png`;
+
+            this._mapLayers[layerConfig.id] = L.tileLayer(tileUrl).addTo(this._map).setZIndex(999);
+
+            this._mapLayers[layerConfig.id].on('load', () => {
+              this._deleteLoader(layerConfig.id);
+            });
+            this._mapLayers[layerConfig.id].on('tileerror', () => {
+              this._deleteLoader(layerConfig.id);
+            });
+          },
+          onError: (data) => {
+            console.error(data);
+            this._deleteLoader(layerConfig.id);
+          }
+        });
+        break;
       }
     }
   }

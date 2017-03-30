@@ -1,7 +1,10 @@
 import React from 'react';
+import classnames from 'classnames';
 import WidgetButtons from 'components/widgets/WidgetButtons';
 import WidgetChart from 'components/widgets/WidgetChart';
 import WidgetModal from 'components/modal/WidgetModal';
+import EmbedModal from 'components/modal/EmbedModal';
+import WidgetImageModal from 'components/modal/WidgetImageModal';
 import { Spinner } from 'aqueduct-components';
 
 class Widget extends React.Component {
@@ -38,6 +41,26 @@ class Widget extends React.Component {
           }
         });
         break;
+      case 'embed':
+        this.props.toggleModal(true, {
+          children: EmbedModal,
+          size: '-medium',
+          childrenProps: {
+            filters: this.props.filters,
+            widget: this.props.widget
+          }
+        });
+        break;
+      case 'image':
+        this.props.toggleModal(true, {
+          children: WidgetImageModal,
+          size: '-medium',
+          childrenProps: {
+            filters: this.props.filters,
+            widget: this.props.widget
+          }
+        });
+        break;
       default:
         console.info('The action is not supported by this function');
     }
@@ -49,15 +72,20 @@ class Widget extends React.Component {
 
   render() {
     const { name, description, widgetConfig, queryUrl } = this.props.widget;
+
+    const className = classnames({
+      [this.props.className]: !!this.props.className
+    });
+
     return (
-      <div className="c-widget">
+      <div className={`c-widget ${className}`} ref={el => this.widgetElem = el}>
         <div>
           <header className="widget-header">
             <div className="widget-titles">
               <h2 className="widget-title">{name}</h2>
               <h3 className="widget-description">{description}</h3>
             </div>
-            <WidgetButtons queryUrl={queryUrl} triggerAction={this.triggerAction} />
+            <WidgetButtons widgetElem={this.widgetElem} queryUrl={queryUrl} triggerAction={this.triggerAction} />
           </header>
           <div className="widget-content">
             <Spinner isLoading={this.state.loading} />
@@ -70,6 +98,7 @@ class Widget extends React.Component {
 }
 
 Widget.propTypes = {
+  className: React.PropTypes.string,
   widget: React.PropTypes.object,
   filters: React.PropTypes.object,
   toggleModal: React.PropTypes.func

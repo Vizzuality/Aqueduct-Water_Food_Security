@@ -16,8 +16,10 @@
 @import "components/bubble-marker";
 @import "components/chart";
 @import "components/compare";
+@import "components/download-map";
 @import "components/filters";
 @import "components/info";
+@import "components/embed";
 @import "components/infowindow";
 @import "components/legend";
 @import "components/share";
@@ -29,6 +31,7 @@
 @import "components/sticky-filters";
 @import "components/swipe";
 @import "components/summary";
+@import "components/widget-image-modal";
 
 /* Aqueduct-components */
 @import "~aqueduct-components/styles/timeline";
