@@ -50,7 +50,7 @@ const getActiveLayers = (_datasets, _filters) => {
         layer = {
           ...currentLayer.attributes,
           id: currentLayer.id,
-          name: layerSpecAttrs.name,
+          name: currentLayer.attributes.name,
           category: layerSpecAttrs.category,
           metadata
         };
