@@ -50,29 +50,37 @@ export const yearOptions = [
   { value: '2040', label: '2040' }
 ];
 
+const cropColorDictionary = {
+  cereals: '#d95997',
+  leguminous: '#1230a5',
+  roots_and_tubers: '#32866d',
+  fruit_and_nuts: '#ffe01b',
+  oilseed_crops: '#6e23bd'
+};
+
 export const cropOptions = [
   { value: 'all', label: 'All crops' },
-  { value: 'all pulses', label: 'Other pulses' },
-  { value: 'wheat', label: 'Wheat' },
-  { value: 'lentils', label: 'Lentils' },
-  { value: 'cowpeas', label: 'Cowpeas' },
-  { value: 'barley', label: 'Barley' },
-  { value: 'beans', label: 'Beans' },
-  { value: 'potato', label: 'Potato' },
-  { value: 'sorghum', label: 'Sorghum' },
-  { value: 'pigeonpeas', label: 'Pigeonpeas' },
-  { value: 'sweet potato', label: 'Sweet potato' },
-  { value: 'soybean', label: 'Soybean' },
-  { value: 'all cereals', label: 'Other cereals' },
-  { value: 'cassava', label: 'Cassava' },
-  { value: 'rice', label: 'Rice' },
-  { value: 'groundnut', label: 'Groundnut' },
-  { value: 'chickpeas', label: 'Chickpeas' },
-  { value: 'plantain', label: 'Plantain' },
-  { value: 'banana', label: 'Banana' },
-  { value: 'millet', label: 'Millet' },
-  { value: 'maize', label: 'Maize' },
-  { value: 'yams', label: 'Yams' }
+  { value: 'all pulses', label: 'Other pulses', color: cropColorDictionary.leguminous },
+  { value: 'wheat', label: 'Wheat', color: cropColorDictionary.cereals },
+  { value: 'lentils', label: 'Lentils', color: cropColorDictionary.leguminous },
+  { value: 'cowpeas', label: 'Cowpeas', color: cropColorDictionary.leguminous },
+  { value: 'barley', label: 'Barley', color: cropColorDictionary.cereals },
+  { value: 'beans', label: 'Beans', color: cropColorDictionary.leguminous },
+  { value: 'potato', label: 'Potato', color: cropColorDictionary.roots_and_tubers },
+  { value: 'sorghum', label: 'Sorghum', color: cropColorDictionary.cereals },
+  { value: 'pigeonpeas', label: 'Pigeonpeas', color: cropColorDictionary.leguminous },
+  { value: 'sweet potato', label: 'Sweet potato', color: cropColorDictionary.roots_and_tubers },
+  { value: 'soybean', label: 'Soybean', color: cropColorDictionary.oilseed_crops },
+  { value: 'all cereals', label: 'Other cereals', color: cropColorDictionary.cereals },
+  { value: 'cassava', label: 'Cassava', color: cropColorDictionary.roots_and_tubers },
+  { value: 'rice', label: 'Rice', color: cropColorDictionary.cereals },
+  { value: 'groundnut', label: 'Groundnut', color: cropColorDictionary.leguminous },
+  { value: 'chickpeas', label: 'Chickpeas', color: cropColorDictionary.leguminous },
+  { value: 'plantain', label: 'Plantain', color: cropColorDictionary.fruit_and_nuts },
+  { value: 'banana', label: 'Banana', color: cropColorDictionary.fruit_and_nuts },
+  { value: 'millet', label: 'Millet', color: cropColorDictionary.cereals },
+  { value: 'maize', label: 'Maize', color: cropColorDictionary.cereals },
+  { value: 'yams', label: 'Yams', color: cropColorDictionary.roots_and_tubers }
 ];
 
 export const irrigationOptions = [

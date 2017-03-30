@@ -3,6 +3,7 @@ import { OnlyOn } from 'aqueduct-components';
 
 class LegendGraph extends React.Component {
 
+
   getLegendGraph() {
     const config = this.props.config;
     switch (config.type) {
@@ -102,6 +103,19 @@ class LegendGraph extends React.Component {
                     );
                   })}
                 </div>
+                {config.disclaimer &&
+                  <div className="graph -basic -disclaimer">
+                    <div className="graph-list">
+                      {config.disclaimer.map((item, i) => {
+                        return (
+                          <div className="graph-list-item" key={i}>
+                            <span className="color" style={{ background: item.color }} />
+                            <span className="label">{item.name}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>}
               </div>
             </OnlyOn>
             <OnlyOn device="mobile">
