@@ -1,5 +1,6 @@
 import React from 'react';
 import { Spinner } from 'aqueduct-components';
+import TetherComponent from 'react-tether';
 
 export default class Tooltip extends React.Component {
 
@@ -28,7 +29,8 @@ export default class Tooltip extends React.Component {
   }
 
   getContent() {
-    return this.props.tooltip.children ? <this.props.tooltip.children {...this.props.tooltip.childrenProps} /> : null;
+    return this.props.tooltip.children ?
+      <this.props.tooltip.children {...this.props.tooltip.childrenProps} /> : null;
   }
 
   getStyles() {
@@ -38,19 +40,38 @@ export default class Tooltip extends React.Component {
       // TODO: modify topPos and bottomPos for recalculating toooltip position if it is out of viewport
     }
     return {
+      position: 'absolute',
       top: `${topPos}px`,
-      left: `${bottomPos}px`
+      left: `${bottomPos}px`,
+      width: '1px',
+      height: '1px',
+      visibility: 'hidden'
     };
   }
 
   render() {
     return (
-      <div ref={(node) => { this.el = node; }} className={`c-tooltip ${this.props.tooltip.opened ? '' : '-hidden'}`} style={this.getStyles()}>
-        <span>Hello, Im a tooltip!</span>
-        <div className="tooltip-content">
-          {this.props.tooltip.loading ? <Spinner isLoading /> : this.getContent()}
-        </div>
-      </div>
+      <TetherComponent
+        attachment="bottom center"
+        targetAttachment="top center"
+        constraints={[{
+          to: 'window',
+          pin: true
+        }]}
+        classes={{
+          element: 'c-tooltip'
+        }}
+        offset="10px 0"
+      >
+        <div
+          style={this.getStyles()}
+        />
+        {this.props.tooltip.opened &&
+          <div ref={(node) => { this.el = node; }}>
+            {this.getContent()}
+          </div>
+        }
+      </TetherComponent>
     );
   }
 }
