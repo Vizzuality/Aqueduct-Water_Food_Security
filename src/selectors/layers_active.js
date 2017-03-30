@@ -31,7 +31,7 @@ const getActiveLayers = (_datasets, _filters) => {
       if (isCrop) {
         currentLayer = dataset.layer.find((l) => {
           return _filters.crop !== 'all' ?
-            l.attributes.layerConfig.generatedCartocss : l.attributes.default;
+            l.attributes.legendConfig.sqlQuery : l.attributes.default;
         });
       }
 

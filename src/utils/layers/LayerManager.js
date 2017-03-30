@@ -232,7 +232,7 @@ export default class LayerManager {
       }
 
       default: {
-        if (layerConfig.generatedCartocss) {
+        if (legendConfig.sqlQuery) {
           return this._getLegendValues(layerConfig, legendConfig, options);
         }
         const layerConfigConverted = getObjectConversion(layerConfig, options, 'water');
