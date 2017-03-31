@@ -172,7 +172,7 @@ export function getObjectConversion(obj = {}, filters = {}, category) {
     })
   };
 
-  const params = obj.paramsConfig.map((p) => {
+  const params = obj.paramsConfig && obj.paramsConfig.map((p) => {
     // Remove once water_column is not used anymore
     if (p.key === 'water_column') {
       if (category === 'widget') {
@@ -184,7 +184,7 @@ export function getObjectConversion(obj = {}, filters = {}, category) {
     return conversions[p.key] ? conversions[p.key](p.key) : filters[p.key];
   });
 
-  const sqlParams = obj.sqlConfig.map((param) => {
+  const sqlParams = obj.sqlConfig && obj.sqlConfig.map((param) => {
     return {
       key: param.key,
       keyParams: param.keyParams.map((p) => {
@@ -196,11 +196,11 @@ export function getObjectConversion(obj = {}, filters = {}, category) {
   // Text widgets have a different parse
   if (category === 'widget' && obj.type === 'text') {
     return Object.assign({}, obj, {
-      data: JSON.parse(getConversion(JSON.stringify(obj.data), params, sqlParams))
+      data: JSON.parse(getConversion(JSON.stringify(obj.data), params || [], sqlParams || []))
     });
   }
 
-  return getConversion(obj, params, sqlParams);
+  return getConversion(obj, params || [], sqlParams || []);
 }
 
 export function widgetsFilter(widget, { scope, crop, country, indicator }, compare, datasetTags) {
