@@ -70,7 +70,7 @@ class LegendItem extends React.Component {
       onSuccess: (data) => {
         const buckets = data.rows[0].bucket;
         const color = cropOptions.find(c => c.value === crop).color;
-        const items = buckets.map((bucket, i) => { return { value: format('.3s')(bucket), color: this._applyOpacity(color, legendOpacityRange[i]), name: '' }; });
+        const items = buckets.map((bucket, i) => { return { value: `(>= ${format('.3s')(bucket)})`, color: this._applyOpacity(color, legendOpacityRange[i]), name: '' }; });
 
         const newlegendConfig = {
           ...legendConfig,
