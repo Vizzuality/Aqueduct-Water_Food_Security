@@ -91,7 +91,9 @@ export default class LayerManager {
       onSuccess: (data) => {
         const bucket = data.rows[0].bucket;
         if (bucket === null || !bucket) {
-          throw Error('No buckets available');
+          console.error('No buckets available');
+          this._deleteLoader(layerConfig.id);
+          return;
         }
 
         const layerConfigParsed = {

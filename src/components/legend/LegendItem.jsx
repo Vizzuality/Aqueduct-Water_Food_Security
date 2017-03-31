@@ -22,6 +22,7 @@ class LegendItem extends React.Component {
     super(props);
 
     this.state = {
+      error: null,
       loading: true,
       layer: this.props.layer
     };
@@ -43,15 +44,6 @@ class LegendItem extends React.Component {
     this.setState(newState, this.getLegendData);
   }
 
-  _applyOpacity(hex, opacity) {
-    // Splits in 2-length chunks the hexadecimal
-    const hexArray = hex.split('#')[1].match(/.{1,2}/g);
-    // Converts from hex to RGB every chunk
-    const rgb = hexArray.map(h => parseInt(h, 16));
-
-    return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${opacity})`;
-  }
-
   getLegendData() {
     const { layerConfig, legendConfig } = this.state.layer;
     if (!legendConfig.sqlQuery) {
@@ -69,6 +61,21 @@ class LegendItem extends React.Component {
       url: `https://${layerConfig.account}.carto.com/api/v2/sql?q=${sqlQuery}`,
       onSuccess: (data) => {
         const buckets = data.rows[0].bucket;
+
+        if (buckets === null || !buckets.length) {
+          this.setState({
+            loading: false,
+            error: 'Data not available',
+            layer: {
+              ...this.state.layer,
+              name: capitalize(crop)
+            }
+          });
+
+          return;
+        }
+
+
         const color = cropOptions.find(c => c.value === crop).color;
         const items = buckets.map((bucket, i) => { return { value: `(>= ${format('.3s')(bucket)})`, color: this._applyOpacity(color, legendOpacityRange[i]), name: '' }; });
 
@@ -78,6 +85,7 @@ class LegendItem extends React.Component {
         };
 
         this.setState({
+          error: null,
           loading: false,
           layer: {
             ...this.state.layer,
@@ -90,6 +98,15 @@ class LegendItem extends React.Component {
         throw err;
       }
     });
+  }
+
+  _applyOpacity(hex, opacity) {
+    // Splits in 2-length chunks the hexadecimal
+    const hexArray = hex.split('#')[1].match(/.{1,2}/g);
+    // Converts from hex to RGB every chunk
+    const rgb = hexArray.map(h => parseInt(h, 16));
+
+    return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${opacity})`;
   }
 
   triggerAction(action) {
@@ -113,7 +130,9 @@ class LegendItem extends React.Component {
           </h3>
           <LegendButtons triggerAction={this.triggerAction} />
         </header>
-        <LegendGraph config={this.state.layer.legendConfig} />
+        {!this.state.error ?
+          <LegendGraph config={this.state.layer.legendConfig} /> :
+          <span className="error-message">{this.state.error}</span>}
         <Spinner isLoading={this.state.loading} />
       </li>
     );

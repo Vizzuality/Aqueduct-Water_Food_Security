@@ -121,6 +121,11 @@
       padding: 0 $space-1 0 0;
     }
   }
+
+  .error-message {
+    font-size: $font-size-small;
+    color: palette(gray, 'dark');
+  }
 }
 
 // BUTTONS
