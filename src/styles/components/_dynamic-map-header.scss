@@ -1,0 +1,13 @@
+.c-dynamic-map-header {
+  padding: $space-1 14px;
+
+  background-color: rgba(245, 243, 240, .9);
+  box-shadow: 0 0 2px rgba(palette(black), .25);
+
+  > .title {
+    font-family: $font-family-roboto;
+    font-size: $font-size-extrabig;
+    color: palette(gray, 'dark');
+    line-height: .9;
+  }
+}

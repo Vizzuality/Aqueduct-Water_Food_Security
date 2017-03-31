@@ -11,9 +11,8 @@
     width: 400px;
     z-index: 998;
 
-    > .legend-header {
+    .legend-header {
       display: flex;
-      align-items: center;
       justify-content: space-between;
       cursor: pointer;
 
@@ -27,9 +26,10 @@
         background-color: rgba(245, 243, 240, .9);
         box-shadow: 0 0 2px rgba(palette(black), .25);
 
-        font-size: $font-size-big;
+        font-size: $font-size-default;
         font-weight: 500;
         color: $color-text-1;
+        text-transform: uppercase;
       }
 
       > .legend-btn {
@@ -38,16 +38,18 @@
         justify-content: center;
         width: 30px;
         height: 30px;
-        margin: 0 0 0 1px;
+        margin: 0;
 
-        background-color: rgba(245, 243, 240, .9);
+        background-color: palette(white);
         box-shadow: 0 0 2px rgba(palette(black), .25);
       }
 
-      > .legend-btn > .legend-open-icon {
+      > .legend-btn > .legend-open-icon,
+      > .legend-btn > .legend-close-icon {
         display: inline-block;
         width: 12px;
         height: 12px;
+        margin: 0 auto;
 
         stroke: $color-text-1;
         stroke-width: 2px;
@@ -60,23 +62,16 @@
 
     > .legend-content {
       display: none;
+      max-height: 375px;
+      overflow-y: auto;
       background-color: rgba(245, 243, 240, .9);
       box-shadow: 0 0 2px rgba(palette(black), .25);
     }
 
     &.-expanded {
 
-      > .legend-header {
+      .legend-header {
         justify-content: flex-end;
-
-        > .legend-header-title {
-          display: none;
-        }
-
-        > .legend-btn {
-          margin: 0 0 1px;
-          background-color: rgba(245, 243, 240, .9);
-        }
 
         > .legend-btn > .legend-open-icon {
           display: none;
@@ -84,11 +79,6 @@
 
         > .legend-btn > .legend-close-icon {
           display: inline-block;
-          width: 14px;
-          height: 14px;
-
-          stroke: $color-text-1;
-          stroke-width: 2px;
         }
       }
 
@@ -132,6 +122,11 @@
       text-transform: capitalize;
       padding: 0 $space-1 0 0;
     }
+  }
+
+  .error-message {
+    font-size: $font-size-small;
+    color: palette(gray, 'dark');
   }
 }
 
