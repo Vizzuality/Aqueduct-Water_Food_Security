@@ -62,6 +62,8 @@
 
     > .legend-content {
       display: none;
+      max-height: 375px;
+      overflow-y: auto;
       background-color: rgba(245, 243, 240, .9);
       box-shadow: 0 0 2px rgba(palette(black), .25);
     }
