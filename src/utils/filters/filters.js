@@ -1,4 +1,5 @@
 import { substitution, concatenation } from 'utils/utils';
+import { cropOptions } from 'constants/filters';
 
 // Util functions
 function getConversion(obj, params, sqlParams) {
@@ -169,7 +170,14 @@ export function getObjectConversion(obj = {}, filters = {}, category) {
     water_column: (param, isWidget = false) => ({
       key: param.key,
       value: getWaterColumn(filters, param.sufix, isWidget)
-    })
+    }),
+    color: key => {
+      const crop = cropOptions.find(c => c.value === filters.crop);
+      return {
+        key,
+        value: (crop) ? crop.color : '#777777'
+      };
+    }
   };
 
   const params = obj.paramsConfig && obj.paramsConfig.map((p) => {

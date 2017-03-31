@@ -15,6 +15,7 @@ const getActiveWidgets = (_datasets, _filters, _compare) => {
   _datasets.list.forEach((dataset) => {
     if (dataset.widget && dataset.widget.length) {
       widget = Object.assign({}, dataset.widget[0].attributes, {
+        id: dataset.widget[0].id,
         metadata: (dataset.metadata && dataset.metadata.length) ? dataset.metadata[0].attributes : null
       });
 
