@@ -71,8 +71,7 @@ class Widget extends React.Component {
   }
 
   render() {
-    const { name, description, widgetConfig, queryUrl } = this.props.widget;
-
+    const { name, description, widgetConfig, queryUrl, dataset, id } = this.props.widget;
     const className = classnames({
       [this.props.className]: !!this.props.className
     });
@@ -88,6 +87,7 @@ class Widget extends React.Component {
             <WidgetButtons widgetElem={this.widgetElem} queryUrl={queryUrl} triggerAction={this.triggerAction} />
           </header>
           <div className="widget-content">
+            {/* <p style={{color: 'black'}}>{`${config.API_URL}/dataset/${dataset}/widget/${id}`}</p> */}
             <Spinner isLoading={this.state.loading} />
             <WidgetChart config={widgetConfig} filters={this.props.filters} toggleLoading={this.toggleLoading} />
           </div>

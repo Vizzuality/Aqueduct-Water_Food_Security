@@ -66,7 +66,7 @@ export default class VegaChart extends React.Component {
         const tooltip = data.interactionConfig && data.interactionConfig.find(i => i.name === 'tooltip');
         if (tooltip) {
           vis.on('mousemove', (e, item) => {
-            if (item) {
+            if (item && item.type !== 'axis') {
               return this.props.toggleTooltip(true, {
                 position: {
                   x: e.clientX,
