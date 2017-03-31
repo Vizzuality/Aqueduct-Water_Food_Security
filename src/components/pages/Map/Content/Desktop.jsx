@@ -9,6 +9,7 @@ import WidgetList from 'components/widgets/WidgetList';
 import Summary from 'components/summary/Summary';
 import DownloadButton from 'components/map/DownloadButton';
 import Legend from 'containers/legend/Legend';
+import DynamicHeader from 'components/map/DynamicHeader';
 import ShareModal from 'containers/modal/ShareModal';
 import LayerManager from 'utils/layers/LayerManager';
 import { Map, Icon } from 'aqueduct-components';
@@ -130,6 +131,12 @@ export default class MapPageDesktop extends React.Component {
             sidebar={this.props.sidebar}
             LayerManager={LayerManager}
           />
+
+          {this.props.countries.list.length &&
+            <DynamicHeader
+              countries={this.props.countries.list}
+              filters={this.props.filters}
+            />}
 
           <Legend
             className="-map"

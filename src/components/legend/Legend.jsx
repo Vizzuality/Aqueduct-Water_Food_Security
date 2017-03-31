@@ -1,7 +1,6 @@
 import React from 'react';
 import orderBy from 'lodash/orderBy';
 import LegendItem from 'components/legend/LegendItem';
-import DynamicHeader from 'components/map/DynamicHeader';
 import { Icon, OnlyOn } from 'aqueduct-components';
 
 export default class Legend extends React.Component {
@@ -26,11 +25,6 @@ export default class Legend extends React.Component {
       <div className={`c-legend ${this.props.className} ${this.state.expanded ? '-expanded' : ''}`}>
         <OnlyOn device="desktop">
           <div>
-            {this.props.countries.list.length &&
-              <DynamicHeader
-                countries={this.props.countries.list}
-                filters={this.props.filters}
-              />}
             <div className="legend-header" onClick={() => this.toggleExpand()}>
               <span className="legend-header-title">{this.state.expanded ? 'Legend' : 'View Legend'}</span>
               <button className="legend-btn">
