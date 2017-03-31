@@ -130,6 +130,7 @@ export default class MapPageDesktop extends React.Component {
             sidebar={this.props.sidebar}
             LayerManager={LayerManager}
           />
+
           <Legend
             className="-map"
             expanded
