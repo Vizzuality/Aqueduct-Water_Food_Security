@@ -73,6 +73,14 @@
       "triangle-up",
       "line",
       "textMark"
+    ],
+    "cropCatColor": [
+      "#D23782",
+      "#1230a5",
+      "#32866d",
+      "#ffe01b",
+      "#6e23bd",
+      "#aaa"
     ]
   }
 }
