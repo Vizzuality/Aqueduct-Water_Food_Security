@@ -1,0 +1,173 @@
+{
+  "name": "Line vizzualitation",
+  "width": 150,
+  "height": 150,
+  "padding": {"top": 30,"left": 50,"bottom": 40,"right": 30},
+  "marks": [
+    {
+      "marks": [
+        {
+          "properties": {
+            "enter": {
+              "stroke": {"field": "group","scale": "group"},
+              "x": {"field": "x","scale": "x"},
+              "strokeWidth": {"value": 2},
+              "y": {"field": "y","scale": "y"}
+            }
+          },
+          "type": "line"
+        }
+      ],
+      "from": {
+        "data": "table",
+        "transform": [{"groupby": ["group"],"type": "facet"}]
+      },
+      "type": "group"
+    }
+  ],
+  "axes": [
+    {
+      "type": "x",
+      "scale": "x",
+      "tickSize": 0,
+      "ticks": 3,
+      "tickPadding": 10,
+      "format": ".0f",
+      "properties": {
+        "axis": {
+          "stroke": {"value": "#eee"},
+          "strokeWidth": {"value": 1}
+        }
+      }
+    },
+    {
+      "type": "y",
+      "scale": "y",
+      "grid": true,
+      "layer": "back",
+      "ticks": 4,
+      "tickSize": 0,
+      "tickPadding": 10,
+      "format": ".2f",
+      "properties": {
+        "axis": {"stroke": {"value": "transparent"}},
+        "grid": {
+          "stroke": {"value": "#eee"},
+          "strokeWidth": {"value": 1}
+        },
+        "labels": {
+          "baseline": {
+            "value": "bottom"
+          }
+        }
+      }
+    }
+  ],
+  "data": [
+    {
+      "url": "https://wri-01.carto.com/api/v2/sql?q=select unnest(Array[ 0.09600429,  0.991519  ,  0.23050533,  0.17471493,  0.69110659, 0.30573123,  0.62629532,  0.49206873,  0.048547  ,  0.6322443 ,0.87878446,  0.21322737,  0.52704151,  0.08186764,  0.78085925, 0.03404986,  0.67157174,  0.30548074]) as y, unnest(Array['Cereals','Leguminous','Roots And Tubers','Fruit and nuts','Oilseed crops','All crops avg']) as group, unnest(Array[2020,2020,2020,2020,2020,2020,2030,2030,2030,2030,2030,2030,2040,2040,2040,2040,2040,2040]) as x",
+      "name": "table",
+      "format": {"type": "json","property": "rows"}
+    }
+  ],
+  "scales": [
+    {
+      "name": "x",
+      "range": "width",
+      "domain": {"data": "table","field": "x"},
+      "type": "linear",
+      "zero": false
+    },
+    {
+      "name": "y",
+      "range": "height",
+      "domain": {"data": "table","field": "y"},
+      "type": "linear",
+      "zero": true
+    },
+    {
+      "name": "group",
+      "range": "cropCatColor",
+      "domain": {"data": "table","field": "group"},
+      "type": "ordinal"
+    }
+  ],
+  "signals": [
+    {
+      "name": "onMousemove",
+      "streams": [
+        {
+          "type": "mousemove",
+          "expr": "{ xval: +iscale('x', eventX()), yval: +iscale('y', eventY())}"
+        }
+      ]
+    }
+  ],
+  "interactionConfig": [
+    {
+      "name": "tooltip",
+      "type": "signal",
+      "config": {
+        "table": {
+          "title": {
+            "key": "year",
+            "parse": {}
+          },
+          "from": "tables",
+          "bisect": "year",
+          "headers": ["Category", "Variability"],
+          "columns": [
+            {
+              "key": "cat",
+              "parse": {}
+            },
+            {
+              "key": "water_risk",
+              "parse": {
+                "format": ".2f"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+
+  "interactionConfigSampleList": [
+    {
+      "name": "tooltip",
+      "config": {
+        "list": {
+          "columns": [
+            {
+              "key": "crop",
+              "label": "Crop",
+              "parse": {}
+            },
+            {
+              "key": "value",
+              "label": "Crop percentage",
+              "parse": {
+                "format": ".2f",
+                "suffix": "%"
+              }
+            },
+            {
+              "key": "risk",
+              "label": "Risk",
+              "parse": {}
+            },
+            {
+              "key": "area_perc",
+              "label": "Risk percentage",
+              "parse": {
+                "format": ".2f",
+                "suffix": "%"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

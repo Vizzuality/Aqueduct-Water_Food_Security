@@ -1,5 +1,6 @@
 import React from 'react';
 import vega from 'vega';
+import * as d3 from 'd3';
 import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';
 import VegaChartTooltip from 'components/widgets/VegaChartTooltip';
@@ -64,40 +65,38 @@ export default class VegaChart extends React.Component {
 
         // TOOLTIP
         const tooltip = data.interactionConfig && data.interactionConfig.find(i => i.name === 'tooltip');
-
         if (tooltip) {
+          const type = tooltip.type;
+          const config = tooltip.config;
           // TODO: Type signal
-          if (tooltip.type === 'signal') {
-            vis.onSignal('onMousemove', (event, x0) => {
-              const visData = vis.data().table;
-              let item;
+          if (type === 'signal') {
+            vis.onSignal('onMousemove', (event, { xval }) => {
+              const visData = vis.data()[config.table.from];
+              let items = [];
 
-              if (typeof x0 === 'string') {
-                item = visData.find(d => d.x === x0);
-              }
-
-              if (typeof x0 === 'number') {
-                const bisectDate = d3.bisector(d => d.x).left;
-                const i = bisectDate(visData, x0, 1);
+              if (typeof xval === 'number') {
+                const bisectVal = config.table.bisect;
+                const bisectDate = d3.bisector(d => d[bisectVal]).left;
+                const i = bisectDate(visData, xval, 1);
                 const d0 = visData[i - 1];
                 const d1 = visData[i];
-                item = (d0 && d1 && (x0 - d0.x > d1.x - x0)) ? d1 : d0;
+                const selected = (d0 && d1 && (xval - d0[bisectVal] > d1[bisectVal] - xval)) ? d1 : d0;
+                items = visData.filter(d => d[bisectVal] === selected[bisectVal]);
               }
 
-              if (item) {
+              if (items.length) {
                 return this.props.toggleTooltip(true, {
                   follow: true,
                   children: VegaChartTooltip,
                   childrenProps: {
-                    item
+                    data: items,
+                    config
                   }
                 });
               }
               return null;
             });
-
           } else {
-
             vis.on('mousemove', (e, item) => {
               if (item && item.type !== 'axis') {
                 return this.props.toggleTooltip(true, {
