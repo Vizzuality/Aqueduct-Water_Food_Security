@@ -13,7 +13,7 @@ import {
   RadioGroup,
   CustomSelect
 } from 'aqueduct-components';
-import { Link } from 'react-router';
+import { browserHistory } from 'react-router';
 
 // Filter options
 import {
@@ -34,9 +34,7 @@ export default class Filters extends React.Component {
     super(props);
 
     // State
-    this.state = {
-      countryToCompare: null
-    };
+    this.state = {};
 
     // Bindings
     this.updateFilters = this.updateFilters.bind(this);
@@ -57,6 +55,11 @@ export default class Filters extends React.Component {
         info: AppDefinitions[slug]
       }
     });
+  }
+
+  onSelectCountryToCompare(selected) {
+    const countriesParam = `countries=${this.props.filters.country},${selected.value}`;
+    browserHistory.push(`/compare?${countriesParam}`);
   }
 
   render() {
@@ -136,26 +139,11 @@ export default class Filters extends React.Component {
                   <div className="small-12 medium-4 columns">
                     <div className="filter-item">
                       {/* Country to compare with */}
-                      <span className="title">Compare With</span>
                       <CountrySelect
-                        className={this.props.filters.country ? '' : '-disabled'}
-                        placeholder={this.props.className === '-mobile' ? 'Compare with...' : 'Country name...'}
-                        value={this.state.countryToCompare}
-                        onValueChange={selected => this.setState({ countryToCompare: selected.value })}
+                        className={this.props.filters.country ? '-country-compare' : '-disabled'}
+                        placeholder="Compare with..."
+                        onValueChange={selected => this.onSelectCountryToCompare(selected)}
                       />
-                    </div>
-                  </div>
-                  <div className="small-12 medium-4 columns">
-                    <div className="filter-item">
-                      {/* Compare */}
-                      {
-                        <Link
-                          className={`c-btn -filters -fluid ${this.state.countryToCompare ? '' : '-disabled'}`}
-                          to={`/compare?countries=${this.props.filters.country},${this.state.countryToCompare}`}
-                        >
-                          Compare
-                        </Link>
-                      }
                     </div>
                   </div>
                 </div>
