@@ -40,7 +40,7 @@ export default class Tooltip extends React.Component {
       // TODO: modify topPos and bottomPos for recalculating toooltip position if it is out of viewport
     }
     return {
-      position: 'absolute',
+      position: 'fixed',
       top: `${topPos}px`,
       left: `${bottomPos}px`,
       width: '1px',
