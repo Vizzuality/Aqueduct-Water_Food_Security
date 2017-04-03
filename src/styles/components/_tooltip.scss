@@ -6,6 +6,11 @@
   z-index: 10001;
   pointer-events: none;
 
+  .tooltip-title {
+    color: $color-text-1;
+    padding: 0 $space-1/2 $space-1/2;
+  }
+
   .tooltip-list {
     list-style: none;
 
@@ -22,6 +27,18 @@
       }
     }
   }
+
+  .tooltip-table {
+    th, td {
+      padding: 1px 4px;
+      color: $color-text-1;
+    }
+
+    th {
+      font-weight: 500;
+    }
+  }
+
 }
 
 .c-tooltip-invisible-div {
