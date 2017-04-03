@@ -84,8 +84,8 @@ export default class SummaryCountry extends React.Component {
       .then((data) => {
         const yieldData = (data.rows[0]) ? format('.3s')(data.rows[0].value) : '-';
         const areaData = (data.rows[1]) ? format('.3s')(data.rows[1].value) : '-';
-        const popRiskHungerData = (data.rows[1]) ? format('.2f')(data.rows[2].value) : '-';
-        const score = (data.rows[1]) ? data.rows[3].value : '-';
+        const popRiskHungerData = (data.rows[2]) ? format('.2f')(data.rows[2].value) : '-';
+        const score = (data.rows[3]) ? data.rows[3].value : '-';
 
         this._mounted && this.setState({
           score,
