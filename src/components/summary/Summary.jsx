@@ -12,8 +12,7 @@ export default class SummaryCountry extends React.Component {
     this.state = {
       country: '',
       loading: false,
-      yield: '',
-      area: ''
+      fields: []
     };
     this._mounted = false;
   }
@@ -46,6 +45,13 @@ export default class SummaryCountry extends React.Component {
         key: 'and',
         keyParams: [
           { key: 'iso' },
+          { key: 'year' }
+        ]
+      },
+      {
+        key: 'and1',
+        keyParams: [
+          { key: 'iso' },
           { key: 'year' },
           { key: 'commodity' }
         ]
@@ -53,9 +59,11 @@ export default class SummaryCountry extends React.Component {
     ];
 
     const url = `https://wri-01.carto.com/api/v2/sql?q=
+      with chstress as (SELECT iso, values from aqueduct_water_stress_country_ranking_bau where type = 'all' {{and}})
       SELECT impactparameter AS name, sum(value) AS value
-      FROM combined01_prepared WHERE impactparameter in ('Area', 'Yield')
-      {{and}} group by impactparameter`;
+      FROM combined01_prepared WHERE impactparameter in ('Area', 'Yield','Share Pop. at risk of hunger')
+      {{and1}} group by impactparameter union all select 'Water risk score' as name, values as value from chstress
+    `;
 
     const widgetConfig = Object.assign({}, {
       sqlConfig,
@@ -76,11 +84,25 @@ export default class SummaryCountry extends React.Component {
       .then((data) => {
         const yieldData = (data.rows[0]) ? format('.3s')(data.rows[0].value) : '-';
         const areaData = (data.rows[1]) ? format('.3s')(data.rows[1].value) : '-';
+        const popRiskHungerData = (data.rows[1]) ? format('.2f')(data.rows[2].value) : '-';
+        const score = (data.rows[1]) ? data.rows[3].value : '-';
 
         this._mounted && this.setState({
-          loading: false,
-          yield: `${yieldData} tons/ha`,
-          area: `${areaData} ha`
+          score,
+          fields: [{
+            title: 'Water risk score',
+            value: score
+          }, {
+            title: 'Yield',
+            value: `${yieldData} tons/ha`
+          }, {
+            title: 'Area',
+            value: `${areaData} ha`
+          }, {
+            title: 'Pop. at risk of hunger',
+            value: `${popRiskHungerData}%`
+          }],
+          loading: false
         });
       });
   }
@@ -99,14 +121,14 @@ export default class SummaryCountry extends React.Component {
           <span className="summary-title">{this.getTitle()}</span>
           <Spinner isLoading={this.state.loading} className="-transparent" />
           <ul className="summary-list">
-            <li>
-              <span className="title">Yield</span>
-              <span className="amount">{this.state.yield}</span>
-            </li>
-            <li>
-              <span className="title">Area</span>
-              <span className="amount">{this.state.area}</span>
-            </li>
+            {!!this.state.fields && this.state.fields.map((f, i) => {
+              return (
+                <li key={i}>
+                  <span className="title">{f.title}</span>
+                  <span className="amount">{f.value}</span>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>
