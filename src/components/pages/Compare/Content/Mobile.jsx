@@ -3,9 +3,9 @@ import ShareModal from 'containers/modal/ShareModal';
 
 // Components
 import { Link } from 'react-router';
+import { SegmentedUi } from 'aqueduct-components';
 import CompareListMobile from 'components/compare/CompareListMobile';
 import MobileFilters from 'components/filters/MobileFilters';
-import { SegmentedUi } from 'aqueduct-components';
 import CountrySelect from 'containers/countries/CountrySelect';
 
 export default class ComparePageMobile extends React.Component {
@@ -88,7 +88,12 @@ export default class ComparePageMobile extends React.Component {
             setFilters={this.props.setFilters}
             headingContent={headingContent}
           >
-            <SegmentedUi className="-stacked-tabs" selected="0" items={this.getCountries()} onChange={this.onChangeTab} />
+            <SegmentedUi
+              className="-stacked-tabs"
+              selected="0"
+              items={this.getCountries()}
+              onChange={this.onChangeTab}
+            />
           </MobileFilters>
         </div>
         <CompareListMobile

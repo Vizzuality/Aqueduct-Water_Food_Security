@@ -55,10 +55,6 @@
 }
 
 .filters-lead {
-  padding-left: ($space-1 * 4);
-  @include only-desktop {
-    border-bottom: 1px solid palette(blue, dark);
-  }
   @include only-mobile {
     background-color: palette(blue, dark);
     box-shadow: 0 2px 3px rgba(0, 0, 0, .2) inset;
