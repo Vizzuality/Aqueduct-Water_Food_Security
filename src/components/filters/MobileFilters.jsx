@@ -1,4 +1,5 @@
 import React from 'react';
+import classnames from 'classnames';
 import Filters from 'components/filters/Filters';
 import { Icon } from 'aqueduct-components';
 
@@ -21,23 +22,26 @@ export default class MobileFilters extends React.Component {
   }
 
   render() {
-    const cNames = ['c-mobile-filters'];
-    this.props.className && cNames.push(this.props.className);
-    this.state.opened && cNames.push('-opened');
+    const classNames = classnames({
+      'c-mobile-filters': true,
+      '-opened': this.state.opened,
+      [this.props.className]: !!this.props.className
+    });
+
     return (
-      <div className={cNames.join(' ')}>
+      <div className={classNames}>
         <div className="mobile-filters-content">
           {this.props.children}
         </div>
+
         <button className="mobile-filters-btn" onClick={this.toggle}>
           <Icon name="icon-filters" className="-medium" />
           <span>Filters</span>
           <Icon name="icon-expand" className="-medium icon-toggle" />
         </button>
+
         <div className="mobile-filters-wrapper">
-          <div className="mobile-filters-heading-content">
-            {this.props.headingContent}
-          </div>
+          {this.props.headingContent}
           <Filters {...this.props} />
         </div>
       </div>

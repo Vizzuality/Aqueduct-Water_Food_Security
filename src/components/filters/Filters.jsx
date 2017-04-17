@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { browserHistory } from 'react-router';
 
 // Components
 import InfoModal from 'components/modal/InfoModal';
@@ -13,7 +13,6 @@ import {
   RadioGroup,
   CustomSelect
 } from 'aqueduct-components';
-import { browserHistory } from 'react-router';
 
 // Filter options
 import {
@@ -67,39 +66,39 @@ export default class Filters extends React.Component {
       return c1.label > c2.label ? 1 : -1;
     });
     const timeline = (
-      <div className="filter-item">
+      <div className="c-filters-item">
         {/* Year */}
-        <div className="c-select">
-          <div className="select-header">
-            <span className="title">Timeframe</span>
-            <button
-              className="icon-container"
-              onClick={() => this.openModal('timeframe')}
-            >
-              <Icon
-                name="icon-question"
-                className="title-icon"
-              />
-            </button>
-          </div>
-          <Timeline
-            items={yearOptions}
-            selected={yearOptions.find(i => i.value === this.props.filters.year)}
-            onChange={(selected) => {
-              selected && selected.value === 'baseline' && this.updateFilters('absolute', 'type');
-              selected && this.updateFilters(selected.value, 'year');
-            }}
-          />
-          {this.props.filters.year !== 'baseline' &&
-            <RadioGroup
-              className="-filters"
-              items={dataTypeOptions}
-              name="type"
-              defaultValue={this.props.filters.type}
-              onChange={selected => this.updateFilters(selected.value, 'type')}
+        <div className="filter-item-header">
+          <span className="title">Timeframe</span>
+          <button
+            className="icon-container"
+            onClick={() => this.openModal('timeframe')}
+          >
+            <Icon
+              name="icon-question"
+              className="title-icon"
             />
-          }
+          </button>
         </div>
+
+        <Timeline
+          items={yearOptions}
+          selected={yearOptions.find(i => i.value === this.props.filters.year)}
+          onChange={(selected) => {
+            selected && selected.value === 'baseline' && this.updateFilters('absolute', 'type');
+            selected && this.updateFilters(selected.value, 'year');
+          }}
+        />
+
+        {this.props.filters.year !== 'baseline' &&
+          <RadioGroup
+            className="-filters -inline"
+            items={dataTypeOptions}
+            name="type"
+            defaultValue={this.props.filters.type}
+            onChange={selected => this.updateFilters(selected.value, 'type')}
+          />
+        }
       </div>
     );
 
@@ -124,12 +123,14 @@ export default class Filters extends React.Component {
         <Accordion className="-filters" opened contentPosition="top" toggleIcon={<Icon name="icon-arrow-up-2" className="filters-collapse-btn" />}>
           <div>
             {this.props.withScope && this.props.filters.scope === 'country' &&
-              <div className="filters-section -highlighted">
-                <div className="row expanded collapse filters-group -commodities">
+              <div className="filters-section -separator">
+                <div className="row expanded collapse align-justify align-bottom">
                   <div className="small-12 medium-4 columns">
-                    <div className="filter-item">
+                    <div className="c-filters-item">
                       {/* Country */}
-                      <span className="title">Select a Country</span>
+                      <div className="filter-item-header">
+                        <span className="title">Select a Country</span>
+                      </div>
                       <CountrySelect
                         value={this.props.filters.country !== 'null' ? this.props.filters.country : null}
                         onValueChange={selected => this.updateFilters(selected && selected.value, 'country')}
@@ -137,7 +138,7 @@ export default class Filters extends React.Component {
                     </div>
                   </div>
                   <div className="small-12 medium-4 columns">
-                    <div className="filter-item">
+                    <div className="c-filters-item">
                       {/* Country to compare with */}
                       <CountrySelect
                         className={this.props.filters.country ? '-country-compare' : '-disabled'}
@@ -153,27 +154,27 @@ export default class Filters extends React.Component {
               <div className="row expanded collapse filters-group">
                 <div className={columnClassName}>
                   {/* Crops */}
-                  <div className="filter-item">
-                    <div className="c-select">
-                      <div className="select-header">
-                        <span className="title">Crops</span>
-                        <button
-                          className="icon-container"
-                          onClick={() => this.openModal('crops')}
-                        >
-                          <Icon
-                            name="icon-question"
-                            className="title-icon"
-                          />
-                        </button>
-                      </div>
-                      <CustomSelect
-                        search
-                        options={cropOptions}
-                        value={this.props.filters.crop}
-                        onValueChange={selected => selected && this.updateFilters(selected.value, 'crop')}
-                      />
+                  <div className="c-filters-item">
+                    <div className="filter-item-header">
+                      <span className="title">Crops</span>
+                      <button
+                        className="icon-container"
+                        onClick={() => this.openModal('crops')}
+                      >
+                        <Icon
+                          name="icon-question"
+                          className="title-icon"
+                        />
+                      </button>
                     </div>
+
+                    <CustomSelect
+                      search
+                      options={cropOptions}
+                      value={this.props.filters.crop}
+                      onValueChange={selected => selected && this.updateFilters(selected.value, 'crop')}
+                    />
+
                     <CheckboxGroup
                       items={irrigationOptions}
                       onChange={selected => this.updateFilters(selected, 'irrigation')}
@@ -182,57 +183,56 @@ export default class Filters extends React.Component {
                     />
                   </div>
                 </div>
+
                 <div className={columnClassName}>
                   {/* Water */}
-                  <div className="filter-item">
-                    <div className="c-select">
-                      <div className="select-header">
-                        <span className="title">Water Risk</span>
-                        <button
-                          className="icon-container"
-                          onClick={() => this.openModal('water-risk')}
-                        >
-                          <Icon
-                            name="icon-question"
-                            className="title-icon"
-                          />
-                        </button>
-                      </div>
-                      <CustomSelect
-                        options={waterOptions}
-                        value={this.props.filters.indicator}
-                        onValueChange={selected => selected && this.updateFilters(selected.value, 'indicator')}
-                      />
+                  <div className="c-filters-item">
+                    <div className="filter-item-header">
+                      <span className="title">Water Risk</span>
+                      <button
+                        className="icon-container"
+                        onClick={() => this.openModal('water-risk')}
+                      >
+                        <Icon
+                          name="icon-question"
+                          className="title-icon"
+                        />
+                      </button>
                     </div>
+
+                    <CustomSelect
+                      options={waterOptions}
+                      value={this.props.filters.indicator}
+                      onValueChange={selected => selected && this.updateFilters(selected.value, 'indicator')}
+                    />
                   </div>
                 </div>
                 <div className={columnClassName}>
                   {/* Food */}
-                  <div className="filter-item">
-                    <div className="c-select">
-                      <div className="select-header">
-                        <span className="title">Food security</span>
-                        <button
-                          className="icon-container"
-                          onClick={() => this.openModal('country-data')}
-                        >
-                          <Icon
-                            name="icon-question"
-                            className="title-icon"
-                          />
-                        </button>
-                      </div>
-                      <CustomSelect
-                        options={foodOptions}
-                        value={this.props.filters.food}
-                        onValueChange={selected => selected && this.updateFilters(selected.value, 'food')}
-                      />
+                  <div className="c-filters-item">
+                    <div className="filter-item-header">
+                      <span className="title">Food security</span>
+                      <button
+                        className="icon-container"
+                        onClick={() => this.openModal('food-security')}
+                      >
+                        <Icon
+                          name="icon-question"
+                          className="title-icon"
+                        />
+                      </button>
                     </div>
+
+                    <CustomSelect
+                      options={foodOptions}
+                      value={this.props.filters.food}
+                      onValueChange={selected => selected && this.updateFilters(selected.value, 'food')}
+                    />
                   </div>
                 </div>
               </div>
             </div>
-            <div className="filters-section -mobile-spacing">
+            <div className="filters-section">
               <div className="row expanded collapse filters-group">
                 <div className="small-12 columns">
                   {timeline}
