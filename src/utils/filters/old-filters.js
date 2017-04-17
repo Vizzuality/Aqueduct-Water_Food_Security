@@ -12,7 +12,7 @@ function getConversion(string, params, sqlParams) {
 function getWaterColumn({ water, period_type, period_value,  dataType }, sufix, widget) {
   const layers = {
     // Wayer stress
-    '6c49ae6c-2c73-46ac-93ab-d4ed1b05d44e': {
+    '4b000ded-5f4d-4dbd-83c9-03f2dfcd36db': {
       indicator: 'ws',
       dataType: dataType === 'change_from_baseline' && !widget ? 'c' : 't',
       sufix: dataType === 'change_from_baseline' && !widget ? 'l' : 'r'

@@ -17,7 +17,7 @@ function getConversion(obj, params, sqlParams) {
 function getIndicator({ indicator }) {
   const layers = {
     // Water stress
-    '6c49ae6c-2c73-46ac-93ab-d4ed1b05d44e': 'water_stress',
+    '4b000ded-5f4d-4dbd-83c9-03f2dfcd36db': 'water_stress',
     // Seasonal variability
     'd9785282-2140-463f-a82d-f7296687055a': 'seasonal_variability',
     // none
@@ -31,7 +31,7 @@ function getIndicator({ indicator }) {
 function getWaterColumn({ indicator, year, type }, sufix, widget) {
   const layers = {
     // Water stress
-    '6c49ae6c-2c73-46ac-93ab-d4ed1b05d44e': {
+    '4b000ded-5f4d-4dbd-83c9-03f2dfcd36db': {
       indicator: 'ws',
       dataType: type === 'change_from_baseline' && !widget ? 'c' : 't',
       sufix: type === 'change_from_baseline' && !widget ? 'l' : 'r'
