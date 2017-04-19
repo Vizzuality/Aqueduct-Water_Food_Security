@@ -1,5 +1,5 @@
 import React from 'react';
-import Widget from 'containers/widgets/Widget';
+import Widget from 'components/widgets/Widget';
 import { Spinner } from 'aqueduct-components';
 
 export default class WidgetList extends React.Component {

@@ -3,7 +3,7 @@ import { Map, SegmentedUi } from 'aqueduct-components';
 import WidgetList from 'components/widgets/WidgetList';
 import MobileFilters from 'components/filters/MobileFilters';
 import DownloadButton from 'components/map/DownloadButton';
-import LegendMobile from 'containers/legend/LegendMobile';
+import LegendMobile from 'components/legend/LegendMobile';
 import Summary from 'components/summary/Summary';
 import LayerManager from 'utils/layers/LayerManager';
 
