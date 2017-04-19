@@ -7,6 +7,7 @@ import Filters from 'components/filters/Filters';
 import CountrySelect from 'containers/countries/CountrySelect';
 import { Icon } from 'aqueduct-components';
 import { Link } from 'react-router';
+import { toggleModal } from 'reducers/modal';
 
 export default class ComparePageDesktop extends React.Component {
 
@@ -51,7 +52,7 @@ export default class ComparePageDesktop extends React.Component {
   }
 
   toggleShareModal() {
-    this.props.toggleModal(true, {
+    toggleModal(true, {
       children: ShareModal
     });
   }
@@ -73,7 +74,6 @@ export default class ComparePageDesktop extends React.Component {
                 className="-compare"
                 filters={this.props.filters}
                 setFilters={this.props.setFilters}
-                toggleModal={this.props.toggleModal}
               />
             </div>
           </div>
@@ -101,7 +101,6 @@ ComparePageDesktop.propTypes = {
   updateCompareUrl: React.PropTypes.func,
   setCompareCountry: React.PropTypes.func,
   emptyCompareCountries: React.PropTypes.func,
-  toggleModal: React.PropTypes.func,
   widgetsActive: React.PropTypes.array,
   layersActive: React.PropTypes.array
 };

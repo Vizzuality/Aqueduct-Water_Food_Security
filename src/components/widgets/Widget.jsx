@@ -6,6 +6,7 @@ import WidgetModal from 'components/modal/WidgetModal';
 import EmbedModal from 'components/modal/EmbedModal';
 import WidgetImageModal from 'components/modal/WidgetImageModal';
 import { Spinner } from 'aqueduct-components';
+import { toggleModal } from 'reducers/modal';
 
 class Widget extends React.Component {
 
@@ -32,7 +33,7 @@ class Widget extends React.Component {
   triggerAction(action) {
     switch (action) {
       case 'info':
-        this.props.toggleModal(true, {
+        toggleModal(true, {
           children: WidgetModal,
           size: '-medium',
           childrenProps: {
@@ -42,7 +43,7 @@ class Widget extends React.Component {
         });
         break;
       case 'embed':
-        this.props.toggleModal(true, {
+        toggleModal(true, {
           children: EmbedModal,
           size: '-medium',
           childrenProps: {
@@ -52,7 +53,7 @@ class Widget extends React.Component {
         });
         break;
       case 'image':
-        this.props.toggleModal(true, {
+        toggleModal(true, {
           children: WidgetImageModal,
           size: '-medium',
           childrenProps: {
@@ -100,8 +101,7 @@ class Widget extends React.Component {
 Widget.propTypes = {
   className: React.PropTypes.string,
   widget: React.PropTypes.object,
-  filters: React.PropTypes.object,
-  toggleModal: React.PropTypes.func
+  filters: React.PropTypes.object
 };
 
 export default Widget;

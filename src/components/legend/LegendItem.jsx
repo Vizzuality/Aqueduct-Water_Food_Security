@@ -10,6 +10,7 @@ import { cropOptions } from 'constants/filters';
 import { legendOpacityRange } from 'constants/index';
 import { format } from 'd3-format';
 import { isEqual, capitalize } from 'lodash';
+import { toggleModal } from 'reducers/modal';
 
 const categories = {
   water: 'Water risk',
@@ -111,7 +112,7 @@ class LegendItem extends React.Component {
 
   triggerAction(action) {
     if (action === 'info') {
-      this.props.toggleModal(true, {
+      toggleModal(true, {
         children: SourceModal,
         childrenProps: {
           layer: this.props.layer
@@ -143,6 +144,5 @@ export default LegendItem;
 
 LegendItem.propTypes = {
   layer: React.PropTypes.object,
-  filters: React.PropTypes.object,
-  toggleModal: React.PropTypes.func
+  filters: React.PropTypes.object
 };

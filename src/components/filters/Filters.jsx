@@ -2,16 +2,16 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 
 // Components
-import InfoModal from 'components/modal/InfoModal';
-import AppDefinitions from 'data/app-definitions.json';
 import {
+  APP_DEFINITIONS,
   CheckboxGroup,
   SegmentedUi,
   Accordion,
   Icon,
   Timeline,
   RadioGroup,
-  CustomSelect
+  CustomSelect,
+  InfoModal
 } from 'aqueduct-components';
 
 // Filter options
@@ -24,6 +24,9 @@ import {
   irrigationOptions,
   dataTypeOptions
 } from 'constants/filters';
+
+// Actions
+import { toggleModal } from 'reducers/modal';
 
 import CountrySelect from 'containers/countries/CountrySelect';
 
@@ -48,10 +51,10 @@ export default class Filters extends React.Component {
   }
 
   openModal(slug) {
-    this.props.toggleModal(true, {
+    toggleModal(true, {
       children: InfoModal,
       childrenProps: {
-        info: AppDefinitions[slug]
+        info: APP_DEFINITIONS[slug]
       }
     });
   }
@@ -250,6 +253,5 @@ Filters.propTypes = {
   setFilters: React.PropTypes.func,
   filters: React.PropTypes.object,
   withScope: React.PropTypes.bool,
-  className: React.PropTypes.string,
-  toggleModal: React.PropTypes.func
+  className: React.PropTypes.string
 };

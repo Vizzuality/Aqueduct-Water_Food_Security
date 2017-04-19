@@ -72,7 +72,6 @@ export default class MapPageMobile extends React.Component {
           className="-mobile"
           withScope filters={this.props.filters}
           setFilters={this.props.setFilters}
-          toggleModal={this.props.toggleModal}
         />
       </div>
     );
@@ -88,6 +87,5 @@ MapPageMobile.propTypes = {
   countries: React.PropTypes.object,
   // Actions
   setMapParams: React.PropTypes.func,
-  setFilters: React.PropTypes.func,
-  toggleModal: React.PropTypes.func
+  setFilters: React.PropTypes.func
 };
