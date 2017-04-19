@@ -151,7 +151,7 @@ export default class Filters extends React.Component {
               </div>
             }
             <div className="filters-section">
-              <div className="row expanded collapse filters-group">
+              <div className="row expanded collapse">
                 <div className={columnClassName}>
                   {/* Crops */}
                   <div className="c-filters-item">
@@ -233,7 +233,7 @@ export default class Filters extends React.Component {
               </div>
             </div>
             <div className="filters-section">
-              <div className="row expanded collapse filters-group">
+              <div className="row expanded collapse">
                 <div className="small-12 columns">
                   {timeline}
                 </div>
