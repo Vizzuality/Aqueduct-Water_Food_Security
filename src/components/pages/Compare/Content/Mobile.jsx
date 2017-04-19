@@ -7,6 +7,7 @@ import { SegmentedUi } from 'aqueduct-components';
 import CompareListMobile from 'components/compare/CompareListMobile';
 import MobileFilters from 'components/filters/MobileFilters';
 import CountrySelect from 'containers/countries/CountrySelect';
+import { toggleModal } from 'reducers/modal';
 
 export default class ComparePageMobile extends React.Component {
 
@@ -81,7 +82,7 @@ export default class ComparePageMobile extends React.Component {
   }
 
   toggleShareModal() {
-    this.props.toggleModal(true, {
+    toggleModal(true, {
       children: ShareModal
     });
   }
@@ -133,7 +134,6 @@ ComparePageMobile.propTypes = {
   updateCompareUrl: React.PropTypes.func,
   setCompareCountry: React.PropTypes.func,
   emptyCompareCountries: React.PropTypes.func,
-  toggleModal: React.PropTypes.func,
   widgetsActive: React.PropTypes.array,
   layersActive: React.PropTypes.array
 };

@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import EmbedPage from 'components/pages/EmbedPage';
-import { toggleModal } from 'aqueduct-components';
 import { getWidget } from 'actions/embed';
 
 const mapStateToProps = state => ({
@@ -10,10 +9,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getWidget: () => dispatch(getWidget()),
-  toggleModal: (opened, opts) => {
-    dispatch(toggleModal(opened, opts));
-  }
+  getWidget: () => dispatch(getWidget())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EmbedPage);

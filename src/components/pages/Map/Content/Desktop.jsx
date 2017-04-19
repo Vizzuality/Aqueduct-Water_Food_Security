@@ -13,6 +13,7 @@ import DynamicHeader from 'components/map/DynamicHeader';
 import ShareModal from 'containers/modal/ShareModal';
 import LayerManager from 'utils/layers/LayerManager';
 import { Map, Icon } from 'aqueduct-components';
+import { toggleModal } from 'reducers/modal';
 
 export default class MapPageDesktop extends React.Component {
 
@@ -64,7 +65,7 @@ export default class MapPageDesktop extends React.Component {
   }
 
   toggleShareModal() {
-    this.props.toggleModal(true, {
+    toggleModal(true, {
       children: ShareModal
     });
   }
@@ -92,7 +93,6 @@ export default class MapPageDesktop extends React.Component {
               className="-sidebar"
               filters={this.props.filters}
               setFilters={this.props.setFilters}
-              toggleModal={this.props.toggleModal}
               withScope
             />
           </div>
@@ -107,7 +107,6 @@ export default class MapPageDesktop extends React.Component {
                 <StickyFilters
                   filters={this.props.filters}
                   setFilters={this.props.setFilters}
-                  toggleModal={this.props.toggleModal}
                   withScope
                 />
             }
@@ -161,6 +160,5 @@ MapPageDesktop.propTypes = {
   // Actions
   setMapParams: React.PropTypes.func,
   updateMapUrl: React.PropTypes.func,
-  setFilters: React.PropTypes.func,
-  toggleModal: React.PropTypes.func
+  setFilters: React.PropTypes.func
 };

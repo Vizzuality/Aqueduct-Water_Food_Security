@@ -22,6 +22,5 @@ export default function LegendMobile(props) {
 }
 
 LegendMobile.propTypes = {
-  layersActive: React.PropTypes.array,
-  toggleModal: React.PropTypes.func
+  layersActive: React.PropTypes.array
 };
