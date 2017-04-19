@@ -12,7 +12,7 @@ import Legend from 'containers/legend/Legend';
 import DynamicHeader from 'components/map/DynamicHeader';
 import ShareModal from 'containers/modal/ShareModal';
 import LayerManager from 'utils/layers/LayerManager';
-import { Map, Icon } from 'aqueduct-components';
+import { Map, Icon, ZoomControl } from 'aqueduct-components';
 
 export default class MapPageDesktop extends React.Component {
 
@@ -33,6 +33,13 @@ export default class MapPageDesktop extends React.Component {
 
   componentDidMount() {
     this.setStickyFilterPosition();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // Zoom
+    if (this.props.mapConfig.zoom !== nextProps.mapConfig.zoom) {
+      this.map.setZoom(nextProps.mapConfig.zoom);
+    }
   }
 
   componentDidUpdate() {
@@ -131,6 +138,17 @@ export default class MapPageDesktop extends React.Component {
             sidebar={this.props.sidebar}
             LayerManager={LayerManager}
           />
+          <ZoomControl
+            zoom={this.props.mapConfig.zoom}
+            onZoomChange={(zoom) => {
+              this.props.setMapParams({
+                ...this.props.mapConfig,
+                ...{ zoom }
+              });
+            }}
+          >
+            <button type="button" className="btn-help">?</button>
+          </ZoomControl>
 
           {this.props.countries.list.length &&
             <DynamicHeader
