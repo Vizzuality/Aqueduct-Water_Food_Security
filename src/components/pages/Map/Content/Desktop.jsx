@@ -140,14 +140,9 @@ export default class MapPageDesktop extends React.Component {
                 ...{ zoom }
               });
             }}
-            actions={[{
-              component: DownloadButton,
-              componentProps: {
-                className: 'download-map-btn',
-                mapElem: this.state.mapElem
-              }
-            }]}
-          />
+          >
+            <DownloadButton className="download-map-btn" mapElem={this.state.mapElem} />
+          </MapControls>
 
           { /* Map headings */}
           {this.props.countries.list.length &&
