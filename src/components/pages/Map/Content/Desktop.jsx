@@ -12,7 +12,7 @@ import Legend from 'containers/legend/Legend';
 import DynamicHeader from 'components/map/DynamicHeader';
 import ShareModal from 'containers/modal/ShareModal';
 import LayerManager from 'utils/layers/LayerManager';
-import { Map, Icon } from 'aqueduct-components';
+import { Map, Icon, MapControls } from 'aqueduct-components';
 import { toggleModal } from 'reducers/modal';
 
 export default class MapPageDesktop extends React.Component {
@@ -131,19 +131,32 @@ export default class MapPageDesktop extends React.Component {
             LayerManager={LayerManager}
           />
 
+          {/* Map controls */}
+          <MapControls
+            zoom={this.props.mapConfig.zoom}
+            onZoomChange={(zoom) => {
+              this.props.setMapParams({
+                ...this.props.mapConfig,
+                ...{ zoom }
+              });
+            }}
+          >
+            <DownloadButton className="download-map-btn" mapElem={this.state.mapElem} />
+          </MapControls>
+
+          { /* Map headings */}
           {this.props.countries.list.length &&
             <DynamicHeader
               countries={this.props.countries.list}
               filters={this.props.filters}
             />}
 
+          { /* Map legend */}
           <Legend
             className="-map"
             expanded
             layers={this.props.layersActive}
           />
-          {this.state.mapElem &&
-            <DownloadButton mapElem={this.state.mapElem} />}
         </div>
       </div>
     );

@@ -32,9 +32,9 @@ export default class DownloadButton extends React.Component {
 
   render() {
     return (
-      <div className="c-download-map">
+      <div className={this.props.className}>
         <Spinner isLoading={this.state.loading} />
-        <button className="download-map-button" onClick={() => this.onDownloadMap()}>
+        <button onClick={() => this.onDownloadMap()}>
           <Icon name="icon-download" />
         </button>
       </div>
@@ -44,5 +44,6 @@ export default class DownloadButton extends React.Component {
 
 
 DownloadButton.propTypes = {
+  className: React.PropTypes.string,
   mapElem: React.PropTypes.object
 };

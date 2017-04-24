@@ -16,7 +16,6 @@
 @import "components/bubble-marker";
 @import "components/chart";
 @import "components/compare";
-@import "components/download-map";
 @import "components/dynamic-map-header";
 @import "components/embed";
 @import "components/infowindow";
@@ -48,3 +47,5 @@
 @import "~aqueduct-components/styles/sidebar";
 @import "~aqueduct-components/styles/spinner";
 @import "~aqueduct-components/styles/timeline";
+@import "~aqueduct-components/styles/map-controls";
+@import "~aqueduct-components/styles/zoom";
