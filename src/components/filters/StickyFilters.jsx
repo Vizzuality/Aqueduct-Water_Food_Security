@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { SegmentedUi, Icon, CustomSelect } from 'aqueduct-components';
+import { dispatch } from 'main';
+
+import { SegmentedUi, Icon, CustomSelect, toggleModal } from 'aqueduct-components';
 import { scopeOptions, cropOptions, waterOptions, foodOptions, yearOptions, dataTypeOptions } from 'constants/filters';
 import ShareModal from 'containers/modal/ShareModal';
 import CountrySelect from 'containers/countries/CountrySelect';
-import { toggleModal } from 'reducers/modal';
 
 class StickyFilters extends React.Component {
 
@@ -25,9 +26,9 @@ class StickyFilters extends React.Component {
   }
 
   toggleShareModal() {
-    toggleModal(true, {
+    dispatch(toggleModal(true, {
       children: ShareModal
-    });
+    }));
   }
 
   render() {

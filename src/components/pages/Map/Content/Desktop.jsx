@@ -1,4 +1,5 @@
 import React from 'react';
+import { dispatch } from 'main';
 
 // Components
 import Sidebar from 'containers/ui/Sidebar';
@@ -12,8 +13,7 @@ import Legend from 'containers/legend/Legend';
 import DynamicHeader from 'components/map/DynamicHeader';
 import ShareModal from 'containers/modal/ShareModal';
 import LayerManager from 'utils/layers/LayerManager';
-import { Map, Icon, MapControls } from 'aqueduct-components';
-import { toggleModal } from 'reducers/modal';
+import { Map, Icon, MapControls, toggleModal } from 'aqueduct-components';
 
 export default class MapPageDesktop extends React.Component {
 
@@ -65,9 +65,9 @@ export default class MapPageDesktop extends React.Component {
   }
 
   toggleShareModal() {
-    toggleModal(true, {
+    dispatch(toggleModal(true, {
       children: ShareModal
-    });
+    }));
   }
 
   render() {

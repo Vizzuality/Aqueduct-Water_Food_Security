@@ -1,4 +1,5 @@
 import React from 'react';
+import { dispatch } from 'main';
 import { browserHistory } from 'react-router';
 
 // Components
@@ -11,7 +12,8 @@ import {
   Timeline,
   RadioGroup,
   CustomSelect,
-  InfoModal
+  InfoModal,
+  toggleModal
 } from 'aqueduct-components';
 
 // Filter options
@@ -24,9 +26,6 @@ import {
   irrigationOptions,
   dataTypeOptions
 } from 'constants/filters';
-
-// Actions
-import { toggleModal } from 'reducers/modal';
 
 import CountrySelect from 'containers/countries/CountrySelect';
 
@@ -51,12 +50,12 @@ export default class Filters extends React.Component {
   }
 
   openModal(slug) {
-    toggleModal(true, {
+    dispatch(toggleModal(true, {
       children: InfoModal,
       childrenProps: {
         info: APP_DEFINITIONS[slug]
       }
-    });
+    }));
   }
 
   onSelectCountryToCompare(selected) {

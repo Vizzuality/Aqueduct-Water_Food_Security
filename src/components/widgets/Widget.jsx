@@ -1,12 +1,12 @@
 import React from 'react';
 import classnames from 'classnames';
+import { dispatch } from 'main';
 import WidgetButtons from 'components/widgets/WidgetButtons';
 import WidgetChart from 'containers/widgets/WidgetChart';
 import WidgetModal from 'components/modal/WidgetModal';
 import EmbedModal from 'components/modal/EmbedModal';
 import WidgetImageModal from 'components/modal/WidgetImageModal';
-import { Spinner } from 'aqueduct-components';
-import { toggleModal } from 'reducers/modal';
+import { Spinner, toggleModal } from 'aqueduct-components';
 
 class Widget extends React.Component {
 
@@ -33,34 +33,34 @@ class Widget extends React.Component {
   triggerAction(action) {
     switch (action) {
       case 'info':
-        toggleModal(true, {
+        dispatch(toggleModal(true, {
           children: WidgetModal,
           size: '-medium',
           childrenProps: {
             filters: this.props.filters,
             widget: this.props.widget
           }
-        });
+        }));
         break;
       case 'embed':
-        toggleModal(true, {
+        dispatch(toggleModal(true, {
           children: EmbedModal,
           size: '-medium',
           childrenProps: {
             filters: this.props.filters,
             widget: this.props.widget
           }
-        });
+        }));
         break;
       case 'image':
-        toggleModal(true, {
+        dispatch(toggleModal(true, {
           children: WidgetImageModal,
           size: '-medium',
           childrenProps: {
             filters: this.props.filters,
             widget: this.props.widget
           }
-        });
+        }));
         break;
       default:
         console.info('The action is not supported by this function');
@@ -72,7 +72,7 @@ class Widget extends React.Component {
   }
 
   render() {
-    const { name, description, widgetConfig, queryUrl, dataset, id } = this.props.widget;
+    const { name, description, widgetConfig, queryUrl } = this.props.widget;
     const className = classnames({
       [this.props.className]: !!this.props.className
     });
