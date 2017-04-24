@@ -1,5 +1,5 @@
 import React from 'react';
-import { Map, SegmentedUi } from 'aqueduct-components';
+import { Map, MapControls, SegmentedUi } from 'aqueduct-components';
 import WidgetList from 'components/widgets/WidgetList';
 import MobileFilters from 'components/filters/MobileFilters';
 import DownloadButton from 'components/map/DownloadButton';
@@ -62,8 +62,18 @@ export default class MapPageMobile extends React.Component {
                 sidebar={this.props.sidebar}
                 LayerManager={LayerManager}
               />
-              {this.state.mapElem &&
-                <DownloadButton mapElem={this.state.mapElem} />}
+              {/* Map controls */}
+              <MapControls
+                zoom={this.props.mapConfig.zoom}
+                onZoomChange={(zoom) => {
+                  this.props.setMapParams({
+                    ...this.props.mapConfig,
+                    ...{ zoom }
+                  });
+                }}
+              >
+                <DownloadButton className="download-map-btn" mapElem={this.state.mapElem} />
+              </MapControls>
             </div>
           </div>
         }
