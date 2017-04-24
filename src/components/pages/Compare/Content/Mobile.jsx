@@ -1,13 +1,13 @@
 import React from 'react';
+import { dispatch } from 'main';
 import ShareModal from 'containers/modal/ShareModal';
 
 // Components
 import { Link } from 'react-router';
-import { SegmentedUi } from 'aqueduct-components';
+import { SegmentedUi, toggleModal } from 'aqueduct-components';
 import CompareListMobile from 'components/compare/CompareListMobile';
 import MobileFilters from 'components/filters/MobileFilters';
 import CountrySelect from 'containers/countries/CountrySelect';
-import { toggleModal } from 'reducers/modal';
 
 export default class ComparePageMobile extends React.Component {
 
@@ -82,9 +82,9 @@ export default class ComparePageMobile extends React.Component {
   }
 
   toggleShareModal() {
-    toggleModal(true, {
+    dispatch(toggleModal(true, {
       children: ShareModal
-    });
+    }));
   }
 
   render() {

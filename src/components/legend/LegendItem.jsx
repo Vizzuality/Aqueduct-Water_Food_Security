@@ -1,16 +1,16 @@
 import React from 'react';
+import { dispatch } from 'main';
 
 import LegendButtons from 'components/legend/LegendButtons';
 import LegendGraph from 'components/legend/LegendGraph';
 import SourceModal from 'components/modal/SourceModal';
-import { Spinner } from 'aqueduct-components';
+import { Spinner, toggleModal } from 'aqueduct-components';
 import { get } from 'utils/request';
 import { getObjectConversion } from 'utils/filters/filters';
 import { cropOptions } from 'constants/filters';
 import { legendOpacityRange } from 'constants/index';
 import { format } from 'd3-format';
 import { isEqual, capitalize } from 'lodash';
-import { toggleModal } from 'reducers/modal';
 
 const categories = {
   water: 'Water risk',
@@ -112,12 +112,12 @@ class LegendItem extends React.Component {
 
   triggerAction(action) {
     if (action === 'info') {
-      toggleModal(true, {
+      dispatch(toggleModal(true, {
         children: SourceModal,
         childrenProps: {
           layer: this.props.layer
         }
-      });
+      }));
     }
   }
 

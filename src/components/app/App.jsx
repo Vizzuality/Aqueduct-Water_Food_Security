@@ -1,8 +1,11 @@
 import React from 'react';
+import { dispatch } from 'main';
 import classnames from 'classnames';
+
 import Modal from 'containers/ui/Modal';
 import Tooltip from 'containers/ui/Tooltip';
-import { toggleModal, setModalOptions } from 'reducers/modal';
+
+import { toggleModal, setModalOptions } from 'aqueduct-components';
 
 export default class App extends React.Component {
 
@@ -28,10 +31,7 @@ export default class App extends React.Component {
         <main role="main" className={mainClass}>
           {this.props.main}
         </main>
-        <Modal
-          toggleModal={toggleModal}
-          setModalOptions={setModalOptions}
-        />
+        <Modal />
         <Tooltip />
       </div>
     );

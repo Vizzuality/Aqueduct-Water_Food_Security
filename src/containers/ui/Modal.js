@@ -1,8 +1,13 @@
 import { connect } from 'react-redux';
-import { Modal } from 'aqueduct-components';
+import { Modal, closeModal, toggleModal, modalLoading, setModalOptions } from 'aqueduct-components';
 
 const mapStateToProps = ({ modal }) => ({
   modal
 });
 
-export default connect(mapStateToProps, null)(Modal);
+export default connect(mapStateToProps, {
+  closeModal,
+  toggleModal,
+  modalLoading,
+  setModalOptions
+})(Modal);
