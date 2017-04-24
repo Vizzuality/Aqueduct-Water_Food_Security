@@ -1,6 +1,6 @@
 .c-dynamic-map-header {
   position: absolute;
-  top: calc(#{$space-1 * 2} + 1px);
+  top: #{$space-1 * 2 + 1};
   right: $space-1 * 10;
   width: 200px;
   z-index: 999;
