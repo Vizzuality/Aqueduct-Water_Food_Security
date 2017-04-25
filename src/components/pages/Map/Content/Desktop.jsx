@@ -10,10 +10,10 @@ import WidgetList from 'components/widgets/WidgetList';
 import Summary from 'components/summary/Summary';
 import DownloadButton from 'components/map/DownloadButton';
 import Legend from 'containers/legend/Legend';
-import DynamicHeader from 'components/map/DynamicHeader';
 import ShareModal from 'containers/modal/ShareModal';
 import LayerManager from 'utils/layers/LayerManager';
-import { Map, Icon, MapControls, toggleModal } from 'aqueduct-components';
+import { Map, Icon, MapControls, MapHeader, toggleModal } from 'aqueduct-components';
+import { cropOptions, irrigationOptions, scopeOptions, waterOptions } from 'constants/filters';
 
 export default class MapPageDesktop extends React.Component {
 
@@ -54,6 +54,40 @@ export default class MapPageDesktop extends React.Component {
     });
   }
 
+  getDictionary() {
+    const _iso = this.props.filters.country;
+    const _scope = this.props.filters.scope;
+    const _countries = this.props.countries.list;
+
+    return {
+      crop(crop) {
+        return (crop !== 'all') ? cropOptions.find(v => v.value === crop).label : '';
+      },
+      country(iso) {
+        if (!iso || _scope === 'global') return '';
+
+        const countryName = _countries.find(c => c.id === iso).name;
+        // be careful with names ending in 's'
+        return `${countryName}'s`;
+      },
+      irrigation(irrigation) {
+        if (!irrigation.length) {
+          return irrigationOptions.map(r => r.label).join(' & ');
+        }
+
+        return irrigation.map((val) => {
+          return irrigationOptions.find(v => v.value === val).label;
+        }).join(' & ');
+      },
+      scope(scope) {
+        return !_iso || scope === 'global' ? scopeOptions.find(v => v.value === 'global').label : '';
+      },
+      indicator(indicator) {
+        return indicator !== 'none' ? waterOptions.find(v => v.value === indicator).label : '';
+      }
+    };
+  }
+
   setStickyFilterPosition() {
     const stickyFilterTopPosition = this.filtersElem.getBoundingClientRect().height;
 
@@ -68,6 +102,10 @@ export default class MapPageDesktop extends React.Component {
     dispatch(toggleModal(true, {
       children: ShareModal
     }));
+  }
+
+  getMapHeaderTemplate() {
+    return '{{scope}} {{country}} {{indicator}} {{irrigation}} {{crop}} Producing Areas';
   }
 
   render() {
@@ -146,9 +184,10 @@ export default class MapPageDesktop extends React.Component {
 
           { /* Map headings */}
           {this.props.countries.list.length &&
-            <DynamicHeader
-              countries={this.props.countries.list}
+            <MapHeader
+              dictionary={this.getDictionary()}
               filters={this.props.filters}
+              template={this.getMapHeaderTemplate()}
             />}
 
           { /* Map legend */}
