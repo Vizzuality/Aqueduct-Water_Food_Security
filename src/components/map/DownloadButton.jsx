@@ -1,7 +1,6 @@
 import React from 'react';
 import domtoimage from 'dom-to-image';
-import { saveAsFile } from 'utils/utils';
-import { Spinner, Icon } from 'aqueduct-components';
+import { Spinner, Icon, saveAsFile } from 'aqueduct-components';
 
 export default class DownloadButton extends React.Component {
 
