@@ -13,7 +13,7 @@ import Legend from 'containers/legend/Legend';
 import DynamicHeader from 'components/map/DynamicHeader';
 import ShareModal from 'containers/modal/ShareModal';
 import LayerManager from 'utils/layers/LayerManager';
-import { Map, Icon, MapControls, toggleModal } from 'aqueduct-components';
+import { Map, Icon, MapControls, SourceModal, toggleModal } from 'aqueduct-components';
 
 export default class MapPageDesktop extends React.Component {
 
@@ -26,6 +26,7 @@ export default class MapPageDesktop extends React.Component {
 
     // BINDINGS
     this.toggleShareModal = this.toggleShareModal.bind(this);
+    this.toggleSourceModal = this.toggleSourceModal.bind(this);
   }
 
   componentWillMount() {
@@ -64,9 +65,17 @@ export default class MapPageDesktop extends React.Component {
     });
   }
 
+  // MODAL EVENTS
   toggleShareModal() {
     dispatch(toggleModal(true, {
       children: ShareModal
+    }));
+  }
+
+  toggleSourceModal(layer) {
+    dispatch(toggleModal(true, {
+      children: SourceModal,
+      childrenProps: layer
     }));
   }
 
@@ -156,6 +165,7 @@ export default class MapPageDesktop extends React.Component {
             className="-map"
             expanded
             layers={this.props.layersActive}
+            onToggleInfo={this.toggleSourceModal}
           />
         </div>
       </div>

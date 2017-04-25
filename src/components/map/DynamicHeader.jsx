@@ -1,10 +1,11 @@
 import React from 'react';
 import isEqual from 'lodash/isEqual';
-import { cropOptions, irrigationOptions, scopeOptions, waterOptions } from 'constants/filters';
+import { CROP_OPTIONS, IRRIGATION_OPTIONS } from 'aqueduct-components';
+import { scopeOptions, waterOptions } from 'constants/filters';
 
 const dictionary = {
   crop(crop) {
-    return (crop !== 'all') ? cropOptions.find(v => v.value === crop).label : '';
+    return (crop !== 'all') ? CROP_OPTIONS.find(v => v.value === crop).label : '';
   },
   country(scope, iso) {
     if (!iso || scope === 'global') return '';
@@ -15,11 +16,11 @@ const dictionary = {
   },
   irrigation(irrigation) {
     if (!irrigation.length) {
-      return irrigationOptions.map(r => r.label).join(' & ');
+      return IRRIGATION_OPTIONS.map(r => r.label).join(' & ');
     }
 
     return irrigation.map((val) => {
-      return irrigationOptions.find(v => v.value === val).label;
+      return IRRIGATION_OPTIONS.find(v => v.value === val).label;
     }).join(' & ');
   },
   scope(scope, iso) {

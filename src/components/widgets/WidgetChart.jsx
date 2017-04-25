@@ -1,6 +1,7 @@
 import React from 'react';
+import { getObjectConversion } from 'aqueduct-components';
+
 import WidgetText from 'components/widgets/WidgetText';
-import { getObjectConversion } from 'utils/filters/filters';
 import theme from 'data/vega-theme.json';
 import VegaChart from 'components/widgets/VegaChart';
 

@@ -1,9 +1,7 @@
 import React from 'react';
 import isEqual from 'lodash/isEqual';
 import { format } from 'd3-format';
-import { capitalizeFirstLetter } from 'utils/utils';
-import { getObjectConversion } from 'utils/filters/filters';
-import { Spinner } from 'aqueduct-components';
+import { Spinner, getObjectConversion, capitalizeFirstLetter } from 'aqueduct-components';
 
 export default class SummaryCountry extends React.Component {
 

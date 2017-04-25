@@ -2,8 +2,16 @@ import React from 'react';
 import { Link } from 'react-router';
 import { dispatch } from 'main';
 
-import { SegmentedUi, Icon, CustomSelect, toggleModal } from 'aqueduct-components';
-import { scopeOptions, cropOptions, waterOptions, foodOptions, yearOptions, dataTypeOptions } from 'constants/filters';
+import {
+  CROP_OPTIONS,
+  DATA_TYPE_OPTIONS,
+  YEAR_OPTIONS,
+  SegmentedUi,
+  Icon,
+  CustomSelect,
+  toggleModal
+} from 'aqueduct-components';
+import { scopeOptions, waterOptions, foodOptions } from 'constants/filters';
 import ShareModal from 'containers/modal/ShareModal';
 import CountrySelect from 'containers/countries/CountrySelect';
 
@@ -87,7 +95,7 @@ class StickyFilters extends React.Component {
             <CustomSelect
               search
               className="-gray"
-              options={cropOptions}
+              options={CROP_OPTIONS}
               value={this.props.filters.crop}
               onValueChange={selected => selected && this.updateFilters(selected.value, 'crop')}
             />
@@ -114,8 +122,8 @@ class StickyFilters extends React.Component {
             <span className="title">Timeframe</span>
             <CustomSelect
               className="-gray"
-              options={yearOptions}
-              value={yearOptions.find(i => i.value === this.props.filters.year).value}
+              options={YEAR_OPTIONS}
+              value={YEAR_OPTIONS.find(i => i.value === this.props.filters.year).value}
               onValueChange={(selected) => {
                 selected && selected.value === 'baseline' && this.updateFilters(
                   'absolute', 'type');
@@ -125,7 +133,7 @@ class StickyFilters extends React.Component {
             {this.props.filters.period_value !== 'baseline' &&
               <CustomSelect
                 className="-gray"
-                options={dataTypeOptions.map(option => Object.assign({}, option, { value: option.value }))}
+                options={DATA_TYPE_OPTIONS.map(option => Object.assign({}, option, { value: option.value }))}
                 value={this.props.filters.type}
                 onValueChange={selected => this.updateFilters(selected.value, 'change_from_baseline')}
               />

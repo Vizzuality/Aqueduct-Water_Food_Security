@@ -1,9 +1,8 @@
 import { connect } from 'react-redux';
-import Legend from 'components/legend/Legend';
+import { Legend } from 'aqueduct-components';
 
 const mapStateToProps = state => ({
-  filters: state.filters,
-  countries: state.countries
+  filters: state.filters
 });
 
 export default connect(mapStateToProps, null)(Legend);

@@ -5,6 +5,10 @@ import { browserHistory } from 'react-router';
 // Components
 import {
   APP_DEFINITIONS,
+  CROP_OPTIONS,
+  IRRIGATION_OPTIONS,
+  DATA_TYPE_OPTIONS,
+  YEAR_OPTIONS,
   CheckboxGroup,
   SegmentedUi,
   Accordion,
@@ -20,11 +24,7 @@ import {
 import {
   waterOptions,
   foodOptions,
-  scopeOptions,
-  yearOptions,
-  cropOptions,
-  irrigationOptions,
-  dataTypeOptions
+  scopeOptions
 } from 'constants/filters';
 
 import CountrySelect from 'containers/countries/CountrySelect';
@@ -64,7 +64,7 @@ export default class Filters extends React.Component {
   }
 
   render() {
-    cropOptions.sort((c1, c2) => {
+    CROP_OPTIONS.sort((c1, c2) => {
       return c1.label > c2.label ? 1 : -1;
     });
     const timeline = (
@@ -84,8 +84,8 @@ export default class Filters extends React.Component {
         </div>
 
         <Timeline
-          items={yearOptions}
-          selected={yearOptions.find(i => i.value === this.props.filters.year)}
+          items={YEAR_OPTIONS}
+          selected={YEAR_OPTIONS.find(i => i.value === this.props.filters.year)}
           onChange={(selected) => {
             selected && selected.value === 'baseline' && this.updateFilters('absolute', 'type');
             selected && this.updateFilters(selected.value, 'year');
@@ -95,7 +95,7 @@ export default class Filters extends React.Component {
         {this.props.filters.year !== 'baseline' &&
           <RadioGroup
             className="-filters -inline"
-            items={dataTypeOptions}
+            items={DATA_TYPE_OPTIONS}
             name="type"
             defaultValue={this.props.filters.type}
             onChange={selected => this.updateFilters(selected.value, 'type')}
@@ -172,13 +172,13 @@ export default class Filters extends React.Component {
 
                     <CustomSelect
                       search
-                      options={cropOptions}
+                      options={CROP_OPTIONS}
                       value={this.props.filters.crop}
                       onValueChange={selected => selected && this.updateFilters(selected.value, 'crop')}
                     />
 
                     <CheckboxGroup
-                      items={irrigationOptions}
+                      items={IRRIGATION_OPTIONS}
                       onChange={selected => this.updateFilters(selected, 'irrigation')}
                       selected={this.props.filters.irrigation}
                       className="-inline"
