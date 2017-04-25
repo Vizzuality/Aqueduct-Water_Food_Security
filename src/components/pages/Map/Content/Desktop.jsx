@@ -3,7 +3,6 @@ import { dispatch } from 'main';
 
 // Components
 import Sidebar from 'containers/ui/Sidebar';
-import Sticky from 'components/ui/Sticky';
 import Filters from 'components/filters/Filters';
 import StickyFilters from 'components/filters/StickyFilters';
 import WidgetList from 'components/widgets/WidgetList';
