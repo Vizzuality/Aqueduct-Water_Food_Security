@@ -9,11 +9,10 @@ import StickyFilters from 'components/filters/StickyFilters';
 import WidgetList from 'components/widgets/WidgetList';
 import Summary from 'components/summary/Summary';
 import DownloadButton from 'components/map/DownloadButton';
-import Legend from 'containers/legend/Legend';
 import DynamicHeader from 'components/map/DynamicHeader';
 import ShareModal from 'containers/modal/ShareModal';
 import LayerManager from 'utils/layers/LayerManager';
-import { Map, Icon, MapControls, SourceModal, toggleModal } from 'aqueduct-components';
+import { Map, Icon, Legend, MapControls, SourceModal, toggleModal } from 'aqueduct-components';
 
 export default class MapPageDesktop extends React.Component {
 
@@ -164,6 +163,7 @@ export default class MapPageDesktop extends React.Component {
           <Legend
             className="-map"
             expanded
+            filters={this.props.filters}
             layers={this.props.layersActive}
             onToggleInfo={this.toggleSourceModal}
           />

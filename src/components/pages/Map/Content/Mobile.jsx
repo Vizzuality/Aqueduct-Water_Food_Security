@@ -52,7 +52,10 @@ export default class MapPageMobile extends React.Component {
         {/* Map */}
         {this.state.context === 'map' &&
           <div className="l-map-mobile">
-            <LegendMobile layersActive={this.props.layersActive} />
+            <LegendMobile
+              layers={this.props.layersActive}
+              filters={this.props.filters}
+            />
             <div className="c-map-container" ref={(el) => { this.setMapElement(el); }}>
               <Map
                 mapConfig={mapConfig}

@@ -34,7 +34,10 @@ export default class CompareItem extends React.Component {
     const showWidgets = this.props.country && (!this.props.context || (this.props.context && this.props.context === 'data'));
     const map = (
       <div>
-        <LegendMobile layersActive={this.props.layersActive} />
+        <LegendMobile
+          filters={this.props.filters}
+          layers={this.props.layersActive}
+        />
         <Map
           filters={this.props.filters}
           mapConfig={mapConfig}
