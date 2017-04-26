@@ -11,7 +11,7 @@ import Summary from 'components/summary/Summary';
 import DownloadButton from 'components/map/DownloadButton';
 import ShareModal from 'containers/modal/ShareModal';
 import LayerManager from 'utils/layers/LayerManager';
-import { scopeOptions, waterOptions } from 'constants/filters';
+import { SCOPE_OPTIONS, WATER_OPTIONS } from 'constants/filters';
 
 import {
   Map,
@@ -92,10 +92,10 @@ export default class MapPageDesktop extends React.Component {
         }).join(' & ');
       },
       scope(scope) {
-        return !_iso || scope !== 'country' ? scopeOptions.find(v => v.value === 'global').label : '';
+        return !_iso || scope !== 'country' ? SCOPE_OPTIONS.find(v => v.value === 'global').label : '';
       },
       indicator(indicator) {
-        return indicator !== 'none' ? waterOptions.find(v => v.value === indicator).label : '';
+        return indicator !== 'none' ? WATER_OPTIONS.find(v => v.value === indicator).label : '';
       }
     };
   }

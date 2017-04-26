@@ -22,9 +22,9 @@ import {
 
 // Filter options
 import {
-  waterOptions,
-  foodOptions,
-  scopeOptions
+  WATER_OPTIONS,
+  FOOD_OPTIONS,
+  SCOPE_OPTIONS
 } from 'constants/filters';
 
 import CountrySelect from 'containers/countries/CountrySelect';
@@ -111,7 +111,7 @@ export default class Filters extends React.Component {
               <div className="small-12 column">
                 <SegmentedUi
                   className="-tabs"
-                  items={scopeOptions}
+                  items={SCOPE_OPTIONS}
                   selected={this.props.filters.scope}
                   onChange={selected => this.updateFilters(selected.value, 'scope')}
                 />
@@ -202,7 +202,7 @@ export default class Filters extends React.Component {
                     </div>
 
                     <CustomSelect
-                      options={waterOptions}
+                      options={WATER_OPTIONS}
                       value={this.props.filters.indicator}
                       onValueChange={selected => selected && this.updateFilters(selected.value, 'indicator')}
                     />
@@ -225,7 +225,7 @@ export default class Filters extends React.Component {
                     </div>
 
                     <CustomSelect
-                      options={foodOptions}
+                      options={FOOD_OPTIONS}
                       value={this.props.filters.food}
                       onValueChange={selected => selected && this.updateFilters(selected.value, 'food')}
                     />

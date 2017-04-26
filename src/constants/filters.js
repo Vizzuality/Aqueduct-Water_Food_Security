@@ -3,7 +3,7 @@ import layerSpec from 'utils/layers/layer_spec.json';
 export const SET_FILTERS = 'SET_FILTERS';
 
 // FOOD OPTIONS
-export const foodOptions = layerSpec.filter(layer => layer.category === 'food').map((layer) => {
+export const FOOD_OPTIONS = layerSpec.filter(layer => layer.category === 'food').map((layer) => {
   return {
     label: layer.name,
     value: layer.id
@@ -11,13 +11,13 @@ export const foodOptions = layerSpec.filter(layer => layer.category === 'food').
 });
 
 // Add 'none' option
-foodOptions.push({
+FOOD_OPTIONS.push({
   label: 'None',
   value: 'none'
 });
 
 // WATER OPTIONS
-export const waterOptions = layerSpec.filter(layer => layer.category === 'water').map((layer) => {
+export const WATER_OPTIONS = layerSpec.filter(layer => layer.category === 'water').map((layer) => {
   return {
     label: layer.name,
     value: layer.id
@@ -25,13 +25,13 @@ export const waterOptions = layerSpec.filter(layer => layer.category === 'water'
 });
 
 // Add 'none' option
-waterOptions.push({
+WATER_OPTIONS.push({
   label: 'None',
   value: 'none'
 });
 
 // SCOPE OPTIONS
-export const scopeOptions = [
+export const SCOPE_OPTIONS = [
   { value: 'global', label: 'Global' },
   { value: 'country', label: 'Country' }
 ];

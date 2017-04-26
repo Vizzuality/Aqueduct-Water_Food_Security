@@ -11,7 +11,7 @@ import {
   CustomSelect,
   toggleModal
 } from 'aqueduct-components';
-import { scopeOptions, waterOptions, foodOptions } from 'constants/filters';
+import { SCOPE_OPTIONS, WATER_OPTIONS, FOOD_OPTIONS } from 'constants/filters';
 import ShareModal from 'containers/modal/ShareModal';
 import CountrySelect from 'containers/countries/CountrySelect';
 
@@ -48,7 +48,7 @@ class StickyFilters extends React.Component {
               <div className="small-12 column">
                 <SegmentedUi
                   className="-tabs"
-                  items={scopeOptions}
+                  items={SCOPE_OPTIONS}
                   selected={this.props.filters.scope}
                   onChange={selected => this.updateFilters(selected.value, 'scope')}
                 />
@@ -104,7 +104,7 @@ class StickyFilters extends React.Component {
             <span className="title">Water Risk</span>
             <CustomSelect
               className="-gray"
-              options={waterOptions}
+              options={WATER_OPTIONS}
               value={this.props.filters.indicator}
               onValueChange={selected => selected && this.updateFilters(selected.value, 'indicator')}
             />
@@ -113,7 +113,7 @@ class StickyFilters extends React.Component {
             <span className="title">Food security</span>
             <CustomSelect
               className="-gray"
-              options={foodOptions}
+              options={FOOD_OPTIONS}
               value={this.props.filters.food}
               onValueChange={selected => selected && this.updateFilters(selected.value, 'food')}
             />
