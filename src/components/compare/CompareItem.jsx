@@ -2,7 +2,6 @@ import React from 'react';
 import WidgetList from 'components/widgets/WidgetList';
 import { Map, Icon } from 'aqueduct-components';
 import LegendMobile from 'components/legend/LegendMobile';
-import DynamicHeader from 'components/map/DynamicHeader';
 import Summary from 'components/summary/Summary';
 import LayerManager from 'utils/layers/LayerManager';
 
@@ -44,11 +43,6 @@ export default class CompareItem extends React.Component {
           layersActive={this.props.layersActive}
           LayerManager={LayerManager}
         />
-        {this.props.countryList.length &&
-          <DynamicHeader
-            countries={this.props.countryList}
-            filters={this.props.filters}
-          />}
       </div>
     );
 
