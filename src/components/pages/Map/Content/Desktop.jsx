@@ -76,7 +76,7 @@ export default class MapPageDesktop extends React.Component {
         return (crop !== 'all') ? CROP_OPTIONS.find(v => v.value === crop).label : '';
       },
       country(iso) {
-        if (!iso || _scope === 'global') return '';
+        if (!iso || _scope !== 'country') return '';
 
         const countryName = _countries.find(c => c.id === iso).name;
         // be careful with names ending in 's'
@@ -92,7 +92,7 @@ export default class MapPageDesktop extends React.Component {
         }).join(' & ');
       },
       scope(scope) {
-        return !_iso || scope === 'global' ? scopeOptions.find(v => v.value === 'global').label : '';
+        return !_iso || scope !== 'country' ? scopeOptions.find(v => v.value === 'global').label : '';
       },
       indicator(indicator) {
         return indicator !== 'none' ? waterOptions.find(v => v.value === indicator).label : '';
@@ -145,6 +145,7 @@ export default class MapPageDesktop extends React.Component {
             <Icon className="-medium" name="icon-share" />
             Share
           </button>
+
           {/* Filters */}
           <div className="l-filters" ref={(elem) => { this.filtersElem = elem; }}>
             <Filters
@@ -154,21 +155,23 @@ export default class MapPageDesktop extends React.Component {
               withScope
             />
           </div>
+
+          {/* Sticky Filters */}
           <Sticky
             className="-filter"
             topLimit={this.state.stickyFilterTopPosition}
             onStick={(isSticky) => { this.onSticky(isSticky); }}
             ScrollElem=".l-sidebar-content"
           >
-            {
-              this.state.showStickyFilters &&
-                <StickyFilters
-                  filters={this.props.filters}
-                  setFilters={this.props.setFilters}
-                  withScope
-                />
+            {this.state.showStickyFilters &&
+              <StickyFilters
+                filters={this.props.filters}
+                setFilters={this.props.setFilters}
+                withScope
+              />
             }
           </Sticky>
+
           {/* Widget List */}
           <div className="l-sidebar-content">
             {this.props.filters.scope === 'country' && this.props.filters.country &&
@@ -208,7 +211,8 @@ export default class MapPageDesktop extends React.Component {
               dictionary={this.getDictionary()}
               filters={this.props.filters}
               template={this.getMapHeaderTemplate()}
-            />}
+            />
+          }
 
           { /* Map legend */}
           <Legend
