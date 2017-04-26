@@ -16,7 +16,6 @@
 @import "components/bubble-marker";
 @import "components/chart";
 @import "components/compare";
-@import "components/dynamic-map-header";
 @import "components/embed";
 @import "components/infowindow";
 @import "components/share";
@@ -40,6 +39,8 @@
 @import "~aqueduct-components/styles/header";
 @import "~aqueduct-components/styles/legend";
 @import "~aqueduct-components/styles/map";
+@import "~aqueduct-components/styles/map-controls";
+@import "~aqueduct-components/styles/map-header";
 @import "~aqueduct-components/styles/modal";
 @import "~aqueduct-components/styles/radio";
 @import "~aqueduct-components/styles/segmentedui";
@@ -47,5 +48,4 @@
 @import "~aqueduct-components/styles/sidebar";
 @import "~aqueduct-components/styles/spinner";
 @import "~aqueduct-components/styles/timeline";
-@import "~aqueduct-components/styles/map-controls";
 @import "~aqueduct-components/styles/zoom";
