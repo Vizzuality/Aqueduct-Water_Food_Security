@@ -8,11 +8,12 @@ import Filters from 'components/filters/Filters';
 import StickyFilters from 'components/filters/StickyFilters';
 import WidgetList from 'components/widgets/WidgetList';
 import Summary from 'components/summary/Summary';
+
 import DownloadButton from 'components/map/DownloadButton';
+import ShareButton from 'components/map/ShareButton';
 import Legend from 'containers/legend/Legend';
-import ShareModal from 'containers/modal/ShareModal';
 import LayerManager from 'utils/layers/LayerManager';
-import { Map, Icon, MapControls, MapHeader, toggleModal } from 'aqueduct-components';
+import { Map, MapControls, ZoomControl, MapHeader } from 'aqueduct-components';
 import { cropOptions, irrigationOptions, scopeOptions, waterOptions } from 'constants/filters';
 
 export default class MapPageDesktop extends React.Component {
@@ -23,9 +24,6 @@ export default class MapPageDesktop extends React.Component {
     this.state = {
       showStickyFilters: false
     };
-
-    // BINDINGS
-    this.toggleShareModal = this.toggleShareModal.bind(this);
   }
 
   componentWillMount() {
@@ -98,12 +96,6 @@ export default class MapPageDesktop extends React.Component {
     });
   }
 
-  toggleShareModal() {
-    dispatch(toggleModal(true, {
-      children: ShareModal
-    }));
-  }
-
   getMapHeaderTemplate() {
     return '{{scope}} {{country}} {{indicator}} {{irrigation}} {{crop}} Producing Areas';
   }
@@ -120,11 +112,6 @@ export default class MapPageDesktop extends React.Component {
       <div className="l-map -fullscreen">
         {/* Sidebar */}
         <Sidebar>
-          {/* Share button */}
-          <button type="button" className="-white -with-icon btn-share" onClick={this.toggleShareModal}>
-            <Icon className="-medium" name="icon-share" />
-            Share
-          </button>
           {/* Filters */}
           <div className="l-filters" ref={(elem) => { this.filtersElem = elem; }}>
             <Filters
@@ -170,16 +157,24 @@ export default class MapPageDesktop extends React.Component {
           />
 
           {/* Map controls */}
-          <MapControls
-            zoom={this.props.mapConfig.zoom}
-            onZoomChange={(zoom) => {
-              this.props.setMapParams({
-                ...this.props.mapConfig,
-                ...{ zoom }
-              });
-            }}
-          >
-            <DownloadButton className="download-map-btn" mapElem={this.state.mapElem} />
+          <MapControls>
+            <ZoomControl
+              zoom={this.props.mapConfig.zoom}
+              onZoomChange={(zoom) => {
+                this.props.setMapParams({
+                  ...this.props.mapConfig,
+                  ...{ zoom }
+                });
+              }}
+            />
+
+            {/* Download button */}
+            <DownloadButton
+              mapElem={this.state.mapElem}
+            />
+            {/* Share button */}
+            <ShareButton />
+
           </MapControls>
 
           { /* Map headings */}
