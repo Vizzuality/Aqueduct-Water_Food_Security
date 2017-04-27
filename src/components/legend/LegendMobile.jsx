@@ -1,15 +1,12 @@
 import React from 'react';
 import { dispatch } from 'main';
-import Legend from 'containers/legend/Legend';
-import { OnlyOn, Icon, toggleModal } from 'aqueduct-components';
+import { Legend, OnlyOn, Icon, toggleModal } from 'aqueduct-components';
 
 export default function LegendMobile(props) {
   const toggle = () => {
     dispatch(toggleModal(true, {
       children: Legend,
-      childrenProps: {
-        layers: props.layersActive
-      }
+      childrenProps: { ...props }
     }));
   };
 
