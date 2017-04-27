@@ -1,12 +1,32 @@
-/* LIB */
-@import "lib/foundation";
-
+/* Settings */
+@import "~aqueduct-components/styles/settings";
 @import "functions";
-@import "settings";
 @import "reset";
 @import "base";
 @import "animations";
 @import "mixins";
+
+/* LIB */
+@import "lib/foundation";
+
+/* Aqueduct-components */
+@import "~aqueduct-components/styles/accordion";
+@import "~aqueduct-components/styles/checkbox";
+@import "~aqueduct-components/styles/dropdown";
+@import "~aqueduct-components/styles/filters";
+@import "~aqueduct-components/styles/icon";
+@import "~aqueduct-components/styles/info";
+@import "~aqueduct-components/styles/header";
+@import "~aqueduct-components/styles/map";
+@import "~aqueduct-components/styles/map-controls";
+@import "~aqueduct-components/styles/map-header";
+@import "~aqueduct-components/styles/modal";
+@import "~aqueduct-components/styles/radio";
+@import "~aqueduct-components/styles/segmentedui";
+@import "~aqueduct-components/styles/select";
+@import "~aqueduct-components/styles/sidebar";
+@import "~aqueduct-components/styles/spinner";
+@import "~aqueduct-components/styles/timeline";
 
 /* LAYOUTS */
 @import "layouts/main";
@@ -29,22 +49,3 @@
 @import "components/swipe";
 @import "components/summary";
 @import "components/widget-image-modal";
-
-/* Aqueduct-components */
-@import "~aqueduct-components/styles/accordion";
-@import "~aqueduct-components/styles/checkbox";
-@import "~aqueduct-components/styles/dropdown";
-@import "~aqueduct-components/styles/filters";
-@import "~aqueduct-components/styles/icon";
-@import "~aqueduct-components/styles/info";
-@import "~aqueduct-components/styles/header";
-@import "~aqueduct-components/styles/map";
-@import "~aqueduct-components/styles/map-controls";
-@import "~aqueduct-components/styles/map-header";
-@import "~aqueduct-components/styles/modal";
-@import "~aqueduct-components/styles/radio";
-@import "~aqueduct-components/styles/segmentedui";
-@import "~aqueduct-components/styles/select";
-@import "~aqueduct-components/styles/sidebar";
-@import "~aqueduct-components/styles/spinner";
-@import "~aqueduct-components/styles/timeline";
