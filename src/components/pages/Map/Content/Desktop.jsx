@@ -11,10 +11,21 @@ import Summary from 'components/summary/Summary';
 
 import DownloadButton from 'components/map/DownloadButton';
 import ShareButton from 'components/map/ShareButton';
-import Legend from 'containers/legend/Legend';
 import LayerManager from 'utils/layers/LayerManager';
-import { Map, MapControls, ZoomControl, MapHeader } from 'aqueduct-components';
-import { cropOptions, irrigationOptions, scopeOptions, waterOptions } from 'constants/filters';
+import { SCOPE_OPTIONS, WATER_OPTIONS } from 'constants/filters';
+
+import {
+  Map,
+  Icon,
+  Legend,
+  MapControls,
+  SourceModal,
+  ZoomControl,
+  MapHeader,
+  toggleModal,
+  CROP_OPTIONS,
+  IRRIGATION_OPTIONS
+} from 'aqueduct-components';
 
 export default class MapPageDesktop extends React.Component {
 
@@ -24,6 +35,10 @@ export default class MapPageDesktop extends React.Component {
     this.state = {
       showStickyFilters: false
     };
+
+    // BINDINGS
+    this.toggleShareModal = this.toggleShareModal.bind(this);
+    this.toggleSourceModal = this.toggleSourceModal.bind(this);
   }
 
   componentWillMount() {
@@ -59,10 +74,10 @@ export default class MapPageDesktop extends React.Component {
 
     return {
       crop(crop) {
-        return (crop !== 'all') ? cropOptions.find(v => v.value === crop).label : '';
+        return (crop !== 'all') ? CROP_OPTIONS.find(v => v.value === crop).label : '';
       },
       country(iso) {
-        if (!iso || _scope === 'global') return '';
+        if (!iso || _scope !== 'country') return '';
 
         const countryName = _countries.find(c => c.id === iso).name;
         // be careful with names ending in 's'
@@ -70,18 +85,18 @@ export default class MapPageDesktop extends React.Component {
       },
       irrigation(irrigation) {
         if (!irrigation.length) {
-          return irrigationOptions.map(r => r.label).join(' & ');
+          return IRRIGATION_OPTIONS.map(r => r.label).join(' & ');
         }
 
         return irrigation.map((val) => {
-          return irrigationOptions.find(v => v.value === val).label;
+          return IRRIGATION_OPTIONS.find(v => v.value === val).label;
         }).join(' & ');
       },
       scope(scope) {
-        return !_iso || scope === 'global' ? scopeOptions.find(v => v.value === 'global').label : '';
+        return !_iso || scope !== 'country' ? SCOPE_OPTIONS.find(v => v.value === 'global').label : '';
       },
       indicator(indicator) {
-        return indicator !== 'none' ? waterOptions.find(v => v.value === indicator).label : '';
+        return indicator !== 'none' ? WATER_OPTIONS.find(v => v.value === indicator).label : '';
       }
     };
   }
@@ -94,6 +109,20 @@ export default class MapPageDesktop extends React.Component {
     this.setState({
       stickyFilterTopPosition
     });
+  }
+
+  // MODAL EVENTS
+  toggleShareModal() {
+    dispatch(toggleModal(true, {
+      children: ShareModal
+    }));
+  }
+
+  toggleSourceModal(layer) {
+    dispatch(toggleModal(true, {
+      children: SourceModal,
+      childrenProps: layer
+    }));
   }
 
   getMapHeaderTemplate() {
@@ -121,21 +150,23 @@ export default class MapPageDesktop extends React.Component {
               withScope
             />
           </div>
+
+          {/* Sticky Filters */}
           <Sticky
             className="-filter"
             topLimit={this.state.stickyFilterTopPosition}
             onStick={(isSticky) => { this.onSticky(isSticky); }}
             ScrollElem=".l-sidebar-content"
           >
-            {
-              this.state.showStickyFilters &&
-                <StickyFilters
-                  filters={this.props.filters}
-                  setFilters={this.props.setFilters}
-                  withScope
-                />
+            {this.state.showStickyFilters &&
+              <StickyFilters
+                filters={this.props.filters}
+                setFilters={this.props.setFilters}
+                withScope
+              />
             }
           </Sticky>
+
           {/* Widget List */}
           <div className="l-sidebar-content">
             {this.props.filters.scope === 'country' && this.props.filters.country &&
@@ -183,13 +214,16 @@ export default class MapPageDesktop extends React.Component {
               dictionary={this.getDictionary()}
               filters={this.props.filters}
               template={this.getMapHeaderTemplate()}
-            />}
+            />
+          }
 
           { /* Map legend */}
           <Legend
             className="-map"
             expanded
+            filters={this.props.filters}
             layers={this.props.layersActive}
+            onToggleInfo={this.toggleSourceModal}
           />
         </div>
       </div>

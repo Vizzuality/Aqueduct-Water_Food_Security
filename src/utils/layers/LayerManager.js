@@ -1,12 +1,12 @@
 import L from 'leaflet/dist/leaflet';
 import esri from 'esri-leaflet';
 import template from 'lodash/template';
+
+// AQ components
+import { CROP_OPTIONS, get, getObjectConversion } from 'aqueduct-components';
+
 // Layers
 import BubbleClusterLayer from 'utils/layers/markers/BubbleClusterLayer';
-// Functions
-import { get } from 'utils/request';
-import { getObjectConversion } from 'utils/filters/filters';
-import { cropOptions } from 'constants/filters';
 
 // adding support for esri
 L.esri = esri;
@@ -73,7 +73,7 @@ export default class LayerManager {
     const { bucket, crop } = params;
     const cartoCss = _layerConfig.body.layers[0].options.cartocss;
     const cartoCssTemplate = template(cartoCss, { interpolate: /{{([\s\S]+?)}}/g });
-    const color = cropOptions.find(c => c.value === crop).color;
+    const color = CROP_OPTIONS.find(c => c.value === crop).color;
 
     return cartoCssTemplate({ bucket, color });
   }
