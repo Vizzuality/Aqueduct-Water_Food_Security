@@ -1,5 +1,4 @@
 import L from 'leaflet/dist/leaflet';
-import esri from 'esri-leaflet';
 import template from 'lodash/template';
 
 // AQ components
@@ -7,9 +6,6 @@ import { CROP_OPTIONS, get, getObjectConversion } from 'aqueduct-components';
 
 // Layers
 import BubbleClusterLayer from 'utils/layers/markers/BubbleClusterLayer';
-
-// adding support for esri
-L.esri = esri;
 
 export default class LayerManager {
 

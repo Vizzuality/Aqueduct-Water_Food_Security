@@ -16,7 +16,6 @@ import { SCOPE_OPTIONS, WATER_OPTIONS } from 'constants/filters';
 
 import {
   Map,
-  Icon,
   Legend,
   MapControls,
   SourceModal,
