@@ -10,7 +10,7 @@ import WidgetList from 'components/widgets/WidgetList';
 import Summary from 'components/summary/Summary';
 
 import DownloadButton from 'components/map/DownloadButton';
-import ShareButton from 'components/map/ShareButton';
+import ShareModal from 'containers/modal/ShareModal';
 import LayerManager from 'utils/layers/LayerManager';
 import { SCOPE_OPTIONS, WATER_OPTIONS } from 'constants/filters';
 
@@ -19,6 +19,7 @@ import {
   Legend,
   MapControls,
   SourceModal,
+  ShareButton,
   ZoomControl,
   MapHeader,
   toggleModal,
@@ -110,6 +111,10 @@ export default class MapPageDesktop extends React.Component {
     });
   }
 
+  getMapHeaderTemplate() {
+    return '{{scope}} {{country}} {{indicator}} {{irrigation}} {{crop}} Producing Areas';
+  }
+
   // MODAL EVENTS
   toggleShareModal() {
     dispatch(toggleModal(true, {
@@ -122,10 +127,6 @@ export default class MapPageDesktop extends React.Component {
       children: SourceModal,
       childrenProps: layer
     }));
-  }
-
-  getMapHeaderTemplate() {
-    return '{{scope}} {{country}} {{indicator}} {{irrigation}} {{crop}} Producing Areas';
   }
 
   render() {
@@ -203,7 +204,9 @@ export default class MapPageDesktop extends React.Component {
               mapElem={this.state.mapElem}
             />
             {/* Share button */}
-            <ShareButton />
+            <ShareButton
+              onClick={this.toggleShareModal}
+            />
 
           </MapControls>
 

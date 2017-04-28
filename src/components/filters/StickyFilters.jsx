@@ -1,18 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { dispatch } from 'main';
 
 import {
   CROP_OPTIONS,
   DATA_TYPE_OPTIONS,
   YEAR_OPTIONS,
   SegmentedUi,
-  Icon,
-  CustomSelect,
-  toggleModal
+  CustomSelect
 } from 'aqueduct-components';
 import { SCOPE_OPTIONS, WATER_OPTIONS, FOOD_OPTIONS } from 'constants/filters';
-import ShareModal from 'containers/modal/ShareModal';
 import CountrySelect from 'containers/countries/CountrySelect';
 
 class StickyFilters extends React.Component {
@@ -33,12 +29,6 @@ class StickyFilters extends React.Component {
     this.props.setFilters(newFilter);
   }
 
-  toggleShareModal() {
-    dispatch(toggleModal(true, {
-      children: ShareModal
-    }));
-  }
-
   render() {
     return (
       <div className="c-sticky-filters">
@@ -52,10 +42,6 @@ class StickyFilters extends React.Component {
                   selected={this.props.filters.scope}
                   onChange={selected => this.updateFilters(selected.value, 'scope')}
                 />
-                <button type="button" className="-white -with-icon btn-share" onClick={this.toggleShareModal}>
-                  <Icon className="-medium" name="icon-share" />
-                  Share
-                </button>
               </div>
             </div>
           </div>
