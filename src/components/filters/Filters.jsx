@@ -119,7 +119,17 @@ export default class Filters extends React.Component {
             </div>
           </div>
         }
-        <Accordion className="-filters" opened contentPosition="top" toggleIcon={<Icon name="icon-arrow-up-2" className="filters-collapse-btn" />}>
+        <Accordion
+          className="-filters"
+          opened
+          contentPosition="top"
+          toggleIcon={
+            <Icon
+              name="icon-arrow-up-2"
+              className="filters-collapse-btn"
+            />
+          }
+        >
           <div>
             {this.props.withScope && this.props.filters.scope === 'country' &&
               <div className="filters-section -separator">
