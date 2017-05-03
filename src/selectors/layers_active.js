@@ -1,4 +1,3 @@
-import find from 'lodash/find';
 import { createSelector } from 'reselect';
 import layerSpec from 'utils/layers/layer_spec.json';
 
@@ -45,7 +44,7 @@ const getActiveLayers = (_datasets, _filters) => {
       const metadata = (dataset.metadata && dataset.metadata.length) ? dataset.metadata[0].attributes : null;
 
       if (currentLayer && (isWater || isFood || isMask || isCrop)) {
-        const layerSpecAttrs = find(layerSpec, { id: dataset.id }) || {};
+        const layerSpecAttrs = layerSpec.find(l => l.id === dataset.id) || {};
 
         layer = {
           ...currentLayer.attributes,

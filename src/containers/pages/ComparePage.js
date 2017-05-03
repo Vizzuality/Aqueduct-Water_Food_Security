@@ -3,7 +3,6 @@ import ComparePage from 'components/pages/Compare/ComparePage';
 import { setCompareCountry, emptyCompareCountries } from 'actions/compare';
 import { setFilters } from 'actions/filters';
 import { updateCompareUrl } from 'actions/url';
-import { toggleModal } from 'aqueduct-components';
 import getActiveWidgets from 'selectors/widgets_active';
 import getActiveLayers from 'selectors/layers_active';
 
@@ -31,9 +30,6 @@ const mapDispatchToProps = dispatch => ({
   },
   emptyCompareCountries: () => {
     dispatch(emptyCompareCountries());
-  },
-  toggleModal: (opened, opts) => {
-    dispatch(toggleModal(opened, opts));
   }
 });
 

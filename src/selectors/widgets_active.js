@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { widgetsFilter } from 'utils/filters/filters';
+import { widgetsFilter } from 'aqueduct-components';
 
 // Get the datasets and filters from state
 const datasets = state => state.datasets;

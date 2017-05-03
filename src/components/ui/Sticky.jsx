@@ -1,6 +1,6 @@
 
 import React from 'react';
-import _ from 'lodash';
+import throttle from 'lodash/throttle';
 
 class Sticky extends React.Component {
 
@@ -25,7 +25,7 @@ class Sticky extends React.Component {
     this.ScrollElem = this.props.ScrollElem ?
       document.querySelector(this.props.ScrollElem) : window;
 
-    this.throttledScroll = _.throttle(() => this._onScroll(), 50);
+    this.throttledScroll = throttle(() => this._onScroll(), 50);
   }
 
   _setEventListeners() {

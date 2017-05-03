@@ -1,4 +1,5 @@
 import React from 'react';
+import { dispatch } from 'main';
 
 // Components
 import Sidebar from 'containers/ui/Sidebar';
@@ -7,12 +8,24 @@ import Filters from 'components/filters/Filters';
 import StickyFilters from 'components/filters/StickyFilters';
 import WidgetList from 'components/widgets/WidgetList';
 import Summary from 'components/summary/Summary';
+
 import DownloadButton from 'components/map/DownloadButton';
-import Legend from 'containers/legend/Legend';
-import DynamicHeader from 'components/map/DynamicHeader';
 import ShareModal from 'containers/modal/ShareModal';
 import LayerManager from 'utils/layers/LayerManager';
-import { Map, Icon } from 'aqueduct-components';
+import { SCOPE_OPTIONS, WATER_OPTIONS } from 'constants/filters';
+
+import {
+  Map,
+  Legend,
+  MapControls,
+  SourceModal,
+  ShareButton,
+  ZoomControl,
+  MapHeader,
+  toggleModal,
+  CROP_OPTIONS,
+  IRRIGATION_OPTIONS
+} from 'aqueduct-components';
 
 export default class MapPageDesktop extends React.Component {
 
@@ -25,6 +38,7 @@ export default class MapPageDesktop extends React.Component {
 
     // BINDINGS
     this.toggleShareModal = this.toggleShareModal.bind(this);
+    this.toggleSourceModal = this.toggleSourceModal.bind(this);
   }
 
   componentWillMount() {
@@ -53,6 +67,40 @@ export default class MapPageDesktop extends React.Component {
     });
   }
 
+  getDictionary() {
+    const _iso = this.props.filters.country;
+    const _scope = this.props.filters.scope;
+    const _countries = this.props.countries.list;
+
+    return {
+      crop(crop) {
+        return (crop !== 'all') ? CROP_OPTIONS.find(v => v.value === crop).label : '';
+      },
+      country(iso) {
+        if (!iso || _scope !== 'country') return '';
+
+        const countryName = _countries.find(c => c.id === iso).name;
+        // be careful with names ending in 's'
+        return `${countryName}'s`;
+      },
+      irrigation(irrigation) {
+        if (!irrigation.length) {
+          return IRRIGATION_OPTIONS.map(r => r.label).join(' & ');
+        }
+
+        return irrigation.map((val) => {
+          return IRRIGATION_OPTIONS.find(v => v.value === val).label;
+        }).join(' & ');
+      },
+      scope(scope) {
+        return !_iso || scope !== 'country' ? SCOPE_OPTIONS.find(v => v.value === 'global').label : '';
+      },
+      indicator(indicator) {
+        return indicator !== 'none' ? WATER_OPTIONS.find(v => v.value === indicator).label : '';
+      }
+    };
+  }
+
   setStickyFilterPosition() {
     const stickyFilterTopPosition = this.filtersElem.getBoundingClientRect().height;
 
@@ -63,10 +111,22 @@ export default class MapPageDesktop extends React.Component {
     });
   }
 
+  getMapHeaderTemplate() {
+    return '{{scope}} {{country}} {{indicator}} {{irrigation}} {{crop}} Producing Areas';
+  }
+
+  // MODAL EVENTS
   toggleShareModal() {
-    this.props.toggleModal(true, {
+    dispatch(toggleModal(true, {
       children: ShareModal
-    });
+    }));
+  }
+
+  toggleSourceModal(layer) {
+    dispatch(toggleModal(true, {
+      children: SourceModal,
+      childrenProps: layer
+    }));
   }
 
   render() {
@@ -81,37 +141,32 @@ export default class MapPageDesktop extends React.Component {
       <div className="l-map -fullscreen">
         {/* Sidebar */}
         <Sidebar>
-          {/* Share button */}
-          <button type="button" className="-white -with-icon btn-share" onClick={this.toggleShareModal}>
-            <Icon className="-medium" name="icon-share" />
-            Share
-          </button>
           {/* Filters */}
           <div className="l-filters" ref={(elem) => { this.filtersElem = elem; }}>
             <Filters
               className="-sidebar"
               filters={this.props.filters}
               setFilters={this.props.setFilters}
-              toggleModal={this.props.toggleModal}
               withScope
             />
           </div>
+
+          {/* Sticky Filters */}
           <Sticky
             className="-filter"
             topLimit={this.state.stickyFilterTopPosition}
             onStick={(isSticky) => { this.onSticky(isSticky); }}
             ScrollElem=".l-sidebar-content"
           >
-            {
-              this.state.showStickyFilters &&
-                <StickyFilters
-                  filters={this.props.filters}
-                  setFilters={this.props.setFilters}
-                  toggleModal={this.props.toggleModal}
-                  withScope
-                />
+            {this.state.showStickyFilters &&
+              <StickyFilters
+                filters={this.props.filters}
+                setFilters={this.props.setFilters}
+                withScope
+              />
             }
           </Sticky>
+
           {/* Widget List */}
           <div className="l-sidebar-content">
             {this.props.filters.scope === 'country' && this.props.filters.country &&
@@ -132,19 +187,46 @@ export default class MapPageDesktop extends React.Component {
             LayerManager={LayerManager}
           />
 
-          {this.props.countries.list.length &&
-            <DynamicHeader
-              countries={this.props.countries.list}
-              filters={this.props.filters}
-            />}
+          {/* Map controls */}
+          <MapControls>
+            <ZoomControl
+              zoom={this.props.mapConfig.zoom}
+              onZoomChange={(zoom) => {
+                this.props.setMapParams({
+                  ...this.props.mapConfig,
+                  ...{ zoom }
+                });
+              }}
+            />
 
+            {/* Download button */}
+            <DownloadButton
+              mapElem={this.state.mapElem}
+            />
+            {/* Share button */}
+            <ShareButton
+              onClick={this.toggleShareModal}
+            />
+
+          </MapControls>
+
+          { /* Map headings */}
+          {this.props.countries.list.length &&
+            <MapHeader
+              dictionary={this.getDictionary()}
+              filters={this.props.filters}
+              template={this.getMapHeaderTemplate()}
+            />
+          }
+
+          { /* Map legend */}
           <Legend
             className="-map"
             expanded
+            filters={this.props.filters}
             layers={this.props.layersActive}
+            onToggleInfo={this.toggleSourceModal}
           />
-          {this.state.mapElem &&
-            <DownloadButton mapElem={this.state.mapElem} />}
         </div>
       </div>
     );
@@ -161,6 +243,5 @@ MapPageDesktop.propTypes = {
   // Actions
   setMapParams: React.PropTypes.func,
   updateMapUrl: React.PropTypes.func,
-  setFilters: React.PropTypes.func,
-  toggleModal: React.PropTypes.func
+  setFilters: React.PropTypes.func
 };

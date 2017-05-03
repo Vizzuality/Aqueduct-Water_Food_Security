@@ -1,8 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { SegmentedUi, Icon, CustomSelect } from 'aqueduct-components';
-import { scopeOptions, cropOptions, waterOptions, foodOptions, yearOptions, dataTypeOptions } from 'constants/filters';
-import ShareModal from 'containers/modal/ShareModal';
+
+import {
+  CROP_OPTIONS,
+  DATA_TYPE_OPTIONS,
+  YEAR_OPTIONS,
+  SegmentedUi,
+  CustomSelect
+} from 'aqueduct-components';
+import { SCOPE_OPTIONS, WATER_OPTIONS, FOOD_OPTIONS } from 'constants/filters';
 import CountrySelect from 'containers/countries/CountrySelect';
 
 class StickyFilters extends React.Component {
@@ -23,12 +29,6 @@ class StickyFilters extends React.Component {
     this.props.setFilters(newFilter);
   }
 
-  toggleShareModal() {
-    this.props.toggleModal(true, {
-      children: ShareModal
-    });
-  }
-
   render() {
     return (
       <div className="c-sticky-filters">
@@ -38,14 +38,10 @@ class StickyFilters extends React.Component {
               <div className="small-12 column">
                 <SegmentedUi
                   className="-tabs"
-                  items={scopeOptions}
+                  items={SCOPE_OPTIONS}
                   selected={this.props.filters.scope}
                   onChange={selected => this.updateFilters(selected.value, 'scope')}
                 />
-                <button type="button" className="-white -with-icon btn-share" onClick={this.toggleShareModal}>
-                  <Icon className="-medium" name="icon-share" />
-                  Share
-                </button>
               </div>
             </div>
           </div>
@@ -85,7 +81,7 @@ class StickyFilters extends React.Component {
             <CustomSelect
               search
               className="-gray"
-              options={cropOptions}
+              options={CROP_OPTIONS}
               value={this.props.filters.crop}
               onValueChange={selected => selected && this.updateFilters(selected.value, 'crop')}
             />
@@ -94,7 +90,7 @@ class StickyFilters extends React.Component {
             <span className="title">Water Risk</span>
             <CustomSelect
               className="-gray"
-              options={waterOptions}
+              options={WATER_OPTIONS}
               value={this.props.filters.indicator}
               onValueChange={selected => selected && this.updateFilters(selected.value, 'indicator')}
             />
@@ -103,7 +99,7 @@ class StickyFilters extends React.Component {
             <span className="title">Food security</span>
             <CustomSelect
               className="-gray"
-              options={foodOptions}
+              options={FOOD_OPTIONS}
               value={this.props.filters.food}
               onValueChange={selected => selected && this.updateFilters(selected.value, 'food')}
             />
@@ -112,8 +108,8 @@ class StickyFilters extends React.Component {
             <span className="title">Timeframe</span>
             <CustomSelect
               className="-gray"
-              options={yearOptions}
-              value={yearOptions.find(i => i.value === this.props.filters.year).value}
+              options={YEAR_OPTIONS}
+              value={YEAR_OPTIONS.find(i => i.value === this.props.filters.year).value}
               onValueChange={(selected) => {
                 selected && selected.value === 'baseline' && this.updateFilters(
                   'absolute', 'type');
@@ -123,7 +119,7 @@ class StickyFilters extends React.Component {
             {this.props.filters.period_value !== 'baseline' &&
               <CustomSelect
                 className="-gray"
-                options={dataTypeOptions.map(option => Object.assign({}, option, { value: option.value }))}
+                options={DATA_TYPE_OPTIONS.map(option => Object.assign({}, option, { value: option.value }))}
                 value={this.props.filters.type}
                 onValueChange={selected => this.updateFilters(selected.value, 'change_from_baseline')}
               />
@@ -138,8 +134,7 @@ class StickyFilters extends React.Component {
 StickyFilters.propTypes = {
   setFilters: React.PropTypes.func,
   filters: React.PropTypes.object,
-  withScope: React.PropTypes.bool,
-  toggleModal: React.PropTypes.func
+  withScope: React.PropTypes.bool
 };
 
 export default StickyFilters;

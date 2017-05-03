@@ -15,9 +15,9 @@ import { onEnterMapPage, onEnterComparePage, onEnterEmbedPage } from 'actions/ro
 const Routes = ({ history }) => (
   <Router history={history}>
     <Route path="/" component={App}>
-      <IndexRoute components={{ header: Header, main: MapPage }} onEnter={onEnterMapPage} />
+      <IndexRoute components={{ header: () => <Header title="Food" />, main: MapPage }} onEnter={onEnterMapPage} />
       <Route path="compare">
-        <IndexRoute components={{ header: Header, main: ComparePage }} onEnter={onEnterComparePage} />
+        <IndexRoute components={{ header: () => <Header title="Food" />, main: ComparePage }} onEnter={onEnterComparePage} />
       </Route>
       <Route path="embed">
         <IndexRoute components={{ main: EmbedPage }} onEnter={onEnterEmbedPage} />

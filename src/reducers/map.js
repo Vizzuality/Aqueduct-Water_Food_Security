@@ -2,11 +2,11 @@ import { SET_MAP_LOCATION } from 'actions/map';
 
 // TODO: complete map initial state
 const initialState = {
-  zoom: 2,
   latLng: {
     lat: 30,
-    lng: -120
-  }
+    lng: -15
+  },
+  zoom: 3
 };
 
 export default function (state = initialState, action) {

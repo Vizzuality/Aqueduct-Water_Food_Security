@@ -6,6 +6,7 @@ process.env.BROWSERSLIST_CONFIG = 'browserslist';
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const rootPath = process.cwd();
 
@@ -67,6 +68,7 @@ const config = {
   },
 
   plugins: [
+    // new BundleAnalyzerPlugin(),
     new HtmlWebpackPlugin({
       template: 'src/index.html',
       inject: 'body',
@@ -105,7 +107,7 @@ if (process.env.NODE_ENV === 'production') {
     comments: false
   }));
 } else {
-  config.devtool = 'source-map';
+  config.devtool = 'eval-source-map';
 }
 
 module.exports = config;

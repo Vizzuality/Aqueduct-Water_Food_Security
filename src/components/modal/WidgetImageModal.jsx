@@ -1,9 +1,8 @@
 import React from 'react';
 import domtoimage from 'dom-to-image';
 import snakeCase from 'lodash/snakeCase';
-import { saveAsFile } from 'utils/utils';
-import { Spinner } from 'aqueduct-components';
 import WidgetChart from 'containers/widgets/WidgetChart';
+import { Spinner, saveAsFile } from 'aqueduct-components';
 
 export default class WidgetImageModal extends React.Component {
 

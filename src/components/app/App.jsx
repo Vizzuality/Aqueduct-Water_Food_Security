@@ -1,5 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
+
 import Modal from 'containers/ui/Modal';
 import Tooltip from 'containers/ui/Tooltip';
 

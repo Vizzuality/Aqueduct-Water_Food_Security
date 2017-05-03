@@ -1,15 +1,13 @@
 import React from 'react';
-import Legend from 'containers/legend/Legend';
-import { OnlyOn, Icon } from 'aqueduct-components';
+import { dispatch } from 'main';
+import { Legend, OnlyOn, Icon, toggleModal } from 'aqueduct-components';
 
 export default function LegendMobile(props) {
   const toggle = () => {
-    props.toggleModal(true, {
+    dispatch(toggleModal(true, {
       children: Legend,
-      childrenProps: {
-        layers: props.layersActive
-      }
-    });
+      childrenProps: { ...props }
+    }));
   };
 
   return (
@@ -22,6 +20,5 @@ export default function LegendMobile(props) {
 }
 
 LegendMobile.propTypes = {
-  layersActive: React.PropTypes.array,
-  toggleModal: React.PropTypes.func
+  layersActive: React.PropTypes.array
 };

@@ -1,9 +1,9 @@
 import React from 'react';
-import { Map, SegmentedUi } from 'aqueduct-components';
+import { Map, MapControls, SegmentedUi } from 'aqueduct-components';
 import WidgetList from 'components/widgets/WidgetList';
 import MobileFilters from 'components/filters/MobileFilters';
 import DownloadButton from 'components/map/DownloadButton';
-import LegendMobile from 'containers/legend/LegendMobile';
+import LegendMobile from 'components/legend/LegendMobile';
 import Summary from 'components/summary/Summary';
 import LayerManager from 'utils/layers/LayerManager';
 
@@ -52,7 +52,10 @@ export default class MapPageMobile extends React.Component {
         {/* Map */}
         {this.state.context === 'map' &&
           <div className="l-map-mobile">
-            <LegendMobile layersActive={this.props.layersActive} />
+            <LegendMobile
+              layers={this.props.layersActive}
+              filters={this.props.filters}
+            />
             <div className="c-map-container" ref={(el) => { this.setMapElement(el); }}>
               <Map
                 mapConfig={mapConfig}
@@ -62,8 +65,18 @@ export default class MapPageMobile extends React.Component {
                 sidebar={this.props.sidebar}
                 LayerManager={LayerManager}
               />
-              {this.state.mapElem &&
-                <DownloadButton mapElem={this.state.mapElem} />}
+              {/* Map controls */}
+              <MapControls
+                zoom={this.props.mapConfig.zoom}
+                onZoomChange={(zoom) => {
+                  this.props.setMapParams({
+                    ...this.props.mapConfig,
+                    ...{ zoom }
+                  });
+                }}
+              >
+                <DownloadButton className="download-map-btn" mapElem={this.state.mapElem} />
+              </MapControls>
             </div>
           </div>
         }
@@ -72,7 +85,6 @@ export default class MapPageMobile extends React.Component {
           className="-mobile"
           withScope filters={this.props.filters}
           setFilters={this.props.setFilters}
-          toggleModal={this.props.toggleModal}
         />
       </div>
     );
@@ -88,6 +100,5 @@ MapPageMobile.propTypes = {
   countries: React.PropTypes.object,
   // Actions
   setMapParams: React.PropTypes.func,
-  setFilters: React.PropTypes.func,
-  toggleModal: React.PropTypes.func
+  setFilters: React.PropTypes.func
 };

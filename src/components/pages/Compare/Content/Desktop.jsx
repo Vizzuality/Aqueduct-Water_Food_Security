@@ -1,11 +1,12 @@
 import React from 'react';
+import { dispatch } from 'main';
 import ShareModal from 'containers/modal/ShareModal';
 
 // Components
 import CompareList from 'components/compare/CompareList';
 import Filters from 'components/filters/Filters';
 import CountrySelect from 'containers/countries/CountrySelect';
-import { Icon } from 'aqueduct-components';
+import { Icon, toggleModal } from 'aqueduct-components';
 import { Link } from 'react-router';
 
 export default class ComparePageDesktop extends React.Component {
@@ -51,9 +52,9 @@ export default class ComparePageDesktop extends React.Component {
   }
 
   toggleShareModal() {
-    this.props.toggleModal(true, {
+    dispatch(toggleModal(true, {
       children: ShareModal
-    });
+    }));
   }
 
   render() {
@@ -73,7 +74,6 @@ export default class ComparePageDesktop extends React.Component {
                 className="-compare"
                 filters={this.props.filters}
                 setFilters={this.props.setFilters}
-                toggleModal={this.props.toggleModal}
               />
             </div>
           </div>
@@ -101,7 +101,6 @@ ComparePageDesktop.propTypes = {
   updateCompareUrl: React.PropTypes.func,
   setCompareCountry: React.PropTypes.func,
   emptyCompareCountries: React.PropTypes.func,
-  toggleModal: React.PropTypes.func,
   widgetsActive: React.PropTypes.array,
   layersActive: React.PropTypes.array
 };
