@@ -83,3 +83,35 @@ export function onEnterEmbedPage({ location }, replace, done) {
 
   done();
 }
+
+export function onEnterReportPage({ location }, replace, done) {
+  if (location.query.zoom) {
+    const map = {
+      zoom: +location.query.zoom,
+      latLng: {
+        lat: +location.query.lat,
+        lng: +location.query.lng
+      }
+    };
+    dispatch(setMapLocation(map));
+  }
+
+  if (location.query.crop) {
+    const { crop, country, food, irrigation, scope, period, period_value, year, indicator, type } = location.query;
+    const filtersObj = {
+      country,
+      crop,
+      food,
+      irrigation: (irrigation) ? irrigation.split(',') : false,
+      scope,
+      period,
+      period_value,
+      year,
+      indicator,
+      type
+    };
+    dispatch(setFilters(filtersObj));
+  }
+
+  done();
+}
