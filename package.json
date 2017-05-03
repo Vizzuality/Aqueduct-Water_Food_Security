@@ -74,6 +74,7 @@
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.3",
+    "webpack-bundle-analyzer": "^2.4.0",
     "webpack-dev-middleware": "^1.8.4",
     "whatwg-fetch": "^2.0.1"
   },
