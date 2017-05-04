@@ -1,13 +1,43 @@
 import React from 'react';
 import WidgetList from 'components/widgets/WidgetList';
-import { Map, MapControls, Icon } from 'aqueduct-components';
+import { Map, MapControls, ZoomControl, Icon } from 'aqueduct-components';
 import LegendMobile from 'components/legend/LegendMobile';
 import Summary from 'components/summary/Summary';
 import LayerManager from 'utils/layers/LayerManager';
 
 export default class CompareItem extends React.Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      mapConfig: {
+        zoom: 3,
+        latLng: {
+          lat: 0,
+          lng: 0
+        },
+        bounds: props.countryList.find(c => c.id === props.country)
+      }
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.country && nextProps.countryList.length) {
+      const bounds = nextProps.countryList.find(c => c.id === nextProps.country);
+
+      this.setState({
+        mapConfig: {
+          ...this.state.mapConfig,
+          bounds
+        }
+      });
+    }
+  }
+
   render() {
+    const { mapConfig } = this.state;
+
     const emptyPlaceholder = (
       <div className="country-placeholder">
         <div>
@@ -17,35 +47,48 @@ export default class CompareItem extends React.Component {
       </div>
     );
 
-    let countrySelected = null;
-    const mapConfig = {
-      zoom: 3,
-      latLng: {
-        lat: 0,
-        lng: 0
-      }
-    };
-    if (this.props.country) {
-      countrySelected = this.props.countryList.find(c => c.id === this.props.country);
-      mapConfig.bounds = countrySelected;
-    }
     const showMap = (!this.props.context || (this.props.context && this.props.context === 'map'));
     const showWidgets = this.props.country && (!this.props.context || (this.props.context && this.props.context === 'data'));
+
     const map = (
       <div>
         <Map
-          filters={this.props.filters}
           mapConfig={mapConfig}
+          filters={this.props.filters}
           layersActive={this.props.layersActive}
           LayerManager={LayerManager}
+          setMapParams={(newMapConfig) => {
+            this.setState({
+              mapConfig: {
+                ...mapConfig,
+                ...newMapConfig
+              }
+            });
+          }}
         />
         {/* Map controls */}
-        <MapControls className="-right">
+        <MapControls className="-left">
           <LegendMobile
             filters={this.props.filters}
             layers={this.props.layersActive}
           />
         </MapControls>
+
+        {/* Map controls */}
+        <MapControls>
+          <ZoomControl
+            zoom={mapConfig.zoom}
+            onZoomChange={(zoom) => {
+              this.setState({
+                mapConfig: {
+                  ...mapConfig,
+                  zoom
+                }
+              });
+            }}
+          />
+        </MapControls>
+
       </div>
     );
 

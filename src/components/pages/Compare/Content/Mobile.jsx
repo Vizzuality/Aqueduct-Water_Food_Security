@@ -56,7 +56,7 @@ export default class ComparePageMobile extends React.Component {
               }
             };
             return (
-              <div className="c-filters-item">
+              <div key={i} className="c-filters-item">
                 {/* Country */}
                 <div className="filter-item-header">
                   <span className="title">{item.title}</span>

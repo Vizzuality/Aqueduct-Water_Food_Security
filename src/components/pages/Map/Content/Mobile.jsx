@@ -62,7 +62,7 @@ export default class MapPageMobile extends React.Component {
                 LayerManager={LayerManager}
               />
               {/* Map controls */}
-              <MapControls className="-right">
+              <MapControls className="-left">
                 <LegendMobile
                   layers={this.props.layersActive}
                   filters={this.props.filters}
