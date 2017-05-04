@@ -6,9 +6,10 @@ import { setCompareCountry } from 'actions/compare';
 import { setEmbed } from 'actions/embed';
 
 export function onEnterMapPage({ location }, replace, done) {
+  const { crop, country, food, irrigation, scope, period, period_value, year, indicator, type, zoom } = location.query;
   // TODO: this check is not as consistent as it should be. The right solution could be grouping all map params inside "map"
   // if there are map position params
-  if (location.query.zoom) {
+  if (zoom) {
     const map = {
       zoom: +location.query.zoom,
       latLng: {
@@ -22,8 +23,7 @@ export function onEnterMapPage({ location }, replace, done) {
   // TODO: this check is not as consistent as it should be. The right solution could be grouping all filter params inside "filters"
   // if there are filter params
   // I really don't like this...
-  if (location.query.crop) {
-    const { crop, country, food, irrigation, scope, period, period_value, year, indicator, type } = location.query;
+  if (crop && period && year) {
     const filtersObj = {
       country,
       crop,
@@ -43,18 +43,15 @@ export function onEnterMapPage({ location }, replace, done) {
 }
 
 export function onEnterComparePage({ location }, replace, done) {
+  const { crop, countries, food, irrigation, period, period_value, year, indicator, type } = location.query;
   // If thera are country params
-  if (location.query.countries) {
-    const countries = location.query.countries.split(',');
-    countries.forEach((c, i) => {
+  if (countries) {
+    countries.split(',').forEach((c, i) => {
       dispatch(setCompareCountry({ iso: c, index: i }));
     });
   }
   // If there are filter params
-  if (location.query.crop) {
-    const { crop, food, period, period_value, year, indicator, type } = location.query;
-    let { irrigation } = location.query;
-    irrigation = irrigation.split(',');
+  if (crop && period && year) {
     const filtersObj = {
       crop,
       scope: 'country',
@@ -63,7 +60,7 @@ export function onEnterComparePage({ location }, replace, done) {
       year,
       food,
       indicator,
-      irrigation,
+      irrigation: (irrigation) ? irrigation.split(',') : false,
       type
     };
     dispatch(setFilters(filtersObj));
