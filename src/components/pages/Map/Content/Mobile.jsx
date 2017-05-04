@@ -1,5 +1,5 @@
 import React from 'react';
-import { Map, MapControls, SegmentedUi } from 'aqueduct-components';
+import { Map, MapControls, ZoomControl, SegmentedUi } from 'aqueduct-components';
 import WidgetList from 'components/widgets/WidgetList';
 import MobileFilters from 'components/filters/MobileFilters';
 import DownloadButton from 'components/map/DownloadButton';
@@ -52,10 +52,6 @@ export default class MapPageMobile extends React.Component {
         {/* Map */}
         {this.state.context === 'map' &&
           <div className="l-map-mobile">
-            <LegendMobile
-              layers={this.props.layersActive}
-              filters={this.props.filters}
-            />
             <div className="c-map-container" ref={(el) => { this.setMapElement(el); }}>
               <Map
                 mapConfig={mapConfig}
@@ -66,15 +62,24 @@ export default class MapPageMobile extends React.Component {
                 LayerManager={LayerManager}
               />
               {/* Map controls */}
-              <MapControls
-                zoom={this.props.mapConfig.zoom}
-                onZoomChange={(zoom) => {
-                  this.props.setMapParams({
-                    ...this.props.mapConfig,
-                    ...{ zoom }
-                  });
-                }}
-              >
+              <MapControls className="-right">
+                <LegendMobile
+                  layers={this.props.layersActive}
+                  filters={this.props.filters}
+                />
+              </MapControls>
+
+              {/* Map controls */}
+              <MapControls>
+                <ZoomControl
+                  zoom={this.props.mapConfig.zoom}
+                  onZoomChange={(zoom) => {
+                    this.props.setMapParams({
+                      ...this.props.mapConfig,
+                      ...{ zoom }
+                    });
+                  }}
+                />
                 <DownloadButton className="download-map-btn" mapElem={this.state.mapElem} />
               </MapControls>
             </div>
