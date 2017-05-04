@@ -102,6 +102,7 @@ export default class Filters extends React.Component {
     );
 
     const columnClassName = 'small-12 medium-4 columns';
+
     return (
       <div className={`c-filters ${this.props.className ? this.props.className : ''}`}>
         {/* Scope */}
