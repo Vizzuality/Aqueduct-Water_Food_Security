@@ -46,7 +46,7 @@ class StickyFilters extends React.Component {
             </div>
           </div>
         }
-        {this.props.withScope && this.props.filters.scope === 'country' &&
+        {/* {this.props.withScope && this.props.filters.scope === 'country' &&
           <div className="country-filters">
             <div>
               <span className="title">Select a country</span>
@@ -74,7 +74,7 @@ class StickyFilters extends React.Component {
               </Link>
             </div>
           </div>
-        }
+        } */}
         <div className="global-filters">
           <div>
             <span className="title">Crops</span>
