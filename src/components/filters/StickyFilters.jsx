@@ -9,7 +9,6 @@ import {
   CustomSelect
 } from 'aqueduct-components';
 import { SCOPE_OPTIONS, WATER_OPTIONS, FOOD_OPTIONS } from 'constants/filters';
-import CountrySelect from 'containers/countries/CountrySelect';
 
 class StickyFilters extends React.Component {
 

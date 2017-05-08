@@ -19,6 +19,7 @@ import {
   MapControls,
   SourceModal,
   ShareButton,
+  Sticky,
   ZoomControl,
   MapHeader,
   toggleModal,
