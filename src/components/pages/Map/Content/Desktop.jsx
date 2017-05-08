@@ -153,7 +153,7 @@ export default class MapPageDesktop extends React.Component {
 
           {/* Sticky Filters */}
           <Sticky
-            className="-filter"
+            className="-full-width"
             topLimit={this.state.stickyFilterTopPosition}
             onStick={(isSticky) => { this.onSticky(isSticky); }}
             ScrollElem=".l-sidebar-content"
