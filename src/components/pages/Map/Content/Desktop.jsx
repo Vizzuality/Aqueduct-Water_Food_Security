@@ -3,7 +3,6 @@ import { dispatch } from 'main';
 
 // Components
 import Sidebar from 'containers/ui/Sidebar';
-import Sticky from 'components/ui/Sticky';
 import Filters from 'components/filters/Filters';
 import StickyFilters from 'components/filters/StickyFilters';
 import WidgetList from 'components/widgets/WidgetList';
@@ -20,6 +19,7 @@ import {
   MapControls,
   SourceModal,
   ShareButton,
+  Sticky,
   ZoomControl,
   MapHeader,
   toggleModal,
@@ -153,7 +153,7 @@ export default class MapPageDesktop extends React.Component {
 
           {/* Sticky Filters */}
           <Sticky
-            className="-filter"
+            className="-full-width"
             topLimit={this.state.stickyFilterTopPosition}
             onStick={(isSticky) => { this.onSticky(isSticky); }}
             ScrollElem=".l-sidebar-content"
