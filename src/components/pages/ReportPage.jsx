@@ -127,6 +127,19 @@ export default class MapPageDesktop extends React.Component {
             onToggleInfo={this.toggleSourceModal}
           />
         </div>
+
+        <button
+          className="c-btn -primary -light no-print"
+          style={{
+            position: 'fixed',
+            zIndex: 10000,
+            bottom: 20,
+            right: 20
+          }}
+          onClick={() => window.print()}
+        >
+          Print
+        </button>
       </div>
     );
   }

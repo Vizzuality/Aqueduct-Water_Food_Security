@@ -18,6 +18,11 @@
     }
   }
 
+  // Print button
+  .no-print {
+    display: block;
+  }
+
   h2, h3 {
     page-break-after: avoid;
   }
@@ -32,7 +37,7 @@
     max-width: 209mm;
     // height: 297mm;
     margin: 0 auto;
-    padding: 0.5cm;
+    padding: 1cm;
   }
 
   h2 {
@@ -54,6 +59,13 @@
     // If we don't do this, we can't use page-break
     .row, .column {
       display: block;
+    }
+
+    .column {
+      border-bottom: 1px solid $border-color-1;
+      &:last-child {
+        border-bottom: none;
+      }
     }
 
     // .column {
