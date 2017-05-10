@@ -54,7 +54,7 @@ class WidgetButtons extends React.Component {
       <ul className="c-widget-buttons">
         <li>
           <DropdownButton
-            left
+            dropdownClassName="-bottom -left"
             options={downloadOptions}
             onSelect={item => this.onDownload(item.value)}
           >

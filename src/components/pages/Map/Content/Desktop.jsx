@@ -9,10 +9,14 @@ import StickyFilters from 'components/filters/StickyFilters';
 import WidgetList from 'components/widgets/WidgetList';
 import Summary from 'components/summary/Summary';
 
-import DownloadButton from 'components/map/DownloadButton';
 import ShareModal from 'containers/modal/ShareModal';
+
+// Layer Manager
 import LayerManager from 'utils/layers/LayerManager';
 import { SCOPE_OPTIONS, WATER_OPTIONS } from 'constants/filters';
+
+// Controls
+import DownloadMapControl from 'components/map/DownloadMapControl';
 
 import {
   Map,
@@ -199,15 +203,15 @@ export default class MapPageDesktop extends React.Component {
               }}
             />
 
-            {/* Download button */}
-            <DownloadButton
-              mapElem={this.state.mapElem}
-            />
             {/* Share button */}
             <ShareButton
               onClick={this.toggleShareModal}
             />
 
+            {/* Download button */}
+            <DownloadMapControl
+              mapElem={this.state.mapElem}
+            />
           </MapControls>
 
           { /* Map headings */}

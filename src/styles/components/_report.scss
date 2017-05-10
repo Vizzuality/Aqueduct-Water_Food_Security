@@ -20,7 +20,11 @@
 
   // Print button
   .no-print {
-    display: block;
+    display: none !important;
+  }
+
+  .c-tooltip {
+    display: none !important;
   }
 
   h2, h3 {
