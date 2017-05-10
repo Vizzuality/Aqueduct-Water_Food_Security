@@ -8,7 +8,7 @@ const embedOptions = [
   { label: 'Large (900x420 pixels)', value: '900x420' }
 ];
 
-export default class EmbedModal extends React.Component {
+export default class WidgetEmbedModal extends React.Component {
 
   constructor(props) {
     super(props);
@@ -134,7 +134,7 @@ export default class EmbedModal extends React.Component {
   }
 }
 
-EmbedModal.propTypes = {
+WidgetEmbedModal.propTypes = {
   widget: React.PropTypes.object,
   filters: React.PropTypes.object
 };

@@ -86,7 +86,7 @@ export default class MapPageDesktop extends React.Component {
         <div className="content">
 
           <header>
-            <h2>Aqueduct Food report</h2>
+            <h2 className="report-title">Aqueduct Food report</h2>
           </header>
 
           {/* Summary & WidgetList */}

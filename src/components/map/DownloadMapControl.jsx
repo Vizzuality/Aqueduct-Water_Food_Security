@@ -1,7 +1,7 @@
 import React from 'react';
 import domtoimage from 'dom-to-image';
 import { dispatch } from 'main';
-import PDFMapModal from 'components/modal/PDFMapModal';
+import MapPDFModal from 'components/modal/MapPDFModal';
 import { DropdownButton, Icon, saveAsFile, toggleModal } from 'aqueduct-components';
 
 export default class DownloadMapControl extends React.Component {
@@ -33,7 +33,7 @@ export default class DownloadMapControl extends React.Component {
 
       case 'pdf':
         dispatch(toggleModal(true, {
-          children: PDFMapModal,
+          children: MapPDFModal,
           size: '-full',
           childrenProps: {
           }
