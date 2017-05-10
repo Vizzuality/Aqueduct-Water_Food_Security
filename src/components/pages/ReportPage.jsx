@@ -74,7 +74,7 @@ export default class MapPageDesktop extends React.Component {
   }
 
   render() {
-    const mapConfig = Object.assign({}, this.props.mapConfig, { scrollWheelZoom: true });
+    const mapConfig = Object.assign({}, this.props.mapConfig, { scrollWheelZoom: false });
 
     if (this.props.filters.scope === 'country' && this.props.filters.country) {
       // Obtain country geom
@@ -82,37 +82,42 @@ export default class MapPageDesktop extends React.Component {
     }
 
     return (
-      <div className="c-report">
-        {/* Summary & WidgetList */}
-        {this.props.filters.scope === 'country' && this.props.filters.country &&
-          <Summary filters={this.props.filters} countries={this.props.countries.list} />
-        }
-        <WidgetList
-          // grid="small-6"
-          filters={this.props.filters}
-          widgetsActive={this.props.widgetsActive}
-        />
+      <div className="l-report c-report">
+        <div className="content">
 
-        {/* Map */}
-        <div className="c-map-container -relative" ref={(el) => { this.setMapElement(el); }}>
-          <Map
-            mapConfig={mapConfig}
+          <header>
+            <h2>Aqueduct Food report</h2>
+          </header>
+
+          {/* Summary & WidgetList */}
+          {this.props.filters.scope === 'country' && this.props.filters.country &&
+            <Summary filters={this.props.filters} countries={this.props.countries.list} />
+          }
+          <WidgetList
             filters={this.props.filters}
-            layersActive={this.props.layersActive}
-            setMapParams={this.props.setMapParams}
-            sidebar={this.props.sidebar}
-            LayerManager={LayerManager}
+            widgetsActive={this.props.widgetsActive}
           />
 
-          { /* Map headings */}
-          {this.props.countries.list.length &&
-            <MapHeader
-              dictionary={this.getDictionary()}
+          {/* Map */}
+          <div className="c-map-container -relative" ref={(el) => { this.setMapElement(el); }}>
+            <Map
+              mapConfig={mapConfig}
               filters={this.props.filters}
-              template={this.getMapHeaderTemplate()}
+              layersActive={this.props.layersActive}
+              setMapParams={this.props.setMapParams}
+              sidebar={this.props.sidebar}
+              LayerManager={LayerManager}
             />
-          }
 
+            { /* Map headings */}
+            {this.props.countries.list.length &&
+              <MapHeader
+                dictionary={this.getDictionary()}
+                filters={this.props.filters}
+                template={this.getMapHeaderTemplate()}
+              />
+            }
+          </div>
           { /* Map legend */}
           <Legend
             className="-map"
