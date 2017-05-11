@@ -11,8 +11,11 @@ import {
   Map,
   Legend,
   MapHeader,
+  // Constants
   CROP_OPTIONS,
-  IRRIGATION_OPTIONS
+  IRRIGATION_OPTIONS,
+  // Functions
+  post
 } from 'aqueduct-components';
 
 export default class MapPageDesktop extends React.Component {
@@ -21,6 +24,8 @@ export default class MapPageDesktop extends React.Component {
     super(props);
 
     this.state = {};
+
+    this.triggerDownload = this.triggerDownload.bind(this);
   }
 
   componentWillMount() {
@@ -73,6 +78,30 @@ export default class MapPageDesktop extends React.Component {
     return '{{scope}} {{country}} {{indicator}} {{irrigation}} {{crop}} Producing Areas';
   }
 
+  triggerDownload() {
+    // Print: first aproach
+    window.print();
+
+    // Download: second aproach
+    // post({
+    //   type: 'POST',
+    //   url: '/download-pdf',
+    //   headers: [{
+    //     key: 'Content-Type',
+    //     value: 'application/json'
+    //   }],
+    //   body: {
+    //     html: document.documentElement.innerHTML
+    //   },
+    //   onSuccess: (data) => {
+    //     console.info(data);
+    //   },
+    //   onError: (error) => {
+    //     console.info(error);
+    //   }
+    // });
+  }
+
   render() {
     const mapConfig = Object.assign({}, this.props.mapConfig, { scrollWheelZoom: false });
 
@@ -82,7 +111,7 @@ export default class MapPageDesktop extends React.Component {
     }
 
     return (
-      <div className="l-report c-report">
+      <div id="l-report" className="l-report c-report">
         <div className="content">
 
           <header>
@@ -136,9 +165,9 @@ export default class MapPageDesktop extends React.Component {
             bottom: 20,
             right: 20
           }}
-          onClick={() => window.print()}
+          onClick={this.triggerDownload}
         >
-          Print
+          Download
         </button>
       </div>
     );

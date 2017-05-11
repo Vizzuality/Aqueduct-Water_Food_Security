@@ -12,7 +12,6 @@ import { createOpbeatMiddleware } from 'opbeat-react/redux';
 import * as reducers from './reducers';
 import Routes from './routes';
 
-import 'leaflet/dist/leaflet.css';
 import './styles/index.scss';
 
 /**
