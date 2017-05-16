@@ -3,16 +3,19 @@ import { dispatch } from 'main';
 
 // Components
 import Sidebar from 'containers/ui/Sidebar';
-import Sticky from 'components/ui/Sticky';
 import Filters from 'components/filters/Filters';
 import StickyFilters from 'components/filters/StickyFilters';
 import WidgetList from 'components/widgets/WidgetList';
 import Summary from 'components/summary/Summary';
 
-import DownloadButton from 'components/map/DownloadButton';
 import ShareModal from 'containers/modal/ShareModal';
+
+// Layer Manager
 import LayerManager from 'utils/layers/LayerManager';
 import { SCOPE_OPTIONS, WATER_OPTIONS } from 'constants/filters';
+
+// Controls
+import DownloadMapControl from 'components/map/DownloadMapControl';
 
 import {
   Map,
@@ -20,6 +23,7 @@ import {
   MapControls,
   SourceModal,
   ShareButton,
+  Sticky,
   ZoomControl,
   MapHeader,
   toggleModal,
@@ -153,7 +157,7 @@ export default class MapPageDesktop extends React.Component {
 
           {/* Sticky Filters */}
           <Sticky
-            className="-filter"
+            className="-full-width"
             topLimit={this.state.stickyFilterTopPosition}
             onStick={(isSticky) => { this.onSticky(isSticky); }}
             ScrollElem=".l-sidebar-content"
@@ -199,15 +203,15 @@ export default class MapPageDesktop extends React.Component {
               }}
             />
 
-            {/* Download button */}
-            <DownloadButton
-              mapElem={this.state.mapElem}
-            />
             {/* Share button */}
             <ShareButton
               onClick={this.toggleShareModal}
             />
 
+            {/* Download button */}
+            <DownloadMapControl
+              mapElem={this.state.mapElem}
+            />
           </MapControls>
 
           { /* Map headings */}

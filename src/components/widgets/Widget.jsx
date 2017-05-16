@@ -4,7 +4,8 @@ import { dispatch } from 'main';
 import WidgetButtons from 'components/widgets/WidgetButtons';
 import WidgetChart from 'containers/widgets/WidgetChart';
 import WidgetModal from 'components/modal/WidgetModal';
-import EmbedModal from 'components/modal/EmbedModal';
+import WidgetEmbedModal from 'components/modal/WidgetEmbedModal';
+import MapPDFModal from 'components/modal/MapPDFModal';
 import WidgetImageModal from 'components/modal/WidgetImageModal';
 import { Spinner, toggleModal } from 'aqueduct-components';
 
@@ -44,7 +45,7 @@ class Widget extends React.Component {
         break;
       case 'embed':
         dispatch(toggleModal(true, {
-          children: EmbedModal,
+          children: WidgetEmbedModal,
           size: '-medium',
           childrenProps: {
             filters: this.props.filters,
@@ -62,6 +63,16 @@ class Widget extends React.Component {
           }
         }));
         break;
+
+      case 'pdf':
+        dispatch(toggleModal(true, {
+          children: MapPDFModal,
+          size: '-full',
+          childrenProps: {
+          }
+        }));
+        break;
+
       default:
         console.info('The action is not supported by this function');
     }

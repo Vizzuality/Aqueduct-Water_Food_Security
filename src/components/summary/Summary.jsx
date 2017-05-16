@@ -59,7 +59,7 @@ export default class SummaryCountry extends React.Component {
     const url = `https://wri-01.carto.com/api/v2/sql?q=
       with chstress as (SELECT iso, values from aqueduct_water_stress_country_ranking_bau where type = 'all' {{and}})
       SELECT impactparameter AS name, sum(value) AS value
-      FROM combined01_prepared WHERE impactparameter in ('Area', 'Yield','Share Pop. at risk of hunger')
+      FROM combined01_prepared WHERE impactparameter in ('Area', 'Yield','Share Pop. at risk of hunger') and scenario = 'SSP2-MIRO'
       {{and1}} group by impactparameter union all select 'Water risk score' as name, values as value from chstress
     `;
 

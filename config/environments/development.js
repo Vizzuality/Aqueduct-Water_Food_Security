@@ -11,6 +11,8 @@ const config = require('../webpack.config.js');
 
 const indexPath = path.join(process.cwd(), 'dist/index.html');
 
+const pdf = require('html-pdf');
+
 module.exports = (app) => {
   const compiler = webpack(config);
   const middleware = webpackMiddleware(compiler, {
@@ -27,6 +29,16 @@ module.exports = (app) => {
   });
 
   app.use(middleware);
+
+  app.post('/download-pdf', (req, res) => {
+    pdf.create(req.body.html, {}).toFile('./report.pdf', (err, generatedPDF) => {
+      if (err) return res.json({ error: err });
+      console.log(generatedPDF); // { filename: '/app/businesscard.pdf' }
+      return res.json({ success: true });
+    });
+  });
+
+
   app.get('*', (req, res) => {
     res.write(middleware.fileSystem.readFileSync(indexPath));
     res.end();

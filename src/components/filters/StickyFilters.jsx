@@ -9,7 +9,6 @@ import {
   CustomSelect
 } from 'aqueduct-components';
 import { SCOPE_OPTIONS, WATER_OPTIONS, FOOD_OPTIONS } from 'constants/filters';
-import CountrySelect from 'containers/countries/CountrySelect';
 
 class StickyFilters extends React.Component {
 
@@ -46,7 +45,7 @@ class StickyFilters extends React.Component {
             </div>
           </div>
         }
-        {this.props.withScope && this.props.filters.scope === 'country' &&
+        {/* {this.props.withScope && this.props.filters.scope === 'country' &&
           <div className="country-filters">
             <div>
               <span className="title">Select a country</span>
@@ -74,7 +73,7 @@ class StickyFilters extends React.Component {
               </Link>
             </div>
           </div>
-        }
+        } */}
         <div className="global-filters">
           <div>
             <span className="title">Crops</span>

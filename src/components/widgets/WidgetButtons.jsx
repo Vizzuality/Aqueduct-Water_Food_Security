@@ -20,7 +20,7 @@ class WidgetButtons extends React.Component {
       const link = document.createElement('a');
       link.href = `${config.API_URL}/${(this.props.queryUrl || '').replace('query', 'download')}&format=${format}`;
       link.click();
-    } else if (format === 'embed' || format === 'image') {
+    } else if (format === 'embed' || format === 'image' || format === 'pdf') {
       this.props.triggerAction(format);
     } else {
       // Reserved for other formats.
@@ -46,13 +46,18 @@ class WidgetButtons extends React.Component {
       { label: 'Embed widget', value: 'embed' },
       { label: 'Download CSV', value: 'csv' },
       { label: 'Download JSON', value: 'json' },
-      { label: 'Download image', value: 'image' }
+      { label: 'Download image', value: 'image' },
+      { label: 'Download report', value: 'pdf' }
     ];
 
     return (
       <ul className="c-widget-buttons">
         <li>
-          <DropdownButton left options={downloadOptions} onSelect={item => this.onDownload(item.value)}>
+          <DropdownButton
+            dropdownClassName="-bottom -left"
+            options={downloadOptions}
+            onSelect={item => this.onDownload(item.value)}
+          >
             <button className="widget-button">
               <Icon name="icon-download" />
             </button>

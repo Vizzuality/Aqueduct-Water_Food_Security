@@ -13,13 +13,19 @@
   Responsive
 */
 @mixin only-mobile() {
-  @media (max-width: $breakpoint-mobile) {
+  @media screen and (max-width: $breakpoint-mobile) {
     @content;
   }
 }
 
 @mixin only-desktop() {
-  @media (min-width: $breakpoint-mobile + 1) {
+  @media screen and (min-width: $breakpoint-mobile + 1) {
+    @content;
+  }
+}
+
+@mixin only-print() {
+  @media print {
     @content;
   }
 }

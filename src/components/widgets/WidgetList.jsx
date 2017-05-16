@@ -1,4 +1,5 @@
 import React from 'react';
+import classnames from 'classnames';
 import Widget from 'components/widgets/Widget';
 import { Spinner } from 'aqueduct-components';
 
@@ -13,11 +14,18 @@ export default class WidgetList extends React.Component {
 
   // Return a array of Widget components
   getWidgets() {
+    const { grid, widgetsActive, filters } = this.props;
     const widgetList = [];
-    this.props.widgetsActive.forEach((widget, index) => {
+
+    const gridClass = classnames({
+      'small-12': !grid,
+      [grid]: !!grid
+    });
+
+    widgetsActive.forEach((widget, index) => {
       widgetList.push(
-        <div key={index} className={'column small-12'}>
-          <Widget widget={widget} filters={this.props.filters} />
+        <div key={index} className={`column ${gridClass}`}>
+          <Widget widget={widget} filters={filters} />
         </div>
       );
     });
@@ -28,7 +36,8 @@ export default class WidgetList extends React.Component {
     const widgetList = this.getWidgets();
     return (
       <div className="c-widget-list">
-        {this.props.loading ? <Spinner isLoading={this.props.loading} /> :
+        {this.props.loading ?
+          <Spinner isLoading={this.props.loading} /> :
           <div className="row collapse">
             {widgetList}
           </div>
@@ -39,6 +48,7 @@ export default class WidgetList extends React.Component {
 }
 
 WidgetList.propTypes = {
+  grid: React.PropTypes.string,
   // STORE
   loading: React.PropTypes.bool,
   filters: React.PropTypes.object,

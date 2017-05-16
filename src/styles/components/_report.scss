@@ -1,0 +1,147 @@
+.c-report {
+  background: #525659;
+  padding: 50px 0;
+
+  .content {
+    background: palette(white);
+    max-width: 209mm;
+    // height: 297mm;
+    margin: 0 auto;
+    padding: 1cm;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.8);
+  }
+
+  .report-title {
+    string-set: doctitle content();
+    font-size: $font-size-extrahuge;
+    font-weight: 300;
+    color: $color-text-1;
+  }
+
+  // Summary
+  .c-summary {
+    padding: ($space-1 * 3) 0;
+  }
+
+  // Widgets
+  .c-widget-list {
+    padding: 0;
+    overflow: hidden;
+
+    // If we don't do this, we can't use page-break
+    .row, .column {
+      display: block;
+    }
+
+    .column {
+      border-bottom: 1px solid $border-color-1;
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    // .column {
+    //   display: inline-block;
+    //   float: left;
+    //   width: 50%;
+    //   padding: 0 $space-1 * 2;
+    // }
+  }
+
+  .c-widget {
+    display: block;
+    width: 100%;
+    padding: ($space-1 * 4) 0 0;
+    page-break-inside: avoid;
+
+    .widget-content {
+      min-height: auto;
+      box-shadow: none;
+    }
+
+    .widget-title {
+      page-break-after: avoid;
+    }
+  }
+
+  .c-widget-text {
+    padding: 0 0 24px;
+  }
+
+  .c-widget-buttons {
+    display: none;
+  }
+
+  // Map
+  .c-map-container {
+    page-break-before: always;
+    height: 500px;
+  }
+
+  .c-map-header {
+    right: $space-1 * 2;
+  }
+
+  // Legend
+  .c-legend {
+    &.-map {
+      position: relative;
+      width: 100%;
+      top: auto;
+      bottom: auto;
+      left: auto;
+      right: auto;
+
+      > .legend-header {
+        display: none;
+      }
+
+      > .legend-content {
+        max-height: none;
+        overflow-y: visible;
+      }
+    }
+  }
+
+  .c-legend-buttons {
+    .legend-button {
+      display: none;
+    }
+  }
+}
+
+// Print styles
+@page { size: auto; margin: 1cm; }
+
+@media print and (color) {
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+@media print {
+  .c-report {
+    padding: 20px 0 0;
+    background: $color-white;
+
+    .content {
+      width: 100%;
+      padding: 0;
+      box-shadow: none;
+    }
+  }
+
+  // Print button
+  .no-print {
+    display: none !important;
+  }
+
+  .c-tooltip {
+    display: none !important;
+  }
+
+  h2, h3 {
+    page-break-after: avoid;
+  }
+}
