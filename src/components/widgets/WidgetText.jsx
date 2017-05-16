@@ -57,6 +57,7 @@ class WidgetText extends React.Component {
     if (this.state.data) {
       templateConfig.forEach((param) => {
         let value = this.state.data[param.key];
+
         const suffix = param.suffix || '';
 
         if (param.format) {

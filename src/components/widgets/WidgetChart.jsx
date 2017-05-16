@@ -14,7 +14,7 @@ class WidgetChart extends React.Component {
   }
 
   render() {
-    const widgetConfig = getObjectConversion(this.props.config, this.props.filters, 'widget');
+    const widgetConfig = getObjectConversion(this.props.config, this.props.filters, this.props.config.dictionary || 'widget');
 
     if (widgetConfig.type === 'text') {
       return (
