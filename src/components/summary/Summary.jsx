@@ -43,14 +43,14 @@ export default class SummaryCountry extends React.Component {
         key: 'and',
         keyParams: [
           { key: 'iso' },
-          { key: 'year' }
+          { key: 'year', dictionary: 'widget' }
         ]
       },
       {
         key: 'and1',
         keyParams: [
           { key: 'iso' },
-          { key: 'year' },
+          { key: 'year', dictionary: 'food' },
           { key: 'commodity' }
         ]
       }
