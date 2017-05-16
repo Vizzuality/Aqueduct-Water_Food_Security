@@ -7,10 +7,6 @@ import Tooltip from 'containers/ui/Tooltip';
 export default class App extends React.Component {
 
   componentWillMount() {
-    // We assume the only page that doesn't have the header is the embed
-    // For the embed, we don't need to fetch the list of datasets nor countries
-    if (!this.props.header) return;
-
     this.props.getDatasets();
     this.props.getCountries();
   }

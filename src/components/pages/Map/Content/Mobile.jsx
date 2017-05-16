@@ -80,7 +80,7 @@ export default class MapPageMobile extends React.Component {
                     });
                   }}
                 />
-                <DownloadButton className="download-map-btn" mapElem={this.state.mapElem} />
+                {/* <DownloadButton className="download-map-btn" mapElem={this.state.mapElem} /> */}
               </MapControls>
             </div>
           </div>

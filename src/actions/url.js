@@ -48,3 +48,29 @@ export function updateCompareUrl() {
     dispatch(replace(locationDescriptor));
   };
 }
+
+export function updateReportUrl() {
+  return (dispatch, state) => {
+    const { map, filters } = state();
+    const { period, period_value, year, country, crop, food, irrigation, scope, indicator, type } = filters;
+    const locationDescriptor = {
+      pathname: '/report',
+      query: {
+        lat: map.latLng.lat.toFixed(2),
+        lng: map.latLng.lng.toFixed(2),
+        zoom: map.zoom,
+        period,
+        period_value,
+        year,
+        country,
+        crop,
+        food,
+        irrigation: (irrigation) ? irrigation.join(',') : undefined,
+        scope,
+        indicator,
+        type
+      }
+    };
+    dispatch(replace(locationDescriptor));
+  };
+}

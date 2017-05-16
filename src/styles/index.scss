@@ -16,6 +16,7 @@
 @import "~aqueduct-components/styles/dropdown";
 @import "~aqueduct-components/styles/filters";
 @import "~aqueduct-components/styles/icon";
+@import "~aqueduct-components/styles/iframe";
 @import "~aqueduct-components/styles/info";
 @import "~aqueduct-components/styles/header";
 @import "~aqueduct-components/styles/legend";
@@ -32,6 +33,7 @@
 @import "~aqueduct-components/styles/sticky-filters";
 @import "~aqueduct-components/styles/spinner";
 @import "~aqueduct-components/styles/timeline";
+@import "~leaflet/dist/leaflet.css";
 
 /* LAYOUTS */
 @import "layouts/main";
@@ -42,10 +44,13 @@
 @import "components/compare";
 @import "components/embed";
 @import "components/infowindow";
-@import "components/switch";
+@import "components/report";
+@import "components/sticky";
+@import "components/sticky-filters";
+@import "components/summary";
 @import "components/tooltip";
+@import "components/swipe";
+@import "components/switch";
 @import "components/widget";
 @import "components/widget-text";
-@import "components/swipe";
-@import "components/summary";
 @import "components/widget-image-modal";
