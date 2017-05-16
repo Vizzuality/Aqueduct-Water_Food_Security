@@ -101,7 +101,11 @@ class Widget extends React.Component {
           <div className="widget-content">
             {/* <p style={{color: 'black'}}>{`${config.API_URL}/dataset/${dataset}/widget/${id}`}</p> */}
             <Spinner isLoading={this.state.loading} />
-            <WidgetChart config={widgetConfig} filters={this.props.filters} toggleLoading={this.toggleLoading} />
+            <WidgetChart
+              config={widgetConfig}
+              filters={this.props.filters}
+              toggleLoading={this.toggleLoading}
+            />
           </div>
         </div>
       </div>
