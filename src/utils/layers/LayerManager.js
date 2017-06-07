@@ -13,6 +13,7 @@ export default class LayerManager {
   constructor(map, options = {}) {
     this._map = map;
     this._mapLayers = {};
+    this._markerLayers = {};
     this._mapRequests = {};
     this._mapLayersLoading = {};
     this._rejectLayersLoading = false;
@@ -46,6 +47,44 @@ export default class LayerManager {
       }
     });
     this._mapLayersLoading = {};
+  }
+
+  _addMarkers(geojson, layerConfig) {
+    this.removeLayer(layerConfig.id);
+    this._mapLayers[layerConfig.id] = new BubbleClusterLayer(
+      geojson, layerConfig
+    ).addTo(this._map);
+  }
+
+  _setMarkers(layerConfig) {
+    const { id, zoom } = layerConfig;
+    const markers = this._getMarkersByZoom(id, zoom);
+    this._addMarkers(markers, layerConfig);
+  }
+
+  _getMarkersByZoom(layerId, zoom) {
+    let newMarkers = this._markerLayers[layerId];
+    if (!newMarkers) return [];
+
+    const sortFunction = (a, b) => {
+      const valueA = +a.properties.value;
+      const valueB = +b.properties.value;
+
+      if (valueA < valueB) return 1;
+      if (valueA > valueB) return -1;
+      return 0;
+    };
+
+    switch (true) {
+      case (zoom > 1 && zoom < 5):
+        newMarkers.sort(sortFunction);
+        if (newMarkers.length > 5) newMarkers = newMarkers.slice(0, 5);
+        break;
+      default:
+        return newMarkers;
+    }
+
+    return newMarkers;
   }
 
   /**
@@ -214,11 +253,10 @@ export default class LayerManager {
           url: layerConfigConverted.body.url,
           onSuccess: (data) => {
             const geojson = data.rows[0].data.features || [];
+            const zoom = this._map.getZoom();
+            this._markerLayers[layerConfig.id] = geojson;
 
-            this._mapLayers[layerConfig.id] = new BubbleClusterLayer(
-              geojson, layerConfig
-            ).addTo(this._map);
-
+            this._setMarkers({ ...layerConfig, zoom });
             this._deleteLoader(layerConfig.id);
           },
           onError: (data) => {
