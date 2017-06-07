@@ -59,13 +59,16 @@ const config = {
 
   resolve: {
     root: [
-      path.join(rootPath, 'src')
+      path.join(rootPath, 'src'),
+      path.join(rootPath, 'node_modules', 'aqueduct-components', 'node_modules')
     ],
     extensions: ['', '.js', '.jsx', '.json', '.css', '.scss']
   },
 
   resolveLoader: {
-    root: path.join(rootPath, 'node_modules')
+    root: [
+      path.join(rootPath, 'node_modules')
+    ]
   },
 
   plugins: [
