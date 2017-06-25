@@ -5,8 +5,13 @@
 /* eslint class-methods-use-this: 0 */
 
 import L from 'leaflet/dist/leaflet';
-import { format } from 'd3-format';
+import { render } from 'react-dom';
+import InfoWindow from 'components/ui/InfoWindow';
+
+// Redux
 import { store } from 'main';
+
+import { format } from 'd3-format';
 import { PruneCluster, PruneClusterForLeaflet } from '../../../../lib/PruneCluster';
 
 /**
@@ -39,12 +44,20 @@ export default class BubbleClusterLayer {
         htmlInfowindow: this._setInfowindowHtml(feature.properties)
       };
 
+      // Set icon
       leafletMarker.setIcon(L.divIcon({
         iconSize: [options.size, options.size],
         className: options.className,
         html: options.htmlIcon
       }));
-      leafletMarker.bindPopup(options.htmlInfowindow);
+
+      // Set popup
+      leafletMarker.bindPopup(
+        render(
+          InfoWindow(feature.properties),
+          window.document.createElement('div')
+        )
+      );
 
       // BINDINGS
       leafletMarker.off('mouseover').on('mouseover', function mouseover() {
