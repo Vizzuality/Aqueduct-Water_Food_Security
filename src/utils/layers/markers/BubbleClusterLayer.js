@@ -5,8 +5,15 @@
 /* eslint class-methods-use-this: 0 */
 
 import L from 'leaflet/dist/leaflet';
+import { render } from 'react-dom';
+import InfoWindow from 'components/ui/InfoWindow';
+
+// Redux
+import { store, dispatch } from 'main';
+import { setFilters } from 'actions/filters';
+
+
 import { format } from 'd3-format';
-import { store } from 'main';
 import { PruneCluster, PruneClusterForLeaflet } from '../../../../lib/PruneCluster';
 
 /**
@@ -39,14 +46,25 @@ export default class BubbleClusterLayer {
         htmlInfowindow: this._setInfowindowHtml(feature.properties)
       };
 
+      // Set icon
       leafletMarker.setIcon(L.divIcon({
         iconSize: [options.size, options.size],
         className: options.className,
         html: options.htmlIcon
       }));
-      leafletMarker.bindPopup(options.htmlInfowindow);
+
+      // Set popup
+      leafletMarker.bindPopup(
+        render(
+          InfoWindow(feature.properties),
+          window.document.createElement('div')
+        )
+      );
 
       // BINDINGS
+      leafletMarker.off('click').on('click', () => {
+        dispatch(setFilters({ scope: 'country', country: feature.properties.iso }));
+      });
       leafletMarker.off('mouseover').on('mouseover', function mouseover() {
         this.openPopup();
       });
@@ -57,6 +75,7 @@ export default class BubbleClusterLayer {
 
     // CLUSTER
     pruneCluster.originalIcon = pruneCluster.BuildLeafletClusterIcon;
+
     // disables clustering
     pruneCluster.Cluster.Size = 1;
 
@@ -118,7 +137,6 @@ export default class BubbleClusterLayer {
   // - _setInfowindowHtml
   // - _setInfowindowClusterHtml
   // - _getSize
-
   _setMarkerClass(layerId, value) {
     let additionalClass = '';
     switch (layerId) {
