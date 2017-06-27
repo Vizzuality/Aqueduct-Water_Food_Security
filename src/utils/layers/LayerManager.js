@@ -78,7 +78,7 @@ export default class LayerManager {
     switch (true) {
       case (zoom < 3):
         newMarkers.sort(sortFunction);
-        if (newMarkers.length > 5) newMarkers = newMarkers.slice(0, 5);
+        if (newMarkers.length >= 10) newMarkers = newMarkers.slice(0, 10);
         break;
       default:
         return newMarkers;
