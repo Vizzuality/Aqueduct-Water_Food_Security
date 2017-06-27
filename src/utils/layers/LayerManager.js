@@ -70,8 +70,8 @@ export default class LayerManager {
       const valueA = +a.properties.value;
       const valueB = +b.properties.value;
 
-      if (valueA < valueB) return 1;
-      if (valueA > valueB) return -1;
+      if (Math.abs(valueA) < Math.abs(valueB)) return 1;
+      if (Math.abs(valueA) > Math.abs(valueB)) return -1;
       return 0;
     };
 
