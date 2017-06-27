@@ -67,11 +67,11 @@ export default class LayerManager {
     if (!newMarkers) return [];
 
     const sortFunction = (a, b) => {
-      const valueA = +a.properties.value;
-      const valueB = +b.properties.value;
+      const valueA = Math.abs(+a.properties.value);
+      const valueB = Math.abs(+b.properties.value);
 
-      if (Math.abs(valueA) < Math.abs(valueB)) return 1;
-      if (Math.abs(valueA) > Math.abs(valueB)) return -1;
+      if (valueA < valueB) return 1;
+      if (valueA > valueB) return -1;
       return 0;
     };
 
