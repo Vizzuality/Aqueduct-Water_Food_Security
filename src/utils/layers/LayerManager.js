@@ -7,6 +7,9 @@ import { CROP_OPTIONS, get, getObjectConversion } from 'aqueduct-components';
 // Layers
 import BubbleClusterLayer from 'utils/layers/markers/BubbleClusterLayer';
 
+// constants
+import { ZOOM_DISPLAYS_TOP, TOP_SIZE } from 'constants/map';
+
 export default class LayerManager {
 
   // Constructor
@@ -67,8 +70,8 @@ export default class LayerManager {
     if (!newMarkers) return [];
 
     const sortFunction = (a, b) => {
-      const valueA = +a.properties.value;
-      const valueB = +b.properties.value;
+      const valueA = Math.abs(+a.properties.value);
+      const valueB = Math.abs(+b.properties.value);
 
       if (valueA < valueB) return 1;
       if (valueA > valueB) return -1;
@@ -76,9 +79,9 @@ export default class LayerManager {
     };
 
     switch (true) {
-      case (zoom > 1 && zoom < 5):
+      case (zoom === ZOOM_DISPLAYS_TOP):
         newMarkers.sort(sortFunction);
-        if (newMarkers.length > 5) newMarkers = newMarkers.slice(0, 5);
+        if (newMarkers.length >= TOP_SIZE) newMarkers = newMarkers.slice(0, TOP_SIZE);
         break;
       default:
         return newMarkers;
