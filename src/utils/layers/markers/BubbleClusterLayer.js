@@ -56,7 +56,13 @@ export default class BubbleClusterLayer {
       // Set popup
       leafletMarker.bindPopup(
         render(
-          InfoWindow(feature.properties),
+          InfoWindow({
+            title: feature.properties.country,
+            list: [{
+              label: 'Units',
+              value: feature.properties.unit
+            }]
+          }),
           window.document.createElement('div')
         )
       );

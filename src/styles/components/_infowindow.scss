@@ -1,9 +1,5 @@
 .c-infowindow {
-  display: flex;
-  flex-flow: column;
-  align-items: center;
   color: $color-text-1;
-  text-align: center;
   font-family: $font-family-roboto;
 
   &.-no-iteraction {
@@ -19,6 +15,23 @@
   h3 {
     width: 100%;
     color: $color-text-1;
+  }
+
+  // Definition list
+  .dl {
+    .dc {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+
+      .dt {
+        font-weight: 500;
+      }
+
+      .dd {
+        margin: 0 0 0 $space-1;
+      }
+    }
   }
 }
 
@@ -36,7 +49,7 @@
   }
 
   .leaflet-popup-content {
-    padding: 18px 36px;
+    padding: 18px;
     background-color: $color-map;
     margin: 0;
   }
