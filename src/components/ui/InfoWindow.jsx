@@ -7,7 +7,7 @@ export default function InfoWindow(props) {
   return (
     <div className="c-infowindow">
       <h3>{country}</h3>
-      {unit && <h3>({unit})</h3>}
+      {unit && <p>({unit})</p>}
     </div>
   );
 }
