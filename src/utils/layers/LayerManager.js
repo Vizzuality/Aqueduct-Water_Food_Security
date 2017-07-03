@@ -53,10 +53,10 @@ export default class LayerManager {
     this._mapLayersLoading = {};
   }
 
-  _addMarkers(geojson, layer) {
-    this.removeLayer(layer.id);
-    this._mapLayers[layer.id] = new BubbleClusterLayer(
-      geojson, layer
+  _addMarkers(geojson, layerConfig, markerConfig) {
+    this.removeLayer(layerConfig.id);
+    this._mapLayers[layerConfig.id] = new BubbleClusterLayer(
+      geojson, layerConfig, markerConfig
     ).addTo(this._map);
   }
 
