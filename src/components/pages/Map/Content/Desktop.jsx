@@ -226,7 +226,6 @@ export default class MapPageDesktop extends React.Component {
           { /* Map legend */}
           <Legend
             className="-map"
-            expanded
             filters={this.props.filters}
             layers={this.props.layersActive}
             onToggleInfo={this.toggleSourceModal}
