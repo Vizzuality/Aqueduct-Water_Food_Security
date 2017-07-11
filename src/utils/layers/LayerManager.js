@@ -53,10 +53,10 @@ export default class LayerManager {
     this._mapLayersLoading = {};
   }
 
-  _addMarkers(geojson, layerConfig) {
-    this.removeLayer(layerConfig.id);
-    this._mapLayers[layerConfig.id] = new BubbleClusterLayer(
-      geojson, layerConfig
+  _addMarkers(geojson, layer) {
+    this.removeLayer(layer.id);
+    this._mapLayers[layer.id] = new BubbleClusterLayer(
+      geojson, layer
     ).addTo(this._map);
   }
 
@@ -68,8 +68,8 @@ export default class LayerManager {
     };
   }
 
-  _setMarkers(layerConfig, zoomLevels) {
-    const { id } = layerConfig || {};
+  _setMarkers(layer, zoomLevels) {
+    const { id } = layer || {};
     const { prevZoom, nextZoom } = zoomLevels || {};
 
     // prevents set markers if zoom is still in same range
@@ -77,15 +77,15 @@ export default class LayerManager {
       !ZOOM_DISPLAYS_TOP.includes(prevZoom) && !ZOOM_DISPLAYS_TOP.includes(nextZoom)) ||
       ZOOM_DISPLAYS_TOP.includes(prevZoom) && ZOOM_DISPLAYS_TOP.includes(nextZoom)) return;
 
-    const markers = this._getMarkersByZoom(id, nextZoom);
+    const markers = this._getMarkersByZoom(layer, nextZoom);
     const markerConfig = LayerManager._getMarkerConfig(markers);
-    this._addMarkers(markers, layerConfig, markerConfig);
+    this._addMarkers(markers, layer, markerConfig);
   }
 
-  _getMarkersByZoom(layerId, zoom) {
-    let newMarkers = this._markerLayers[layerId];
-    const layer = layerSpec.find(layer => layer.layerId === layerId);
-    const { sort, topSize } = layer && layer.layerOptions ? layer.layerOptions : {};
+  _getMarkersByZoom(layer, zoom) {
+    const { id, options } = layer;
+    const { sort, topSize } = options || {};
+    let newMarkers = this._markerLayers[id];
     if (!newMarkers) return [];
 
     const sortFunction = (a, b) => {
@@ -274,7 +274,7 @@ export default class LayerManager {
             const nextZoom = this._map.getZoom();
             this._markerLayers[layerConfig.id] = geojson;
 
-            this._setMarkers(layerConfig, { nextZoom });
+            this._setMarkers(layerSpec, { nextZoom });
             this._deleteLoader(layerConfig.id);
           },
           onError: (data) => {
