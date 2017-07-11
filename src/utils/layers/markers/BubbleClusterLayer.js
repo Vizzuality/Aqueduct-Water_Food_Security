@@ -83,7 +83,7 @@ export default class BubbleClusterLayer {
     pruneCluster.originalIcon = pruneCluster.BuildLeafletClusterIcon;
 
     // disables clustering
-    pruneCluster.Cluster.Size = 0.1;
+    pruneCluster.Cluster.Size = 0.01;
 
     pruneCluster.BuildLeafletCluster = (cluster, position) => {
       const m = new L.Marker(position, {
