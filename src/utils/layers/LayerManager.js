@@ -8,7 +8,8 @@ import { CROP_OPTIONS, get, getObjectConversion } from 'aqueduct-components';
 import BubbleClusterLayer from 'utils/layers/markers/BubbleClusterLayer';
 
 // constants
-import { ZOOM_DISPLAYS_TOP, TOP_SIZE } from 'constants/map';
+import layerSpec from 'utils/layers/layer_spec.json';
+const ZOOM_DISPLAYS_TOP = [2, 3];
 
 export default class LayerManager {
 
@@ -67,24 +68,22 @@ export default class LayerManager {
 
   _getMarkersByZoom(layerId, zoom) {
     let newMarkers = this._markerLayers[layerId];
+    const layer = layerSpec.find(layer => layer.layerId === layerId);
+    const { sort, topSize } = layer && layer.layerOptions ? layer.layerOptions : {};
     if (!newMarkers) return [];
 
     const sortFunction = (a, b) => {
       const valueA = Math.abs(+a.properties.value);
       const valueB = Math.abs(+b.properties.value);
 
-      if (valueA < valueB) return 1;
-      if (valueA > valueB) return -1;
+      if (valueA < valueB) return sort === 'desc' ? 1 : -1;
+      if (valueA > valueB) return sort === 'desc' ? -1 : 1;
       return 0;
     };
 
-    switch (true) {
-      case (zoom === ZOOM_DISPLAYS_TOP):
-        newMarkers.sort(sortFunction);
-        if (newMarkers.length >= TOP_SIZE) newMarkers = newMarkers.slice(0, TOP_SIZE);
-        break;
-      default:
-        return newMarkers;
+    if(ZOOM_DISPLAYS_TOP.includes(zoom)) {
+      if (sort) newMarkers.sort(sortFunction);
+      if (topSize && newMarkers.length >= topSize) newMarkers = newMarkers.slice(0, topSize);
     }
 
     return newMarkers;
