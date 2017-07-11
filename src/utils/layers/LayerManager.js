@@ -59,10 +59,25 @@ export default class LayerManager {
     ).addTo(this._map);
   }
 
-  _setMarkers(layerConfig) {
-    const { id, zoom } = layerConfig;
-    const markers = this._getMarkersByZoom(id, zoom);
-    this._addMarkers(markers, layerConfig);
+  static _getMarkerConfig(markers) {
+    const markerValues = markers.map(marker => marker.properties.value);
+
+    return {
+      maxValue: Math.max(...markerValues)
+    };
+  }
+
+  _setMarkers(layerConfig, zoomLevels) {
+    const { id } = layerConfig || {};
+    const { prevZoom, nextZoom } = zoomLevels || {};
+
+    // prevents set markers if zoom is still in same range
+    if ((!!prevZoom
+      && prevZoom !== ZOOM_DISPLAYS_TOP && nextZoom !== ZOOM_DISPLAYS_TOP)) return;
+
+    const markers = this._getMarkersByZoom(id, nextZoom);
+    const markerConfig = LayerManager._getMarkerConfig(markers);
+    this._addMarkers(markers, layerConfig, markerConfig);
   }
 
   _getMarkersByZoom(layerId, zoom) {
@@ -107,7 +122,7 @@ export default class LayerManager {
     }
   }
 
-  _generateCartoCSS(_layerConfig, params) {
+  static _generateCartoCSS(_layerConfig, params) {
     const { bucket, crop } = params;
     const cartoCss = _layerConfig.body.layers[0].options.cartocss;
     const cartoCssTemplate = template(cartoCss, { interpolate: /{{([\s\S]+?)}}/g });
@@ -136,7 +151,7 @@ export default class LayerManager {
 
         const layerConfigParsed = {
           ...layerConfigConverted,
-          ...{ body: this._getLayerConfigParsed(layerConfigConverted) }
+          ...{ body: LayerManager._getLayerConfigParsed(layerConfigConverted) }
         };
 
         layerConfigParsed.body.layers[0].options.cartocss = this._generateCartoCSS(layerConfig, { bucket, crop: options.crop });
@@ -176,7 +191,7 @@ export default class LayerManager {
     });
   }
 
-  _getLayerConfigParsed(_layerConfig) {
+  static _getLayerConfigParsed(_layerConfig) {
     return {
       layers: _layerConfig.body.layers.map((l) => {
         const newOptions = { user_name: _layerConfig.account, cartocss_version: l.options.cartocssVersion };
@@ -209,7 +224,7 @@ export default class LayerManager {
         const layerConfigConverted = getObjectConversion(layerConfig, options, 'water');
         const layerConfigParsed = {
           ...layerConfigConverted,
-          ...{ body: this._getLayerConfigParsed(layerConfigConverted) }
+          ...{ body: LayerManager._getLayerConfigParsed(layerConfigConverted) }
         };
 
         const layerTpl = {
@@ -256,10 +271,10 @@ export default class LayerManager {
           url: layerConfigConverted.body.url,
           onSuccess: (data) => {
             const geojson = data.rows[0].data.features || [];
-            const zoom = this._map.getZoom();
+            const nextZoom = this._map.getZoom();
             this._markerLayers[layerConfig.id] = geojson;
 
-            this._setMarkers({ ...layerConfig, zoom });
+            this._setMarkers(layerConfig, { nextZoom });
             this._deleteLoader(layerConfig.id);
           },
           onError: (data) => {
@@ -277,7 +292,7 @@ export default class LayerManager {
         const layerConfigConverted = getObjectConversion(layerConfig, options, 'water');
         const layerConfigParsed = {
           ...layerConfigConverted,
-          ...{ body: this._getLayerConfigParsed(layerConfigConverted) }
+          ...{ body: LayerManager._getLayerConfigParsed(layerConfigConverted) }
         };
 
         const layerTpl = {
