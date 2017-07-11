@@ -69,7 +69,7 @@ export default class LayerManager {
 
   _setMarkers(layerConfig, zoomLevels) {
     const { id } = layerConfig || {};
-    const { prevZoom, nextZoom } = zoomLevels;
+    const { prevZoom, nextZoom } = zoomLevels || {};
 
     // prevents set markers if zoom is still in same range
     if ((!!prevZoom
