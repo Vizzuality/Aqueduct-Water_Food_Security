@@ -73,8 +73,9 @@ export default class LayerManager {
     const { prevZoom, nextZoom } = zoomLevels || {};
 
     // prevents set markers if zoom is still in same range
-    if ((!!prevZoom
-      && prevZoom !== ZOOM_DISPLAYS_TOP && nextZoom !== ZOOM_DISPLAYS_TOP)) return;
+    if ((!!prevZoom &&
+      !ZOOM_DISPLAYS_TOP.includes(prevZoom) && !ZOOM_DISPLAYS_TOP.includes(nextZoom)) ||
+      ZOOM_DISPLAYS_TOP.includes(prevZoom) && ZOOM_DISPLAYS_TOP.includes(nextZoom)) return;
 
     const markers = this._getMarkersByZoom(id, nextZoom);
     const markerConfig = LayerManager._getMarkerConfig(markers);
