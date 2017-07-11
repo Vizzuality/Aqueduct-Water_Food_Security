@@ -8,7 +8,8 @@ import { CROP_OPTIONS, get, getObjectConversion } from 'aqueduct-components';
 import BubbleClusterLayer from 'utils/layers/markers/BubbleClusterLayer';
 
 // constants
-import { ZOOM_DISPLAYS_TOP, TOP_SIZE } from 'constants/map';
+import layerSpec from 'utils/layers/layer_spec.json';
+const ZOOM_DISPLAYS_TOP = [2, 3];
 
 export default class LayerManager {
 
@@ -52,10 +53,10 @@ export default class LayerManager {
     this._mapLayersLoading = {};
   }
 
-  _addMarkers(geojson, layerConfig) {
-    this.removeLayer(layerConfig.id);
-    this._mapLayers[layerConfig.id] = new BubbleClusterLayer(
-      geojson, layerConfig
+  _addMarkers(geojson, layer) {
+    this.removeLayer(layer.id);
+    this._mapLayers[layer.id] = new BubbleClusterLayer(
+      geojson, layer
     ).addTo(this._map);
   }
 
@@ -67,39 +68,38 @@ export default class LayerManager {
     };
   }
 
-  _setMarkers(layerConfig, zoomLevels) {
-    const { id } = layerConfig || {};
+  _setMarkers(layer, zoomLevels) {
+    const { id } = layer || {};
     const { prevZoom, nextZoom } = zoomLevels || {};
 
     // prevents set markers if zoom is still in same range
-    if ((!!prevZoom
-      && prevZoom !== ZOOM_DISPLAYS_TOP && nextZoom !== ZOOM_DISPLAYS_TOP)) return;
+    if ((!!prevZoom &&
+      !ZOOM_DISPLAYS_TOP.includes(prevZoom) && !ZOOM_DISPLAYS_TOP.includes(nextZoom)) ||
+      ZOOM_DISPLAYS_TOP.includes(prevZoom) && ZOOM_DISPLAYS_TOP.includes(nextZoom)) return;
 
-    const markers = this._getMarkersByZoom(id, nextZoom);
+    const markers = this._getMarkersByZoom(layer, nextZoom);
     const markerConfig = LayerManager._getMarkerConfig(markers);
-    this._addMarkers(markers, layerConfig, markerConfig);
+    this._addMarkers(markers, layer, markerConfig);
   }
 
-  _getMarkersByZoom(layerId, zoom) {
-    let newMarkers = this._markerLayers[layerId];
+  _getMarkersByZoom(layer, zoom) {
+    const { id, options } = layer;
+    const { sort, topSize } = options || {};
+    let newMarkers = this._markerLayers[id];
     if (!newMarkers) return [];
 
     const sortFunction = (a, b) => {
       const valueA = Math.abs(+a.properties.value);
       const valueB = Math.abs(+b.properties.value);
 
-      if (valueA < valueB) return 1;
-      if (valueA > valueB) return -1;
+      if (valueA < valueB) return sort === 'desc' ? 1 : -1;
+      if (valueA > valueB) return sort === 'desc' ? -1 : 1;
       return 0;
     };
 
-    switch (true) {
-      case (zoom === ZOOM_DISPLAYS_TOP):
-        newMarkers.sort(sortFunction);
-        if (newMarkers.length >= TOP_SIZE) newMarkers = newMarkers.slice(0, TOP_SIZE);
-        break;
-      default:
-        return newMarkers;
+    if(ZOOM_DISPLAYS_TOP.includes(zoom)) {
+      if (sort) newMarkers.sort(sortFunction);
+      if (topSize && newMarkers.length >= topSize) newMarkers = newMarkers.slice(0, topSize);
     }
 
     return newMarkers;
@@ -274,7 +274,7 @@ export default class LayerManager {
             const nextZoom = this._map.getZoom();
             this._markerLayers[layerConfig.id] = geojson;
 
-            this._setMarkers(layerConfig, { nextZoom });
+            this._setMarkers(layerSpec, { nextZoom });
             this._deleteLoader(layerConfig.id);
           },
           onError: (data) => {
