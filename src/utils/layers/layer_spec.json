@@ -3,35 +3,52 @@
     "id": "76f53ba4-b1d9-4385-8bab-f56aa707d961",
     "layerId": "0699ced2-960f-4f06-8792-62f6c34b4e39",
     "name": "Food demand for crop",
-    "category": "food"
+    "category": "food",
+    "layerOptions": {
+      "topSize": 10,
+      "sort": "desc"
+    }
   },
   {
     "id": "0eb7ef57-037b-4356-8902-04a39cf4bd24",
     "layerId": "efafaa9f-37ec-4f51-be7d-999f58e6823b",
     "name": "Total crop production",
-    "category": "food"
+    "category": "food",
+    "layerOptions": {
+      "topSize": 10,
+      "sort": "desc"
+    }
   },
   {
     "id": "bc60a695-ab95-4264-8058-bd61d13c4918",
     "layerId": "b8e135d2-b64f-4ea3-93e9-9f8d1245fb2a",
     "name": "Crop net trade",
-    "category": "food"
+    "category": "food",
+    "layerOptions": {
+      "topSize": 10,
+      "sort": "desc"
+    }
   },
   {
     "id": "ccdaede2-5343-49d6-8ea9-769528c3ab92",
     "layerId": "c29b190b-6801-49ed-a101-6770525467c4",
     "name": "Kilocalories per person",
-    "category": "food"
+    "category": "food",
+    "layerOptions": {
+      "topSize": 10,
+      "sort": "asc"
+    }
   },
   {
     "id": "1c9a1e4f-455b-4c03-ac88-dd2242a2e4b1",
     "layerId": "63976c45-d991-4495-a318-45950912510a",
     "name": "Population at risk of hunger",
-    "category": "food"
+    "category": "food",
+    "layerOptions": {
+      "topSize": 10,
+      "sort": "desc"
+    }
   },
-
-
-
   {
     "id": "4b000ded-5f4d-4dbd-83c9-03f2dfcd36db",
     "layerId": "d556ab99-3064-4148-9c9f-3e3fb1e0c0f1",

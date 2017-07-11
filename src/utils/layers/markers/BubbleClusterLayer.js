@@ -23,7 +23,7 @@ import { PruneCluster, PruneClusterForLeaflet } from '../../../../lib/PruneClust
  * @return {Object} layer
  */
 export default class BubbleClusterLayer {
-  constructor(geoJson, layer) {
+  constructor(geoJson, layer, config) {
     const { id } = layer;
     const pruneCluster = new PruneClusterForLeaflet();
 
@@ -40,7 +40,7 @@ export default class BubbleClusterLayer {
       const options = {
         location: feature.geometry.coordinates,
         className: this._setMarkerClass(id, feature.properties.value),
-        size: this._getSize(feature.properties.value),
+        size: this._getSize(feature.properties.value, config),
         data: feature.properties,
         htmlIcon: this._setMarkerHtml(feature.properties.value),
         htmlInfowindow: this._setInfowindowHtml(feature.properties)
@@ -83,7 +83,7 @@ export default class BubbleClusterLayer {
     pruneCluster.originalIcon = pruneCluster.BuildLeafletClusterIcon;
 
     // disables clustering
-    pruneCluster.Cluster.Size = 1;
+    pruneCluster.Cluster.Size = 0.01;
 
     pruneCluster.BuildLeafletCluster = (cluster, position) => {
       const m = new L.Marker(position, {
@@ -187,14 +187,14 @@ export default class BubbleClusterLayer {
     );
   }
 
-  _getSize(v) {
-    const size = (v < 1 && v > -1) ? 1 : Math.abs(v);
-    const reductor = 3.5;
-    const constant = 55;
+  _getSize(v, { maxValue }) {
+    const relativeSize = (v < 1 && v > -1) ?
+      1 : ((Math.abs(v) * 100) / maxValue);
+    const reductor = 4.5;
+    const offset = 55;
     const border = 10;
+    const aggregate = offset + border;
 
-    const value = border + constant + ((size ** 0.40) / reductor);
-    return value;
+    return aggregate + ((relativeSize / 0.50) / reductor);
   }
-
 }
