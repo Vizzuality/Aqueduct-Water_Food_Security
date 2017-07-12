@@ -154,7 +154,7 @@ export default class LayerManager {
           ...{ body: LayerManager._getLayerConfigParsed(layerConfigConverted) }
         };
 
-        layerConfigParsed.body.layers[0].options.cartocss = this._generateCartoCSS(layerConfig, { bucket, crop: options.crop });
+        layerConfigParsed.body.layers[0].options.cartocss = LayerManager._generateCartoCSS(layerConfig, { bucket, crop: options.crop });
 
         const layerTpl = {
           version: '1.3.0',
