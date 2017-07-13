@@ -61,9 +61,10 @@ export default class LayerManager {
   }
 
   static _getMarkerConfig(markers) {
-    const markerValues = markers.map(marker => marker.properties.value);
+    const markerValues = markers.map(marker => Math.abs(marker.properties.value));
 
     return {
+      minValue: Math.min(...markerValues),
       maxValue: Math.max(...markerValues)
     };
   }
