@@ -187,14 +187,14 @@ export default class BubbleClusterLayer {
     );
   }
 
-  _getSize(v, { maxValue }) {
-    const relativeSize = (v < 1 && v > -1) ?
-      1 : ((Math.abs(v) * 100) / maxValue);
-    const reductor = 4.5;
-    const offset = 55;
-    const border = 10;
-    const aggregate = offset + border;
+  _getSize(v, { minValue, maxValue }) {
+    // minimun radio of the bubble
+    const baseRadio = 55;
+    // multiplicator to make the bubble larger based on the relative percentage.
+    const offset = 75;
+    // calculates percentage relative of a value based on its min and max values
+    const relativePercentage = (Math.abs(v) - minValue) / (maxValue - minValue);
 
-    return aggregate + ((relativeSize / 0.50) / reductor);
+    return baseRadio + (offset * relativePercentage);
   }
 }
