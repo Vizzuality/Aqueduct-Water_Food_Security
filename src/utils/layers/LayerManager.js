@@ -23,6 +23,7 @@ export default class LayerManager {
     this._rejectLayersLoading = false;
     this._onLayerAddedSuccess = options.onLayerAddedSuccess;
     this._onLayerAddedError = options.onLayerAddedError;
+    this._filters = options.filters || {};
   }
 
   /*
@@ -72,14 +73,23 @@ export default class LayerManager {
   _setMarkers(layer, zoomLevels) {
     const { id } = layer || {};
     const { prevZoom, nextZoom } = zoomLevels || {};
+    const { scope, country } = this._filters;
+    let markers = [];
+    let markerConfig = {};
 
     // prevents set markers if zoom is still in same range
     if ((!!prevZoom &&
       !ZOOM_DISPLAYS_TOP.includes(prevZoom) && !ZOOM_DISPLAYS_TOP.includes(nextZoom)) ||
       ZOOM_DISPLAYS_TOP.includes(prevZoom) && ZOOM_DISPLAYS_TOP.includes(nextZoom)) return;
 
-    const markers = this._getMarkersByZoom(layer, nextZoom);
-    const markerConfig = LayerManager._getMarkerConfig(markers);
+    if(!this._markerLayers[id]) return;
+
+    markerConfig = LayerManager._getMarkerConfig(this._markerLayers[id]);
+
+    markers = scope === 'country' && country ?
+      this._markerLayers[id].filter(marker => marker.properties.iso === country) :
+      this._getMarkersByZoom(layer, nextZoom);
+
     this._addMarkers(markers, layer, markerConfig);
   }
 
@@ -273,6 +283,7 @@ export default class LayerManager {
           onSuccess: (data) => {
             const geojson = data.rows[0].data.features || [];
             const nextZoom = this._map.getZoom();
+
             this._markerLayers[layerConfig.id] = geojson;
 
             this._setMarkers(layerSpec, { nextZoom });
