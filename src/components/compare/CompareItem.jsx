@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import WidgetList from 'components/widgets/WidgetList';
 import { Map, MapControls, ZoomControl, Icon } from 'aqueduct-components';
 import LegendMobile from 'components/legend/LegendMobile';
@@ -111,11 +112,11 @@ export default class CompareItem extends React.Component {
 }
 
 CompareItem.propTypes = {
-  context: React.PropTypes.string,
-  countryList: React.PropTypes.array,
-  country: React.PropTypes.string,
-  loading: React.PropTypes.bool,
-  widgetsActive: React.PropTypes.array,
-  filters: React.PropTypes.object,
-  layersActive: React.PropTypes.array
+  context: PropTypes.string,
+  countryList: PropTypes.array,
+  country: PropTypes.string,
+  loading: PropTypes.bool,
+  widgetsActive: PropTypes.array,
+  filters: PropTypes.object,
+  layersActive: PropTypes.array
 };

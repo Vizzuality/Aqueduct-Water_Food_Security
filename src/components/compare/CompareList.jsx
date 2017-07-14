@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import CompareItem from 'components/compare/CompareItem';
@@ -11,7 +12,7 @@ export default class CompareList extends React.Component {
       const filters = Object.assign({}, this.props.filters, { country: this.props.countries[i] });
       items.push(
         <CompareItem
-          key={i}
+          key={`${this.props.countries[i]}-${i}`}
           filters={filters}
           loading={this.props.loading}
           widgetsActive={this.props.widgetsActive}
@@ -37,12 +38,12 @@ export default class CompareList extends React.Component {
 }
 
 CompareList.propTypes = {
-  countries: React.PropTypes.array,
-  countryList: React.PropTypes.array,
-  loading: React.PropTypes.bool,
-  items: React.PropTypes.number,
-  widgetsActive: React.PropTypes.array,
-  filters: React.PropTypes.object,
-  layersActive: React.PropTypes.array,
-  active: React.PropTypes.number
+  countries: PropTypes.array,
+  countryList: PropTypes.array,
+  loading: PropTypes.bool,
+  items: PropTypes.number,
+  widgetsActive: PropTypes.array,
+  filters: PropTypes.object,
+  layersActive: PropTypes.array,
+  active: PropTypes.number
 };
