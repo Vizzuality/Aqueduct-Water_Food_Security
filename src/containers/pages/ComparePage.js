@@ -10,7 +10,7 @@ import getActiveLayers from 'selectors/layers_active';
 const mapStateToProps = state => ({
   compare: state.compare,
   filters: state.filters,
-  loding: state.datasets.loading,
+  loading: state.datasets.loading,
   countries: state.countries,
   widgetsActive: getActiveWidgets(state),
   layersActive: getActiveLayers(state)
