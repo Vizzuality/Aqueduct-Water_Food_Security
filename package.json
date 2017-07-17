@@ -8,6 +8,9 @@
     "postinstall": "npm run build",
     "test": "./node_modules/.bin/eslint ."
   },
+  "pre-commit": [
+    "test"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Vizzuality/Aqueduct-Water_Food_Security.git"
@@ -81,12 +84,10 @@
     "whatwg-fetch": "^2.0.1"
   },
   "devDependencies": {
-    "eslint": "^3.9.1",
-    "eslint-config-airbnb": "^13.0.0",
-    "eslint-import-resolver-webpack": "^0.7.0",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-plugin-react": "^6.5.0"
+    "eslint": "^3.19.0",
+    "eslint-config-vizzuality": "^1.0.5",
+    "eslint-plugin-react": "^7.1.0",
+    "pre-commit": "^1.2.2"
   },
   "engines": {
     "node": "7.2.0"
