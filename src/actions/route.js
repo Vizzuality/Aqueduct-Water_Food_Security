@@ -28,7 +28,7 @@ export function onEnterMapPage({ location }, replace, done) {
       country,
       crop,
       food,
-      irrigation: (irrigation) ? irrigation.split(',') : false,
+      irrigation: (irrigation) ? irrigation.split(',') : [],
       scope,
       period,
       period_value,
