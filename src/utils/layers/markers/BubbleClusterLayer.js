@@ -1,8 +1,3 @@
-/* eslint import/no-unresolved: 0 */
-/* eslint import/extensions: 0 */
-/* eslint new-cap: 0 */
-/* eslint class-methods-use-this: 0 */
-
 import L from 'leaflet/dist/leaflet';
 import { render } from 'react-dom';
 import InfoWindow from 'components/ui/InfoWindow';
@@ -38,11 +33,11 @@ export default class BubbleClusterLayer {
       // Options
       const options = {
         location: feature.geometry.coordinates,
-        className: this._setMarkerClass(id, feature.properties.value),
-        size: this._getSize(feature.properties.value, config),
+        className: BubbleClusterLayer._setMarkerClass(id, feature.properties.value),
+        size: BubbleClusterLayer._getSize(feature.properties.value, config),
         data: feature.properties,
-        htmlIcon: this._setMarkerHtml(feature.properties.value),
-        htmlInfowindow: this._setInfowindowHtml(feature.properties)
+        htmlIcon: BubbleClusterLayer._setMarkerHtml(feature.properties.value),
+        htmlInfowindow: BubbleClusterLayer._setInfowindowHtml(feature.properties)
       };
 
       // Set icon
@@ -89,7 +84,7 @@ export default class BubbleClusterLayer {
         icon: pruneCluster.BuildLeafletClusterIcon(cluster)
       });
 
-      m.bindPopup(this._setInfowindowClusterHtml(cluster));
+      m.bindPopup(BubbleClusterLayer._setInfowindowClusterHtml(cluster));
 
       m.on('click', () => {
         // Compute the  cluster bounds (it's slow : O(n))
@@ -142,7 +137,7 @@ export default class BubbleClusterLayer {
   // - _setInfowindowHtml
   // - _setInfowindowClusterHtml
   // - _getSize
-  _setMarkerClass(layerId, value) {
+  static _setMarkerClass(layerId, value) {
     let additionalClass = '';
     switch (layerId) {
       case 'b8e135d2-b64f-4ea3-93e9-9f8d1245fb2a':
@@ -156,7 +151,7 @@ export default class BubbleClusterLayer {
   }
 
 
-  _setMarkerHtml(value) {
+  static _setMarkerHtml(value) {
     let _value;
     if (value < 0.001 && value > 0) {
       _value = '< 0.001';
@@ -170,7 +165,7 @@ export default class BubbleClusterLayer {
       `);
   }
 
-  _setInfowindowHtml(properties) {
+  static _setInfowindowHtml(properties) {
     return (`
       <div class="c-infowindow -no-iteraction">
       <h3>${properties.country}</h3>
@@ -178,7 +173,7 @@ export default class BubbleClusterLayer {
     );
   }
 
-  _setInfowindowClusterHtml(properties) {
+  static _setInfowindowClusterHtml(properties) {
     return (`
       <div class="c-infowindow -no-iteraction">
       <h3>${properties.population} countries</h3>
@@ -186,7 +181,7 @@ export default class BubbleClusterLayer {
     );
   }
 
-  _getSize(v, { minValue, maxValue }) {
+  static _getSize(v, { minValue, maxValue }) {
     // minimun radio of the bubble
     const baseRadio = 55;
     // multiplicator to make the bubble larger based on the relative percentage.
