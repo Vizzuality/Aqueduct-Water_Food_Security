@@ -1,5 +1,5 @@
 import React from 'react';
-import vega from 'vega';
+import * as vega from 'vega';
 import * as d3 from 'd3';
 import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';

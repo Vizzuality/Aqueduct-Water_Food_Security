@@ -6,7 +6,8 @@
   "scripts": {
     "build": "NODE_ENV=production ./node_modules/.bin/webpack --config ./config/webpack.config.js --progress --colors",
     "postinstall": "npm run build",
-    "test": "./node_modules/.bin/eslint ."
+    "test": "./node_modules/.bin/eslint .",
+    "dev": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -86,7 +87,8 @@
     "eslint-import-resolver-webpack": "^0.7.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-plugin-react": "^6.5.0"
+    "eslint-plugin-react": "^6.5.0",
+    "webpack-validator": "^3.0.0"
   },
   "engines": {
     "node": "7.2.0"
