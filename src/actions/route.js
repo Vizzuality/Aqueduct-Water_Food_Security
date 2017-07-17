@@ -54,7 +54,7 @@ export function onEnterComparePage({ location }, replace, done) {
   if (crop && period && year) {
     const filtersObj = {
       crop,
-      scope: 'country',
+      scope: 'compare',
       period,
       period_value,
       year,
