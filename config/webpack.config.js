@@ -68,10 +68,7 @@ const config = {
       path.resolve(componentsPath, 'node_modules'),
       'node_modules'
     ],
-    extensions: ['', '.js', '.jsx', '.json', '.css', '.scss'],
-    alias: {
-      icons: path.resolve(componentsPath, 'src', 'icons')
-    }
+    extensions: ['', '.js', '.jsx', '.json', '.css', '.scss']
   },
 
   resolveLoader: {

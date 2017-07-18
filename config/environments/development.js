@@ -16,9 +16,9 @@ const pdf = require('html-pdf');
 
 module.exports = (app) => {
   config.resolve = Object.assign(config.resolve, {
-    alias: Object.assign(config.resolve.alias, {
-      'aqueduct-components': path.resolve(rootPath, '..', 'aqueduct-components', 'dist')
-    })
+    alias: {
+      'aqueduct-components': path.resolve(rootPath, '..', 'aqueduct-components', 'lib')
+    }
   });
 
   const compiler = webpack(config);
