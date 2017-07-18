@@ -187,8 +187,7 @@ export default class BubbleClusterLayer {
     // multiplicator to make the bubble larger based on the relative percentage.
     const offset = 75;
     // calculates percentage relative of a value based on its min and max values
-    // const relativePercentage = (Math.abs(v) - minValue) / (maxValue - minValue);
-    const relativePercentage = ((v ** 0.5) - (minValue ** 0.5)) / ((maxValue ** 0.5) - (minValue ** 0.5));
+    const relativePercentage = ((Math.abs(v) ** 0.5) - (minValue ** 0.5)) / ((maxValue ** 0.5) - (minValue ** 0.5));
 
     return baseRadio + (offset * relativePercentage);
   }
