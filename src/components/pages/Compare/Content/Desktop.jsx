@@ -12,6 +12,11 @@ import { Icon, toggleModal, Sticky } from 'aqueduct-components';
 import { Link } from 'react-router';
 
 export default class ComparePageDesktop extends React.Component {
+  static toggleShareModal() {
+    dispatch(toggleModal(true, {
+      children: ShareModal
+    }));
+  }
 
   constructor(props) {
     super(props);
@@ -20,7 +25,7 @@ export default class ComparePageDesktop extends React.Component {
     };
 
     // bindings
-    this.toggleShareModal = this.toggleShareModal.bind(this);
+    this.toggleShareModal = ComparePageDesktop.toggleShareModal.bind(this);
   }
 
   componentWillMount() {
@@ -77,12 +82,6 @@ export default class ComparePageDesktop extends React.Component {
     return items;
   }
 
-  toggleShareModal() {
-    dispatch(toggleModal(true, {
-      children: ShareModal
-    }));
-  }
-
   render() {
     return (
       <div className="l-comparepage l-fullheight">
@@ -107,12 +106,12 @@ export default class ComparePageDesktop extends React.Component {
 
         {/* Sticky Filters */}
         <Sticky
-          className="-full-width"
           topLimit={this.state.stickyFilterTopPosition}
           onStick={(isSticky) => { this.onSticky(isSticky); }}
         >
           {this.state.showStickyFilters &&
             <StickyFilters
+              className="-compare"
               countriesCompare={this.props.compare.countries}
               filters={this.props.filters}
               setFilters={this.props.setFilters}

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { Link } from 'react-router';
 
 import {
   CROP_OPTIONS,
@@ -32,11 +31,15 @@ class StickyFilters extends React.Component {
   }
 
   render() {
-    const compareCountryClass = classnames('-gray', {
-      '-disabled': !this.props.countriesCompare[1]
+    const stickyFilterClass = classnames('c-sticky-filters', {
+      [this.props.className]: this.props.className
     });
+    const compareCountryClass = classnames('-gray', {
+      '-disabled': !this.props.countriesCompare[0]
+    });
+
     return (
-      <div className="c-sticky-filters">
+      <div className={stickyFilterClass}>
         {this.props.withScope &&
           <div className="filters-lead">
             <div className="row expanded collapse">
@@ -52,34 +55,35 @@ class StickyFilters extends React.Component {
           </div>
         }
         {/* COMPARE COUNTRY SELECTORS */}
-        {this.props.filters.scope === 'compare' &&
-          <div className="country-filters">
-            <div>
-              <span className="title">Select a country</span>
-              <CountrySelect
-                className="-gray"
-                value={this.props.countriesCompare[0] || null}
-                onValueChange={(selected) => { selected && this.props.setCompareCountry({ index: 0, iso: selected.value }); }}
-              />
+        {this.props.filters.scope === 'country' &&
+          this.props.countriesCompare.length > 0 &&
+            <div className="country-filters">
+              <div className="small-6 columns">
+                <div className="compare-country-wrapper">
+                  <span className="compare-filters-text">Select a country</span>
+                  <CountrySelect
+                    className="-gray"
+                    value={this.props.countriesCompare[0] || null}
+                    onValueChange={(selected) => {
+                      selected && this.props.setCompareCountry({ index: 0, iso: selected.value });
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="small-6 columns">
+                <div className="compare-country-wrapper">
+                  <span className="compare-filters-text">Compare with</span>
+                  <CountrySelect
+                    className={compareCountryClass}
+                    placeholder="Country name..."
+                    value={this.props.countriesCompare[1] || null}
+                    onValueChange={(selected) => {
+                      selected && this.props.setCompareCountry({ index: 1, iso: selected.value });
+                    }}
+                  />
+                </div>
+              </div>
             </div>
-            <div>
-              <span className="title">Compare With</span>
-              <CountrySelect
-                className={compareCountryClass}
-                placeholder="Country name..."
-                value={this.props.countriesCompare[1] || null}
-                onValueChange={(selected) => { selected && this.props.setCompareCountry({ index: 1, iso: selected.value }); }}
-              />
-            </div>
-            <div>
-              <Link
-                className={`c-btn -filters ${this.state.countryToCompare ? '' : '-disabled'}`}
-                to={`/compare?countries=${this.props.filters.country},${this.state.countryToCompare}`}
-              >
-                Compare
-              </Link>
-            </div>
-          </div>
         }
         <div className="global-filters">
           <div>
@@ -138,6 +142,7 @@ class StickyFilters extends React.Component {
 }
 
 StickyFilters.propTypes = {
+  className: PropTypes.string,
   countriesCompare: PropTypes.array,
   setCompareCountry: PropTypes.func,
   setFilters: PropTypes.func,

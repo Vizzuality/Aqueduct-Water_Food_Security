@@ -43,7 +43,7 @@ export function onEnterMapPage({ location }, replace, done) {
 }
 
 export function onEnterComparePage({ location }, replace, done) {
-  const { crop, countries, food, irrigation, period, period_value, year, indicator, type } = location.query;
+  const { crop, countries, food, irrigation, period, period_value, scope, year, indicator, type } = location.query;
   // If thera are country params
   if (countries) {
     countries.split(',').forEach((c, i) => {
@@ -54,7 +54,7 @@ export function onEnterComparePage({ location }, replace, done) {
   if (crop && period && year) {
     const filtersObj = {
       crop,
-      scope: 'compare',
+      scope,
       period,
       period_value,
       year,
