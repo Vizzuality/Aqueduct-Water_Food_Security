@@ -30,6 +30,14 @@ import {
 import CountrySelect from 'containers/countries/CountrySelect';
 
 export default class Filters extends React.Component {
+  static openModal(slug) {
+    dispatch(toggleModal(true, {
+      children: InfoModal,
+      childrenProps: {
+        info: APP_DEFINITIONS[slug]
+      }
+    }));
+  }
 
   constructor(props) {
     super(props);
@@ -41,26 +49,17 @@ export default class Filters extends React.Component {
     this.updateFilters = this.updateFilters.bind(this);
   }
 
+  onSelectCountryToCompare(selected) {
+    const countriesParam = `countries=${this.props.filters.country},${selected.value}`;
+    browserHistory.push(`/compare?${countriesParam}`);
+  }
+
   updateFilters(value, field) {
     const newFilter = {
       [field]: value
     };
 
     this.props.setFilters(newFilter);
-  }
-
-  openModal(slug) {
-    dispatch(toggleModal(true, {
-      children: InfoModal,
-      childrenProps: {
-        info: APP_DEFINITIONS[slug]
-      }
-    }));
-  }
-
-  onSelectCountryToCompare(selected) {
-    const countriesParam = `countries=${this.props.filters.country},${selected.value}`;
-    browserHistory.push(`/compare?${countriesParam}`);
   }
 
   render() {
@@ -71,7 +70,7 @@ export default class Filters extends React.Component {
           <span className="title">Timeframe</span>
           <button
             className="icon-container"
-            onClick={() => this.openModal('timeframe')}
+            onClick={() => Filters.openModal('timeframe')}
           >
             <Icon
               name="icon-question"
@@ -169,7 +168,7 @@ export default class Filters extends React.Component {
                       <span className="title">Crops</span>
                       <button
                         className="icon-container"
-                        onClick={() => this.openModal('crops')}
+                        onClick={() => Filters.openModal('crops')}
                       >
                         <Icon
                           name="icon-question"
@@ -203,7 +202,7 @@ export default class Filters extends React.Component {
                       <span className="title">Water Risk</span>
                       <button
                         className="icon-container"
-                        onClick={() => this.openModal('water-risk')}
+                        onClick={() => Filters.openModal('water-risk')}
                       >
                         <Icon
                           name="icon-question"
@@ -226,7 +225,7 @@ export default class Filters extends React.Component {
                       <span className="title">Food security</span>
                       <button
                         className="icon-container"
-                        onClick={() => this.openModal('food-security')}
+                        onClick={() => Filters.openModal('food-security')}
                       >
                         <Icon
                           name="icon-question"
