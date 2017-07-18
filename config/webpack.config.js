@@ -7,7 +7,7 @@ const path = require('path');
 const validate = require('webpack-validator');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const rootPath = process.cwd();
 const componentsPath = path.join(rootPath, '..', 'aqueduct-components');

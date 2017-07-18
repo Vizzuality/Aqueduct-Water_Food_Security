@@ -32,6 +32,23 @@ import {
 } from 'aqueduct-components';
 
 export default class MapPageDesktop extends React.Component {
+  static getMapHeaderTemplate() {
+    return '{{scope}} {{country}} {{indicator}} {{irrigation}} {{crop}} Producing Areas';
+  }
+
+  // MODAL EVENTS
+  static toggleShareModal() {
+    dispatch(toggleModal(true, {
+      children: ShareModal
+    }));
+  }
+
+  static toggleSourceModal(layer) {
+    dispatch(toggleModal(true, {
+      children: SourceModal,
+      childrenProps: layer
+    }));
+  }
 
   constructor(props) {
     super(props);
@@ -41,8 +58,8 @@ export default class MapPageDesktop extends React.Component {
     };
 
     // BINDINGS
-    this.toggleShareModal = this.toggleShareModal.bind(this);
-    this.toggleSourceModal = this.toggleSourceModal.bind(this);
+    this.toggleShareModal = MapPageDesktop.toggleShareModal.bind(this);
+    this.toggleSourceModal = MapPageDesktop.toggleSourceModal.bind(this);
   }
 
   componentWillMount() {
@@ -115,24 +132,6 @@ export default class MapPageDesktop extends React.Component {
     });
   }
 
-  getMapHeaderTemplate() {
-    return '{{scope}} {{country}} {{indicator}} {{irrigation}} {{crop}} Producing Areas';
-  }
-
-  // MODAL EVENTS
-  toggleShareModal() {
-    dispatch(toggleModal(true, {
-      children: ShareModal
-    }));
-  }
-
-  toggleSourceModal(layer) {
-    dispatch(toggleModal(true, {
-      children: SourceModal,
-      childrenProps: layer
-    }));
-  }
-
   render() {
     const mapConfig = Object.assign({}, this.props.mapConfig, { scrollWheelZoom: true });
 
@@ -157,13 +156,13 @@ export default class MapPageDesktop extends React.Component {
 
           {/* Sticky Filters */}
           <Sticky
-            className="-full-width"
             topLimit={this.state.stickyFilterTopPosition}
             onStick={(isSticky) => { this.onSticky(isSticky); }}
             ScrollElem=".l-sidebar-content"
           >
             {this.state.showStickyFilters &&
               <StickyFilters
+                className="-country"
                 filters={this.props.filters}
                 setFilters={this.props.setFilters}
                 withScope
@@ -219,7 +218,7 @@ export default class MapPageDesktop extends React.Component {
             <MapHeader
               dictionary={this.getDictionary()}
               filters={this.props.filters}
-              template={this.getMapHeaderTemplate()}
+              template={MapPageDesktop.getMapHeaderTemplate()}
             />
           }
 
