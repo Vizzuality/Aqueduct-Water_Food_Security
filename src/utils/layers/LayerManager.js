@@ -8,7 +8,6 @@ import { CROP_OPTIONS, get, getObjectConversion } from 'aqueduct-components';
 import BubbleClusterLayer from 'utils/layers/markers/BubbleClusterLayer';
 
 // constants
-import layerSpec from 'utils/layers/layer_spec.json';
 const ZOOM_DISPLAYS_TOP = [2, 3];
 
 export default class LayerManager {
@@ -80,9 +79,9 @@ export default class LayerManager {
     // prevents set markers if zoom is still in same range
     if ((!!prevZoom &&
       !ZOOM_DISPLAYS_TOP.includes(prevZoom) && !ZOOM_DISPLAYS_TOP.includes(nextZoom)) ||
-      ZOOM_DISPLAYS_TOP.includes(prevZoom) && ZOOM_DISPLAYS_TOP.includes(nextZoom)) return;
+      (ZOOM_DISPLAYS_TOP.includes(prevZoom) && ZOOM_DISPLAYS_TOP.includes(nextZoom))) return;
 
-    if(!this._markerLayers[id]) return;
+    if (!this._markerLayers[id]) return;
 
     markerConfig = LayerManager._getMarkerConfig(this._markerLayers[id]);
 
@@ -108,7 +107,7 @@ export default class LayerManager {
       return 0;
     };
 
-    if(ZOOM_DISPLAYS_TOP.includes(zoom)) {
+    if (ZOOM_DISPLAYS_TOP.includes(zoom)) {
       if (sort) newMarkers.sort(sortFunction);
       if (topSize && newMarkers.length >= topSize) newMarkers = newMarkers.slice(0, topSize);
     }
@@ -299,7 +298,8 @@ export default class LayerManager {
 
       default: {
         if (legendConfig.sqlQuery) {
-          return this._getLegendValues(layerConfig, legendConfig, options);
+          this._getLegendValues(layerConfig, legendConfig, options);
+          return;
         }
         const layerConfigConverted = getObjectConversion(layerConfig, options, 'water');
         const layerConfigParsed = {

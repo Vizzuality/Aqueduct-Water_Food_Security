@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { dispatch } from 'main';
 import ShareModal from 'containers/modal/ShareModal';
 
@@ -6,10 +7,16 @@ import ShareModal from 'containers/modal/ShareModal';
 import CompareList from 'components/compare/CompareList';
 import Filters from 'components/filters/Filters';
 import CountrySelect from 'containers/countries/CountrySelect';
-import { Icon, toggleModal } from 'aqueduct-components';
+import StickyFilters from 'components/filters/StickyFilters';
+import { Icon, toggleModal, Sticky } from 'aqueduct-components';
 import { Link } from 'react-router';
 
 export default class ComparePageDesktop extends React.Component {
+  static toggleShareModal() {
+    dispatch(toggleModal(true, {
+      children: ShareModal
+    }));
+  }
 
   constructor(props) {
     super(props);
@@ -18,15 +25,39 @@ export default class ComparePageDesktop extends React.Component {
     };
 
     // bindings
-    this.toggleShareModal = this.toggleShareModal.bind(this);
+    this.toggleShareModal = ComparePageDesktop.toggleShareModal.bind(this);
   }
 
   componentWillMount() {
     this.props.updateCompareUrl();
   }
+  componentDidMount() {
+    this.setStickyFilterPosition();
+  }
+
+  componentDidUpdate() {
+    this.setStickyFilterPosition();
+  }
 
   componentWillUnmount() {
     this.props.emptyCompareCountries();
+  }
+
+  onSticky(isSticky) {
+    this.setState({
+      showStickyFilters: isSticky
+    });
+  }
+
+  setStickyFilterPosition() {
+    const elemHeight = this.filtersElem.getBoundingClientRect().height;
+    const stickyFilterTopPosition = this.filtersElem.offsetTop + elemHeight;
+
+    if (this.state.stickyFilterTopPosition === stickyFilterTopPosition) return;
+
+    this.setState({
+      stickyFilterTopPosition
+    });
   }
 
   getCountrySelects() {
@@ -51,12 +82,6 @@ export default class ComparePageDesktop extends React.Component {
     return items;
   }
 
-  toggleShareModal() {
-    dispatch(toggleModal(true, {
-      children: ShareModal
-    }));
-  }
-
   render() {
     return (
       <div className="l-comparepage l-fullheight">
@@ -64,7 +89,7 @@ export default class ComparePageDesktop extends React.Component {
           <Link to="/" className="back-link">Back</Link>
           <button onClick={this.toggleShareModal} className="share-btn" type="button"><Icon name="icon-share" className="medium" />Share</button>
         </div>
-        <div className="compare-filters">
+        <div className="compare-filters" ref={(elem) => { this.filtersElem = elem; }}>
           <div className="compare-filters-section -highlighted">
             <div className="row expanded collapse">{this.getCountrySelects()}</div>
           </div>
@@ -78,6 +103,23 @@ export default class ComparePageDesktop extends React.Component {
             </div>
           </div>
         </div>
+
+        {/* Sticky Filters */}
+        <Sticky
+          topLimit={this.state.stickyFilterTopPosition}
+          onStick={(isSticky) => { this.onSticky(isSticky); }}
+        >
+          {this.state.showStickyFilters &&
+            <StickyFilters
+              className="-compare"
+              countriesCompare={this.props.compare.countries}
+              filters={this.props.filters}
+              setFilters={this.props.setFilters}
+              setCompareCountry={this.props.setCompareCountry}
+            />
+          }
+        </Sticky>
+
         <CompareList
           filters={this.props.filters}
           countryList={this.props.countries.list}
@@ -93,14 +135,14 @@ export default class ComparePageDesktop extends React.Component {
 }
 
 ComparePageDesktop.propTypes = {
-  compare: React.PropTypes.object,
-  loading: React.PropTypes.bool,
-  countries: React.PropTypes.object,
-  filters: React.PropTypes.object,
-  setFilters: React.PropTypes.func,
-  updateCompareUrl: React.PropTypes.func,
-  setCompareCountry: React.PropTypes.func,
-  emptyCompareCountries: React.PropTypes.func,
-  widgetsActive: React.PropTypes.array,
-  layersActive: React.PropTypes.array
+  compare: PropTypes.object,
+  loading: PropTypes.bool,
+  countries: PropTypes.object,
+  filters: PropTypes.object,
+  setFilters: PropTypes.func,
+  updateCompareUrl: PropTypes.func,
+  setCompareCountry: PropTypes.func,
+  emptyCompareCountries: PropTypes.func,
+  widgetsActive: PropTypes.array,
+  layersActive: PropTypes.array
 };
