@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const webpack = require('webpack');
+const config = require('../webpack.config.js');
 
 const indexPath = path.join(process.cwd(), 'dist/index.html');
 
