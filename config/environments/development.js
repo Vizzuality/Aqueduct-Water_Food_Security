@@ -9,11 +9,18 @@ const webpack = require('webpack');
 const webpackMiddleware = require('webpack-dev-middleware');
 const config = require('../webpack.config.js');
 
+const rootPath = process.cwd();
 const indexPath = path.join(process.cwd(), 'dist/index.html');
 
 const pdf = require('html-pdf');
 
 module.exports = (app) => {
+  config.resolve = Object.assign(config.resolve, {
+    alias: {
+      'aqueduct-components': path.resolve(rootPath, '..', 'aqueduct-components', 'lib')
+    }
+  });
+
   const compiler = webpack(config);
   const middleware = webpackMiddleware(compiler, {
     publicPath: config.output.publicPath,

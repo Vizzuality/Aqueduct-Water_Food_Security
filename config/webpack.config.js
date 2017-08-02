@@ -4,11 +4,13 @@ require('dotenv').config({ silent: true });
 process.env.BROWSERSLIST_CONFIG = 'browserslist';
 
 const path = require('path');
+const validate = require('webpack-validator');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const rootPath = process.cwd();
+const componentsPath = path.join(rootPath, '..', 'aqueduct-components');
 
 const config = {
 
@@ -29,9 +31,11 @@ const config = {
   module: {
     loaders: [
       {
-        test: /\.jsx?$/,
+        test: /\.(js|jsx)?$/,
         loader: 'babel-loader',
-        exclude: /node_modules/
+        include: [
+          path.join(rootPath, 'src')
+        ]
       },
       {
         test: /\.css$/,
@@ -58,8 +62,11 @@ const config = {
 
   resolve: {
     root: [
-      path.join(rootPath, 'src'),
-      path.join(rootPath, 'node_modules', 'aqueduct-components', 'node_modules')
+      path.join(rootPath, 'src')
+    ],
+    modulesDirectories: [
+      path.resolve(componentsPath, 'node_modules'),
+      'node_modules'
     ],
     extensions: ['', '.js', '.jsx', '.json', '.css', '.scss']
   },
@@ -98,19 +105,4 @@ const config = {
 
 };
 
-// Environment configuration
-if (process.env.NODE_ENV === 'production') {
-  config.plugins.push(new webpack.optimize.UglifyJsPlugin({
-    compress: {
-      warnings: false,
-      dead_code: true,
-      drop_debugger: true,
-      drop_console: true
-    },
-    comments: false
-  }));
-} else {
-  config.devtool = 'eval-source-map';
-}
-
-module.exports = config;
+module.exports = validate(config);
