@@ -68,6 +68,9 @@ const config = {
       path.resolve(componentsPath, 'node_modules'),
       'node_modules'
     ],
+    alias: {
+      'aqueduct-components': path.resolve(rootPath, 'node_modules', 'aqueduct-components', 'lib')
+    },
     extensions: ['', '.js', '.jsx', '.json', '.css', '.scss']
   },
 
