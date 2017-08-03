@@ -1,6 +1,8 @@
 import L from 'leaflet/dist/leaflet';
 import template from 'lodash/template';
 
+import { store } from 'main';
+
 // AQ components
 import { CROP_OPTIONS, get, getObjectConversion } from 'aqueduct-components';
 
@@ -22,7 +24,6 @@ export default class LayerManager {
     this._rejectLayersLoading = false;
     this._onLayerAddedSuccess = options.onLayerAddedSuccess;
     this._onLayerAddedError = options.onLayerAddedError;
-    this._filters = options.filters || {};
   }
 
   /*
@@ -72,7 +73,7 @@ export default class LayerManager {
   _setMarkers(layer, zoomLevels) {
     const { id } = layer || {};
     const { prevZoom, nextZoom } = zoomLevels || {};
-    const { scope, country } = this._filters;
+    const { scope, country } = store.getState().filters;
     let markers = [];
     let markerConfig = {};
 
