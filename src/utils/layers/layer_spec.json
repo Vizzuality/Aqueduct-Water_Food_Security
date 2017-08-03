@@ -49,20 +49,50 @@
       "sort": "desc"
     }
   },
+
+
   {
     "id": "4b000ded-5f4d-4dbd-83c9-03f2dfcd36db",
-    "layerId": "d556ab99-3064-4148-9c9f-3e3fb1e0c0f1",
+    "layerId": "dadb9cc1-40fc-4c43-89b2-2e1423223523",
+    "layerAbsoluteId": "d556ab99-3064-4148-9c9f-3e3fb1e0c0f1",
     "layerProjectedId": "7c16a991-cd4f-4421-8789-0f8763bc1176",
     "name": "Water stress",
     "category": "water"
   },
   {
     "id": "d9785282-2140-463f-a82d-f7296687055a",
-    "layerId": "e35cdf8e-0601-477c-9a0d-8d4874d296a7",
+    "layerId": "XXX",
+    "layerAbsoluteId": "e35cdf8e-0601-477c-9a0d-8d4874d296a7",
     "layerProjectedId": "83b9c999-22f3-4413-9793-5eb806630117",
     "name": "Seasonal variability",
     "category": "water"
   },
+  {
+    "id": "bf657e60-de9c-4b7e-8736-d573d38e3ce1",
+    "layerId": "db89786d-0862-44f7-8a21-9d21cd52ab15",
+    "name": "Interannual variability",
+    "category": "water"
+  },
+  {
+    "id": "9c450642-f976-40eb-96b4-0c904d519578",
+    "layerId": "39c5649f-aaf7-4d32-9493-26441d8f80f0",
+    "name": "Drought severity soil moisture",
+    "category": "water"
+  },
+  {
+    "id": "b53ef8c5-8554-4a4a-a100-fdf5a022cb4e",
+    "layerId": "a1007109-4462-43ac-8412-e1acc6c84174",
+    "name": "Groundwater stress",
+    "category": "water"
+  },
+  {
+    "id": "cbd0d0f8-edf9-47bc-93ef-71c1a5e5fed7",
+    "layerId": "1c825957-f34f-4f49-8c19-20c952722ba9",
+    "name": "Groundwater decline trend",
+    "category": "water"
+  },
+
+
 
 
   {
@@ -71,6 +101,7 @@
     "name": "Country mask",
     "category": "mask"
   },
+
 
   {
     "id": "b7bf012f-4b8b-4478-b5c9-6af3075ca1e4",
