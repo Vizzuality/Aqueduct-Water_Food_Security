@@ -23,8 +23,20 @@ const getActiveLayers = (_datasets, _filters) => {
 
       if (isWater) {
         currentLayer = dataset.layer.find((l) => {
-          return _filters.type === 'change_from_baseline' ? l.attributes.layerConfig.fromBaseline : l.attributes.default;
+          if (_filters.year !== 'baseline' && _filters.type === 'change_from_baseline') {
+            return l.attributes.layerConfig.fromBaseline;
+          }
+
+          if (_filters.year !== 'baseline' && l.attributes.layerConfig.absolute) {
+            return l.attributes.layerConfig.absolute;
+          }
+
+          if (_filters.year === 'baseline' && l.attributes.default) {
+            return l.attributes.default;
+          }
         });
+
+        currentLayer = currentLayer || dataset.layer.find(l => l.attributes.default);
       }
 
       if (isCrop) {
@@ -49,7 +61,7 @@ const getActiveLayers = (_datasets, _filters) => {
         layer = {
           ...currentLayer.attributes,
           id: currentLayer.id,
-          name: currentLayer.attributes.name,
+          name: layerSpecAttrs.name,
           category: layerSpecAttrs.category,
           options: layerSpecAttrs.layerOptions,
           metadata
