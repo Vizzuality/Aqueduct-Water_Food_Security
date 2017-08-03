@@ -27,7 +27,10 @@ export default class LayerManager {
   }
 
   /*
-    Public methods
+    LAYERS
+    - addLayer
+    - removeLayer
+    - removeLayers
   */
   addLayer(layer, opts = {}) {
     const method = {
@@ -54,6 +57,12 @@ export default class LayerManager {
     this._mapLayersLoading = {};
   }
 
+  /*
+    MARKERS
+    - _addMarkers
+    - _setMarkers
+    - _getMarkerConfig
+  */
   _addMarkers(geojson, layerConfig, markerConfig) {
     this.removeLayer(layerConfig.id);
     this._mapLayers[layerConfig.id] = new BubbleClusterLayer(
