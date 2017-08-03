@@ -1,6 +1,8 @@
 import L from 'leaflet/dist/leaflet';
 import template from 'lodash/template';
 
+import { store } from 'main';
+
 // AQ components
 import { CROP_OPTIONS, get, getObjectConversion } from 'aqueduct-components';
 
@@ -22,11 +24,13 @@ export default class LayerManager {
     this._rejectLayersLoading = false;
     this._onLayerAddedSuccess = options.onLayerAddedSuccess;
     this._onLayerAddedError = options.onLayerAddedError;
-    this._filters = options.filters || {};
   }
 
   /*
-    Public methods
+    LAYERS
+    - addLayer
+    - removeLayer
+    - removeLayers
   */
   addLayer(layer, opts = {}) {
     const method = {
@@ -53,6 +57,12 @@ export default class LayerManager {
     this._mapLayersLoading = {};
   }
 
+  /*
+    MARKERS
+    - _addMarkers
+    - _setMarkers
+    - _getMarkerConfig
+  */
   _addMarkers(geojson, layerConfig, markerConfig) {
     this.removeLayer(layerConfig.id);
     this._mapLayers[layerConfig.id] = new BubbleClusterLayer(
@@ -72,7 +82,7 @@ export default class LayerManager {
   _setMarkers(layer, zoomLevels) {
     const { id } = layer || {};
     const { prevZoom, nextZoom } = zoomLevels || {};
-    const { scope, country } = this._filters;
+    const { scope, country } = store.getState().filters;
     let markers = [];
     let markerConfig = {};
 
