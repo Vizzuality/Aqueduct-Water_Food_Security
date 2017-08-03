@@ -204,7 +204,13 @@ export default class LayerManager {
   static _getLayerConfigParsed(_layerConfig) {
     return {
       layers: _layerConfig.body.layers.map((l) => {
-        const newOptions = { user_name: _layerConfig.account, cartocss_version: l.options.cartocssVersion };
+        const newOptions = {
+          user_name: _layerConfig.account,
+          cartocss_version: l.options.cartocssVersion,
+          geom_column: l.options.geomColumn,
+          geom_type: l.options.geomType,
+          raster_band: l.options.rasterBand,
+        };
         const options = { ...l.options, ...newOptions };
         return { ...l, options };
       })
