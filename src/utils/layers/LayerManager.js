@@ -1,4 +1,4 @@
-import L from 'leaflet/dist/leaflet';
+import L from 'leaflet';
 import template from 'lodash/template';
 
 import { store } from 'main';
