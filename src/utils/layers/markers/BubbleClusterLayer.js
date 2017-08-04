@@ -1,4 +1,4 @@
-import L from 'leaflet/dist/leaflet';
+import L from 'leaflet';
 import { render } from 'react-dom';
 import InfoWindow from 'components/ui/InfoWindow';
 
