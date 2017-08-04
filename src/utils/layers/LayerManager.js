@@ -152,8 +152,8 @@ export default class LayerManager {
   }
 
   _getLegendValues(layerConfig, legendConfig, options) {
-    const layerConfigConverted = getObjectConversion(layerConfig, options, 'water');
-    const legendConfigConverted = getObjectConversion(legendConfig, options, 'water');
+    const layerConfigConverted = getObjectConversion(layerConfig, options, 'water', layerConfig.paramsConfig, layerConfig.sqlConfig);
+    const legendConfigConverted = getObjectConversion(legendConfig, options, 'water', layerConfig.paramsConfig, layerConfig.sqlConfig);
 
     // Save loader
     this._addLoader(layerConfig.id);
@@ -247,7 +247,7 @@ export default class LayerManager {
     switch (layerConfig.category) {
       case 'water': {
         // Parse config
-        const layerConfigConverted = getObjectConversion(layerConfig, options, 'water');
+        const layerConfigConverted = getObjectConversion(layerConfig, options, 'water', layerConfig.paramsConfig, layerConfig.sqlConfig);
         const layerConfigParsed = {
           ...layerConfigConverted,
           ...{ body: LayerManager._getLayerConfigParsed(layerConfigConverted) }
@@ -287,7 +287,7 @@ export default class LayerManager {
 
       case 'food': {
         // Parse config
-        const layerConfigConverted = getObjectConversion(layerConfig, options, 'food');
+        const layerConfigConverted = getObjectConversion(layerConfig, options, 'food', layerConfig.paramsConfig, layerConfig.sqlConfig);
 
         // Save loader
         this._addLoader(layerConfig.id);
@@ -317,7 +317,7 @@ export default class LayerManager {
           this._getLegendValues(layerConfig, legendConfig, options);
           return;
         }
-        const layerConfigConverted = getObjectConversion(layerConfig, options, 'water');
+        const layerConfigConverted = getObjectConversion(layerConfig, options, 'water', layerConfig.paramsConfig, layerConfig.sqlConfig);
         const layerConfigParsed = {
           ...layerConfigConverted,
           ...{ body: LayerManager._getLayerConfigParsed(layerConfigConverted) }

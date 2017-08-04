@@ -59,7 +59,7 @@ export default class SummaryCountry extends React.Component {
     const url = `https://wri-01.carto.com/api/v2/sql?q=
       with chstress as (SELECT iso, values from aqueduct_water_stress_country_ranking_bau where type = 'all' {{and}})
       SELECT impactparameter AS name, sum(value) AS value
-      FROM combined01_prepared WHERE impactparameter in ('Area', 'Yield','Share Pop. at risk of hunger') and scenario = 'SSP2-MIRO'
+      FROM combined01_prepared WHERE impactparameter in ('Area','Share Pop. at risk of hunger') and scenario = 'SSP2-MIRO'
       {{and1}} group by impactparameter union all select 'Water risk score' as name, values as value from chstress
     `;
 
@@ -69,7 +69,13 @@ export default class SummaryCountry extends React.Component {
       data: { url }
     });
 
-    const widgetConfigParsed = getObjectConversion(widgetConfig, this.props.filters, 'widget');
+    const widgetConfigParsed = getObjectConversion(
+      widgetConfig,
+      this.props.filters,
+      'widget',
+      widgetConfig.paramsConfig,
+      widgetConfig.sqlConfig
+    );
 
     this.setState({ loading: true });
 
@@ -80,19 +86,15 @@ export default class SummaryCountry extends React.Component {
         throw new Error(response.statusText);
       })
       .then((data) => {
-        const yieldData = (data.rows[0]) ? format('.3s')(data.rows[0].value) : '-';
-        const areaData = (data.rows[1]) ? format('.3s')(data.rows[1].value) : '-';
-        const popRiskHungerData = (data.rows[2]) ? format('.2f')(data.rows[2].value) : '-';
-        const score = (data.rows[3]) ? data.rows[3].value : '-';
+        const areaData = (data.rows[0]) ? format('.3s')(data.rows[0].value) : '-';
+        const popRiskHungerData = (data.rows[1]) ? format('.2f')(data.rows[1].value) : '-';
+        const score = (data.rows[2]) ? data.rows[2].value : '-';
 
         this._mounted && this.setState({
           score,
           fields: [{
             title: 'Water risk score',
             value: score
-          }, {
-            title: 'Yield',
-            value: `${yieldData} tons/ha`
           }, {
             title: 'Area',
             value: `${areaData} ha`

@@ -1,13 +1,15 @@
 import React from 'react';
 import classnames from 'classnames';
 import { dispatch } from 'main';
+
+// Components
 import WidgetButtons from 'components/widgets/WidgetButtons';
 import WidgetChart from 'containers/widgets/WidgetChart';
 import WidgetModal from 'components/modal/WidgetModal';
 import WidgetEmbedModal from 'components/modal/WidgetEmbedModal';
 import MapPDFModal from 'components/modal/MapPDFModal';
 import WidgetImageModal from 'components/modal/WidgetImageModal';
-import { Spinner, toggleModal } from 'aqueduct-components';
+import { Spinner, toggleModal, getObjectConversion } from 'aqueduct-components';
 
 class Widget extends React.Component {
 
@@ -83,7 +85,17 @@ class Widget extends React.Component {
   }
 
   render() {
-    const { name, description, widgetConfig, queryUrl } = this.props.widget;
+    const { widget } = this.props;
+    const widgetParsed = getObjectConversion(
+      widget,
+      this.props.filters,
+      widget.widgetConfig.dictionary || 'widget',
+      widget.widgetConfig.paramsConfig,
+      widget.widgetConfig.sqlConfig
+    );
+
+    const { name, description, widgetConfig, queryUrl } = widgetParsed;
+
     const className = classnames({
       [this.props.className]: !!this.props.className
     });
@@ -96,14 +108,17 @@ class Widget extends React.Component {
               <h2 className="widget-title">{name}</h2>
               <h3 className="widget-description">{description}</h3>
             </div>
+
             <WidgetButtons widgetElem={this.widgetElem} queryUrl={queryUrl} triggerAction={this.triggerAction} />
           </header>
+
           <div className="widget-content">
-            {/* <p style={{color: 'black'}}>{`${config.API_URL}/dataset/${dataset}/widget/${id}`}</p> */}
+            <p style={{color: 'black'}}>{`${config.API_URL}/dataset/${this.props.widget.dataset}/widget/${this.props.widget.id}`}</p>
+
             <Spinner isLoading={this.state.loading} />
+
             <WidgetChart
               config={widgetConfig}
-              filters={this.props.filters}
               toggleLoading={this.toggleLoading}
             />
           </div>
