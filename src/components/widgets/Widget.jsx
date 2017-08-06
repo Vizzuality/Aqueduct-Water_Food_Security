@@ -103,14 +103,16 @@ class Widget extends React.Component {
     return (
       <div className={`c-widget ${className}`} ref={el => this.widgetElem = el}>
         <div>
-          <header className="widget-header">
-            <div className="widget-titles">
-              <h2 className="widget-title">{name}</h2>
-              <h3 className="widget-description">{description}</h3>
-            </div>
+          {widgetConfig.type !== 'text' &&
+            <header className="widget-header">
+              <div className="widget-titles">
+                <h2 className="widget-title">{name}</h2>
+                <h3 className="widget-description">{description}</h3>
+              </div>
 
-            <WidgetButtons widgetElem={this.widgetElem} queryUrl={queryUrl} triggerAction={this.triggerAction} />
-          </header>
+              <WidgetButtons widgetElem={this.widgetElem} queryUrl={queryUrl} triggerAction={this.triggerAction} />
+            </header>
+          }
 
           <div className="widget-content">
             <p style={{color: 'black'}}>{`${config.API_URL}/dataset/${this.props.widget.dataset}/widget/${this.props.widget.id}`}</p>
