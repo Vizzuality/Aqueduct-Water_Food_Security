@@ -66,7 +66,7 @@ class WidgetText extends React.Component {
 
         const span = value !== '' ? `<span class="widget-text-token -${param.key}">${value}${suffix}</span>` : '';
 
-        template = template.replace(new RegExp(`{{${param.key}}}`, 'g'), span);
+        template = template.replace(new RegExp(`##${param.key}##`, 'g'), span);
       });
 
       return (
