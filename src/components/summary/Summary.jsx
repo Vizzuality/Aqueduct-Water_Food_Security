@@ -53,14 +53,32 @@ export default class SummaryCountry extends React.Component {
           { key: 'year', dictionary: 'food' },
           { key: 'commodity' }
         ]
+      },
+      {
+        key: 'and2',
+        keyParams: [
+          { key: 'iso' },
+          { key: 'year', dictionary: 'food' }
+        ]
       }
     ];
 
-    const url = `https://wri-01.carto.com/api/v2/sql?q=
+    const url = `https://wri-rw.carto.com/api/v2/sql?q=
       with chstress as (SELECT iso, values from aqueduct_water_stress_country_ranking_bau where type = 'all' {{and}})
+
       SELECT impactparameter AS name, sum(value) AS value
-      FROM combined01_prepared WHERE impactparameter in ('Area','Share Pop. at risk of hunger') and scenario = 'SSP2-MIRO'
-      {{and1}} group by impactparameter union all select 'Water risk score' as name, values as value from chstress
+      FROM combined01_prepared WHERE impactparameter in ('Area') and scenario = 'SSP2-MIRO'
+      {{and1}} group by impactparameter
+
+      UNION ALL
+
+      SELECT impactparameter AS name, sum(value) AS value
+      FROM combined01_prepared WHERE impactparameter in ('Share Pop. at risk of hunger') and scenario = 'SSP2-MIRO'
+      {{and2}} group by impactparameter
+
+      UNION ALL
+
+      SELECT 'Water risk score' as name, values as value FROM chstress
     `;
 
     const widgetConfig = Object.assign({}, {
@@ -86,21 +104,21 @@ export default class SummaryCountry extends React.Component {
         throw new Error(response.statusText);
       })
       .then((data) => {
-        const areaData = (data.rows[0]) ? format('.3s')(data.rows[0].value) : '-';
-        const popRiskHungerData = (data.rows[1]) ? format('.2f')(data.rows[1].value) : '-';
-        const score = (data.rows[2]) ? data.rows[2].value : '-';
+        const areaData = data.rows.find(r => r.name === 'Area');
+        const popRiskHungerData = data.rows.find(r => r.name === 'Share Pop. at risk of hunger');
+        const score = data.rows.find(r => r.name === 'Water risk score');
 
         this._mounted && this.setState({
           score,
           fields: [{
             title: 'Water risk score',
-            value: score
+            value: (score) ? score.value : '-'
           }, {
             title: 'Area',
-            value: `${areaData} ha`
+            value: `${(areaData) ? format('.3s')(areaData.value) : '-'} ha`
           }, {
             title: 'Pop. at risk of hunger',
-            value: `${popRiskHungerData}%`
+            value: `${(popRiskHungerData) ? format('.2f')(popRiskHungerData.value) : '-'} %`
           }],
           loading: false
         });
