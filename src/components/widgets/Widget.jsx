@@ -115,7 +115,7 @@ class Widget extends React.Component {
           }
 
           <div className="widget-content">
-            <p style={{color: 'black'}}>{`${config.API_URL}/dataset/${this.props.widget.dataset}/widget/${this.props.widget.id}`}</p>
+            {/* <p style={{color: 'black'}}>{`${config.API_URL}/dataset/${this.props.widget.dataset}/widget/${this.props.widget.id}`}</p> */}
 
             <Spinner isLoading={this.state.loading} />
 
