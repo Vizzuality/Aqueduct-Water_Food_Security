@@ -89,7 +89,7 @@ class Widget extends React.Component {
     const widgetParsed = getObjectConversion(
       widget,
       this.props.filters,
-      widget.widgetConfig.dictionary || 'widget',
+      widget.widgetConfig.dictionary || 'widget-2010',
       widget.widgetConfig.paramsConfig,
       widget.widgetConfig.sqlConfig
     );
