@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import { format } from 'd3-format';
 import { Spinner, getObjectConversion, capitalizeFirstLetter } from 'aqueduct-components';
@@ -43,7 +44,7 @@ export default class SummaryCountry extends React.Component {
         key: 'and',
         keyParams: [
           { key: 'iso' },
-          { key: 'year', dictionary: 'widget' }
+          { key: 'year', dictionary: 'widget-2010' }
         ]
       },
       {
@@ -90,7 +91,7 @@ export default class SummaryCountry extends React.Component {
     const widgetConfigParsed = getObjectConversion(
       widgetConfig,
       this.props.filters,
-      'widget',
+      'widget-2010',
       widgetConfig.paramsConfig,
       widgetConfig.sqlConfig
     );
@@ -155,6 +156,6 @@ export default class SummaryCountry extends React.Component {
 }
 
 SummaryCountry.propTypes = {
-  filters: React.PropTypes.object,
-  countries: React.PropTypes.array
+  filters: PropTypes.object,
+  countries: PropTypes.array
 };
