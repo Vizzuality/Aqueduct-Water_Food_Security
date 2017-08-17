@@ -9,6 +9,10 @@
     font-weight: 500;
     text-transform: capitalize;
 
+    &.-commodity {
+      text-transform: lowercase;
+    }
+
     &.-verb {
       margin: 0;
       color: $color-text-1;
