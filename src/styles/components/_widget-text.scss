@@ -9,7 +9,8 @@
     font-weight: 500;
     text-transform: capitalize;
 
-    &.-commodity {
+    &.-commodity,
+    &.-crop {
       text-transform: lowercase;
     }
 
