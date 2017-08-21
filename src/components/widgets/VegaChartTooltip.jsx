@@ -22,7 +22,7 @@ class VegaChartTooltip extends React.Component {
   getTable() {
     const { data, config } = this.props;
 
-    const title = this.parseValues(data[0][config.table.title.key], config.table.title.parse);
+    const title = this.parseValues(data[0][config.table.title.key], config.table.title.parse || {});
 
     return (
       <div>
@@ -43,7 +43,7 @@ class VegaChartTooltip extends React.Component {
                 <tr className="tooltip-list-item" key={i}>
                   {config.table.columns.map((item, j) => {
                     const key = item.key;
-                    const parse = item.parse;
+                    const parse = item.parse || {};
 
                     return (
                       <td key={j}>{this.parseValues(d[key], parse)}</td>
