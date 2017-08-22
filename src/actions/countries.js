@@ -4,6 +4,12 @@ import {
   GET_COUNTRIES_ERROR
 } from 'constants/countries';
 
+import {
+  SET_FILTERS
+} from 'constants/filters'
+
+import { store } from 'main';
+
 export function getCountries() {
   return (dispatch) => {
     const query = `https://wri-01.carto.com/api/v2/sql?q=
@@ -28,6 +34,16 @@ export function getCountries() {
         type: GET_COUNTRIES_LOADING,
         payload: false
       });
+
+      // Sets country name
+      const { filters } = store.getState();
+      const { country } = filters;
+      const countryName = ((data.rows || []).find(c => c.id === country) || {}).name;
+
+      dispatch({
+        type: SET_FILTERS,
+        payload: { countryName }
+      })
     })
     .catch((err) => {
       // Fetch from server ko -> Dispatch error

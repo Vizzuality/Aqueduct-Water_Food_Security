@@ -6,6 +6,7 @@ const initialState = {
   crop: 'all',
   scope: 'global',
   country: undefined,
+  countryName: undefined,
   period: 'year',
   period_value: 'baseline',
   year: 'baseline',
