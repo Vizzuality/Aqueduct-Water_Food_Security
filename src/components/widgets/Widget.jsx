@@ -107,7 +107,7 @@ class Widget extends React.Component {
             <header className="widget-header">
               <div className="widget-titles">
                 <h2 className="widget-title">{name}</h2>
-                <h3 className="widget-description">{description}</h3>
+                {/* <h3 className="widget-description">{description}</h3> */}
               </div>
 
               <WidgetButtons widgetElem={this.widgetElem} queryUrl={queryUrl} triggerAction={this.triggerAction} />
