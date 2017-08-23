@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import { format } from 'd3-format';
 import { Spinner, getObjectConversion, capitalizeFirstLetter } from 'aqueduct-components';
@@ -43,7 +44,7 @@ export default class SummaryCountry extends React.Component {
         key: 'and',
         keyParams: [
           { key: 'iso' },
-          { key: 'year', dictionary: 'widget' }
+          { key: 'year', dictionary: 'widget-2010' }
         ]
       },
       {
@@ -62,12 +63,15 @@ export default class SummaryCountry extends React.Component {
         ]
       }
     ];
+    const { crop } = this.props.filters;
+
+    const impactParameter = (crop !== 'all') ? `('Area', 'Yield')` : `('Area')`;
 
     const url = `https://wri-rw.carto.com/api/v2/sql?q=
       with chstress as (SELECT iso, values from aqueduct_water_stress_country_ranking_bau where type = 'all' {{and}})
 
       SELECT impactparameter AS name, sum(value) AS value
-      FROM combined01_prepared WHERE impactparameter in ('Area') and scenario = 'SSP2-MIRO'
+      FROM combined01_prepared WHERE impactparameter in ${impactParameter} and scenario = 'SSP2-MIRO'
       {{and1}} group by impactparameter
 
       UNION ALL
@@ -90,7 +94,7 @@ export default class SummaryCountry extends React.Component {
     const widgetConfigParsed = getObjectConversion(
       widgetConfig,
       this.props.filters,
-      'widget',
+      'widget-2010',
       widgetConfig.paramsConfig,
       widgetConfig.sqlConfig
     );
@@ -108,18 +112,29 @@ export default class SummaryCountry extends React.Component {
         const popRiskHungerData = data.rows.find(r => r.name === 'Share Pop. at risk of hunger');
         const score = data.rows.find(r => r.name === 'Water risk score');
 
+        const fields = [{
+          title: 'Water risk score',
+          value: (score) ? score.value : '-'
+        }, {
+          title: 'Area',
+          value: `${(areaData) ? format('.3s')(areaData.value) : '-'} ha`
+        }, {
+          title: 'Pop. at risk of hunger',
+          value: `${(popRiskHungerData) ? format('.2f')(popRiskHungerData.value) : '-'} %`
+        }];
+
+        // Adds Yield field if there is a crop selected
+        if(crop !== 'all') {
+          const yieldData = (data.rows[0]) ? format('.3s')(data.rows[0].value) : '-';
+          fields.splice(1, 0, {
+            title: 'Yield',
+            value: `${yieldData} tons/ha`
+          });
+        }
+
         this._mounted && this.setState({
           score,
-          fields: [{
-            title: 'Water risk score',
-            value: (score) ? score.value : '-'
-          }, {
-            title: 'Area',
-            value: `${(areaData) ? format('.3s')(areaData.value) : '-'} ha`
-          }, {
-            title: 'Pop. at risk of hunger',
-            value: `${(popRiskHungerData) ? format('.2f')(popRiskHungerData.value) : '-'} %`
-          }],
+          fields,
           loading: false
         });
       });
@@ -155,6 +170,6 @@ export default class SummaryCountry extends React.Component {
 }
 
 SummaryCountry.propTypes = {
-  filters: React.PropTypes.object,
-  countries: React.PropTypes.array
+  filters: PropTypes.object,
+  countries: PropTypes.array
 };
