@@ -82,7 +82,10 @@ export default class LayerManager {
   _setMarkers(layer, zoomLevels) {
     const { id } = layer || {};
     const { prevZoom, nextZoom } = zoomLevels || {};
-    const { scope, country } = store.getState().filters;
+    const { filters, compare } = store.getState()
+    const { scope, country } = filters;
+    const { countries } = compare;
+
     let markers = [];
     let markerConfig = {};
 
@@ -95,9 +98,11 @@ export default class LayerManager {
 
     markerConfig = LayerManager._getMarkerConfig(this._markerLayers[id]);
 
-    markers = scope === 'country' && country ?
-      this._markerLayers[id].filter(marker => marker.properties.iso === country) :
-      this._getMarkersByZoom(layer, nextZoom);
+    markers = this._getMarkersByZoom(layer, nextZoom);
+
+    if (scope === 'country' && layer.country) {
+      markers = this._markerLayers[id].filter(marker => marker.properties.iso === layer.country)
+    }
 
     this._addMarkers(markers, layer, markerConfig);
   }
