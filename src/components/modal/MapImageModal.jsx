@@ -2,7 +2,7 @@ import React from 'react';
 import domtoimage from 'dom-to-image';
 import snakeCase from 'lodash/snakeCase';
 import WidgetChart from 'containers/widgets/WidgetChart';
-import { Spinner, saveAsFile } from 'aqueduct-components';
+import { Spinner, getObjectConversion, saveAsFile } from 'aqueduct-components';
 
 export default class WidgetImageModal extends React.Component {
 
@@ -37,7 +37,16 @@ export default class WidgetImageModal extends React.Component {
   }
 
   render() {
-    const { name, description, widgetConfig } = this.props.widget;
+    const { widget, filters } = this.props;
+    const widgetParsed = getObjectConversion(
+      widget,
+      filters,
+      widget.widgetConfig.dictionary || 'widget-2010',
+      widget.widgetConfig.paramsConfig,
+      widget.widgetConfig.sqlConfig
+    );
+
+    const { name, description } = widgetParsed;
 
     return (
       <div className="c-widget-image-modal">
@@ -55,7 +64,11 @@ export default class WidgetImageModal extends React.Component {
                     </header>
                     <div className="widget-content">
                       <Spinner isLoading={this.state.loading} />
-                      <WidgetChart config={widgetConfig} filters={this.props.filters} toggleLoading={() => this.toggleLoading()} />
+                      <WidgetChart
+                        widget={widget}
+                        filters={filters}
+                        toggleLoading={() => this.toggleLoading()}
+                      />
                     </div>
                   </div>
                 </div>

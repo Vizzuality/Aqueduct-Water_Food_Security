@@ -85,10 +85,10 @@ class Widget extends React.Component {
   }
 
   render() {
-    const { widget } = this.props;
+    const { widget, filters } = this.props;
     const widgetParsed = getObjectConversion(
       widget,
-      this.props.filters,
+      filters,
       widget.widgetConfig.dictionary || 'widget-2010',
       widget.widgetConfig.paramsConfig,
       widget.widgetConfig.sqlConfig
@@ -110,7 +110,11 @@ class Widget extends React.Component {
                 {/* <h3 className="widget-description">{description}</h3> */}
               </div>
 
-              <WidgetButtons widgetElem={this.widgetElem} queryUrl={queryUrl} triggerAction={this.triggerAction} />
+              <WidgetButtons
+                widgetElem={this.widgetElem}
+                queryUrl={queryUrl}
+                triggerAction={this.triggerAction}
+              />
             </header>
           }
 
@@ -120,6 +124,8 @@ class Widget extends React.Component {
             <Spinner isLoading={this.state.loading} />
 
             <WidgetChart
+              widget={widget}
+              filters={filters}
               config={widgetConfig}
               toggleLoading={this.toggleLoading}
             />

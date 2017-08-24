@@ -3,14 +3,22 @@ import React from 'react';
 import WidgetText from 'components/widgets/WidgetText';
 import theme from 'data/vega-theme.json';
 import VegaChart from 'components/widgets/VegaChart';
+import { getObjectConversion } from 'aqueduct-components';
 
 function WidgetChart(props) {
-  const { config } = props;
+  const { widget, filters } = props;
+  const widgetParsed = getObjectConversion(
+    widget,
+    filters,
+    widget.widgetConfig.dictionary || 'widget-2010',
+    widget.widgetConfig.paramsConfig,
+    widget.widgetConfig.sqlConfig
+  );
 
-  if (config.type === 'text') {
+  if (widget.widgetConfig.type === 'text') {
     return (
       <WidgetText
-        widgetConfig={config}
+        widgetConfig={widgetParsed.widgetConfig}
         toggleLoading={props.toggleLoading}
       />);
   }
@@ -18,7 +26,7 @@ function WidgetChart(props) {
   return (
     <VegaChart
       theme={theme}
-      data={config}
+      data={widgetParsed.widgetConfig}
       toggleLoading={props.toggleLoading}
       toggleTooltip={props.toggleTooltip}
     />
@@ -26,7 +34,8 @@ function WidgetChart(props) {
 }
 
 WidgetChart.propTypes = {
-  config: React.PropTypes.object,
+  widget: React.PropTypes.object,
+  filters: React.PropTypes.object,
   toggleLoading: React.PropTypes.func,
   toggleTooltip: React.PropTypes.func
 };

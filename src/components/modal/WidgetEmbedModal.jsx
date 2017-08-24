@@ -1,6 +1,6 @@
 import React from 'react';
 import WidgetChart from 'containers/widgets/WidgetChart';
-import { Spinner, CustomSelect } from 'aqueduct-components';
+import { Spinner, CustomSelect, getObjectConversion } from 'aqueduct-components';
 
 const embedOptions = [
   { label: 'Small (320x420 pixels)', value: '320x420' },
@@ -101,17 +101,31 @@ export default class WidgetEmbedModal extends React.Component {
       copyButtonContent = 'Copy it manually';
     }
 
+    const { widget, filters } = this.props;
+    const widgetParsed = getObjectConversion(
+      widget,
+      filters,
+      widget.widgetConfig.dictionary || 'widget-2010',
+      widget.widgetConfig.paramsConfig,
+      widget.widgetConfig.sqlConfig
+    );
+
+    const { name, description, widgetConfig, queryUrl } = widgetParsed;
+
     return (
       <div className="c-embed">
         <div className="row expanded">
           <div className="small-12 large-8 columns">
             <div className="title">
-              {this.props.widget.name}
-              {this.props.widget.subtitle && <span className="subtitle">{this.props.widget.subtitle}</span>}
+              {name}
             </div>
             <div className="widget">
               <Spinner isLoading={this.state.loading} />
-              <WidgetChart config={this.props.widget.widgetConfig} filters={this.props.filters} toggleLoading={this.toggleLoading} />
+              <WidgetChart
+                widget={widget}
+                filters={filters}
+                toggleLoading={this.toggleLoading}
+              />
             </div>
           </div>
           <div className="small-12 large-4 columns sidebar">
