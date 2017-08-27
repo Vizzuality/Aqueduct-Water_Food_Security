@@ -17,12 +17,14 @@ class Widget extends React.Component {
     super(props);
 
     this.state = {
-      loading: true
+      loading: true,
+      visibility: true
     };
 
     // BINDINGS
     this.triggerAction = this.triggerAction.bind(this);
     this.toggleLoading = this.toggleLoading.bind(this);
+    this.toggleVisibility = this.toggleVisibility.bind(this);
   }
 
   componentDidMount() {
@@ -84,6 +86,10 @@ class Widget extends React.Component {
     this.mounted && this.setState({ loading: bool });
   }
 
+  toggleVisibility(bool) {
+    this.mounted && this.setState({ visibility: bool });
+  }
+
   render() {
     const { widget, filters } = this.props;
     const widgetParsed = getObjectConversion(
@@ -97,7 +103,8 @@ class Widget extends React.Component {
     const { name, description, widgetConfig, queryUrl } = widgetParsed;
 
     const className = classnames({
-      [this.props.className]: !!this.props.className
+      [this.props.className]: !!this.props.className,
+      '-hidden': !this.state.visibility
     });
 
     return (
@@ -128,6 +135,7 @@ class Widget extends React.Component {
               filters={filters}
               config={widgetConfig}
               toggleLoading={this.toggleLoading}
+              toggleVisibility={this.toggleVisibility}
             />
           </div>
         </div>

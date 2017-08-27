@@ -21,7 +21,7 @@ export default class VegaChart extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return !isEqual(nextProps.data, this.props.data);
+    return !isEqual(nextProps.widgetConfig, this.props.widgetConfig);
   }
 
   componentDidUpdate() {
@@ -42,18 +42,29 @@ export default class VegaChart extends React.Component {
   }
 
   parseVega() {
+    const { data, widgetConfig } = this.props;
+
     const defaultPadding = { left: 20, right: 20 };
-    const padding = this.props.data.padding || defaultPadding;
+    const padding = widgetConfig.padding || defaultPadding;
+
     const size = {
       width: this.width - padding.left - padding.right,
-      height: this.props.data.height || 260
+      height: widgetConfig.height || 260
     };
 
-    const data = Object.assign({}, this.props.data, size);
+    delete widgetConfig.data[0].format;
+    delete widgetConfig.data[0].url;
+
+    widgetConfig.data[0] = {
+      ...widgetConfig.data[0],
+      values: data
+    }
+
+    const config = Object.assign({}, widgetConfig, size);
 
     this.mounted && this.props.toggleLoading && this.props.toggleLoading(true);
 
-    vega.parse.spec(data, this.props.theme, (err, chart) => {
+    vega.parse.spec(config, this.props.theme, (err, chart) => {
       if (!this.mounted) {
         return;
       }
@@ -67,7 +78,7 @@ export default class VegaChart extends React.Component {
         vis.update();
 
         // TOOLTIP
-        const tooltip = data.interactionConfig && data.interactionConfig.find(i => i.name === 'tooltip');
+        const tooltip = config.interactionConfig && config.interactionConfig.find(i => i.name === 'tooltip');
         if (tooltip) {
           const type = tooltip.type;
           const config = tooltip.config;
@@ -146,6 +157,7 @@ export default class VegaChart extends React.Component {
 
 VegaChart.propTypes = {
   // Define the chart data
+  widgetConfig: React.PropTypes.any.isRequired,
   data: React.PropTypes.any.isRequired,
   theme: React.PropTypes.object,
   toggleLoading: React.PropTypes.func,
