@@ -8,9 +8,17 @@ export default class CompareList extends React.Component {
 
   getItems() {
     const items = [];
+
     for (let i = 0; i < this.props.items; i += 1) {
-      const filters = Object.assign({}, this.props.filters, { country: this.props.countries[i] });
-      const layersActive = this.props.layersActive.map(l => Object.assign({}, l, { country: this.props.countries[i] }));
+      const filters = Object.assign({}, this.props.filters, {
+        country: this.props.countries[i],
+        countryName: ((this.props.countryList || []).find(c => c.id === this.props.countries[i]) || {}).name
+      });
+
+      const layersActive = this.props.layersActive.map(l => Object.assign({}, l, {
+        country: this.props.countries[i],
+        countryName: ((this.props.countryList || []).find(c => c.id === this.props.countries[i]) || {}).name
+      }));
 
       items.push(
         <CompareItem

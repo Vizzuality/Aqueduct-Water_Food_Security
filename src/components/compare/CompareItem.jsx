@@ -102,8 +102,15 @@ export default class CompareItem extends React.Component {
         }
         {showWidgets &&
           <section className="compareitem-widgets">
-            <Summary filters={this.props.filters} countries={this.props.countryList} />
-            <WidgetList filters={this.props.filters} loading={this.props.loading} widgetsActive={this.props.widgetsActive} />
+            <Summary
+              filters={this.props.filters}
+              countries={this.props.countryList}
+            />
+            <WidgetList
+              filters={this.props.filters}
+              loading={this.props.loading}
+              widgetsActive={this.props.widgetsActive}
+            />
           </section>
         }
       </div>
