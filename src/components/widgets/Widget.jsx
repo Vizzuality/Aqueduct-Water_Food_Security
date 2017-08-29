@@ -17,12 +17,14 @@ class Widget extends React.Component {
     super(props);
 
     this.state = {
-      loading: true
+      loading: true,
+      visibility: true
     };
 
     // BINDINGS
     this.triggerAction = this.triggerAction.bind(this);
     this.toggleLoading = this.toggleLoading.bind(this);
+    this.toggleVisibility = this.toggleVisibility.bind(this);
   }
 
   componentDidMount() {
@@ -84,11 +86,15 @@ class Widget extends React.Component {
     this.mounted && this.setState({ loading: bool });
   }
 
+  toggleVisibility(bool) {
+    this.mounted && this.setState({ visibility: bool });
+  }
+
   render() {
-    const { widget } = this.props;
+    const { widget, filters } = this.props;
     const widgetParsed = getObjectConversion(
       widget,
-      this.props.filters,
+      filters,
       widget.widgetConfig.dictionary || 'widget-2010',
       widget.widgetConfig.paramsConfig,
       widget.widgetConfig.sqlConfig
@@ -97,7 +103,8 @@ class Widget extends React.Component {
     const { name, description, widgetConfig, queryUrl } = widgetParsed;
 
     const className = classnames({
-      [this.props.className]: !!this.props.className
+      [this.props.className]: !!this.props.className,
+      '-hidden': !this.state.visibility
     });
 
     return (
@@ -110,7 +117,11 @@ class Widget extends React.Component {
                 {/* <h3 className="widget-description">{description}</h3> */}
               </div>
 
-              <WidgetButtons widgetElem={this.widgetElem} queryUrl={queryUrl} triggerAction={this.triggerAction} />
+              <WidgetButtons
+                widgetElem={this.widgetElem}
+                queryUrl={queryUrl}
+                triggerAction={this.triggerAction}
+              />
             </header>
           }
 
@@ -120,8 +131,11 @@ class Widget extends React.Component {
             <Spinner isLoading={this.state.loading} />
 
             <WidgetChart
+              widget={widget}
+              filters={filters}
               config={widgetConfig}
               toggleLoading={this.toggleLoading}
+              toggleVisibility={this.toggleVisibility}
             />
           </div>
         </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import WidgetChart from 'containers/widgets/WidgetChart';
-import { Spinner } from 'aqueduct-components';
+import { Spinner, getObjectConversion } from 'aqueduct-components';
 
 export default class InfoModal extends React.Component {
 
@@ -28,16 +28,24 @@ export default class InfoModal extends React.Component {
   render() {
     const notAvailable = 'Not available';
 
+    const { widget, filters } = this.props;
+    const widgetParsed = getObjectConversion(
+      widget,
+      filters,
+      widget.widgetConfig.dictionary || 'widget-2010',
+      widget.widgetConfig.paramsConfig,
+      widget.widgetConfig.sqlConfig
+    );
+
+    const { name, description, metadata, widgetConfig, queryUrl } = widgetParsed;
+
+
     return (
       <div className="c-info">
         <div className="info-header">
           <div className="info-titles">
-            <span className="info-title">{this.props.widget.name}</span>
-            {this.props.widget.subtitle &&
-              <span className="info-subtitle">{this.props.widget.subtitle}</span>
-            }
+            <span className="info-title">{name}</span>
           </div>
-          {/* <button className="c-btn -primary" type="button">Download</button> */}
         </div>
         <div className="info-content">
           <div className="row expanded">
@@ -45,7 +53,11 @@ export default class InfoModal extends React.Component {
               <div className="info-widget">
                 <div className="widget-content">
                   <Spinner isLoading={this.state.loading} />
-                  <WidgetChart config={this.props.widget.widgetConfig} filters={this.props.filters} toggleLoading={this.toggleLoading} />
+                  <WidgetChart
+                    widget={widget}
+                    filters={filters}
+                    toggleLoading={this.toggleLoading}
+                  />
                 </div>
               </div>
             </div>
@@ -53,15 +65,15 @@ export default class InfoModal extends React.Component {
               <div className="info-description">
                 <dl>
                   <dt>Description:</dt>
-                  <dd>{this.props.widget.metadata && this.props.widget.metadata.description || notAvailable}</dd>
+                  <dd>{metadata && metadata.description || notAvailable}</dd>
                   <dt>Language:</dt>
-                  <dd>{this.props.widget.metadata && this.props.widget.metadata.language || notAvailable}</dd>
+                  <dd>{metadata && metadata.language || notAvailable}</dd>
                   <dt>Source:</dt>
-                  <dd>{this.props.widget.metadata && this.props.widget.metadata.source || notAvailable}</dd>
+                  <dd>{metadata && metadata.source || notAvailable}</dd>
                   <dt>Citation:</dt>
-                  <dd>{this.props.widget.metadata && this.props.widget.metadata.citation || notAvailable}</dd>
+                  <dd>{metadata && metadata.citation || notAvailable}</dd>
                   <dt>License:</dt>
-                  <dd>{this.props.widget.metadata && this.props.widget.metadata.license || notAvailable}</dd>
+                  <dd>{metadata && metadata.license || notAvailable}</dd>
                 </dl>
               </div>
             </div>

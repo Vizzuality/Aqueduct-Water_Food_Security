@@ -1,5 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
+import isEqual from 'lodash/isEqual';
+
 import Widget from 'components/widgets/Widget';
 import { Spinner } from 'aqueduct-components';
 
@@ -10,6 +12,19 @@ export default class WidgetList extends React.Component {
 
     this.state = {
     };
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const { widget: nextWidgetsActive, filters: nextFilters } = nextProps;
+    const { widgetsActive, filters } = this.props;
+    if (
+      !isEqual(nextWidgetsActive, widgetsActive) ||
+      !isEqual(nextFilters, filters)
+    ) {
+      return true;
+    }
+
+    return false;
   }
 
   // Return a array of Widget components
@@ -24,7 +39,7 @@ export default class WidgetList extends React.Component {
 
     widgetsActive.forEach((widget, index) => {
       widgetList.push(
-        <div key={index} className={`column ${gridClass}`}>
+        <div key={widget.id} className={`column ${gridClass}`}>
           <Widget widget={widget} filters={filters} />
         </div>
       );
@@ -34,6 +49,7 @@ export default class WidgetList extends React.Component {
 
   render() {
     const widgetList = this.getWidgets();
+
     return (
       <div className="c-widget-list">
         {this.props.loading ?
