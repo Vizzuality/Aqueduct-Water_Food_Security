@@ -62,6 +62,7 @@ const getActiveLayers = (_datasets, _filters) => {
           ...currentLayer.attributes,
           id: currentLayer.id,
           name: layerSpecAttrs.name,
+          country: _filters.country,
           category: layerSpecAttrs.category,
           options: layerSpecAttrs.layerOptions,
           metadata

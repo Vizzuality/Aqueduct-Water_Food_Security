@@ -10,6 +10,8 @@ export default class CompareList extends React.Component {
     const items = [];
     for (let i = 0; i < this.props.items; i += 1) {
       const filters = Object.assign({}, this.props.filters, { country: this.props.countries[i] });
+      const layersActive = this.props.layersActive.map(l => Object.assign({}, l, { country: this.props.countries[i] }));
+
       items.push(
         <CompareItem
           key={`${this.props.countries[i]}-${i}`}
@@ -19,7 +21,7 @@ export default class CompareList extends React.Component {
           index={i}
           country={this.props.countries[i]}
           countryList={this.props.countryList}
-          layersActive={this.props.layersActive}
+          layersActive={layersActive}
         />
       );
     }
