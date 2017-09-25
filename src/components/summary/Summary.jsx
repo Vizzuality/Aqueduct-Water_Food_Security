@@ -44,7 +44,7 @@ export default class SummaryCountry extends React.Component {
         key: 'and',
         keyParams: [
           { key: 'iso' },
-          { key: 'year', dictionary: 'widget-2010' }
+          { key: 'year', dictionary: 'widget-2014' }
         ]
       },
       {
@@ -68,7 +68,7 @@ export default class SummaryCountry extends React.Component {
     const impactParameter = (crop !== 'all') ? `('Area', 'Yield')` : `('Area')`;
 
     const url = `https://wri-rw.carto.com/api/v2/sql?q=
-      with chstress as (SELECT iso, values from aqueduct_water_stress_country_ranking_bau where type = 'all' {{and}})
+      with a as(SELECT iso, avg(value) as value FROM water_risk_rankings_v3 WHERE indicator='water_stress' {{and}} and value is not null group by iso order by iso asc)
 
       SELECT impactparameter AS name, sum(value) AS value
       FROM combined01_prepared WHERE impactparameter in ${impactParameter} and scenario = 'SSP2-MIRO'
@@ -82,8 +82,7 @@ export default class SummaryCountry extends React.Component {
 
       UNION ALL
 
-      SELECT 'Water risk score' as name, values as value FROM chstress
-    `;
+      SELECT 'Water risk score' as name, value as value from a`;
 
     const widgetConfig = Object.assign({}, {
       sqlConfig,
@@ -114,7 +113,7 @@ export default class SummaryCountry extends React.Component {
 
         const fields = [{
           title: 'Water risk score',
-          value: (score) ? score.value : '-'
+          value: (score) ? format('.2f')(score.value) : '-'
         }, {
           title: 'Area',
           value: `${(areaData) ? format('.3s')(areaData.value) : '-'} ha`
