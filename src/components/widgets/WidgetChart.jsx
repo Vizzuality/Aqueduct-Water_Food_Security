@@ -72,7 +72,7 @@ class WidgetChart extends React.Component {
   render() {
     const { widgetConfig, data } = this.state;
 
-    if (!!data.length && widgetConfig.type === 'text') {
+    if (widgetConfig.type === 'text') {
       return (
         <WidgetText
           widgetConfig={widgetConfig}

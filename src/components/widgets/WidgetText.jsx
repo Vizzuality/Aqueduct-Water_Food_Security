@@ -22,15 +22,18 @@ class WidgetText extends React.Component {
 
         template = template.replace(new RegExp(`##${param.key}##`, 'g'), span);
       });
-
-      return (
-        <div className="c-widget-text">
-          <p dangerouslySetInnerHTML={{ __html: template }} />
-        </div>
-      );
+    } else {
+      templateConfig.forEach((param) => {
+        template = template.replace(new RegExp(`##${param.key}##`, 'g'), 'No data');
+      });
     }
 
-    return null;
+    return (
+      <div className="c-widget-text">
+        <p dangerouslySetInnerHTML={{ __html: template }} />
+      </div>
+    );
+
   }
 }
 

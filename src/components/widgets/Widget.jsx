@@ -90,6 +90,14 @@ class Widget extends React.Component {
     this.mounted && this.setState({ visibility: bool });
   }
 
+  getMinHeight(widgetConfig) {
+    const height = widgetConfig.height || 0;
+    const paddingTop = (widgetConfig.padding) ? widgetConfig.padding.top : 0;
+    const paddingBottom = (widgetConfig.padding) ? widgetConfig.padding.bottom : 0;
+
+    return height + paddingTop + paddingBottom;
+  }
+
   render() {
     const { widget, filters } = this.props;
     const widgetParsed = getObjectConversion(
@@ -103,8 +111,7 @@ class Widget extends React.Component {
     const { name, description, widgetConfig, queryUrl } = widgetParsed;
 
     const className = classnames({
-      [this.props.className]: !!this.props.className,
-      '-hidden': !this.state.visibility
+      [this.props.className]: !!this.props.className
     });
 
     return (
@@ -125,8 +132,26 @@ class Widget extends React.Component {
             </header>
           }
 
-          <div className="widget-content">
+          <div
+            className="widget-content"
+            style={{
+              minHeight: this.getMinHeight(widgetConfig)
+            }}
+          >
             {/* <p style={{color: 'black'}}>{`${config.API_URL}/dataset/${this.props.widget.dataset}/widget/${this.props.widget.id}`}</p> */}
+            {!this.state.visibility &&
+              <div
+                style={{
+                  position: (widgetConfig.type === 'text') ? 'absolute' : 'relative',
+                  top: 0,
+                  left: 0,
+                  minHeight: this.getMinHeight(widgetConfig)
+                }}
+                className="widget-noresults"
+              >
+                  No data available
+              </div>
+            }
 
             <Spinner isLoading={this.state.loading} />
 
