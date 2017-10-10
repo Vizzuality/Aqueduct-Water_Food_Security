@@ -1,5 +1,6 @@
 import React from 'react';
 import { dispatch } from 'main';
+import capitalize from 'lodash/capitalize';
 
 // Components
 import Sidebar from 'containers/ui/Sidebar';
@@ -32,9 +33,6 @@ import {
 } from 'aqueduct-components';
 
 export default class MapPageDesktop extends React.Component {
-  static getMapHeaderTemplate() {
-    return '{{scope}} {{country}} {{indicator}} {{irrigation}} {{crop}} Producing Areas';
-  }
 
   // MODAL EVENTS
   static toggleShareModal() {
@@ -86,6 +84,269 @@ export default class MapPageDesktop extends React.Component {
     this.setState({
       mapElem
     });
+  }
+
+  getMapHeaderTemplate() {
+    const { scope, crop, year, type, indicator, food, irrigation, countryName } = this.props.filters;
+    const existsIndicator = indicator !== 'none';
+    const existsFood = food !== 'none';
+    const typeString = type === 'change_from_baseline' ? 'Change in Baseline' : capitalize(type);
+    const foodDatasetName = existsFood ? (this.props.datasets.find(dataset => dataset.id === food) || {}).name : null;
+    const waterDatasetName = existsIndicator ? (this.props.datasets.find(dataset => dataset.id === indicator) || {}).name : null;
+    const cropName = crop !== 'all' ? (CROP_OPTIONS.find(cr => cr.value === crop) ||{}).label : null;
+    const irrigationString = irrigation.map(irr => capitalize(irr)).join('/');
+    const isWaterStress = indicator === '4b000ded-5f4d-4dbd-83c9-03f2dfcd36db';
+    const isSeasonalVariability = indicator === 'd9785282-2140-463f-a82d-f7296687055a';
+
+    // Global, all crops, baseline
+    if (scope === 'global' && crop === 'all' && year === 'baseline') {
+
+      // only "irrigated" or "rainfed" is selected
+      if(!existsIndicator && !existsFood && irrigation.length === 1) {
+        return `Global ${capitalize(irrigationString)} Crop Producing Areas`;
+      }
+
+      // water dataset selected
+      if (existsIndicator && !existsFood) {
+        return `Global Risk of ${waterDatasetName} in ${irrigationString} Crop Producing Areas`;
+      }
+
+      // food and water datasets are selected
+      if (existsFood && existsIndicator) {
+        return `Global Risk of ${waterDatasetName} in ${irrigationString} Crop Producing Areas & ${foodDatasetName}`;
+      }
+
+      // food dataset is selected
+      if (existsFood && !existsIndicator) {
+        return `Global ${irrigationString} Crop Producing Areas & ${foodDatasetName}`;
+      }
+
+      // "all crops" is selected
+      return 'Global Irrigated & Rainfed Crop Producing Areas';
+    }
+
+    // Global, one crop, baseline
+    if (scope === "global" && crop !== 'all' && year === 'baseline') {
+
+      // only "irrigated" or "rainfed" is selected
+      if(!existsIndicator && !existsFood && irrigation.length === 1) {
+        return `Global ${capitalize(irrigationString)} ${cropName} Producing Areas`;
+      }
+
+      // water dataset selected
+      if (existsIndicator && !existsFood) {
+        return `Global Risk of ${waterDatasetName} in ${irrigationString} ${cropName} Producing Areas`;
+      }
+
+      // food and water datasets are selected
+      if (existsFood && existsIndicator) {
+        return `Global Risk of ${waterDatasetName} in ${irrigationString} ${cropName} Producing Areas & ${foodDatasetName}`;
+      }
+
+      // food dataset is selected
+      if (existsFood && !existsIndicator) {
+        return `Global ${irrigationString} ${cropName} Producing Areas & ${foodDatasetName}`;
+      }
+
+      return `Global Irrigated & Rainfed ${cropName} Producing Areas`;
+    }
+
+    // Global, all crops, [change in] future year
+    if (scope === "global" && crop === 'all' && year !== 'baseline') {
+
+      // only "irrigated" or "rainfed" is selected
+      if(!existsIndicator && !existsFood && irrigation.length === 1) {
+        return `Global ${capitalize(irrigationString)} Crop Producing Areas`;
+      }
+
+      // water risk indicators of water stress or seasonal variability are selected
+      if ((isWaterStress || isSeasonalVariability) && !existsFood) {
+        return `Projected ${typeString} Global Risk of ${waterDatasetName} in ${year} in ${irrigationString} Crop Producing Areas`;
+      }
+
+      // water risk indicators of water stress or seasonal variability and a food security dataset is selected
+      if ((isWaterStress || isSeasonalVariability) && existsFood) {
+        return `Projected ${typeString} Global Risk of ${waterDatasetName} in ${year} in ${irrigationString}
+          Crop Producing Areas & ${year} ${foodDatasetName}`;
+      }
+
+      // food security dataset is selected and indicator (not water stress or seasonal variability)
+      if (existsIndicator && (!isWaterStress && !isSeasonalVariability) && existsFood) {
+        return `Global Risk of ${waterDatasetName} in ${irrigationString} Crop Producing Areas &
+          Projected ${year} ${foodDatasetName}`;
+      }
+
+      // food security dataset are selected but no water risk indicator
+      if (existsFood && !existsIndicator) {
+        return `Global ${irrigationString} Crop Producing Areas & Projected ${year} ${foodDatasetName}`;
+      }
+
+      // only “all crops” is selected
+      return "Global Irrigated & Rainfed Crop Producing Areas";
+    }
+
+    // Global, one crops, [change in] future year
+    if (scope === "global" && crop !== 'all' && year !== 'baseline') {
+
+      // only "irrigated" or "rainfed" is selected
+      if(!existsIndicator && !existsFood && irrigation.length === 1) {
+        return `Global ${capitalize(irrigationString)} ${cropName} Producing Areas`;
+      }
+
+      // water risk indicators of water stress or seasonal variability are selected
+      if ((isWaterStress || isSeasonalVariability) && !existsFood) {
+        return `Projected ${typeString} Global Risk of ${waterDatasetName} in ${year} in ${irrigationString} ${cropName} Producing Areas`;
+      }
+
+      // water risk indicators of water stress or seasonal variability and a food security dataset is selected
+      if ((isWaterStress || isSeasonalVariability) && existsFood) {
+        return `Projected ${typeString} Global Risk of ${waterDatasetName} in ${year} in ${irrigationString}
+        ${cropName} Producing Areas & ${year} ${foodDatasetName}`;
+      }
+
+      // food security dataset are selected but no water risk indicator
+      if (existsFood && !existsIndicator) {
+        return `Global ${irrigationString} ${cropName} Producing Areas & Projected ${year} ${foodDatasetName}`;
+      }
+
+      // only “all crops” is selected
+      return `Global Irrigated & Rainfed ${cropName} Producing Areas`;
+    }
+
+    // Country, all crops, baseline
+    if (scope === 'country' && crop === 'all' && year === 'baseline' && countryName) {
+
+      // only "irrigated" or "rainfed" is selected
+      if(!existsIndicator && !existsFood && irrigation.length === 1) {
+        return `${capitalize(irrigationString)} Crop Producing Areas in ${countryName}`;
+      }
+
+      // any water dataset selected
+      if (existsIndicator && !existsFood) {
+        return `Risk of ${waterDatasetName} in ${irrigationString} Crop Producing Areas in ${countryName}`;
+      }
+
+      // food and water datasets are selected
+      if (existsFood && existsIndicator) {
+        return `Risk of ${waterDatasetName} in ${irrigationString} Crop Producing Areas & ${foodDatasetName} in ${countryName}`;
+      }
+
+      // food dataset is selected
+      if (existsFood && !existsIndicator) {
+        return `${irrigationString} Crop Producing Areas & ${foodDatasetName} in ${countryName}`;
+      }
+
+      return `Irrigated & Rainfed Crop Producing Areas in ${countryName}`;
+    }
+
+    // Country, one crop, baseline
+    if (scope === 'country' && crop !== 'all' && year === 'baseline' && countryName) {
+
+      // only "irrigated" or "rainfed" is selected
+      if(!existsIndicator && !existsFood && irrigation.length === 1) {
+        return `${capitalize(irrigationString)} ${cropName} Producing Areas in ${countryName}`;
+      }
+
+      // water dataset selected
+      if (existsIndicator && !existsFood) {
+        return `Risk of ${waterDatasetName} in ${irrigationString} ${cropName} Producing Areas in ${countryName}`;
+      }
+
+      // food and water datasets are selected
+      if (existsFood && existsIndicator) {
+        return `Risk of ${waterDatasetName} in ${irrigationString} ${cropName} Producing Areas & ${foodDatasetName} in ${countryName}`;
+      }
+
+      // food dataset is selected
+      if (existsFood && !existsIndicator) {
+        return `${irrigationString} ${cropName} Producing Areas & ${foodDatasetName} in ${countryName}`;
+      }
+
+      // food security dataset is selected and indicator (not water stress or seasonal variability)
+      if (existsIndicator && (!isWaterStress && !isSeasonalVariability) && existsFood) {
+        return `Risk of ${waterDatasetName} in ${irrigationString} Crop Producing Areas &
+          Projected ${year} ${foodDatasetName}`;
+      }
+
+      // only “all crops” is selected
+      return `Irrigated & Rainfed ${cropName} Producing Areas in ${countryName}`;
+    }
+
+    // Country, all crops, [change in] future year
+    if (scope === 'country' && crop === 'all' && year !== 'baseline' && countryName) {
+
+      // only "irrigated" or "rainfed" is selected
+      if(!existsIndicator && !existsFood && irrigation.length === 1) {
+        return `${capitalize(irrigationString)} Crop Producing Areas in ${countryName}`;
+      }
+
+      // water risk indicators of water stress or seasonal variability are selected
+      if ((isWaterStress || isSeasonalVariability) && !existsFood) {
+        return `Projected ${typeString} Risk of ${waterDatasetName} in ${year} in ${irrigationString} Crop Producing Areas in ${countryName}`;
+      }
+
+      // any other water risk indicator (not water stress nor seasonal variability)
+      if (existsIndicator && (!isWaterStress && !isSeasonalVariability) && !existsFood) {
+        return `Risk of ${waterDatasetName} in ${irrigationString} Crop Producing Areas in ${countryName}`;
+      }
+
+      // water stress or seasonal variability selected and food selected
+      if ((isWaterStress || isSeasonalVariability) && existsFood) {
+        return `Projected ${typeString} Risk of ${waterDatasetName} in ${year} in ${irrigationString} Crop Producing Areas
+          & ${year} ${foodDatasetName} in ${countryName}`;
+      }
+
+      // food security dataset is selected and indicator (not water stress or seasonal variability)
+      if (existsIndicator && (!isWaterStress && !isSeasonalVariability) && existsFood) {
+        return `Risk of ${waterDatasetName} in ${irrigationString} Crop Producing Areas &
+          Projected ${year} ${foodDatasetName} in ${countryName}`;
+      }
+
+      // food security dataset is selected but no water risk indicator
+      if (existsFood && !existsIndicator) {
+        return `${irrigationString} Crop Producing Areas & Projected ${year} ${foodDatasetName} in ${countryName}`
+      }
+
+      // only “all crops” is selected
+      return `Irrigated & Rainfed Crop Producing Areas in ${countryName}`;
+    }
+
+    // Country, all crops, [change in] future year
+    if (scope === 'country' && crop !== 'all' && year !== 'baseline' && countryName) {
+
+      // only "irrigated" or "rainfed" is selected
+      if(!existsIndicator && !existsFood && irrigation.length === 1) {
+        return `${capitalize(irrigationString)} ${cropName} Producing Areas in ${countryName}`;
+      }
+
+      // water stress or seasonal variability selected (not food dataset)
+      if ((isWaterStress || isSeasonalVariability) && !existsFood) {
+        return `Projected ${typeString} Risk of ${waterDatasetName} in ${year} in ${irrigationString} ${cropName}
+          Producing Areas in ${countryName}`;
+      }
+
+      // water risk indicators of water stress or seasonal variability and a food security dataset is selected
+      if ((isWaterStress || isSeasonalVariability) && existsFood) {
+        return `Projected ${typeString} Risk of ${waterDatasetName} in ${year} in ${irrigationString} ${cropName}
+          Producing Areas & ${year} ${foodDatasetName} in ${countryName}`;
+      }
+
+      // food security dataset is selected and indicator (not water stress or seasonal variability)
+      if (existsIndicator && (!isWaterStress && !isSeasonalVariability) && existsFood) {
+        return `Risk of ${waterDatasetName} in ${irrigationString} Crop Producing Areas &
+          Projected ${year} ${foodDatasetName}`;
+      }
+
+      // food security dataset are selected but no water risk indicator
+      if (existsFood && !existsIndicator) {
+        return `${irrigationString} ${cropName} Producing Areas & Projected ${year} ${foodDatasetName} in ${countryName}`
+      }
+
+      // only crop is selected
+      return `Irrigated & Rainfed ${cropName} Producing Areas in ${countryName}`;
+    }
+
+    return null;
   }
 
   getDictionary() {
@@ -218,7 +479,7 @@ export default class MapPageDesktop extends React.Component {
             <MapHeader
               dictionary={this.getDictionary()}
               filters={this.props.filters}
-              template={MapPageDesktop.getMapHeaderTemplate()}
+              template={this.getMapHeaderTemplate()}
             />
           }
 
@@ -238,6 +499,7 @@ export default class MapPageDesktop extends React.Component {
 MapPageDesktop.propTypes = {
   mapConfig: React.PropTypes.object,
   filters: React.PropTypes.object,
+  datasets: React.PropTypes.array,
   countries: React.PropTypes.object,
   sidebar: React.PropTypes.object,
   layersActive: React.PropTypes.array,
