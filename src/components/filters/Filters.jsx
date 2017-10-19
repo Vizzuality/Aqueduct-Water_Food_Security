@@ -66,8 +66,7 @@ export default class Filters extends React.Component {
     const isTimeline = (
       WATER_OPTIONS.find(w => w.value === this.props.filters.indicator).timeline ||
       FOOD_OPTIONS.find(w => w.value === this.props.filters.food).timeline
-    )
-
+    );
 
     const timeline = (
       <div className="c-filters-item">
@@ -270,7 +269,6 @@ export default class Filters extends React.Component {
                           this.updateFilters('absolute', 'type');
                           this.updateFilters('baseline', 'year');
                         }
-
                       }}
                     />
                   </div>

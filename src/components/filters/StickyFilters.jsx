@@ -34,9 +34,16 @@ class StickyFilters extends React.Component {
     const stickyFilterClass = classnames('c-sticky-filters', {
       [this.props.className]: this.props.className
     });
+
     const compareCountryClass = classnames('-gray', {
       '-disabled': !this.props.countriesCompare[0]
     });
+
+    const isTimeline = (
+      WATER_OPTIONS.find(w => w.value === this.props.filters.indicator).timeline ||
+      FOOD_OPTIONS.find(w => w.value === this.props.filters.food).timeline
+    );
+
 
     return (
       <div className={stickyFilterClass}>
@@ -104,7 +111,12 @@ class StickyFilters extends React.Component {
               value={this.props.filters.indicator}
               onValueChange={selected => {
                 selected && this.updateFilters(selected.value, 'indicator');
-                if (selected && !WATER_OPTIONS.find(w => w.value === selected.value).timeline) {
+
+                if (
+                  selected &&
+                  !WATER_OPTIONS.find(w => w.value === selected.value).timeline &&
+                  !FOOD_OPTIONS.find(w => w.value === this.props.filters.food).timeline
+                ) {
                   this.updateFilters('absolute', 'type');
                   this.updateFilters('baseline', 'year');
                 }
@@ -117,7 +129,18 @@ class StickyFilters extends React.Component {
               className="-gray"
               options={FOOD_OPTIONS}
               value={this.props.filters.food}
-              onValueChange={selected => selected && this.updateFilters(selected.value, 'food')}
+              onValueChange={selected => {
+                selected && this.updateFilters(selected.value, 'food')
+
+                if (
+                  selected &&
+                  !WATER_OPTIONS.find(w => w.value === this.props.filters.indicator).timeline &&
+                  !FOOD_OPTIONS.find(w => w.value === selected.value).timeline
+                ) {
+                  this.updateFilters('absolute', 'type');
+                  this.updateFilters('baseline', 'year');
+                }
+              }}
             />
           </div>
           <div>
@@ -126,7 +149,7 @@ class StickyFilters extends React.Component {
               className="-gray"
               options={YEAR_OPTIONS}
               value={YEAR_OPTIONS.find(i => i.value === this.props.filters.year).value}
-              disabled={!WATER_OPTIONS.find(w => w.value === this.props.filters.indicator).timeline}
+              disabled={!isTimeline}
               onValueChange={(selected) => {
                 selected && selected.value === 'baseline' && this.updateFilters(
                   'absolute', 'type');
