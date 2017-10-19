@@ -11,6 +11,7 @@ const mapStateToProps = state => ({
   filters: state.filters,
   countries: state.countries,
   sidebar: state.sidebar,
+  datasets: state.datasets.list,
   layersActive: getActiveLayers(state),
   widgetsActive: getActiveWidgets(state)
 });
