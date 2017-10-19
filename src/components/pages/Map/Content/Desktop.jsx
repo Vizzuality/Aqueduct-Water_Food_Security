@@ -94,7 +94,7 @@ export default class MapPageDesktop extends React.Component {
     const foodDatasetName = existsFood ? (this.props.datasets.find(dataset => dataset.id === food) || {}).name : null;
     const waterDatasetName = existsIndicator ? (this.props.datasets.find(dataset => dataset.id === indicator) || {}).name : null;
     const cropName = crop !== 'all' ? (CROP_OPTIONS.find(cr => cr.value === crop) ||{}).label : null;
-    const irrigationString = irrigation.map(irr => capitalize(irr)).join('/');
+    const irrigationString = irrigation === 'all' ? IRRIGATION_OPTIONS.filter(irr => irr.value !== 'all').map(irr => capitalize(irr.label)).join('/') : capitalize(irrigation);
     const isWaterStress = indicator === '4b000ded-5f4d-4dbd-83c9-03f2dfcd36db';
     const isSeasonalVariability = indicator === 'd9785282-2140-463f-a82d-f7296687055a';
 
@@ -102,8 +102,8 @@ export default class MapPageDesktop extends React.Component {
     if (scope === 'global' && crop === 'all' && year === 'baseline') {
 
       // only "irrigated" or "rainfed" is selected
-      if(!existsIndicator && !existsFood && irrigation.length === 1) {
-        return `Global ${capitalize(irrigationString)} Crop Producing Areas`;
+      if(!existsIndicator && !existsFood) {
+        return `Global ${irrigationString} Crop Producing Areas`;
       }
 
       // water dataset selected
@@ -129,8 +129,8 @@ export default class MapPageDesktop extends React.Component {
     if (scope === "global" && crop !== 'all' && year === 'baseline') {
 
       // only "irrigated" or "rainfed" is selected
-      if(!existsIndicator && !existsFood && irrigation.length === 1) {
-        return `Global ${capitalize(irrigationString)} ${cropName} Producing Areas`;
+      if(!existsIndicator && !existsFood) {
+        return `Global ${irrigationString} ${cropName} Producing Areas`;
       }
 
       // water dataset selected
@@ -155,8 +155,8 @@ export default class MapPageDesktop extends React.Component {
     if (scope === "global" && crop === 'all' && year !== 'baseline') {
 
       // only "irrigated" or "rainfed" is selected
-      if(!existsIndicator && !existsFood && irrigation.length === 1) {
-        return `Global ${capitalize(irrigationString)} Crop Producing Areas`;
+      if(!existsIndicator && !existsFood) {
+        return `Global ${irrigationString} Crop Producing Areas`;
       }
 
       // water risk indicators of water stress or seasonal variability are selected
@@ -189,8 +189,8 @@ export default class MapPageDesktop extends React.Component {
     if (scope === "global" && crop !== 'all' && year !== 'baseline') {
 
       // only "irrigated" or "rainfed" is selected
-      if(!existsIndicator && !existsFood && irrigation.length === 1) {
-        return `Global ${capitalize(irrigationString)} ${cropName} Producing Areas`;
+      if(!existsIndicator && !existsFood) {
+        return `Global ${irrigationString} ${cropName} Producing Areas`;
       }
 
       // water risk indicators of water stress or seasonal variability are selected
@@ -217,8 +217,8 @@ export default class MapPageDesktop extends React.Component {
     if (scope === 'country' && crop === 'all' && year === 'baseline' && countryName) {
 
       // only "irrigated" or "rainfed" is selected
-      if(!existsIndicator && !existsFood && irrigation.length === 1) {
-        return `${capitalize(irrigationString)} Crop Producing Areas in ${countryName}`;
+      if(!existsIndicator && !existsFood) {
+        return `${irrigationString} Crop Producing Areas in ${countryName}`;
       }
 
       // any water dataset selected
@@ -243,8 +243,8 @@ export default class MapPageDesktop extends React.Component {
     if (scope === 'country' && crop !== 'all' && year === 'baseline' && countryName) {
 
       // only "irrigated" or "rainfed" is selected
-      if(!existsIndicator && !existsFood && irrigation.length === 1) {
-        return `${capitalize(irrigationString)} ${cropName} Producing Areas in ${countryName}`;
+      if(!existsIndicator && !existsFood) {
+        return `${irrigationString} ${cropName} Producing Areas in ${countryName}`;
       }
 
       // water dataset selected
@@ -276,8 +276,8 @@ export default class MapPageDesktop extends React.Component {
     if (scope === 'country' && crop === 'all' && year !== 'baseline' && countryName) {
 
       // only "irrigated" or "rainfed" is selected
-      if(!existsIndicator && !existsFood && irrigation.length === 1) {
-        return `${capitalize(irrigationString)} Crop Producing Areas in ${countryName}`;
+      if(!existsIndicator && !existsFood) {
+        return `${irrigationString} Crop Producing Areas in ${countryName}`;
       }
 
       // water risk indicators of water stress or seasonal variability are selected
@@ -315,8 +315,8 @@ export default class MapPageDesktop extends React.Component {
     if (scope === 'country' && crop !== 'all' && year !== 'baseline' && countryName) {
 
       // only "irrigated" or "rainfed" is selected
-      if(!existsIndicator && !existsFood && irrigation.length === 1) {
-        return `${capitalize(irrigationString)} ${cropName} Producing Areas in ${countryName}`;
+      if(!existsIndicator && !existsFood) {
+        return `${irrigationString} ${cropName} Producing Areas in ${countryName}`;
       }
 
       // water stress or seasonal variability selected (not food dataset)
