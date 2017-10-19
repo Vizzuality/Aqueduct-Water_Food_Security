@@ -13,7 +13,7 @@ import ShareModal from 'containers/modal/ShareModal';
 
 // Layer Manager
 import LayerManager from 'utils/layers/LayerManager';
-import { SCOPE_OPTIONS, WATER_OPTIONS } from 'constants/filters';
+import { SCOPE_OPTIONS, WATER_OPTIONS, FOOD_OPTIONS } from 'constants/filters';
 
 // Controls
 import DownloadMapControl from 'components/map/DownloadMapControl';
@@ -91,11 +91,11 @@ export default class MapPageDesktop extends React.Component {
     const scope = (scopeF === 'country' && !countryName) ? 'global' : scopeF;
     const existsIndicator = indicator !== 'none';
     const existsFood = food !== 'none';
-    const typeString = type === 'change_from_baseline' ? 'Change in Baseline' : capitalize(type);
-    const foodDatasetName = existsFood ? (this.props.datasets.find(dataset => dataset.id === food) || {}).name : null;
-    const waterDatasetName = existsIndicator ? (this.props.datasets.find(dataset => dataset.id === indicator) || {}).name : null;
+    const typeString = type === 'change_from_baseline' ? 'Change in' : capitalize(type);
+    const foodDatasetName = existsFood ? (FOOD_OPTIONS.find(f => f.value === food) || {}).label : null;
+    const waterDatasetName = existsIndicator ? (WATER_OPTIONS.find(w => w.value === indicator) || {}).label : null;
     const cropName = crop !== 'all' ? (CROP_OPTIONS.find(cr => cr.value === crop) ||{}).label : null;
-    const irrigationString = irrigation === 'all' ? IRRIGATION_OPTIONS.filter(irr => irr.value !== 'all').map(irr => capitalize(irr.label)).join('/') : capitalize(irrigation);
+    const irrigationString = irrigation === 'all' ? IRRIGATION_OPTIONS.filter(irr => irr.value !== 'all').map(irr => capitalize(irr.label)).join(' & ') : capitalize(irrigation);
     const isWaterStress = indicator === '4b000ded-5f4d-4dbd-83c9-03f2dfcd36db';
     const isSeasonalVariability = indicator === 'd9785282-2140-463f-a82d-f7296687055a';
 
