@@ -10,9 +10,6 @@
     "test": "eslint .",
     "dev": "node server.js"
   },
-  "pre-commit": [
-    "test"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Vizzuality/Aqueduct-Water_Food_Security.git"
