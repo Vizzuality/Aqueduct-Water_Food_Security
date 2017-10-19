@@ -87,7 +87,8 @@ export default class MapPageDesktop extends React.Component {
   }
 
   getMapHeaderTemplate() {
-    const { scope, crop, year, type, indicator, food, irrigation, countryName } = this.props.filters;
+    const { scope: scopeF, crop, year, type, indicator, food, irrigation, countryName } = this.props.filters;
+    const scope = (scopeF === 'country' && !countryName) ? 'global' : scopeF;
     const existsIndicator = indicator !== 'none';
     const existsFood = food !== 'none';
     const typeString = type === 'change_from_baseline' ? 'Change in Baseline' : capitalize(type);
@@ -126,7 +127,7 @@ export default class MapPageDesktop extends React.Component {
     }
 
     // Global, one crop, baseline
-    if (scope === "global" && crop !== 'all' && year === 'baseline') {
+    if (scope === 'global' && crop !== 'all' && year === 'baseline') {
 
       // only "irrigated" or "rainfed" is selected
       if(!existsIndicator && !existsFood) {
@@ -152,7 +153,7 @@ export default class MapPageDesktop extends React.Component {
     }
 
     // Global, all crops, [change in] future year
-    if (scope === "global" && crop === 'all' && year !== 'baseline') {
+    if (scope === 'global' && crop === 'all' && year !== 'baseline') {
 
       // only "irrigated" or "rainfed" is selected
       if(!existsIndicator && !existsFood) {
@@ -182,11 +183,11 @@ export default class MapPageDesktop extends React.Component {
       }
 
       // only “all crops” is selected
-      return "Global Irrigated & Rainfed Crop Producing Areas";
+      return 'Global Irrigated & Rainfed Crop Producing Areas';
     }
 
     // Global, one crops, [change in] future year
-    if (scope === "global" && crop !== 'all' && year !== 'baseline') {
+    if (scope === 'global' && crop !== 'all' && year !== 'baseline') {
 
       // only "irrigated" or "rainfed" is selected
       if(!existsIndicator && !existsFood) {

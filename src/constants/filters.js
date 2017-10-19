@@ -20,7 +20,8 @@ FOOD_OPTIONS.push({
 export const WATER_OPTIONS = layerSpec.filter(layer => layer.category === 'water').map((layer) => {
   return {
     label: layer.name,
-    value: layer.id
+    value: layer.id,
+    timeline: !!layer.timeline
   };
 });
 

@@ -57,7 +57,8 @@
     "layerAbsoluteId": "d556ab99-3064-4148-9c9f-3e3fb1e0c0f1",
     "layerProjectedId": "7c16a991-cd4f-4421-8789-0f8763bc1176",
     "name": "Water stress",
-    "category": "water"
+    "category": "water",
+    "timeline": true
   },
   {
     "id": "d9785282-2140-463f-a82d-f7296687055a",
@@ -65,7 +66,8 @@
     "layerAbsoluteId": "e35cdf8e-0601-477c-9a0d-8d4874d296a7",
     "layerProjectedId": "83b9c999-22f3-4413-9793-5eb806630117",
     "name": "Seasonal variability",
-    "category": "water"
+    "category": "water",
+    "timeline": true
   },
   {
     "id": "bf657e60-de9c-4b7e-8736-d573d38e3ce1",

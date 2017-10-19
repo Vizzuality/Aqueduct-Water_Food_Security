@@ -63,6 +63,9 @@ export default class Filters extends React.Component {
   }
 
   render() {
+    const isTimeline = !WATER_OPTIONS.find(w => w.value === this.props.filters.indicator).timeline
+
+
     const timeline = (
       <div className="c-filters-item">
         {/* Year */}
@@ -82,6 +85,7 @@ export default class Filters extends React.Component {
         <Timeline
           items={YEAR_OPTIONS}
           selected={YEAR_OPTIONS.find(i => i.value === this.props.filters.year)}
+          disabled={!WATER_OPTIONS.find(w => w.value === this.props.filters.indicator).timeline}
           onChange={(selected) => {
             selected && selected.value === 'baseline' && this.updateFilters('absolute', 'type');
             selected && this.updateFilters(selected.value, 'year');
@@ -218,7 +222,13 @@ export default class Filters extends React.Component {
                     <CustomSelect
                       options={WATER_OPTIONS}
                       value={this.props.filters.indicator}
-                      onValueChange={selected => selected && this.updateFilters(selected.value, 'indicator')}
+                      onValueChange={selected => {
+                        selected && this.updateFilters(selected.value, 'indicator');
+                        if (selected && !WATER_OPTIONS.find(w => w.value === selected.value).timeline) {
+                          this.updateFilters('absolute', 'type');
+                          this.updateFilters('baseline', 'year');
+                        }
+                      }}
                     />
                   </div>
                 </div>
