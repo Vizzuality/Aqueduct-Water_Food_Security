@@ -28,7 +28,7 @@ export function onEnterMapPage({ location }, replace, done) {
       country,
       crop,
       food,
-      irrigation: (irrigation) ? irrigation.split(',') : [],
+      irrigation,
       scope,
       period,
       period_value,
@@ -60,7 +60,7 @@ export function onEnterComparePage({ location }, replace, done) {
       year,
       food,
       indicator,
-      irrigation: (irrigation) ? irrigation.split(',') : false,
+      irrigation,
       type
     };
     dispatch(setFilters(filtersObj));
@@ -99,7 +99,7 @@ export function onEnterReportPage({ location }, replace, done) {
       country,
       crop,
       food,
-      irrigation: (irrigation) ? irrigation.split(',') : false,
+      irrigation,
       scope,
       period,
       period_value,

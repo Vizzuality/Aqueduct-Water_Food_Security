@@ -57,13 +57,11 @@ export default class MapPageDesktop extends React.Component {
         return `${countryName}'s`;
       },
       irrigation(irrigation) {
-        if (!irrigation.length) {
-          return IRRIGATION_OPTIONS.map(r => r.label).join(' & ');
+        if (irrigation === 'all') {
+          return IRRIGATION_OPTIONS.filter(v => v.value !== 'all').map(v => v.label).join(' & ');
         }
 
-        return irrigation.map((val) => {
-          return IRRIGATION_OPTIONS.find(v => v.value === val).label;
-        }).join(' & ');
+        return IRRIGATION_OPTIONS.find(v => v.value === irrigation).label;
       },
       scope(scope) {
         return !_iso || scope !== 'country' ? SCOPE_OPTIONS.find(v => v.value === 'global').label : '';

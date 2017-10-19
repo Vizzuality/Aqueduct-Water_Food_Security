@@ -12,7 +12,7 @@ const initialState = {
   year: 'baseline',
   food: 'none',
   indicator: 'none',
-  irrigation: ['irrigated', 'rainfed'],
+  irrigation: 'all',
   type: 'absolute'
 };
 

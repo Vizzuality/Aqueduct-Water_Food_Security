@@ -93,7 +93,7 @@ export default class Filters extends React.Component {
             className="-filters -inline"
             items={DATA_TYPE_OPTIONS}
             name="type"
-            defaultValue={this.props.filters.type}
+            selected={this.props.filters.type}
             onChange={selected => this.updateFilters(selected.value, 'type')}
           />
         }
@@ -189,9 +189,10 @@ export default class Filters extends React.Component {
                       onValueChange={selected => selected && this.updateFilters(selected.value, 'crop')}
                     />
 
-                    <CheckboxGroup
+                    <RadioGroup
+                      name="irrigation"
                       items={IRRIGATION_OPTIONS}
-                      onChange={selected => this.updateFilters(selected, 'irrigation')}
+                      onChange={selected => this.updateFilters(selected.value, 'irrigation')}
                       selected={this.props.filters.irrigation}
                       className="-inline"
                     />

@@ -16,7 +16,7 @@ export function updateMapUrl() {
         country,
         crop,
         food,
-        irrigation: (irrigation) ? irrigation.join(',') : undefined,
+        irrigation,
         scope,
         indicator,
         type
@@ -39,7 +39,7 @@ export function updateCompareUrl() {
         year,
         crop,
         food,
-        irrigation: irrigation.join(','),
+        irrigation,
         scope: 'country',
         indicator,
         type
@@ -65,7 +65,7 @@ export function updateReportUrl() {
         country,
         crop,
         food,
-        irrigation: (irrigation) ? irrigation.join(',') : undefined,
+        irrigation,
         scope,
         indicator,
         type
