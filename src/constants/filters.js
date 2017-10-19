@@ -33,7 +33,6 @@ WATER_OPTIONS.push({
   label: 'None',
   value: 'none'
 });
-console.log(WATER_OPTIONS);
 
 // SCOPE OPTIONS
 const SCOPE_OPTIONS = [
