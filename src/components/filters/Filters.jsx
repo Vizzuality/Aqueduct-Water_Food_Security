@@ -63,7 +63,10 @@ export default class Filters extends React.Component {
   }
 
   render() {
-    const isTimeline = !WATER_OPTIONS.find(w => w.value === this.props.filters.indicator).timeline
+    const isTimeline = (
+      WATER_OPTIONS.find(w => w.value === this.props.filters.indicator).timeline ||
+      FOOD_OPTIONS.find(w => w.value === this.props.filters.food).timeline
+    )
 
 
     const timeline = (
@@ -85,7 +88,7 @@ export default class Filters extends React.Component {
         <Timeline
           items={YEAR_OPTIONS}
           selected={YEAR_OPTIONS.find(i => i.value === this.props.filters.year)}
-          disabled={!WATER_OPTIONS.find(w => w.value === this.props.filters.indicator).timeline}
+          disabled={!isTimeline}
           onChange={(selected) => {
             selected && selected.value === 'baseline' && this.updateFilters('absolute', 'type');
             selected && this.updateFilters(selected.value, 'year');
@@ -224,7 +227,12 @@ export default class Filters extends React.Component {
                       value={this.props.filters.indicator}
                       onValueChange={selected => {
                         selected && this.updateFilters(selected.value, 'indicator');
-                        if (selected && !WATER_OPTIONS.find(w => w.value === selected.value).timeline) {
+
+                        if (
+                          selected &&
+                          !WATER_OPTIONS.find(w => w.value === selected.value).timeline &&
+                          !FOOD_OPTIONS.find(w => w.value === this.props.filters.food).timeline
+                        ) {
                           this.updateFilters('absolute', 'type');
                           this.updateFilters('baseline', 'year');
                         }
@@ -251,7 +259,19 @@ export default class Filters extends React.Component {
                     <CustomSelect
                       options={FOOD_OPTIONS}
                       value={this.props.filters.food}
-                      onValueChange={selected => selected && this.updateFilters(selected.value, 'food')}
+                      onValueChange={selected => {
+                        selected && this.updateFilters(selected.value, 'food')
+
+                        if (
+                          selected &&
+                          !WATER_OPTIONS.find(w => w.value === this.props.filters.indicator).timeline &&
+                          !FOOD_OPTIONS.find(w => w.value === selected.value).timeline
+                        ) {
+                          this.updateFilters('absolute', 'type');
+                          this.updateFilters('baseline', 'year');
+                        }
+
+                      }}
                     />
                   </div>
                 </div>

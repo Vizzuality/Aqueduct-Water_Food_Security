@@ -1,6 +1,11 @@
-import {
-  SET_FILTERS
-} from 'constants/filters';
+import { SET_FILTERS } from 'constants/filters';
+
+// Services
+import { toastr } from 'react-redux-toastr';
+
+// Constants
+import { WATER_OPTIONS } from 'constants/filters';
+import { MESSAGES } from 'constants/messages';
 
 const initialState = {
   crop: 'all',
@@ -19,7 +24,8 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case SET_FILTERS: {
-      return Object.assign({}, state, action.payload);
+      const newState = Object.assign({}, state, action.payload);
+      return newState
     }
     default:
       return state;

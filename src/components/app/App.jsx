@@ -3,6 +3,7 @@ import classnames from 'classnames';
 
 import Modal from 'containers/ui/Modal';
 import Tooltip from 'containers/ui/Tooltip';
+import Toastr from 'react-redux-toastr'
 
 export default class App extends React.Component {
 
@@ -21,11 +22,20 @@ export default class App extends React.Component {
     return (
       <div className="l-app">
         {this.props.header}
+
         <main role="main" className={mainClass}>
           {this.props.main}
         </main>
+
         <Modal />
+
         <Tooltip />
+
+        <Toastr
+          preventDuplicates
+          transitionIn="fadeIn"
+          transitionOut="fadeOut"
+        />
       </div>
     );
   }

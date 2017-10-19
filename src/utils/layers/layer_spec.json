@@ -4,6 +4,7 @@
     "layerId": "0699ced2-960f-4f06-8792-62f6c34b4e39",
     "name": "Food demand for crop",
     "category": "food",
+    "timeline": true,
     "layerOptions": {
       "topSize": 10,
       "sort": "desc"
@@ -14,6 +15,7 @@
     "layerId": "efafaa9f-37ec-4f51-be7d-999f58e6823b",
     "name": "Total crop production",
     "category": "food",
+    "timeline": true,
     "layerOptions": {
       "topSize": 10,
       "sort": "desc"
@@ -24,6 +26,7 @@
     "layerId": "b8e135d2-b64f-4ea3-93e9-9f8d1245fb2a",
     "name": "Crop net trade",
     "category": "food",
+    "timeline": true,
     "layerOptions": {
       "topSize": 10,
       "sort": "desc"
@@ -34,6 +37,7 @@
     "layerId": "c29b190b-6801-49ed-a101-6770525467c4",
     "name": "Kilocalories per person",
     "category": "food",
+    "timeline": true,
     "layerOptions": {
       "topSize": 10,
       "sort": "asc"
@@ -44,6 +48,7 @@
     "layerId": "63976c45-d991-4495-a318-45950912510a",
     "name": "Population at risk of hunger",
     "category": "food",
+    "timeline": true,
     "layerOptions": {
       "topSize": 10,
       "sort": "desc"
@@ -58,7 +63,8 @@
     "layerProjectedId": "7c16a991-cd4f-4421-8789-0f8763bc1176",
     "name": "Water stress",
     "category": "water",
-    "timeline": true
+    "timeline": true,
+    "warning": "not-rainfed-relevant"
   },
   {
     "id": "d9785282-2140-463f-a82d-f7296687055a",
@@ -85,13 +91,15 @@
     "id": "b53ef8c5-8554-4a4a-a100-fdf5a022cb4e",
     "layerId": "a1007109-4462-43ac-8412-e1acc6c84174",
     "name": "Groundwater stress",
-    "category": "water"
+    "category": "water",
+    "warning": "not-rainfed-relevant"
   },
   {
     "id": "cbd0d0f8-edf9-47bc-93ef-71c1a5e5fed7",
     "layerId": "1c825957-f34f-4f49-8c19-20c952722ba9",
     "name": "Groundwater decline trend",
-    "category": "water"
+    "category": "water",
+    "warning": "not-rainfed-relevant"
   },
 
 

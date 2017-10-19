@@ -6,7 +6,8 @@ export const SET_FILTERS = 'SET_FILTERS';
 export const FOOD_OPTIONS = layerSpec.filter(layer => layer.category === 'food').map((layer) => {
   return {
     label: layer.name,
-    value: layer.id
+    value: layer.id,
+    timeline: !!layer.timeline
   };
 });
 
@@ -21,6 +22,7 @@ export const WATER_OPTIONS = layerSpec.filter(layer => layer.category === 'water
   return {
     label: layer.name,
     value: layer.id,
+    warning: layer.warning,
     timeline: !!layer.timeline
   };
 });

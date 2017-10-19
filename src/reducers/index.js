@@ -1,5 +1,7 @@
 // AQ-Components
 export { modalReducer as modal } from 'aqueduct-components';
+// Toastr
+export { reducer as toastr } from 'react-redux-toastr';
 
 export { default as map } from './map';
 export { default as filters } from './filters';
