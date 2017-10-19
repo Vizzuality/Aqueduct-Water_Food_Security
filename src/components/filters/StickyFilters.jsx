@@ -102,7 +102,13 @@ class StickyFilters extends React.Component {
               className="-gray"
               options={WATER_OPTIONS}
               value={this.props.filters.indicator}
-              onValueChange={selected => selected && this.updateFilters(selected.value, 'indicator')}
+              onValueChange={selected => {
+                selected && this.updateFilters(selected.value, 'indicator');
+                if (selected && !WATER_OPTIONS.find(w => w.value === selected.value).timeline) {
+                  this.updateFilters('absolute', 'type');
+                  this.updateFilters('baseline', 'year');
+                }
+              }}
             />
           </div>
           <div>
@@ -120,6 +126,7 @@ class StickyFilters extends React.Component {
               className="-gray"
               options={YEAR_OPTIONS}
               value={YEAR_OPTIONS.find(i => i.value === this.props.filters.year).value}
+              disabled={!WATER_OPTIONS.find(w => w.value === this.props.filters.indicator).timeline}
               onValueChange={(selected) => {
                 selected && selected.value === 'baseline' && this.updateFilters(
                   'absolute', 'type');
