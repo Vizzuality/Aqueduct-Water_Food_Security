@@ -59,7 +59,7 @@ class WidgetChart extends React.Component {
             widgetConfig: widgetParsed.widgetConfig
           }, () => {
             this.props.toggleLoading(false);
-            this.props.toggleVisibility(!!this.state.data.length);
+            this.props.toggleVisibility && this.props.toggleVisibility(!!this.state.data.length);
           });
         },
         onError: (err) => {
