@@ -110,6 +110,10 @@ class Widget extends React.Component {
 
     const { name, description, widgetConfig, queryUrl } = widgetParsed;
 
+    // if (widget.id === 'af969fd8-fd47-430d-ad13-9113e42e9fed') {
+    //   console.log(JSON.stringify(widgetParsed.widgetConfig));
+    // }
+
     const className = classnames({
       [this.props.className]: !!this.props.className
     });

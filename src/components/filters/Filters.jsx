@@ -65,7 +65,7 @@ export default class Filters extends React.Component {
   render() {
     const isTimeline = (
       WATER_OPTIONS.find(w => w.value === this.props.filters.indicator).timeline ||
-      FOOD_OPTIONS.find(w => w.value === this.props.filters.food).timeline
+      (this.props.filters.indicator === 'none' && FOOD_OPTIONS.find(w => w.value === this.props.filters.food).timeline)
     );
 
     const timeline = (
@@ -229,8 +229,10 @@ export default class Filters extends React.Component {
 
                         if (
                           selected &&
-                          !WATER_OPTIONS.find(w => w.value === selected.value).timeline &&
-                          !FOOD_OPTIONS.find(w => w.value === this.props.filters.food).timeline
+                          (
+                            (selected.value !== 'none' && !WATER_OPTIONS.find(w => w.value === selected.value).timeline) ||
+                            (selected.value === 'none' && !FOOD_OPTIONS.find(w => w.value === this.props.filters.food).timeline)
+                          )
                         ) {
                           this.updateFilters('absolute', 'type');
                           this.updateFilters('baseline', 'year');
@@ -263,7 +265,7 @@ export default class Filters extends React.Component {
 
                         if (
                           selected &&
-                          !WATER_OPTIONS.find(w => w.value === this.props.filters.indicator).timeline &&
+                          this.props.filters.indicator === 'none' &&
                           !FOOD_OPTIONS.find(w => w.value === selected.value).timeline
                         ) {
                           this.updateFilters('absolute', 'type');
