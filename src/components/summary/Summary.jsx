@@ -120,7 +120,7 @@ export default class SummaryCountry extends React.Component {
 
         const fields = [{
           title: 'Area',
-          value: `${(areaData) ? format('.3s')(areaData.value) : '-'} ha`
+          value: `${(areaData) ? format('.3s')(areaData.value * 1000) : '-'} ha`
         }, {
           title: 'Pop. at risk of hunger',
           value: `${(popRiskHungerData) ? format('.2f')(popRiskHungerData.value) : '-'} %`
