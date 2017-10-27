@@ -90,7 +90,7 @@ class Widget extends React.Component {
     this.mounted && this.setState({ visibility: bool });
   }
 
-  getMinHeight(widgetConfig) {
+  getMinWidgetContentHeight(widgetConfig) {
     const height = widgetConfig.height || 0;
     const paddingTop = (widgetConfig.padding) ? widgetConfig.padding.top : 0;
     const paddingBottom = (widgetConfig.padding) ? widgetConfig.padding.bottom : 0;
@@ -100,6 +100,7 @@ class Widget extends React.Component {
 
   render() {
     const { widget, filters } = this.props;
+
     const widgetParsed = getObjectConversion(
       widget,
       filters,
@@ -117,6 +118,10 @@ class Widget extends React.Component {
     const className = classnames({
       [this.props.className]: !!this.props.className
     });
+
+    if (!this.state.visibility && (filters.page !== 'compare')) {
+      return null;
+    }
 
     return (
       <div className={`c-widget ${className}`} ref={el => this.widgetElem = el}>
@@ -139,17 +144,17 @@ class Widget extends React.Component {
           <div
             className="widget-content"
             style={{
-              minHeight: this.getMinHeight(widgetConfig)
+              minHeight: this.getMinWidgetContentHeight(widgetConfig)
             }}
           >
             {/* <p style={{color: 'black'}}>{`${config.API_URL}/dataset/${this.props.widget.dataset}/widget/${this.props.widget.id}`}</p> */}
-            {!this.state.visibility &&
+            {!this.state.visibility && filters.page === 'compare' &&
               <div
                 style={{
                   position: (widgetConfig.type === 'text') ? 'absolute' : 'relative',
                   top: 0,
                   left: 0,
-                  minHeight: this.getMinHeight(widgetConfig)
+                  minHeight: this.getMinWidgetContentHeight(widgetConfig)
                 }}
                 className="widget-noresults"
               >
@@ -166,6 +171,7 @@ class Widget extends React.Component {
               toggleLoading={this.toggleLoading}
               toggleVisibility={this.toggleVisibility}
             />
+
           </div>
         </div>
       </div>

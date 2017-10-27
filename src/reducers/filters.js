@@ -8,6 +8,7 @@ import { WATER_OPTIONS } from 'constants/filters';
 import { MESSAGES } from 'constants/messages';
 
 const initialState = {
+  page: '',
   crop: 'all',
   scope: 'global',
   country: undefined,

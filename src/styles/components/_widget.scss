@@ -29,7 +29,7 @@
 
     .widget-titles {
       font-size: $font-size-default;
-      max-width: calc(100% - 60px);
+      max-width: calc(100% - 100px);
       > * {
         margin: 5px 0 0;
         &:first-child {

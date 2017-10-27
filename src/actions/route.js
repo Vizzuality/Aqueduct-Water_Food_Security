@@ -34,9 +34,14 @@ export function onEnterMapPage({ location }, replace, done) {
       period_value,
       year,
       indicator,
-      type
+      type,
+      page: 'map'
     };
     dispatch(setFilters(filtersObj));
+  } else {
+    dispatch(setFilters({
+      page: 'map'
+    }));
   }
 
   done();
@@ -61,9 +66,14 @@ export function onEnterComparePage({ location }, replace, done) {
       food,
       indicator,
       irrigation,
-      type
+      type,
+      page: 'compare'
     };
     dispatch(setFilters(filtersObj));
+  } else {
+    dispatch(setFilters({
+      page: 'compare'
+    }));
   }
   done();
 }
@@ -105,7 +115,8 @@ export function onEnterReportPage({ location }, replace, done) {
       period_value,
       year,
       indicator,
-      type
+      type,
+      page: 'map'
     };
     dispatch(setFilters(filtersObj));
   }
