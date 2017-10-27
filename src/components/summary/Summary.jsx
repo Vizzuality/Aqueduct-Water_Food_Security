@@ -44,6 +44,7 @@ export default class SummaryCountry extends React.Component {
         key: 'and',
         keyParams: [
           { key: 'iso' },
+          { key: 'crop' },
           { key: 'year', dictionary: 'widget-2014' }
         ]
       },
@@ -68,7 +69,9 @@ export default class SummaryCountry extends React.Component {
     const impactParameter = (crop !== 'all') ? `('Area', 'Yield')` : `('Area')`;
 
     const url = `https://wri-rw.carto.com/api/v2/sql?q=
-      with a as(SELECT iso, avg(value) as value FROM water_risk_rankings_v3 WHERE indicator='water_stress' {{and}} and value is not null group by iso order by iso asc)
+      with b as(SELECT * FROM water_risk_rankings_v3 WHERE irrigation='irrigated' AND indicator='water_stress' {{and}} and value is not null order by iso asc),
+      c as (SELECT * FROM water_risk_rankings_v3 WHERE irrigation='rainfed' AND indicator='drought_stress' {{and}} and value is not null order by iso asc)
+
 
       SELECT impactparameter AS name, sum(value) AS value
       FROM combined01_prepared WHERE impactparameter in ${impactParameter} and scenario = 'SSP2-MIRO'
@@ -82,7 +85,12 @@ export default class SummaryCountry extends React.Component {
 
       UNION ALL
 
-      SELECT 'Water risk score' as name, value as value from a`;
+      SELECT 'Irrigated Area Water Stress Score' as name, value as value from b
+
+      UNION ALL
+
+      SELECT 'Rainfed Area Drought Severity Risk Score' as name, value as value from c
+    `;
 
     const widgetConfig = Object.assign({}, {
       sqlConfig,
@@ -109,12 +117,8 @@ export default class SummaryCountry extends React.Component {
       .then((data) => {
         const areaData = data.rows.find(r => r.name === 'Area');
         const popRiskHungerData = data.rows.find(r => r.name === 'Share Pop. at risk of hunger');
-        const score = data.rows.find(r => r.name === 'Water risk score');
 
         const fields = [{
-          title: 'Water risk score',
-          value: (score) ? format('.2f')(score.value) : '-'
-        }, {
           title: 'Area',
           value: `${(areaData) ? format('.3s')(areaData.value) : '-'} ha`
         }, {
@@ -124,15 +128,26 @@ export default class SummaryCountry extends React.Component {
 
         // Adds Yield field if there is a crop selected
         if(crop !== 'all') {
-          const yieldData = (data.rows[0]) ? format('.3s')(data.rows[0].value) : '-';
+          const IAWSSData = data.rows.find(r => r.name === 'Irrigated Area Water Stress Score');
+          fields.push({
+            title: 'Irrigated Area Water Stress Score',
+            value: `${(IAWSSData) ? format('.2f')(IAWSSData.value) : '-'}`
+          });
+
+          const RADSRSData = data.rows.find(r => r.name === 'Rainfed Area Drought Severity Risk Score');
+          fields.push({
+            title: 'Rainfed Area Drought Severity Risk Score',
+            value: `${(RADSRSData) ? format('.2f')(RADSRSData.value) : '-'}`
+          });
+
+          const yieldData = data.rows.find(r => r.name === 'Yield');
           fields.splice(1, 0, {
             title: 'Yield',
-            value: `${yieldData} tons/ha`
+            value: `${(yieldData) ? format('.3s')(yieldData.value) : '-'} tons/ha`
           });
         }
 
         this._mounted && this.setState({
-          score,
           fields,
           loading: false
         });

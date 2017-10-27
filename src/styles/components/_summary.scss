@@ -25,7 +25,6 @@
     display: block;
     text-transform: uppercase;
     letter-spacing: .9px;
-    margin-bottom: $space-1 * 2;
   }
 
   .summary-list {
@@ -45,10 +44,10 @@
 
       @include only-desktop {
         width: auto;
-        margin: 0;
+        margin: $space-1 * 2 0 0;
 
         &:not(:last-child) {
-          margin: 0 $space-1 * 6 0 0;
+          margin: $space-1 * 2 $space-1 * 6 0 0;
         }
       }
     }

@@ -1,4 +1,5 @@
 import React from 'react';
+import sortBy from 'lodash/sortBy';
 import { format } from 'd3-format';
 
 const BASELINE_YEARS = ['2005', '2010', '2014'];
@@ -40,7 +41,7 @@ class VegaChartTooltip extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {data.map((d, i) => {
+            {sortBy(data, d => d.impactparameter || d.commodity).map((d, i) => {
               return (
                 <tr className="tooltip-list-item" key={i}>
                   {config.table.columns.map((item, j) => {
