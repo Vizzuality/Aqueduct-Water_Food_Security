@@ -39,18 +39,6 @@ export default class CompareMaps extends React.Component {
   render() {
     const { mapConfig } = this.state;
 
-    const emptyPlaceholder = (
-      <div className="country-placeholder">
-        <div>
-          <Icon className="-huge country-placeholder-icon" name="icon-country" />
-          <p className="country-placeholder-text">Choose a country first</p>
-        </div>
-      </div>
-    );
-
-    const showMap = (!this.props.context || (this.props.context && this.props.context === 'map'));
-    const showWidgets = this.props.country && (!this.props.context || (this.props.context && this.props.context === 'data'));
-
     const items = Array.from(Array(this.props.items));
 
     return (
@@ -58,6 +46,19 @@ export default class CompareMaps extends React.Component {
         <div className="c-compareitem-row">
           {items.map((item, i) => {
             const country = this.props.countries[i];
+
+            if (!country) {
+              return (
+                <div className="compareitem-column">
+                  <div className="country-placeholder">
+                    <div>
+                      <Icon className="-huge country-placeholder-icon" name="icon-country" />
+                      <p className="country-placeholder-text">Choose a country first</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            }
 
             const filters = Object.assign({}, this.props.filters, {
               country,

@@ -96,7 +96,10 @@
   display: flex;
 
   .compareitem-column {
-    width: 50%;
+    @include only-desktop {
+      width: 50%;
+    }
+    width: 100%;
   }
 }
 
@@ -146,6 +149,7 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+  padding: $space-1 * 10 0;
 }
 
 /* Compare list */

@@ -18,6 +18,10 @@ export default class CompareWidgetList extends React.Component {
               {items.map((item, i) => {
                 const country = this.props.countries[i];
 
+                if (!country) {
+                  return null;
+                }
+
                 const filters = Object.assign({}, this.props.filters, {
                   country,
                   countryName: ((this.props.countryList || []).find(c => c.id === this.props.countries[i]) || {}).name
