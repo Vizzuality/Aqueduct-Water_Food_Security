@@ -170,7 +170,8 @@
 }
 
 .comparelist-content {
-  display: flex;
+  padding: 0 0 50px;
+
   @include only-mobile {
     height: 100%;
     flex-direction: column;

@@ -28,7 +28,7 @@ export default class CompareMaps extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!isEqual(nextProps.countries.sort(), this.props.countries.sort())) {
+    if (!isEqual(nextProps.countries, this.props.countries)) {
       this.setState({
         maps: zipObject(nextProps.countries, [MAP_CONFIG, MAP_CONFIG])
       });
