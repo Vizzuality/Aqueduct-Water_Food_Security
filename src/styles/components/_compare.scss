@@ -90,6 +90,23 @@
     padding-bottom: 0;
   }
 }
+
+.c-compareitem-row {
+  width: 100%;
+  display: flex;
+
+  .compareitem-column {
+    @include only-desktop {
+      width: 50%;
+    }
+    width: 100%;
+  }
+}
+
+.c-compareitem-maps {
+  width: 100%;
+}
+
 .compareitem-map {
   @include only-mobile {
     height: calc(100vh - 212px);
@@ -98,6 +115,7 @@
     height: 430px;
   }
   position: relative;
+  width: 100%;
   & > div {
     height: 100%;
   }
@@ -131,6 +149,7 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+  padding: $space-1 * 10 0;
 }
 
 /* Compare list */
@@ -145,10 +164,6 @@
 
 .c-compareitem {
   flex: 1;
-  width: 50%;
-  @include only-mobile {
-    width: 100%;
-  }
 }
 
 .comparelist-item {
@@ -159,7 +174,8 @@
 }
 
 .comparelist-content {
-  display: flex;
+  padding: 0 0 50px;
+
   @include only-mobile {
     height: 100%;
     flex-direction: column;

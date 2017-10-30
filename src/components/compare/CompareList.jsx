@@ -2,45 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Components
-import CompareItem from 'components/compare/CompareItem';
+import CompareMaps from 'components/compare/CompareMaps';
+import CompareSummaries from 'components/compare/CompareSummaries';
+import CompareWidgetList from 'components/compare/CompareWidgetList';
 
 export default class CompareList extends React.Component {
-
-  getItems() {
-    const items = [];
-
-    for (let i = 0; i < this.props.items; i += 1) {
-      const filters = Object.assign({}, this.props.filters, {
-        country: this.props.countries[i],
-        countryName: ((this.props.countryList || []).find(c => c.id === this.props.countries[i]) || {}).name
-      });
-
-      const layersActive = this.props.layersActive.map(l => Object.assign({}, l, {
-        country: this.props.countries[i],
-        countryName: ((this.props.countryList || []).find(c => c.id === this.props.countries[i]) || {}).name
-      }));
-
-      items.push(
-        <CompareItem
-          key={`${this.props.countries[i]}-${i}`}
-          filters={filters}
-          loading={this.props.loading}
-          widgetsActive={this.props.widgetsActive}
-          index={i}
-          country={this.props.countries[i]}
-          countryList={this.props.countryList}
-          layersActive={layersActive}
-        />
-      );
-    }
-    return items;
-  }
-
   render() {
     return (
       <div className="c-comparelist">
         <div className="comparelist-content">
-          {this.getItems()}
+          <CompareMaps {...this.props} />
+          <CompareSummaries {...this.props} />
+          <CompareWidgetList {...this.props} />
         </div>
       </div>
     );
