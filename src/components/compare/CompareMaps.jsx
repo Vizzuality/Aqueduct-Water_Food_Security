@@ -1,37 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import isEqual from 'lodash/isEqual';
+import zipObject from 'lodash/zipObject';
+
 
 import { Map, MapControls, ZoomControl, Icon } from 'aqueduct-components';
 import LegendMobile from 'components/legend/LegendMobile';
 import LayerManager from 'utils/layers/LayerManager';
 
+const MAP_CONFIG = {
+  mapConfig: {
+    zoom: 3,
+    latLng: {
+      lat: 0,
+      lng: 0
+    }
+  }
+};
+
 export default class CompareMaps extends React.Component {
   constructor(props) {
     super(props);
 
-    console.log(props.countries);
-
     this.state = {
-      [props.countries[0]]: {
-        mapConfig: {
-          zoom: 3,
-          latLng: {
-            lat: 0,
-            lng: 0
-          }
-        }
-      },
-      [props.countries[1]]: {
-        mapConfig: {
-          zoom: 3,
-          latLng: {
-            lat: 0,
-            lng: 0
-          }
-        }
-      }
+      maps: zipObject(props.countries, [MAP_CONFIG, MAP_CONFIG])
     };
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (!isEqual(nextProps.countries.sort(), this.props.countries.sort())) {
+      this.setState({
+        maps: zipObject(nextProps.countries, [MAP_CONFIG, MAP_CONFIG])
+      });
+    }
+  }
+
 
   render() {
     const { mapConfig } = this.state;
@@ -66,10 +69,10 @@ export default class CompareMaps extends React.Component {
               countryName: ((this.props.countryList || []).find(c => c.id === this.props.countries[i]) || {}).name
             }));
 
-            const mapConfig = Object.assign({}, this.state[country].mapConfig, { bounds: this.props.countryList.find(c => c.id === country) })
+            const mapConfig = Object.assign({}, this.state.maps[country].mapConfig, { bounds: this.props.countryList.find(c => c.id === country) })
 
             return (
-              <div className="compareitem-column">
+              <div key={country} className="compareitem-column">
                 <div className="compareitem-map">
                   <Map
                     mapConfig={mapConfig}
