@@ -90,6 +90,20 @@
     padding-bottom: 0;
   }
 }
+
+.c-compareitem-row {
+  width: 100%;
+  display: flex;
+
+  .compareitem-column {
+    width: 50%;
+  }
+}
+
+.c-compareitem-maps {
+  width: 100%;
+}
+
 .compareitem-map {
   @include only-mobile {
     height: calc(100vh - 212px);
@@ -98,6 +112,7 @@
     height: 430px;
   }
   position: relative;
+  width: 100%;
   & > div {
     height: 100%;
   }
@@ -145,10 +160,6 @@
 
 .c-compareitem {
   flex: 1;
-  width: 50%;
-  @include only-mobile {
-    width: 100%;
-  }
 }
 
 .comparelist-item {
