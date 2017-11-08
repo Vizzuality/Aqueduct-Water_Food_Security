@@ -52,6 +52,7 @@ export default class SummaryCountry extends React.Component {
         key: 'and1',
         keyParams: [
           { key: 'iso' },
+          { key: 'irrigation' },
           { key: 'year', dictionary: 'food' },
           { key: 'commodity' }
         ]
@@ -66,15 +67,18 @@ export default class SummaryCountry extends React.Component {
     ];
     const { crop } = this.props.filters;
 
-    const impactParameter = (crop !== 'all') ? `('Area', 'Yield')` : `('Area')`;
-
     const url = `https://wri-rw.carto.com/api/v2/sql?q=
       with b as(SELECT * FROM water_risk_rankings_v3 WHERE irrigation='irrigated' AND indicator='water_stress' {{and}} and value is not null order by iso asc),
       c as (SELECT * FROM water_risk_rankings_v3 WHERE irrigation='rainfed' AND indicator='drought_stress' {{and}} and value is not null order by iso asc)
 
-
       SELECT impactparameter AS name, sum(value) AS value, null as label
-      FROM combined01_prepared WHERE impactparameter in ${impactParameter} and scenario = 'SSP2-MIRO'
+      FROM combined01_prepared WHERE impactparameter in ('Area') and scenario = 'SSP2-MIRO'
+      {{and1}} group by impactparameter
+
+      UNION ALL
+
+      SELECT impactparameter AS name, avg(value) AS value, null as label
+      FROM combined01_prepared WHERE impactparameter in ('Yield') and scenario = 'SSP2-MIRO'
       {{and1}} group by impactparameter
 
       UNION ALL
