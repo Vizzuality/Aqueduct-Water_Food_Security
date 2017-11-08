@@ -86,7 +86,8 @@ export default class WidgetEmbedModal extends React.Component {
       filters: this.props.filters,
       embed: { id: this.props.widget.dataset }
     };
-    return `${location.origin + location.pathname}embed?state=${btoa(JSON.stringify(state))}`;
+
+    return `${location.origin}/embed?state=${btoa(JSON.stringify(state))}`;
   }
 
   toggleLoading(loading) {
