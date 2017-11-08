@@ -54,13 +54,15 @@ class WidgetChart extends React.Component {
       this.request = get({
         url: url,
         onSuccess: (response) => {
-          this.setState({
-            data: response.rows,
-            widgetConfig: widgetParsed.widgetConfig
-          }, () => {
-            this.props.toggleLoading(false);
-            this.props.toggleVisibility && this.props.toggleVisibility(!!this.state.data.length);
-          });
+          this.props.toggleLoading(false);
+          this.props.toggleVisibility && this.props.toggleVisibility(!!response.rows.length);
+
+          requestAnimationFrame(() => {
+            this.setState({
+              data: response.rows,
+              widgetConfig: widgetParsed.widgetConfig
+            });
+          })
         },
         onError: (err) => {
           this.props.toggleLoading(false);

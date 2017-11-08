@@ -13,6 +13,11 @@
   width: 100%;
   padding: ($space-1 * 6) ($space-1 * 2) 0;
 
+  &.-hidden {
+    display: none;
+    visibility: hidden;
+  }
+
   &.-embed {
     padding: 0;
 

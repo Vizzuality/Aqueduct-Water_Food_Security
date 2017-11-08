@@ -116,12 +116,9 @@ class Widget extends React.Component {
     // }
 
     const className = classnames({
+      '-hidden': (!this.state.visibility && (filters.page !== 'compare')),
       [this.props.className]: !!this.props.className
     });
-
-    if (!this.state.visibility && (filters.page !== 'compare')) {
-      return null;
-    }
 
     return (
       <div className={`c-widget ${className}`} ref={el => this.widgetElem = el}>
