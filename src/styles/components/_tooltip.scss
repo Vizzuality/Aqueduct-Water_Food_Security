@@ -20,10 +20,12 @@
 
       .title {
         font-weight: 500;
+        text-transform: capitalize;
       }
 
       .value {
         font-weight: 500;
+        text-transform: capitalize;
       }
     }
   }
@@ -32,10 +34,12 @@
     th, td {
       padding: 1px 4px;
       color: $color-text-1;
+      text-transform: capitalize;
     }
 
     th {
       font-weight: 500;
+      text-transform: capitalize;
     }
   }
 
