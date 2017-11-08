@@ -126,7 +126,7 @@ class StickyFilters extends React.Component {
             />
           </div>
           <div>
-            <span className="title">Food security</span>
+            <span className="title">Food Security</span>
             <CustomSelect
               className="-gray"
               options={FOOD_OPTIONS}

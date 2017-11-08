@@ -245,7 +245,7 @@ export default class Filters extends React.Component {
                   {/* Food */}
                   <div className="c-filters-item">
                     <div className="filter-item-header">
-                      <span className="title">Food security</span>
+                      <span className="title">Food Security</span>
                       <button
                         className="icon-container"
                         onClick={() => Filters.openModal('food-security')}
