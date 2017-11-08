@@ -73,23 +73,23 @@ export default class SummaryCountry extends React.Component {
       c as (SELECT * FROM water_risk_rankings_v3 WHERE irrigation='rainfed' AND indicator='drought_stress' {{and}} and value is not null order by iso asc)
 
 
-      SELECT impactparameter AS name, sum(value) AS value
+      SELECT impactparameter AS name, sum(value) AS value, null as label
       FROM combined01_prepared WHERE impactparameter in ${impactParameter} and scenario = 'SSP2-MIRO'
       {{and1}} group by impactparameter
 
       UNION ALL
 
-      SELECT impactparameter AS name, sum(value) AS value
+      SELECT impactparameter AS name, sum(value) AS value, null as label
       FROM combined01_prepared WHERE impactparameter in ('Share Pop. at risk of hunger') and scenario = 'SSP2-MIRO'
       {{and2}} group by impactparameter
 
       UNION ALL
 
-      SELECT 'Irrigated Area Water Stress Score' as name, value as value from b
+      SELECT 'Irrigated Area Water Stress Score' as name, value as value, label from b
 
       UNION ALL
 
-      SELECT 'Rainfed Area Drought Severity Risk Score' as name, value as value from c
+      SELECT 'Rainfed Area Drought Severity Risk Score' as name, value as value, label from c
     `;
 
     const widgetConfig = Object.assign({}, {
@@ -131,12 +131,14 @@ export default class SummaryCountry extends React.Component {
           const IAWSSData = data.rows.find(r => r.name === 'Irrigated Area Water Stress Score');
           fields.push({
             title: 'Irrigated Area Water Stress Score',
-            value: `${(IAWSSData) ? format('.2f')(IAWSSData.value) : '-'}`
+            label: IAWSSData && IAWSSData.label ? `${capitalizeFirstLetter(IAWSSData.label)}:` : null,
+            value: `${(IAWSSData) ? format('.2f')(IAWSSData.value) : '-'}`,
           });
 
           const RADSRSData = data.rows.find(r => r.name === 'Rainfed Area Drought Severity Risk Score');
           fields.push({
             title: 'Rainfed Area Drought Severity Risk Score',
+            label: RADSRSData && RADSRSData.label ? `${capitalizeFirstLetter(RADSRSData.label)}:` : null,
             value: `${(RADSRSData) ? format('.2f')(RADSRSData.value) : '-'}`
           });
 
@@ -172,7 +174,7 @@ export default class SummaryCountry extends React.Component {
               return (
                 <li key={i}>
                   <span className="title">{f.title}</span>
-                  <span className="amount">{f.value}</span>
+                  <span className="amount">{f.label} {f.value}</span>
                 </li>
               );
             })}
