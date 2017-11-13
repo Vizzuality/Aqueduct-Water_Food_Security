@@ -158,7 +158,7 @@ export default class LayerManager {
 
   _getLegendValues(layerConfig, legendConfig, options) {
     const layerConfigConverted = getObjectConversion(layerConfig, options, 'water', layerConfig.paramsConfig, layerConfig.sqlConfig);
-    const legendConfigConverted = getObjectConversion(legendConfig, options, 'water', layerConfig.paramsConfig, layerConfig.sqlConfig);
+    const legendConfigConverted = getObjectConversion(legendConfig, options, 'water', legendConfig.paramsConfig, legendConfig.sqlConfig);
 
     // Save loader
     this._addLoader(layerConfig.id);
