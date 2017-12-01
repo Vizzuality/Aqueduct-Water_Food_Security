@@ -39,7 +39,6 @@ export default class InfoModal extends React.Component {
 
     const { name, description, metadata, widgetConfig, queryUrl } = widgetParsed;
 
-
     return (
       <div className="c-info">
         <div className="info-header">
@@ -66,14 +65,38 @@ export default class InfoModal extends React.Component {
                 <dl>
                   <dt>Description:</dt>
                   <dd>{metadata && metadata.description || notAvailable}</dd>
-                  <dt>Language:</dt>
-                  <dd>{metadata && metadata.language || notAvailable}</dd>
-                  <dt>Source:</dt>
-                  <dd>{metadata && metadata.source || notAvailable}</dd>
-                  <dt>Citation:</dt>
-                  <dd>{metadata && metadata.citation || notAvailable}</dd>
-                  <dt>License:</dt>
-                  <dd>{metadata && metadata.license || notAvailable}</dd>
+
+                  {metadata && metadata.info && metadata.info.sources &&
+                    <dt>Source:</dt>
+                  }
+                  {metadata && metadata.info && metadata.info.sources &&
+                    <dd>
+                      {metadata.info.sources.map((s, i) => {
+                        if (s.sourceUrl) {
+                          return (
+                            <span>
+                              {i !== 0 && ', '}
+                              <a
+                                key={s.sourceName}
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                href={s.sourceUrl}
+                              >
+                                {s.sourceName}
+                              </a>
+                            </span>
+                          );
+                        }
+
+                        return (
+                          <span>
+                            {i !== 0 && ', '}
+                            {s.sourceName}
+                          </span>
+                        );
+                      })}
+                    </dd>
+                  }
                 </dl>
               </div>
             </div>
