@@ -25,6 +25,15 @@ export default class InfoModal extends React.Component {
     this.mounted && this.setState({ loading });
   }
 
+  getName(widgetParsed) {
+    const { filters } = this.props;
+    const { name, widgetConfig } = widgetParsed;
+
+    const proyection = (filters.year === 'baseline') ? 'baseline' : 'future';
+
+    return (widgetConfig.titleConfig) ? widgetConfig.titleConfig[proyection] : name;
+  }
+
   render() {
     const notAvailable = 'Not available';
 
@@ -43,7 +52,7 @@ export default class InfoModal extends React.Component {
       <div className="c-info">
         <div className="info-header">
           <div className="info-titles">
-            <span className="info-title">{name}</span>
+            <span className="info-title">{this.getName(widgetParsed)}</span>
           </div>
         </div>
         <div className="info-content">

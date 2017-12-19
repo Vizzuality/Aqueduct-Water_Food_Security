@@ -94,6 +94,15 @@ export default class WidgetEmbedModal extends React.Component {
     this.mounted && this.setState({ loading });
   }
 
+  getName(widgetParsed) {
+    const { filters } = this.props;
+    const { name, widgetConfig } = widgetParsed;
+
+    const proyection = (filters.year === 'baseline') ? 'baseline' : 'future';
+
+    return (widgetConfig.titleConfig) ? widgetConfig.titleConfig[proyection] : name;
+  }
+
   render() {
     let copyButtonContent = 'Copy code';
     if (this.state.copyError === false) {
@@ -118,7 +127,7 @@ export default class WidgetEmbedModal extends React.Component {
         <div className="row expanded">
           <div className="small-12 large-8 columns">
             <div className="title">
-              {name}
+              {this.getName(widgetParsed)}
             </div>
             <div className="widget">
               <Spinner isLoading={this.state.loading} />

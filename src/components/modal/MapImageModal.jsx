@@ -36,6 +36,15 @@ export default class WidgetImageModal extends React.Component {
     this.mounted && this.setState({ loading: bool });
   }
 
+  getName(widgetParsed) {
+    const { filters } = this.props;
+    const { name, widgetConfig } = widgetParsed;
+
+    const proyection = (filters.year === 'baseline') ? 'baseline' : 'future';
+
+    return (widgetConfig.titleConfig) ? widgetConfig.titleConfig[proyection] : name;
+  }
+
   render() {
     const { widget, filters } = this.props;
     const widgetParsed = getObjectConversion(
@@ -53,7 +62,7 @@ export default class WidgetImageModal extends React.Component {
         <div className="row expanded">
           <div className="small-12 large-8 columns">
             <div className="canvas-content" ref={el => this.canvasContent = el}>
-              <div className="title">{name}</div>
+              <div className="title">{this.getName(widgetParsed)}</div>
               <div className="widget">
                 <div className="c-widget" >
                   <div>
