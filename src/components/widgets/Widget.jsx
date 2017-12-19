@@ -98,6 +98,15 @@ class Widget extends React.Component {
     return height + paddingTop + paddingBottom;
   }
 
+  getName(widgetParsed) {
+    const { filters } = this.props;
+    const { name, widgetConfig } = widgetParsed;
+
+    const proyection = (filters.year === 'baseline') ? 'baseline' : 'future';
+
+    return (widgetConfig.titleConfig) ? widgetConfig.titleConfig[proyection] : name;
+  }
+
   render() {
     const { widget, filters } = this.props;
 
@@ -109,7 +118,7 @@ class Widget extends React.Component {
       widget.widgetConfig.sqlConfig
     );
 
-    const { name, description, widgetConfig, queryUrl } = widgetParsed;
+    const { description, widgetConfig, queryUrl } = widgetParsed;
 
     // if (widget.id === 'af969fd8-fd47-430d-ad13-9113e42e9fed') {
     //   console.log(JSON.stringify(widgetParsed.widgetConfig));
@@ -126,7 +135,7 @@ class Widget extends React.Component {
           {widgetConfig.type !== 'text' &&
             <header className="widget-header">
               <div className="widget-titles">
-                <h2 className="widget-title">{name}</h2>
+                <h2 className="widget-title">{this.getName(widgetParsed)}</h2>
                 {/* <h3 className="widget-description">{description}</h3> */}
               </div>
 
