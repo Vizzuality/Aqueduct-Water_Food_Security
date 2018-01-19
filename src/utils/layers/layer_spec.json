@@ -54,8 +54,6 @@
       "sort": "desc"
     }
   },
-
-
   {
     "id": "4b000ded-5f4d-4dbd-83c9-03f2dfcd36db",
     "layerId": "dadb9cc1-40fc-4c43-89b2-2e1423223523",
@@ -78,13 +76,13 @@
   {
     "id": "bf657e60-de9c-4b7e-8736-d573d38e3ce1",
     "layerId": "db89786d-0862-44f7-8a21-9d21cd52ab15",
-    "name": "Interannual variability",
+    "name": "Inter-annual variability",
     "category": "water"
   },
   {
     "id": "9c450642-f976-40eb-96b4-0c904d519578",
     "layerId": "39c5649f-aaf7-4d32-9493-26441d8f80f0",
-    "name": "Drought severity soil moisture",
+    "name": "Drought severity (soil moisture)",
     "category": "water"
   },
   {
@@ -97,14 +95,10 @@
   {
     "id": "cbd0d0f8-edf9-47bc-93ef-71c1a5e5fed7",
     "layerId": "1c825957-f34f-4f49-8c19-20c952722ba9",
-    "name": "Groundwater decline trend",
+    "name": "Groundwater table declining trend",
     "category": "water",
     "warning": "not-rainfed-relevant"
   },
-
-
-
-
   {
     "id": "e844accd-9e65-414b-84e7-efc5bd65aa17",
     "layerId": "87e294b1-80fe-4ddc-baac-d2e2e28d9894",
