@@ -110,6 +110,18 @@ export default class Filters extends React.Component {
 
     return (
       <div className={`c-filters ${this.props.className ? this.props.className : ''}`}>
+        <a
+          href="/"
+          style={{
+            color: '#FFF',
+            position: 'absolute',
+            right: 20,
+            bottom: 19
+          }}
+        >
+          Reset filters
+        </a>
+      
         {/* Scope */}
         {this.props.withScope &&
           <div className="filters-lead">

@@ -23,7 +23,7 @@ export default class AboutPage extends React.Component {
                   <li>Ministries of water and agriculture: Government officials within relevant ministries can use Aqueduct Food to see how changes in climate and demand for water could affect their food-producing areas. </li>
                 </ul>
 
-                <p>For instructions on how to use Aqueduct Food, see <a href="linktodocument">here</a>.</p>
+                <p>For instructions on how to use Aqueduct Food, see <a target="_blank" href="https://s3.amazonaws.com/aqueduct-food/Aqueduct+Food+User-s+Guide.pdf">here</a>.</p>
               </div>
 
               <div className="text-section">
