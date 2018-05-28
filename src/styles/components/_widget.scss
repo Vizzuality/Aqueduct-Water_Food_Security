@@ -90,6 +90,12 @@
       text-transform: uppercase;
     }
   }
+
+  .widget-warning {
+    font-size: $font-size-small;
+    padding: 10px 20px 0;
+    color: $color-text-1;
+  }
 }
 
 

@@ -9,6 +9,11 @@ export default class CompareWidgetList extends React.Component {
   render() {
     const { widgetsActive } = this.props;
     const items = Array.from(Array(this.props.items));
+    const compareWarningList = [
+      '88aefca0-e25c-4a16-80b3-f2831d2064e4',
+      'd654b935-31cd-4971-877e-bf0345c8b49a',
+      '636d41ed-620b-4da9-8796-e5783347fc10'
+    ];
 
     return (
       <div className="c-compareitem-widgets">
@@ -30,7 +35,13 @@ export default class CompareWidgetList extends React.Component {
                 return (
                   <div key={`${widget.id}-${i}`} className="compareitem-column">
                     <div className="column small-12">
-                      <Widget widget={widget} filters={filters} />
+                      <Widget
+                        widget={widget}
+                        filters={filters}
+                        warning={compareWarningList.includes(widget.id) &&
+                          <p><i>Note: Y-Axis scales could be different between countries</i></p>
+                        }
+                      />
                     </div>
                   </div>
                 );

@@ -108,7 +108,7 @@ class Widget extends React.Component {
   }
 
   render() {
-    const { widget, filters } = this.props;
+    const { widget, filters, warning } = this.props;
 
     const widgetParsed = getObjectConversion(
       widget,
@@ -178,6 +178,13 @@ class Widget extends React.Component {
               toggleVisibility={this.toggleVisibility}
             />
 
+
+            {!!warning && 
+              <div className="widget-warning">
+                {warning}
+              </div>
+            }
+
           </div>
         </div>
       </div>
@@ -188,7 +195,8 @@ class Widget extends React.Component {
 Widget.propTypes = {
   className: React.PropTypes.string,
   widget: React.PropTypes.object,
-  filters: React.PropTypes.object
+  filters: React.PropTypes.object,
+  warning: React.PropTypes.node
 };
 
 export default Widget;
