@@ -21,7 +21,6 @@ RUN yarn install
 
 # Bundle app source
 COPY . /usr/src/app
-RUN yarn build
 
 EXPOSE 3000
 
