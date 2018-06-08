@@ -5,9 +5,8 @@
   "main": "server.js",
   "private": true,
   "scripts": {
-    "build": "NODE_ENV=production webpack --config ./config/webpack.config.js --progress --colors",
+    "build": "webpack --config ./config/webpack.config.js --progress --colors",
     "test": "eslint .",
-    "postinstall": "yarn build",
     "dev": "node server.js"
   },
   "repository": {

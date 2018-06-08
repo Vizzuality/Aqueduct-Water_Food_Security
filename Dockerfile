@@ -12,15 +12,14 @@ RUN apt-get update && \
     && mkdir -p /usr/src/app
 
 # Add app directory
+COPY . /usr/src/app
 WORKDIR /usr/src/app
 
 # Install app dependencies
-COPY package.json /usr/src/app/
-COPY yarn.lock /usr/src/app/
-RUN yarn install
+RUN cd /usr/src/app/ && yarn install --frozen-lockfile --production && yarn cache clean
 
 # Bundle app source
-COPY . /usr/src/app
+RUN yarn build
 
 EXPOSE 3000
 
