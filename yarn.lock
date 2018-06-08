@@ -995,7 +995,7 @@ basename@0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/basename/-/basename-0.1.2.tgz#d6039bef939863160c78048cced3c5e7f88cb261"
 
-basic-auth@~2.0.0:
+basic-auth@^2.0.0, basic-auth@~2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/basic-auth/-/basic-auth-2.0.0.tgz#015db3f353e02e56377755f962742e8981e7bbba"
   dependencies:
