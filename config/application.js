@@ -11,18 +11,17 @@ const rootPath = path.join(process.cwd());
 
 function checkBasicAuth(users) {
   return function authMiddleware(req, res, nextAction) {
-    if (!/(AddSearchBot)|(HeadlessChrome)/.test(req.headers['user-agent'])) {
-      const user = basicAuth(req);
-      let authorized = false;
-      if (user && ((user.name === users[0].name && user.pass === users[0].pass))) {
-        authorized = true;
-      }
-
-      if (!authorized) {
-        res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
-        return res.sendStatus(401);
-      }
+    const user = basicAuth(req);
+    let authorized = false;
+    if (user && ((user.name === users[0].name && user.pass === users[0].pass))) {
+      authorized = true;
     }
+
+    if (!authorized) {
+      res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
+      return res.sendStatus(401);
+    }
+  
     return nextAction();
   };
 }
