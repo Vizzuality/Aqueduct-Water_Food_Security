@@ -20,7 +20,7 @@
   },
   "homepage": "http://vizzuality.github.io/Aqueduct-Water_Food_Security/",
   "dependencies": {
-    "aqueduct-components": "^0.1.3",
+    "aqueduct-components": "^0.1.5",
     "babel-core": "^6.18.2",
     "babel-loader": "^6.2.7",
     "babel-plugin-add-react-displayname": "0.0.4",
