@@ -3,6 +3,7 @@ import classnames from 'classnames';
 
 import Modal from 'containers/ui/Modal';
 import Tooltip from 'containers/ui/Tooltip';
+import UserReport from 'components/user-report';
 import Toastr from 'react-redux-toastr'
 
 export default class App extends React.Component {
@@ -36,6 +37,8 @@ export default class App extends React.Component {
           transitionIn="fadeIn"
           transitionOut="fadeOut"
         />
+
+        <UserReport />
       </div>
     );
   }
