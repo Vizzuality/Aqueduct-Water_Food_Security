@@ -87,6 +87,7 @@ export default class AboutPage extends React.Component {
 
               <div className="text-section">
                 <h2>Contact</h2>
+                <p>For more info <a href="mailto:aqueductfood@wri.org">aqueductfood@wri.org</a>.</p>
                 <p>For media inquiries or general Aqueduct inquiries, contact <a href="mailto:leah.schleifer@wri.org">Leah Schleifer</a>.</p>
                 <p>For specific data-related or usability inquiries or to provide feedback about Aqueduct Food, contact <a href="mailto:sara.walker@wri.org">Sara Walker</a>.</p>
               </div>
