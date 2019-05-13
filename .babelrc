@@ -1,4 +1,6 @@
 {
-  "presets": ["env", "react", "latest", "stage-3"],
-  "plugins": ["add-react-displayname"]
+  "presets": ["env", "react"],
+  "plugins": [
+    "transform-object-rest-spread"
+  ]
 }

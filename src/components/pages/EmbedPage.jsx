@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Spinner } from 'aqueduct-components';
 import Widget from 'components/widgets/Widget';
 
@@ -21,8 +22,8 @@ export default class EmbedPage extends React.Component {
 
 
 EmbedPage.propTypes = {
-  filters: React.PropTypes.object,
-  getWidget: React.PropTypes.func,
-  widget: React.PropTypes.object,
-  error: React.PropTypes.string
+  filters: PropTypes.object,
+  getWidget: PropTypes.func,
+  widget: PropTypes.object,
+  error: PropTypes.string
 };

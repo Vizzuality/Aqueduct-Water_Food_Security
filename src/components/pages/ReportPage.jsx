@@ -1,22 +1,27 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import WidgetList from 'components/widgets/WidgetList';
 import Summary from 'components/summary/Summary';
 
 import LayerManager from 'utils/layers/LayerManager';
-import { SCOPE_OPTIONS, WATER_OPTIONS } from 'constants/filters';
+
 
 import {
   Map,
   Legend,
   MapHeader,
-  // Constants
-  CROP_OPTIONS,
-  IRRIGATION_OPTIONS,
-  // Functions
-  post
+  IRRIGATION_OPTIONS
 } from 'aqueduct-components';
+
+// constants
+import { CROP_OPTIONS } from 'constants/crops';
+import { SCOPE_OPTIONS } from 'constants/filters';
+import {
+  BASELINE_WATER_INDICATORS,
+  PROJECTED_WATER_INDICATORS
+} from 'constants/water-indicators';
 
 export default class MapPageDesktop extends React.Component {
 
@@ -41,9 +46,14 @@ export default class MapPageDesktop extends React.Component {
   }
 
   getDictionary() {
-    const _iso = this.props.filters.country;
-    const _scope = this.props.filters.scope;
-    const _countries = this.props.countries.list;
+    const {
+      filters: { iso: _iso, scope: _scope, year: _year },
+      countries: { list: _countries }
+    } = this.props;
+    // const _iso = this.props.filters.country;
+    // const _scope = this.props.filters.scope;
+    // const _countries = this.props.countries.list;
+    const waterIndicators = _year === 'baseline' ? BASELINE_WATER_INDICATORS : PROJECTED_WATER_INDICATORS;
 
     return {
       crop(crop) {
@@ -67,7 +77,7 @@ export default class MapPageDesktop extends React.Component {
         return !_iso || scope !== 'country' ? SCOPE_OPTIONS.find(v => v.value === 'global').label : '';
       },
       indicator(indicator) {
-        return indicator !== 'none' ? WATER_OPTIONS.find(v => v.value === indicator).label : '';
+        return indicator !== 'none' ? waterIndicators.find(v => v.value === indicator).label : '';
       }
     };
   }
@@ -77,27 +87,7 @@ export default class MapPageDesktop extends React.Component {
   }
 
   triggerDownload() {
-    // Print: first aproach
     window.print();
-
-    // Download: second aproach
-    // post({
-    //   type: 'POST',
-    //   url: '/download-pdf',
-    //   headers: [{
-    //     key: 'Content-Type',
-    //     value: 'application/json'
-    //   }],
-    //   body: {
-    //     html: document.documentElement.innerHTML
-    //   },
-    //   onSuccess: (data) => {
-    //     console.info(data);
-    //   },
-    //   onError: (error) => {
-    //     console.info(error);
-    //   }
-    // });
   }
 
   render() {
@@ -173,13 +163,13 @@ export default class MapPageDesktop extends React.Component {
 }
 
 MapPageDesktop.propTypes = {
-  mapConfig: React.PropTypes.object,
-  filters: React.PropTypes.object,
-  countries: React.PropTypes.object,
-  sidebar: React.PropTypes.object,
-  layersActive: React.PropTypes.array,
-  widgetsActive: React.PropTypes.array,
+  mapConfig: PropTypes.object,
+  filters: PropTypes.object,
+  countries: PropTypes.object,
+  sidebar: PropTypes.object,
+  layersActive: PropTypes.array,
+  widgetsActive: PropTypes.array,
   // Actions
-  setMapParams: React.PropTypes.func,
-  updateMapUrl: React.PropTypes.func
+  setMapParams: PropTypes.func,
+  updateMapUrl: PropTypes.func
 };

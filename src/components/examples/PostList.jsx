@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Modal from 'components/common/Modal';
 import Tooltip from 'components/common/Tooltip';
 
@@ -143,10 +144,10 @@ class PostList extends React.Component {
 
 PostList.propTypes = {
   // STATE
-  posts: React.PropTypes.object,
+  posts: PropTypes.object,
 
   // ACTIONS
-  getPost: React.PropTypes.func
+  getPost: PropTypes.func
 };
 
 

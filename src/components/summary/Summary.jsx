@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import { format } from 'd3-format';
-import { Spinner, getObjectConversion, capitalizeFirstLetter } from 'aqueduct-components';
+import { Spinner, capitalizeFirstLetter } from 'aqueduct-components';
 
-export default class SummaryCountry extends React.Component {
+// utils
+import { getObjectConversion } from 'utils/filters';
 
+export default class SummaryCountry extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {

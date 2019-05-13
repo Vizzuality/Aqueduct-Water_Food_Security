@@ -1,13 +1,17 @@
-import React from 'react';
-import isEqual from 'lodash/isEqual';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import isEqual from 'react-fast-compare';
+import axios from 'axios';
 
+// components
 import WidgetText from 'components/widgets/WidgetText';
-import theme from 'data/vega-theme.json';
 import VegaChart from 'components/widgets/VegaChart';
-import { getObjectConversion, get } from 'aqueduct-components';
+import theme from 'data/vega-theme.json';
 
-class WidgetChart extends React.Component {
+// utils
+import { getObjectConversion } from 'utils/filters';
 
+class WidgetChart extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -26,52 +30,44 @@ class WidgetChart extends React.Component {
     const { widget: nextWidget, filters: nextFilters } = nextProps;
     const { widget, filters } = this.props;
     if (
-      !isEqual(nextWidget, widget) ||
-      !isEqual(nextFilters, filters)
+      !isEqual(nextWidget, widget)
+      || !isEqual(nextFilters, filters)
     ) {
       this.fetchData({ widget: nextWidget, filters: nextFilters });
     }
   }
 
   fetchData({ widget, filters }) {
+    const { toggleLoading, toggleVisibility } = this.props;
     const widgetParsed = getObjectConversion(
       widget,
       filters,
       widget.widgetConfig.dictionary || 'widget-2010',
-      widget.widgetConfig.paramsConfig,
-      widget.widgetConfig.sqlConfig
+      widget.widgetConfig.params_config,
+      widget.widgetConfig.sql_config
     );
-
     const { url } = widgetParsed.widgetConfig.data[0] || widgetParsed.widgetConfig.data;
 
-    if (this.request && this.request.readyState !== 4) {
-      this.request.abort();
-    }
-
     if (url) {
-      this.props.toggleLoading(true);
+      toggleLoading(true);
 
-      this.request = get({
-        url: url,
-        onSuccess: (response) => {
-          this.props.toggleLoading(false);
-          this.props.toggleVisibility && this.props.toggleVisibility(!!response.rows.length);
+      axios.get(url)
+        .then((response) => {
+          if (toggleVisibility) toggleVisibility(!!response.data.rows.length);
 
           requestAnimationFrame(() => {
             this.setState({
-              data: response.rows,
+              data: response.data.rows,
               widgetConfig: widgetParsed.widgetConfig
-            });
-          })
-        },
-        onError: (err) => {
-          this.props.toggleLoading(false);
-        }
-      })
+            }, () => { toggleLoading(false); });
+          });
+        })
+        .catch(() => { toggleLoading(false); });
     }
   }
 
   render() {
+    const { toggleLoading, toggleTooltip } = this.props;
     const { widgetConfig, data } = this.state;
 
     if (widgetConfig.type === 'text') {
@@ -79,19 +75,19 @@ class WidgetChart extends React.Component {
         <WidgetText
           widgetConfig={widgetConfig}
           data={data}
-          toggleLoading={this.props.toggleLoading}
+          toggleLoading={toggleLoading}
         />
       );
     }
 
-    if (!!data.length) {
+    if (data.length) {
       return (
         <VegaChart
           theme={theme}
           widgetConfig={widgetConfig}
           data={data}
-          toggleLoading={this.props.toggleLoading}
-          toggleTooltip={this.props.toggleTooltip}
+          toggleLoading={toggleLoading}
+          toggleTooltip={toggleTooltip}
         />
       );
     }
@@ -101,11 +97,11 @@ class WidgetChart extends React.Component {
 }
 
 WidgetChart.propTypes = {
-  widget: React.PropTypes.object,
-  filters: React.PropTypes.object,
-  toggleLoading: React.PropTypes.func,
-  toggleTooltip: React.PropTypes.func,
-  toggleVisibility: React.PropTypes.func
+  widget: PropTypes.object.isRequired,
+  filters: PropTypes.object.isRequired,
+  toggleLoading: PropTypes.func.isRequired,
+  toggleTooltip: PropTypes.func.isRequired,
+  toggleVisibility: PropTypes.func.isRequired
 };
 
 export default WidgetChart;

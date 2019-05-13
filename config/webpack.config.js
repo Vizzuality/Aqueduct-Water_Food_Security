@@ -7,8 +7,6 @@ const path = require('path');
 const validate = require('webpack-validator');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-
 const rootPath = process.cwd();
 const componentsPath = path.join(rootPath, '..', 'aqueduct-components');
 
@@ -22,10 +20,6 @@ const config = {
     path: path.join(rootPath, 'dist/'),
     filename: '[name]-[hash].js',
     publicPath: '/'
-  },
-
-  externals: {
-    leaflet: 'L'
   },
 
   module: {
@@ -81,7 +75,6 @@ const config = {
   },
 
   plugins: [
-    // new BundleAnalyzerPlugin(),
     new HtmlWebpackPlugin({
       template: 'src/index.html',
       inject: 'body',
@@ -91,17 +84,11 @@ const config = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-      },
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       config: {
         API_URL: JSON.stringify(process.env.API_URL),
-        BASEMAP_TILE_URL: JSON.stringify(process.env.BASEMAP_TILE_URL),
-        BASEMAP_LABEL_URL: JSON.stringify(process.env.BASEMAP_LABEL_URL),
         BITLY_LOGIN: JSON.stringify(process.env.BITLY_LOGIN),
-        BITLY_KEY: JSON.stringify(process.env.BITLY_KEY),
-        opbeatOrgId: JSON.stringify(process.env.OPBEAT_ORGID),
-        opbeatAppId: JSON.stringify(process.env.OPBEAT_APPID)
+        BITLY_KEY: JSON.stringify(process.env.BITLY_KEY)
       }
     })
   ]

@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { IndexRoute, Router, Route } from 'react-router';
 
 // Components
@@ -34,8 +34,6 @@ const Routes = ({ history }) => (
   </Router>
 );
 
-Routes.propTypes = {
-  history: React.PropTypes.object
-};
+Routes.propTypes = { history: PropTypes.object.isRequired };
 
-export default connect()(Routes);
+export default Routes;

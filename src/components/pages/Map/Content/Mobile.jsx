@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Map, MapControls, ZoomControl, SegmentedUi } from 'aqueduct-components';
 import WidgetList from 'components/widgets/WidgetList';
-import MobileFilters from 'components/filters/MobileFilters';
-import DownloadButton from 'components/map/DownloadButton';
+import MobileFilters from 'components/filters/mobile';
+import DownloadButton from 'components/map/map-controls/download-map';
 import LegendMobile from 'components/legend/LegendMobile';
 import Summary from 'components/summary/Summary';
 import LayerManager from 'utils/layers/LayerManager';
@@ -88,8 +89,7 @@ export default class MapPageMobile extends React.Component {
         {/* Filters */}
         <MobileFilters
           className="-mobile"
-          withScope filters={this.props.filters}
-          setFilters={this.props.setFilters}
+          withScope
         />
       </div>
     );
@@ -97,13 +97,13 @@ export default class MapPageMobile extends React.Component {
 }
 
 MapPageMobile.propTypes = {
-  mapConfig: React.PropTypes.object,
-  filters: React.PropTypes.object,
-  sidebar: React.PropTypes.object,
-  layersActive: React.PropTypes.array,
-  widgetsActive: React.PropTypes.array,
-  countries: React.PropTypes.object,
+  mapConfig: PropTypes.object,
+  filters: PropTypes.object,
+  sidebar: PropTypes.object,
+  layersActive: PropTypes.array,
+  widgetsActive: PropTypes.array,
+  countries: PropTypes.object,
   // Actions
-  setMapParams: React.PropTypes.func,
-  setFilters: React.PropTypes.func
+  setMapParams: PropTypes.func,
+  setFilters: PropTypes.func
 };

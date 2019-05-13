@@ -12,7 +12,7 @@ export function onEnterMapPage({ location }, replace, done) {
   if (zoom) {
     const map = {
       zoom: +location.query.zoom,
-      latLng: {
+      center: {
         lat: +location.query.lat,
         lng: +location.query.lng
       }
@@ -35,6 +35,7 @@ export function onEnterMapPage({ location }, replace, done) {
       year,
       indicator,
       type,
+      iso: country,
       page: 'map'
     };
     dispatch(setFilters(filtersObj));
@@ -67,6 +68,7 @@ export function onEnterComparePage({ location }, replace, done) {
       indicator,
       irrigation,
       type,
+      iso: country,
       page: 'compare'
     };
     dispatch(setFilters(filtersObj));
@@ -95,7 +97,7 @@ export function onEnterReportPage({ location }, replace, done) {
   if (location.query.zoom) {
     const map = {
       zoom: +location.query.zoom,
-      latLng: {
+      center: {
         lat: +location.query.lat,
         lng: +location.query.lng
       }
@@ -116,6 +118,7 @@ export function onEnterReportPage({ location }, replace, done) {
       year,
       indicator,
       type,
+      iso: country,
       page: 'map'
     };
     dispatch(setFilters(filtersObj));
