@@ -1,12 +1,5 @@
 import { SET_FILTERS } from 'constants/filters';
 
-// Services
-import { toastr } from 'react-redux-toastr';
-
-// Constants
-import { WATER_OPTIONS } from 'constants/filters';
-import { MESSAGES } from 'constants/messages';
-
 const initialState = {
   page: '',
   crop: 'all',
@@ -19,14 +12,15 @@ const initialState = {
   food: 'none',
   indicator: 'none',
   irrigation: 'all',
-  type: 'absolute'
+  type: 'absolute',
+  iso: null
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
     case SET_FILTERS: {
       const newState = Object.assign({}, state, action.payload);
-      return newState
+      return newState;
     }
     default:
       return state;

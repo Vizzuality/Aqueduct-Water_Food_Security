@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as vega from 'vega';
 import * as d3 from 'd3';
 import debounce from 'lodash/debounce';
@@ -158,9 +159,9 @@ export default class VegaChart extends React.Component {
 
 VegaChart.propTypes = {
   // Define the chart data
-  widgetConfig: React.PropTypes.any.isRequired,
-  data: React.PropTypes.any.isRequired,
-  theme: React.PropTypes.object,
-  toggleLoading: React.PropTypes.func,
-  toggleTooltip: React.PropTypes.func
+  widgetConfig: PropTypes.any.isRequired,
+  data: PropTypes.any.isRequired,
+  theme: PropTypes.object,
+  toggleLoading: PropTypes.func,
+  toggleTooltip: PropTypes.func
 };

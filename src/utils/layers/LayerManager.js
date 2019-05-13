@@ -1,19 +1,19 @@
-import L from 'leaflet';
 import template from 'lodash/template';
 
 import { store } from 'main';
 
 // AQ components
-import { CROP_OPTIONS, get, getObjectConversion } from 'aqueduct-components';
+import { get, getObjectConversion } from 'aqueduct-components';
 
 // Layers
 import BubbleClusterLayer from 'utils/layers/markers/BubbleClusterLayer';
 
 // constants
+import { CROP_OPTIONS } from 'constants/crops';
+
 const ZOOM_DISPLAYS_TOP = [2, 3];
 
 export default class LayerManager {
-
   // Constructor
   constructor(map, options = {}) {
     this._map = map;

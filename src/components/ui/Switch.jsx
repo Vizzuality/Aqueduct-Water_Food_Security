@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Switch extends React.Component {
 
@@ -61,9 +62,9 @@ class Switch extends React.Component {
 }
 
 Switch.propTypes = {
-  selected: React.PropTypes.string,
-  items: React.PropTypes.array.isRequired, // It should be an array of 2 elements
-  onChange: React.PropTypes.func
+  selected: PropTypes.string,
+  items: PropTypes.array.isRequired, // It should be an array of 2 elements
+  onChange: PropTypes.func
 };
 
 export default Switch;

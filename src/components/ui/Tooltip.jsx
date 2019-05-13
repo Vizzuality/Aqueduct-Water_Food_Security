@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Spinner } from 'aqueduct-components';
 import TetherComponent from 'react-tether';
 
@@ -78,6 +79,6 @@ export default class Tooltip extends React.Component {
 
 Tooltip.propTypes = {
   // STORE
-  tooltip: React.PropTypes.object,
-  setTooltipPosition: React.PropTypes.func
+  tooltip: PropTypes.object,
+  setTooltipPosition: PropTypes.func
 };

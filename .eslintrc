@@ -1,0 +1,36 @@
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "mocha": true,
+    "es6": true
+  },
+  "globals": {
+    "L": true,
+    "config": true
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 7,
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+  "plugins": [
+    "babel"
+  ],
+  "extends": "vizzuality",
+  "rules": {
+    "react/jsx-one-expression-per-line": 0,
+    "react/forbid-prop-types": 0,
+    "no-underscore-dangle": 0
+  },
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "config/webpack.config.js"
+      }
+    }
+  }
+}

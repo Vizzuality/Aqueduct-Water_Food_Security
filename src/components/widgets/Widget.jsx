@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { dispatch } from 'main';
 
@@ -9,10 +10,12 @@ import WidgetModal from 'components/modal/WidgetModal';
 import WidgetEmbedModal from 'components/modal/WidgetEmbedModal';
 import MapPDFModal from 'components/modal/MapPDFModal';
 import WidgetImageModal from 'components/modal/WidgetImageModal';
-import { Spinner, toggleModal, getObjectConversion } from 'aqueduct-components';
+import { Spinner, toggleModal } from 'aqueduct-components';
 
-class Widget extends React.Component {
+// utils
+import { getObjectConversion } from 'utils/filters';
 
+class Widget extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -33,6 +36,31 @@ class Widget extends React.Component {
 
   componentWillUnmount() {
     this.mounted = false;
+  }
+
+  toggleLoading(bool) {
+    this.mounted && this.setState({ loading: bool });
+  }
+
+  toggleVisibility(bool) {
+    this.mounted && this.setState({ visibility: bool });
+  }
+
+  getMinWidgetContentHeight(widgetConfig = {}) {
+    const height = widgetConfig.height || 0;
+    const paddingTop = (widgetConfig.padding) ? widgetConfig.padding.top : 0;
+    const paddingBottom = (widgetConfig.padding) ? widgetConfig.padding.bottom : 0;
+
+    return height + paddingTop + paddingBottom;
+  }
+
+  getName(widgetParsed) {
+    const { filters } = this.props;
+    const { name, widgetConfig } = widgetParsed;
+
+    const proyection = (filters.year === 'baseline') ? 'baseline' : 'future';
+
+    return (widgetConfig.titleConfig) ? widgetConfig.titleConfig[proyection] : name;
   }
 
   triggerAction(action) {
@@ -82,47 +110,17 @@ class Widget extends React.Component {
     }
   }
 
-  toggleLoading(bool) {
-    this.mounted && this.setState({ loading: bool });
-  }
-
-  toggleVisibility(bool) {
-    this.mounted && this.setState({ visibility: bool });
-  }
-
-  getMinWidgetContentHeight(widgetConfig) {
-    const height = widgetConfig.height || 0;
-    const paddingTop = (widgetConfig.padding) ? widgetConfig.padding.top : 0;
-    const paddingBottom = (widgetConfig.padding) ? widgetConfig.padding.bottom : 0;
-
-    return height + paddingTop + paddingBottom;
-  }
-
-  getName(widgetParsed) {
-    const { filters } = this.props;
-    const { name, widgetConfig } = widgetParsed;
-
-    const proyection = (filters.year === 'baseline') ? 'baseline' : 'future';
-
-    return (widgetConfig.titleConfig) ? widgetConfig.titleConfig[proyection] : name;
-  }
-
   render() {
     const { widget, filters, warning } = this.props;
-
     const widgetParsed = getObjectConversion(
       widget,
       filters,
       widget.widgetConfig.dictionary || 'widget-2010',
-      widget.widgetConfig.paramsConfig,
-      widget.widgetConfig.sqlConfig
+      widget.widgetConfig.params_config,
+      widget.widgetConfig.sql_config
     );
-
-    const { description, widgetConfig, queryUrl } = widgetParsed;
-
-    // if (widget.id === 'af969fd8-fd47-430d-ad13-9113e42e9fed') {
-    //   console.log(JSON.stringify(widgetParsed.widgetConfig));
-    // }
+    const { widgetConfig, queryUrl } = widgetParsed;
+    const minHeight = this.getMinWidgetContentHeight(widgetConfig);
 
     const className = classnames({
       '-hidden': (!this.state.visibility && (filters.page !== 'compare')),
@@ -149,25 +147,23 @@ class Widget extends React.Component {
 
           <div
             className="widget-content"
-            style={{
-              minHeight: this.getMinWidgetContentHeight(widgetConfig)
-            }}
+            style={{ ...minHeight && { minHeight } }}
           >
             {/* <p style={{color: 'black'}}>{`${config.API_URL}/dataset/${this.props.widget.dataset}/widget/${this.props.widget.id}`}</p> */}
-            {!this.state.visibility && filters.page === 'compare' &&
-              <div
-                style={{
-                  position: (widgetConfig.type === 'text') ? 'absolute' : 'relative',
-                  top: 0,
-                  left: 0,
-                  minHeight: this.getMinWidgetContentHeight(widgetConfig)
-                }}
-                className="widget-noresults"
-              >
-                  No data available
-              </div>
-            }
-
+            {!this.state.visibility && filters.page === 'compare'
+              && (
+                <div
+                  style={{
+                    position: (widgetConfig.type === 'text') ? 'absolute' : 'relative',
+                    top: 0,
+                    left: 0,
+                    ...minHeight && { minHeight }
+                  }}
+                  className="widget-noresults"
+                >
+                    No data available
+                </div>
+              )}
             <Spinner isLoading={this.state.loading} />
 
             <WidgetChart
@@ -179,12 +175,11 @@ class Widget extends React.Component {
             />
 
 
-            {!!warning && 
+            {!!warning &&
               <div className="widget-warning">
                 {warning}
               </div>
             }
-
           </div>
         </div>
       </div>
@@ -193,10 +188,10 @@ class Widget extends React.Component {
 }
 
 Widget.propTypes = {
-  className: React.PropTypes.string,
-  widget: React.PropTypes.object,
-  filters: React.PropTypes.object,
-  warning: React.PropTypes.node
+  className: PropTypes.string,
+  widget: PropTypes.object,
+  filters: PropTypes.object,
+  warning: PropTypes.node
 };
 
 export default Widget;

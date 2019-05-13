@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Icon, DropdownButton } from 'aqueduct-components';
 
 class WidgetButtons extends React.Component {
@@ -74,8 +75,8 @@ class WidgetButtons extends React.Component {
 }
 
 WidgetButtons.propTypes = {
-  queryUrl: React.PropTypes.string,
-  triggerAction: React.PropTypes.func
+  queryUrl: PropTypes.string,
+  triggerAction: PropTypes.func
 };
 
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import Modal from 'containers/ui/Modal';
@@ -45,8 +46,8 @@ export default class App extends React.Component {
 }
 
 App.propTypes = {
-  header: React.PropTypes.element,
-  main: React.PropTypes.element,
-  getCountries: React.PropTypes.func,
-  getDatasets: React.PropTypes.func
+  header: PropTypes.element,
+  main: PropTypes.element,
+  getCountries: PropTypes.func,
+  getDatasets: PropTypes.func
 };

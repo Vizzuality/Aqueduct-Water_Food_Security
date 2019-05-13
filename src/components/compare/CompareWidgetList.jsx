@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import isEqual from 'lodash/isEqual';
 
@@ -55,10 +56,10 @@ export default class CompareWidgetList extends React.Component {
 }
 
 CompareWidgetList.propTypes = {
-  grid: React.PropTypes.string,
+  grid: PropTypes.string,
   // STORE
-  loading: React.PropTypes.bool,
-  filters: React.PropTypes.object,
+  loading: PropTypes.bool,
+  filters: PropTypes.object,
   // SELECTOR
-  widgetsActive: React.PropTypes.array
+  widgetsActive: PropTypes.array
 };

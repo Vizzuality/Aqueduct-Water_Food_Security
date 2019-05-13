@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import sortBy from 'lodash/sortBy';
 import { format } from 'd3-format';
 
@@ -88,8 +89,8 @@ class VegaChartTooltip extends React.Component {
 
 VegaChartTooltip.propTypes = {
   // Define the chart data
-  data: React.PropTypes.any,
-  config: React.PropTypes.object
+  data: PropTypes.any,
+  config: PropTypes.object
 };
 
 export default VegaChartTooltip;

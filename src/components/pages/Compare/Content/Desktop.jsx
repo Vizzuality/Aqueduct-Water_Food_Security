@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Icon, toggleModal, Sticky } from 'aqueduct-components';
 import { dispatch } from 'main';
-import ShareModal from 'containers/modal/ShareModal';
+import { Link } from 'react-router';
 
 // Components
+import ShareModal from 'containers/modal/ShareModal';
 import CompareList from 'components/compare/CompareList';
-import Filters from 'components/filters/Filters';
 import CountrySelect from 'containers/countries/CountrySelect';
-import StickyFilters from 'components/filters/StickyFilters';
-import { Icon, toggleModal, Sticky } from 'aqueduct-components';
-import { Link } from 'react-router';
+import StickyFilters from 'components/filters/sticky';
+import Filters from 'components/filters';
 
 export default class ComparePageDesktop extends React.Component {
   static toggleShareModal() {

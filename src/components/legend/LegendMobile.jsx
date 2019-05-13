@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { dispatch } from 'main';
 import { Legend, Icon, toggleModal } from 'aqueduct-components';
 
@@ -21,5 +22,5 @@ export default function LegendMobile(props) {
 }
 
 LegendMobile.propTypes = {
-  layersActive: React.PropTypes.array
+  layersActive: PropTypes.array
 };

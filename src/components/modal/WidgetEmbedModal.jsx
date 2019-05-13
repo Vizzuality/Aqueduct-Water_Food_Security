@@ -1,6 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import WidgetChart from 'containers/widgets/WidgetChart';
-import { Spinner, CustomSelect, getObjectConversion } from 'aqueduct-components';
+import { Spinner, CustomSelect } from 'aqueduct-components';
+
+// utils
+import { getObjectConversion } from 'utils/filters';
 
 const embedOptions = [
   { label: 'Small (320x420 pixels)', value: '320x420' },
@@ -159,6 +163,6 @@ export default class WidgetEmbedModal extends React.Component {
 }
 
 WidgetEmbedModal.propTypes = {
-  widget: React.PropTypes.object,
-  filters: React.PropTypes.object
+  widget: PropTypes.object,
+  filters: PropTypes.object
 };

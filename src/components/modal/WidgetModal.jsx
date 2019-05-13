@@ -1,6 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import WidgetChart from 'containers/widgets/WidgetChart';
-import { Spinner, getObjectConversion } from 'aqueduct-components';
+import { Spinner } from 'aqueduct-components';
+
+// utils
+import { getObjectConversion } from 'utils/filters';
 
 export default class InfoModal extends React.Component {
 
@@ -36,17 +40,15 @@ export default class InfoModal extends React.Component {
 
   render() {
     const notAvailable = 'Not available';
-
     const { widget, filters } = this.props;
     const widgetParsed = getObjectConversion(
       widget,
       filters,
       widget.widgetConfig.dictionary || 'widget-2010',
-      widget.widgetConfig.paramsConfig,
-      widget.widgetConfig.sqlConfig
+      widget.widgetConfig.params_config,
+      widget.widgetConfig.sql_config
     );
-
-    const { name, description, metadata, widgetConfig, queryUrl } = widgetParsed;
+    const { metadata } = widgetParsed;
 
     return (
       <div className="c-info">
@@ -117,7 +119,7 @@ export default class InfoModal extends React.Component {
 }
 
 InfoModal.propTypes = {
-  widget: React.PropTypes.object,
-  filters: React.PropTypes.object,
-  topics: React.PropTypes.array
+  widget: PropTypes.object,
+  filters: PropTypes.object,
+  topics: PropTypes.array
 };

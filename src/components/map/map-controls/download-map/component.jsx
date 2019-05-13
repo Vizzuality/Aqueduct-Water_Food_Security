@@ -1,43 +1,43 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import domtoimage from 'dom-to-image';
-import { dispatch } from 'main';
 import MapPDFModal from 'components/modal/MapPDFModal';
-import { DropdownButton, Icon, saveAsFile, toggleModal } from 'aqueduct-components';
+import { DropdownButton, Icon, saveAsFile } from 'aqueduct-components';
 
-export default class DownloadMapControl extends React.Component {
-
+class DownloadMapControl extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = {
-      loading: false
-    };
+    this.state = { loading: false };
 
     this.triggerAction = this.triggerAction.bind(this);
   }
 
   triggerAction(action) {
+    const { toggleModal, mapElem } = this.props;
+    const { loading } = this.state;
+
     switch (action) {
       case 'image':
-        if (this.state.loading) return;
+        if (loading) return;
 
-        this.setState({ loading: true });
-
-        domtoimage.toPng(this.props.mapElem)
-          .then((png) => {
-            this.setState({ loading: false });
-            saveAsFile(png, 'image/png', 'map.png');
-          });
+        this.setState({ loading: true }, () => {
+          domtoimage.toPng(mapElem)
+            .then((png) => {
+              this.setState({ loading: false });
+              saveAsFile(png, 'image/png', 'map.png');
+            });
+        });
 
         break;
 
       case 'pdf':
-        dispatch(toggleModal(true, {
+        toggleModal(true, {
           children: MapPDFModal,
           size: '-full',
           childrenProps: {
           }
-        }));
+        });
         break;
 
       default:
@@ -55,7 +55,7 @@ export default class DownloadMapControl extends React.Component {
         dropdownClassName="-bottom -left"
         onSelect={selected => this.triggerAction(selected.value)}
       >
-        <button>
+        <button type="button">
           <Icon name="icon-download" />
         </button>
       </DropdownButton>
@@ -65,5 +65,10 @@ export default class DownloadMapControl extends React.Component {
 
 
 DownloadMapControl.propTypes = {
-  mapElem: React.PropTypes.object
+  mapElem: PropTypes.object,
+  toggleModal: PropTypes.func.isRequired
 };
+
+DownloadMapControl.defaultProps = { mapElem: null };
+
+export default DownloadMapControl;
