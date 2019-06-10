@@ -5,7 +5,7 @@ import zipObject from 'lodash/zipObject';
 
 
 import { Map, MapControls, ZoomControl, Icon } from 'aqueduct-components';
-import LegendMobile from 'components/legend/LegendMobile';
+import LegendMobile from 'components/legend';
 import LayerManager from 'utils/layers/LayerManager';
 
 const MAP_CONFIG = {
@@ -93,10 +93,7 @@ export default class CompareMaps extends React.Component {
                   />
                   {/* Map controls */}
                   <MapControls className="-left">
-                    <LegendMobile
-                      filters={filters}
-                      layers={layersActive}
-                    />
+                    <LegendMobile />
                   </MapControls>
 
                   {/* Map controls */}

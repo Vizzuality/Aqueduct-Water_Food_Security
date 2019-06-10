@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { IndexRoute, Router, Route } from 'react-router';
-
-// Components
-import App from 'containers/app/App';
 import { Header } from 'aqueduct-components';
-import MapPage from 'containers/pages/MapPage';
+
+// components
+import App from 'containers/app/App';
+import MapPage from 'components/pages/map';
 import ComparePage from 'containers/pages/ComparePage';
 import EmbedPage from 'containers/pages/EmbedPage';
 import ReportPage from 'containers/pages/ReportPage';
