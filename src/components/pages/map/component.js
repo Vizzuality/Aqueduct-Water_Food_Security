@@ -1,10 +1,11 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import isEqual from 'react-fast-compare';
-
-// Components
 import { OnlyOn } from 'aqueduct-components';
-import MapPageDesktop from './Content/Desktop';
-import MapPageMobile from './Content/Mobile';
+
+// components
+import MapPageDesktop from './desktop';
+import MapPageMobile from './mobile';
 
 class MapPage extends PureComponent {
   componentWillReceiveProps(nextProps) {
@@ -22,26 +23,16 @@ class MapPage extends PureComponent {
           <MapPageMobile {...this.props} />
         </OnlyOn>
         <OnlyOn device="desktop">
-          <MapPageDesktop {...this.props} />
+          <MapPageDesktop />
         </OnlyOn>
       </div>
     );
   }
 }
 
+MapPage.propTypes = {
+  mapState: PropTypes.object.isRequired,
+  updateMapUrl: PropTypes.func.isRequired
+};
+
 export default MapPage;
-
-
-
-// export default function MapPage(props) {
-//   return (
-//     <div className="-mobile-fullscreen">
-//       <OnlyOn device="mobile">
-//         <MapPageMobile {...props} />
-//       </OnlyOn>
-//       <OnlyOn device="desktop">
-//         <MapPageDesktop {...props} />
-//       </OnlyOn>
-//     </div>
-//   );
-// }
