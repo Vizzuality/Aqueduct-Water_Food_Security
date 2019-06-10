@@ -1,15 +1,15 @@
 import { connect } from 'react-redux';
 
 // selectors
-import { getDictionary } from './selectors';
+import { getCountryName } from './selectors';
 
 // component
-import MapHeader from './component';
+import Summary from './component';
 
 export default connect(
   state => ({
-    dictionary: getDictionary(state),
+    countryName: getCountryName(state),
     filters: state.filters
   }),
   null
-)(MapHeader);
+)(Summary);

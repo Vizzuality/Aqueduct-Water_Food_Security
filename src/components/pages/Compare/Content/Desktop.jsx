@@ -5,9 +5,9 @@ import { dispatch } from 'main';
 import { Link } from 'react-router';
 
 // Components
-import ShareModal from 'containers/modal/ShareModal';
+import ShareModal from 'components/modal/share';
 import CompareList from 'components/compare/CompareList';
-import CountrySelect from 'containers/countries/CountrySelect';
+import CountrySelect from 'components/country-select';
 import StickyFilters from 'components/filters/sticky';
 import Filters from 'components/filters';
 

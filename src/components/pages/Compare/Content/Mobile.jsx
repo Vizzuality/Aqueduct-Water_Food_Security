@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { dispatch } from 'main';
-import ShareModal from 'containers/modal/ShareModal';
+import ShareModal from 'components/modal/share';
 
 // Components
 import { Link } from 'react-router';
 import { SegmentedUi, toggleModal } from 'aqueduct-components';
 import CompareListMobile from 'components/compare/CompareListMobile';
 import MobileFilters from 'components/filters/mobile';
-import CountrySelect from 'containers/countries/CountrySelect';
+import CountrySelect from 'components/country-select';
 
 export default class ComparePageMobile extends React.Component {
 

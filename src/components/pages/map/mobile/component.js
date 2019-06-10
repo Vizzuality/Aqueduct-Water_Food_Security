@@ -7,7 +7,7 @@ import Map from 'components/map';
 import WidgetList from 'components/widgets/widget-list';
 import MobileFilters from 'components/filters/mobile';
 import LegendMobile from 'components/legend';
-import Summary from 'components/summary/Summary';
+import Summary from 'components/summary';
 
 // constants
 import { PAGE_CONTEXT_OPTIONS } from './constants';
@@ -40,7 +40,7 @@ class MapPageMobile extends PureComponent {
         {context === 'data' && (
           <div className="mobile-widgets-container">
             {filters.scope === 'country' && filters.country && (
-              <Summary filters={filters} countries={countries.list} />
+              <Summary />
             )}
             <WidgetList />
           </div>

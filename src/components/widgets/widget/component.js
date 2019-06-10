@@ -1,19 +1,19 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { dispatch } from 'main';
+import { Spinner } from 'aqueduct-components';
 
-// Components
+// components
 import WidgetButtons from 'components/widgets/WidgetButtons';
-import WidgetChart from 'containers/widgets/WidgetChart';
+import WidgetChart from 'components/widgets/widget/chart';
 import WidgetModal from 'components/modal/WidgetModal';
 import WidgetEmbedModal from 'components/modal/WidgetEmbedModal';
 import MapPDFModal from 'components/modal/MapPDFModal';
 import WidgetImageModal from 'components/modal/WidgetImageModal';
-import { Spinner, toggleModal } from 'aqueduct-components';
 
 // utils
 import { getObjectConversion } from 'utils/filters';
+import { getMinWidgetContentHeight } from './utils';
 
 class Widget extends PureComponent {
   constructor(props) {
@@ -38,71 +38,64 @@ class Widget extends PureComponent {
     this.mounted = false;
   }
 
-  toggleLoading(bool) {
-    this.mounted && this.setState({ loading: bool });
-  }
-
-  toggleVisibility(bool) {
-    this.mounted && this.setState({ visibility: bool });
-  }
-
-  getMinWidgetContentHeight(widgetConfig = {}) {
-    const height = widgetConfig.height || 0;
-    const paddingTop = (widgetConfig.padding) ? widgetConfig.padding.top : 0;
-    const paddingBottom = (widgetConfig.padding) ? widgetConfig.padding.bottom : 0;
-
-    return height + paddingTop + paddingBottom;
-  }
-
   getName(widgetParsed) {
     const { filters } = this.props;
     const { name, widgetConfig } = widgetParsed;
-
     const proyection = (filters.year === 'baseline') ? 'baseline' : 'future';
 
     return (widgetConfig.titleConfig) ? widgetConfig.titleConfig[proyection] : name;
   }
 
+  toggleLoading(bool) {
+    if (this.mounted) this.setState({ loading: bool });
+  }
+
+  toggleVisibility(bool) {
+    if (this.mounted) this.setState({ visibility: bool });
+  }
+
   triggerAction(action) {
+    const { toggleModal, filters, widget } = this.props;
+
     switch (action) {
       case 'info':
-        dispatch(toggleModal(true, {
+        toggleModal(true, {
           children: WidgetModal,
           size: '-medium',
           childrenProps: {
-            filters: this.props.filters,
-            widget: this.props.widget
+            filters,
+            widget
           }
-        }));
+        });
         break;
       case 'embed':
-        dispatch(toggleModal(true, {
+        toggleModal(true, {
           children: WidgetEmbedModal,
           size: '-medium',
           childrenProps: {
-            filters: this.props.filters,
-            widget: this.props.widget
+            filters,
+            widget
           }
-        }));
+        });
         break;
       case 'image':
-        dispatch(toggleModal(true, {
+        toggleModal(true, {
           children: WidgetImageModal,
           size: '-medium',
           childrenProps: {
-            filters: this.props.filters,
-            widget: this.props.widget
+            filters,
+            widget
           }
-        }));
+        });
         break;
 
       case 'pdf':
-        dispatch(toggleModal(true, {
+        toggleModal(true, {
           children: MapPDFModal,
           size: '-full',
           childrenProps: {
           }
-        }));
+        });
         break;
 
       default:
@@ -111,7 +104,8 @@ class Widget extends PureComponent {
   }
 
   render() {
-    const { widget, filters, warning } = this.props;
+    const { widget, filters, warning, className } = this.props;
+    const { visibility, loading } = this.state;
     const widgetParsed = getObjectConversion(
       widget,
       filters,
@@ -120,21 +114,23 @@ class Widget extends PureComponent {
       widget.widgetConfig.sql_config
     );
     const { widgetConfig, queryUrl } = widgetParsed;
-    const minHeight = this.getMinWidgetContentHeight(widgetConfig);
+    const minHeight = getMinWidgetContentHeight(widgetConfig);
 
-    const className = classnames({
-      '-hidden': (!this.state.visibility && (filters.page !== 'compare')),
-      [this.props.className]: !!this.props.className
+    const componentClass = classnames('c-widget', {
+      '-hidden': (!visibility && (filters.page !== 'compare')),
+      [className]: !!className
     });
 
     return (
-      <div className={`c-widget ${className}`} ref={el => this.widgetElem = el}>
+      <div
+        className={componentClass}
+        ref={(el) => { this.widgetElem = el; }}
+      >
         <div>
-          {widgetConfig.type !== 'text' &&
+          {widgetConfig.type !== 'text' && (
             <header className="widget-header">
               <div className="widget-titles">
                 <h2 className="widget-title">{this.getName(widgetParsed)}</h2>
-                {/* <h3 className="widget-description">{description}</h3> */}
               </div>
 
               <WidgetButtons
@@ -143,14 +139,13 @@ class Widget extends PureComponent {
                 triggerAction={this.triggerAction}
               />
             </header>
-          }
+          )}
 
           <div
             className="widget-content"
             style={{ ...minHeight && { minHeight } }}
           >
-            {/* <p style={{color: 'black'}}>{`${config.API_URL}/dataset/${this.props.widget.dataset}/widget/${this.props.widget.id}`}</p> */}
-            {!this.state.visibility && filters.page === 'compare'
+            {!visibility && filters.page === 'compare'
               && (
                 <div
                   style={{
@@ -164,7 +159,7 @@ class Widget extends PureComponent {
                     No data available
                 </div>
               )}
-            <Spinner isLoading={this.state.loading} />
+            <Spinner isLoading={loading} />
 
             <WidgetChart
               widget={widget}
@@ -174,12 +169,11 @@ class Widget extends PureComponent {
               toggleVisibility={this.toggleVisibility}
             />
 
-
-            {!!warning &&
+            {!!warning && (
               <div className="widget-warning">
                 {warning}
               </div>
-            }
+            )}
           </div>
         </div>
       </div>
@@ -189,9 +183,15 @@ class Widget extends PureComponent {
 
 Widget.propTypes = {
   className: PropTypes.string,
-  widget: PropTypes.object,
-  filters: PropTypes.object,
-  warning: PropTypes.node
+  warning: PropTypes.node,
+  widget: PropTypes.object.isRequired,
+  filters: PropTypes.object.isRequired,
+  toggleModal: PropTypes.func.isRequired
+};
+
+Widget.defaultProps = {
+  className: null,
+  warning: null
 };
 
 export default Widget;

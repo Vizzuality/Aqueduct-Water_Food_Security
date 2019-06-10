@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import { MapHeader as Header } from 'aqueduct-components';
 
 // helpers
-import { getDictionary, getMapHeaderTemplate } from './helpers';
+import { getMapHeaderTemplate } from './helpers';
 
 class MapHeader extends PureComponent {
   render() {
-    const { filters, countries } = this.props;
+    const { dictionary, filters } = this.props;
 
     return (
       <Header
-        dictionary={getDictionary(filters, countries)}
+        dictionary={dictionary}
         filters={filters}
         template={getMapHeaderTemplate(filters)}
       />
@@ -21,7 +21,7 @@ class MapHeader extends PureComponent {
 
 MapHeader.propTypes = {
   filters: PropTypes.object.isRequired,
-  countries: PropTypes.array.isRequired
+  dictionary: PropTypes.object.isRequired
 };
 
 export default MapHeader;

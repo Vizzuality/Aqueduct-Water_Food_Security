@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import domtoimage from 'dom-to-image';
 import snakeCase from 'lodash/snakeCase';
-import WidgetChart from 'containers/widgets/WidgetChart';
+import WidgetChart from 'components/widgets/widget/chart';
 import { Spinner, saveAsFile } from 'aqueduct-components';
 
 // utils

@@ -4,7 +4,7 @@ import { IndexRoute, Router, Route } from 'react-router';
 import { Header } from 'aqueduct-components';
 
 // components
-import App from 'containers/app/App';
+import App from 'components/app';
 import MapPage from 'components/pages/map';
 import ComparePage from 'containers/pages/ComparePage';
 import EmbedPage from 'containers/pages/EmbedPage';

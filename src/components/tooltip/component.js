@@ -1,45 +1,47 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Spinner } from 'aqueduct-components';
 import TetherComponent from 'react-tether';
 
-export default class Tooltip extends React.Component {
-
+class Tooltip extends PureComponent {
   constructor(props) {
     super(props);
 
-    // Bindings
+    // bindings
     this.onMouseMove = this.onMouseMove.bind(this);
   }
 
-  componentWillReceiveProps({ tooltip }) {
-    if (tooltip.follow && tooltip.follow !== this.props.tooltip.follow) {
+  componentWillReceiveProps(nextProps) {
+    const { tooltip: nextTooltip } = nextProps;
+    const { tooltip } = this.props;
+    if (nextTooltip.follow && nextTooltip.follow !== tooltip.follow) {
       document.addEventListener('mousemove', this.onMouseMove);
     }
-    const stopFollowing = tooltip.follow === false && tooltip.follow !== this.props.tooltip.follow;
-    const isEmpty = !tooltip.opened && tooltip.opened !== this.props.tooltip.opened;
+    const stopFollowing = nextTooltip.follow === false && nextTooltip.follow !== tooltip.follow;
+    const isEmpty = !nextTooltip.opened && nextTooltip.opened !== tooltip.opened;
     if (stopFollowing || isEmpty) {
       document.removeEventListener('mousemove', this.onMouseMove);
     }
   }
 
   onMouseMove({ clientX, clientY }) {
-    this.props.setTooltipPosition({ x: clientX, y: clientY });
+    const { setTooltipPosition } = this.props;
+
+    setTooltipPosition({ x: clientX, y: clientY });
     this.clientX = clientX;
     this.clientY = clientY;
   }
 
   getContent() {
-    return this.props.tooltip.children ?
-      <this.props.tooltip.children {...this.props.tooltip.childrenProps} /> : null;
+    const { tooltip } = this.props;
+    return tooltip.children
+      ? <tooltip.children {...tooltip.childrenProps} /> : null;
   }
 
   getStyles() {
-    const topPos = this.props.tooltip.position.y;
-    const bottomPos = this.props.tooltip.position.x;
-    if (this.el) {
-      // TODO: modify topPos and bottomPos for recalculating toooltip position if it is out of viewport
-    }
+    const { tooltip } = this.props;
+    const topPos = tooltip.position.y;
+    const bottomPos = tooltip.position.x;
+
     return {
       position: 'fixed',
       top: `${topPos}px`,
@@ -51,6 +53,8 @@ export default class Tooltip extends React.Component {
   }
 
   render() {
+    const { tooltip } = this.props;
+
     return (
       <TetherComponent
         attachment="bottom center"
@@ -67,18 +71,19 @@ export default class Tooltip extends React.Component {
         <div
           style={this.getStyles()}
         />
-        {this.props.tooltip.opened &&
+        {tooltip.opened && (
           <div ref={(node) => { this.el = node; }}>
             {this.getContent()}
           </div>
-        }
+        )}
       </TetherComponent>
     );
   }
 }
 
 Tooltip.propTypes = {
-  // STORE
-  tooltip: PropTypes.object,
-  setTooltipPosition: PropTypes.func
+  tooltip: PropTypes.object.isRequired,
+  setTooltipPosition: PropTypes.func.isRequired
 };
+
+export default Tooltip;

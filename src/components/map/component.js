@@ -12,7 +12,7 @@ import {
 } from 'aqueduct-components';
 
 // components
-import ShareModal from 'containers/modal/ShareModal';
+import ShareModal from 'components/modal/share';
 import DownloadMapControl from 'components/map/map-controls/download-map';
 import MapHeader from './header';
 import Legend from './legend';

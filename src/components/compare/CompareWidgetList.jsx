@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import isEqual from 'lodash/isEqual';
 
-import Widget from 'components/widgets/Widget';
+import Widget from 'components/widgets/widget';
 import { Spinner } from 'aqueduct-components';
 
 export default class CompareWidgetList extends React.Component {
