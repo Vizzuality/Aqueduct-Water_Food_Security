@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Spinner } from 'aqueduct-components';
-import Widget from 'components/widgets/Widget';
+import Widget from 'components/widgets/widget';
 
 export default class EmbedPage extends React.Component {
 

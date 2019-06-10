@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Summary from 'components/summary/Summary';
+import Summary from 'components/summary';
 
 export default class CompareSummaries extends React.Component {
   render() {

@@ -98,9 +98,19 @@ export const NONE_OPTION_WATER_INDICATORS = [{
 export const BASELINE_WATER_INDICATORS_IDS = BASELINE_WATER_INDICATORS
   .map(_waterIndicator => _waterIndicator.value);
 
+export const EQUIVALENCE_WATER_INDICATORS = {
+  // water stress - baseline & projected
+  '1a1d4f61-f1b3-4c1a-bfb5-9d0444ecdd56': '935f9a49-a45a-4362-b9f7-7a8e22df5146',
+  '935f9a49-a45a-4362-b9f7-7a8e22df5146': '1a1d4f61-f1b3-4c1a-bfb5-9d0444ecdd56',
+  // seasonal variability - baseline & projected
+  '64f65bd0-6dc5-4ce8-9421-a8e0a1eab40c': '9d47a284-c196-4e33-a3c8-058823ccaa2f',
+  '9d47a284-c196-4e33-a3c8-058823ccaa2f': '64f65bd0-6dc5-4ce8-9421-a8e0a1eab40c'
+};
+
 export default {
   BASELINE_WATER_INDICATORS,
   PROJECTED_WATER_INDICATORS,
   NONE_OPTION_WATER_INDICATORS,
-  BASELINE_WATER_INDICATORS_IDS
+  BASELINE_WATER_INDICATORS_IDS,
+  EQUIVALENCE_WATER_INDICATORS
 };

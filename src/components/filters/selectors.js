@@ -4,7 +4,7 @@ import { createSelector } from 'reselect';
 import {
   BASELINE_WATER_INDICATORS,
   PROJECTED_WATER_INDICATORS,
-  NONE_OPTION_WATER_INDICATORS
+  NONE_OPTION_WATER_INDICATORS,
 } from 'constants/water-indicators';
 
 // states

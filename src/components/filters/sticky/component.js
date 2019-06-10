@@ -6,7 +6,7 @@ import {
   SegmentedUi,
   CustomSelect
 } from 'aqueduct-components';
-import CountrySelect from 'containers/countries/CountrySelect';
+import CountrySelect from 'components/country-select';
 
 // constants
 import {

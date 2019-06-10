@@ -7,6 +7,9 @@ import { updateMapUrl } from 'actions/url';
 import MapPage from './component';
 
 export default connect(
-  state => ({ mapState: state.map }),
+  state => ({
+    mapState: state.map,
+    filters: state.filters
+  }),
   { updateMapUrl }
 )(MapPage);

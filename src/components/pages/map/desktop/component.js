@@ -4,11 +4,11 @@ import { Sticky } from 'aqueduct-components';
 
 // components
 import Map from 'components/map';
-import Sidebar from 'containers/ui/Sidebar';
+import Sidebar from 'components/sidebar';
 import Filters from 'components/filters';
 import StickyFilters from 'components/filters/sticky';
 import WidgetList from 'components/widgets/widget-list';
-import Summary from 'components/summary/Summary';
+import Summary from 'components/summary';
 // import DownloadMapControl from 'components/map/map-controls/download-map';
 
 class MapPageDesktop extends PureComponent {
@@ -78,7 +78,7 @@ class MapPageDesktop extends PureComponent {
           {/* Widget List */}
           <div className="l-sidebar-content">
             {filters.scope === 'country' && filters.country && (
-              <Summary filters={filters} countries={countries.list} />
+              <Summary />
             )}
             <WidgetList />
           </div>

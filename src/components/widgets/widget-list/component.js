@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 // components
-import Widget from 'components/widgets/Widget';
+import Widget from 'components/widgets/widget';
 
 class WidgetList extends PureComponent {
   render() {

@@ -9,11 +9,19 @@ import MapPageMobile from './mobile';
 
 class MapPage extends PureComponent {
   componentWillReceiveProps(nextProps) {
-    const { mapState, updateMapUrl } = this.props;
-    const { mapState: nextMapState } = nextProps;
+    const {
+      mapState,
+      filters,
+      updateMapUrl,
+    } = this.props;
+    const {
+      mapState: nextMapState,
+      filters: nextFilters
+    } = nextProps;
     const mapStateChanged = !isEqual(mapState, nextMapState);
+    const filtersChanged = !isEqual(filters, nextFilters);
 
-    if (mapStateChanged) updateMapUrl();
+    if (mapStateChanged || filtersChanged) updateMapUrl();
   }
 
   render() {
@@ -32,6 +40,7 @@ class MapPage extends PureComponent {
 
 MapPage.propTypes = {
   mapState: PropTypes.object.isRequired,
+  filters: PropTypes.object.isRequired,
   updateMapUrl: PropTypes.func.isRequired
 };
 

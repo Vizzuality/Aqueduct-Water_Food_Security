@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import WidgetChart from 'containers/widgets/WidgetChart';
+import WidgetChart from 'components/widgets/widget/chart';
 import { Spinner } from 'aqueduct-components';
 
 // utils

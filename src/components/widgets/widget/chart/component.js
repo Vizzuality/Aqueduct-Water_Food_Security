@@ -101,7 +101,9 @@ WidgetChart.propTypes = {
   filters: PropTypes.object.isRequired,
   toggleLoading: PropTypes.func.isRequired,
   toggleTooltip: PropTypes.func.isRequired,
-  toggleVisibility: PropTypes.func.isRequired
+  toggleVisibility: PropTypes.func
 };
+
+WidgetChart.defaultProps = { toggleVisibility: null };
 
 export default WidgetChart;

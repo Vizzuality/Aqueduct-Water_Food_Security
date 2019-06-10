@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 // Components
 import WidgetList from 'components/widgets/WidgetList';
-import Summary from 'components/summary/Summary';
+import Summary from 'components/summary';
 
 import LayerManager from 'utils/layers/LayerManager';
 
@@ -108,7 +108,7 @@ export default class MapPageDesktop extends React.Component {
 
           {/* Summary & WidgetList */}
           {this.props.filters.scope === 'country' && this.props.filters.country &&
-            <Summary filters={this.props.filters} countries={this.props.countries.list} />
+            <Summary />
           }
           <WidgetList
             filters={this.props.filters}

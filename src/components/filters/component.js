@@ -2,8 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { browserHistory } from 'react-router';
-
-// Components
 import {
   APP_DEFINITIONS,
   IRRIGATION_OPTIONS,
@@ -16,16 +14,18 @@ import {
   InfoModal
 } from 'aqueduct-components';
 
+// components
+import CountrySelect from 'components/country-select';
+
 // constants
 import {
   FOOD_OPTIONS,
   SCOPE_OPTIONS,
-  YEAR_OPTIONS,
-  DATA_TYPE_OPTIONS
+  DATA_TYPE_OPTIONS,
+  YEAR_OPTIONS
 } from 'constants/filters';
 import { CROP_OPTIONS } from 'constants/crops';
-
-import CountrySelect from 'containers/countries/CountrySelect';
+import { EQUIVALENCE_WATER_INDICATORS } from 'constants/water-indicators';
 
 class Filters extends PureComponent {
   constructor(props) {
@@ -58,7 +58,7 @@ class Filters extends PureComponent {
 
   handleWaterRiskIndicator(selected) {
     const {
-      filters: { type, food },
+      filters: { food },
       waterOptions
     } = this.props;
 
@@ -73,6 +73,16 @@ class Filters extends PureComponent {
     ) {
       this.updateFilters('absolute', 'type');
       this.updateFilters('baseline', 'year');
+    }
+  }
+
+  handleTimeframe(selected) {
+    const { filters: { indicator } } = this.props;
+
+    if (selected && selected.value === 'baseline') this.updateFilters('absolute', 'type');
+    if (selected) {
+      this.updateFilters(selected.value, 'year');
+      if (EQUIVALENCE_WATER_INDICATORS[indicator]) this.updateFilters(EQUIVALENCE_WATER_INDICATORS[indicator], 'indicator');
     }
   }
 
@@ -97,10 +107,7 @@ class Filters extends PureComponent {
       className,
       withScope
     } = this.props;
-    const isTimeline = (
-      waterOptions.find(w => w.value === filters.indicator).timeline
-      || (filters.indicator === 'none' && FOOD_OPTIONS.find(w => w.value === filters.food).timeline)
-    );
+    const disablesTimeline = !filters.indicator || filters.indicator === 'none';
     const componentClass = classnames('c-filters', { [className]: !!className });
 
     const timeline = (
@@ -123,11 +130,8 @@ class Filters extends PureComponent {
         <Timeline
           items={YEAR_OPTIONS}
           selected={YEAR_OPTIONS.find(i => i.value === filters.year)}
-          disabled={!isTimeline}
-          onChange={(selected) => {
-            if (selected && selected.value === 'baseline') this.updateFilters('absolute', 'type');
-            if (selected) this.updateFilters(selected.value, 'year');
-          }}
+          disabled={disablesTimeline}
+          onChange={(selected) => { this.handleTimeframe(selected); }}
         />
 
         {filters.year !== 'baseline'

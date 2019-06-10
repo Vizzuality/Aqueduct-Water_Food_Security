@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import WidgetList from 'components/widgets/WidgetList';
 import { Map, MapControls, ZoomControl, Icon } from 'aqueduct-components';
 import LegendMobile from 'components/legend';
-import Summary from 'components/summary/Summary';
+import Summary from 'components/summary';
 import LayerManager from 'utils/layers/LayerManager';
 
 export default class CompareItem extends React.Component {
