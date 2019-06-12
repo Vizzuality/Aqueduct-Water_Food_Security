@@ -44,20 +44,23 @@ class Legend extends PureComponent {
 
     return (
       <div className={componentClass}>
-        {!isModal
-          && (
-            <OnlyOn device="desktop">
-              <div className="legend-header" onClick={() => this.toggleExpand()}>
-                <span className="legend-header-title">{expanded ? 'Legend' : 'View Legend'}</span>
-                <button
-                  className="legend-btn"
-                  type="button"
-                >
-                  <Icon name="icon-arrow-up-2" className="legend-open-icon" />
-                  <Icon name="icon-arrow-down-2" className="legend-close-icon" />
-                </button>
-              </div>
-            </OnlyOn>)}
+        {!isModal && (
+          <OnlyOn device="desktop">
+            <div
+              className="legend-header"
+              onClick={() => this.toggleExpand()}
+            >
+              <span className="legend-header-title">{expanded ? 'Legend' : 'View Legend'}</span>
+              <button
+                className="legend-btn"
+                type="button"
+              >
+                <Icon name="icon-arrow-up-2" className="legend-open-icon" />
+                <Icon name="icon-arrow-down-2" className="legend-close-icon" />
+              </button>
+            </div>
+          </OnlyOn>
+        )}
         <div className="legend-content">
           <ul>
             {layers.map(layer => (
@@ -80,8 +83,7 @@ Legend.defaultProps = {
   filters: [],
   className: '',
   expanded: false,
-  isModal: false,
-  onToggleInfo: null
+  isModal: false
 };
 
 Legend.propTypes = {

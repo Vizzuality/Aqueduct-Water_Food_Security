@@ -1,9 +1,8 @@
 import { createSelector } from 'reselect';
 import { IRRIGATION_OPTIONS } from 'aqueduct-components';
-import capitalize from 'lodash/capitalize';
 
 // constants
-import { SCOPE_OPTIONS, FOOD_OPTIONS } from 'constants/filters';
+import { SCOPE_OPTIONS } from 'constants/filters';
 import { CROP_OPTIONS } from 'constants/crops';
 import {
   BASELINE_WATER_INDICATORS,
