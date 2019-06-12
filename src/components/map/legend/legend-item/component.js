@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 import isEqual from 'lodash/isEqual';
@@ -19,7 +19,7 @@ import { applyOpacity } from './helpers';
 import LegendButtons from './legend-buttons';
 import LegendGraph from './legend-graph';
 
-class LegendItem extends React.Component {
+class LegendItem extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -51,18 +51,19 @@ class LegendItem extends React.Component {
     const { layer } = this.state;
     const { layerConfig, legendConfig } = layer;
 
-    if (!legendConfig.sqlQuery) {
+
+    if (!legendConfig.sql_query) {
       this.setState({ loading: false });
 
       return;
     }
 
-    const legendConfigConverted = Object.assign({}, getObjectConversion(legendConfig, filters, 'water', legendConfig.paramsConfig, legendConfig.sqlConfig));
-    const { sqlQuery } = legendConfigConverted;
+    const legendConfigConverted = Object.assign({}, getObjectConversion(legendConfig, filters, 'water', legendConfig.params_config, legendConfig.sql_config));
+    const { sql_query: sqlQuery } = legendConfigConverted;
     const { crop } = filters;
 
     axios.get(`https://${layerConfig.account}.carto.com/api/v2/sql?q=${sqlQuery}`)
-      .then((data) => {
+      .then(({ data }) => {
         const buckets = data.rows[0].bucket;
 
         if (buckets === null || !buckets.length) {

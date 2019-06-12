@@ -55,43 +55,56 @@ class Map extends PureComponent {
     const filtersChanged = !isEqual(filters, nextFilters);
     const foodLayersChanged = !isEqual(foodLayers, nextFoodLayers);
     const zoomChanged = zoom !== nextZoom;
+    const isSingleCropLayer = '064a524f-0e58-41fb-b948-f7bb66f43ef0';
+    const isAllCropsLayer = 'a533c717-8473-412c-add8-89b0a008e3ac';
 
-    if (nextFoodLayers && !nextFoodLayers[0]) {
-      this.setState({
-        loading: true,
-        layers: [...nextFoodLayers, ...nextLayers]
-      });
-    }
+    // console.log(nextFoodLayers)
+    // if (nextFoodLayers && !nextFoodLayers[0]) {
+    //   console.log('case 1');
+    //   this.setState({
+    //     loading: true,
+    //     layers: [...nextFoodLayers, ...nextLayers]
+    //   });
+    // }
 
     if ((foodLayersChanged || filtersChanged || zoomChanged) && nextFoodLayers[0]) {
+      console.log('case 1');
       this.setState({ loading: true }, () => {
         prepareMarkerLayer(nextFoodLayers[0], nextFilters, nextZoom)
           .then((markerLayer) => {
-            this.setState({ layers: [markerLayer, ...nextLayers] });
+            const { layers: currenLayers } = this.state;
+            const filteredLayers = currenLayers.filter(_layer => !_layer.isMarkerLayer);
+            this.setState({ layers: [markerLayer, ...filteredLayers] });
           });
       });
     }
 
     // if the incoming layer is the one crop one we need to update its cartoCSS manually
-    if ((layersChanged || filtersChanged) && nextLayers[0] && nextLayers[0].id === '064a524f-0e58-41fb-b948-f7bb66f43ef0') {
+    if (layersChanged && (nextLayers[0] && nextLayers[0].id === isSingleCropLayer)) {
+      console.log('case 2');
       this.setState({
         loading: true,
         loadingCartoCSS: true
       }, () => {
         updateCartoCSS(nextLayers[0], nextFilters)
           .then((updatedLayer) => {
-            const [, ...restLayers] = nextLayers;
+            const { layers: currentLayers } = this.state;
+            // filters any previous all crop layer and one crop layer present.
+            const filteredLayers = currentLayers.filter(
+              _layer => ![isAllCropsLayer, isSingleCropLayer].includes(_layer.id)
+            );
 
             this.setState({
               loadingCartoCSS: false,
               loading: true,
-              layers: [updatedLayer, ...restLayers]
+              layers: [updatedLayer, ...filteredLayers]
             });
           });
       });
     }
 
-    if (layersChanged) {
+    if (layersChanged && (nextLayers[0] && nextLayers[0].id !== isSingleCropLayer)) {
+      console.log('case 3');
       this.setState({
         layers: nextLayers,
         loading: true
@@ -134,8 +147,8 @@ class Map extends PureComponent {
     } = this.state;
     const mapEvents = { moveend: (e, _map) => { this.updateMap(e, _map); } };
 
-    // console.log('active layers:');
-    // console.log(layers);
+    console.log('active layers:');
+    console.log(layers);
 
     return (
       <div className="l-map">

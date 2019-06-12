@@ -30,7 +30,7 @@ const getMarkup = (value) => {
 
 const getMarkersClass = (properties, layer) => {
   const { value } = properties;
-  const isCropNetTrade = layer.id === 'b8e135d2-b64f-4ea3-93e9-9f8d1245fb2a';
+  const isCropNetTrade = layer.id === '25bb1a31-70ae-4f93-b8ae-6eee7bd04df7';
 
   return classnames('c-marker-bubble', {
     '-positive': isCropNetTrade && value > 0,

@@ -82,6 +82,7 @@ class Filters extends PureComponent {
     if (selected && selected.value === 'baseline') this.updateFilters('absolute', 'type');
     if (selected) {
       this.updateFilters(selected.value, 'year');
+      const isBaseline = selected.value === 'baseline';
       if (EQUIVALENCE_WATER_INDICATORS[indicator]) this.updateFilters(EQUIVALENCE_WATER_INDICATORS[indicator], 'indicator');
     }
   }

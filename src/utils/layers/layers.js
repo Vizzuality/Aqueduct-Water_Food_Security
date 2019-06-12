@@ -1,7 +1,7 @@
 export const DATASETS = [
   {
-    id: '4659c249-7524-47bf-92eb-05ba196dedda',
-    layerId: '9d5850be-e026-4e34-b043-78d90082215f',
+    id: 'd07bdbd4-2b86-48e4-bb08-31c0ffac4b1c',
+    layerId: '9cc271e2-89bb-4854-975d-86b4cea0ff2f',
     name: 'Food demand for crop',
     category: 'food',
     timeline: true,
@@ -11,8 +11,8 @@ export const DATASETS = [
     }
   },
   {
-    id: '0eb7ef57-037b-4356-8902-04a39cf4bd24',
-    layerId: 'efafaa9f-37ec-4f51-be7d-999f58e6823b',
+    id: '5e3b49b7-08e3-4c2f-9b9a-bd14f72c7879',
+    layerId: '5dd373d7-08f7-481b-813f-bf476d8e41f5',
     name: 'Total crop production',
     category: 'food',
     timeline: true,
@@ -22,8 +22,8 @@ export const DATASETS = [
     }
   },
   {
-    id: 'bc60a695-ab95-4264-8058-bd61d13c4918',
-    layerId: 'b8e135d2-b64f-4ea3-93e9-9f8d1245fb2a',
+    id: 'acf126ae-39bc-4085-a8ca-2a9287636713',
+    layerId: '25bb1a31-70ae-4f93-b8ae-6eee7bd04df7',
     name: 'Crop net trade',
     category: 'food',
     timeline: true,
@@ -43,8 +43,8 @@ export const DATASETS = [
     }
   },
   {
-    id: 'ccdaede2-5343-49d6-8ea9-769528c3ab92',
-    layerId: 'c29b190b-6801-49ed-a101-6770525467c4',
+    id: '110f25ae-0525-404d-b305-fa5cce609ccd',
+    layerId: '8360bffe-75ee-4eea-ab33-143d9e1003f5',
     name: 'Kilocalories per person',
     category: 'food',
     timeline: true,
@@ -54,8 +54,8 @@ export const DATASETS = [
     }
   },
   {
-    id: '1c9a1e4f-455b-4c03-ac88-dd2242a2e4b1',
-    layerId: '63976c45-d991-4495-a318-45950912510a',
+    id: 'ee0aefe6-176e-43e7-b349-b44b70d95d22',
+    layerId: '8b8c9f05-0cfe-4c82-ba91-1b4e8d7c9942',
     name: 'Population at risk of hunger',
     category: 'food',
     timeline: true,
