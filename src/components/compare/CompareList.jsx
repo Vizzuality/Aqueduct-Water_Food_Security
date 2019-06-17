@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Components
-import CompareMaps from 'components/compare/CompareMaps';
+import CompareMaps from 'components/compare/compare-maps';
 import CompareSummaries from 'components/compare/CompareSummaries';
 import CompareWidgetList from 'components/compare/CompareWidgetList';
 
@@ -11,7 +11,7 @@ export default class CompareList extends React.Component {
     return (
       <div className="c-comparelist">
         <div className="comparelist-content">
-          <CompareMaps {...this.props} />
+          <CompareMaps />
           <CompareSummaries {...this.props} />
           <CompareWidgetList {...this.props} />
         </div>

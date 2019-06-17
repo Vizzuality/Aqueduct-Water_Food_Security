@@ -25,7 +25,11 @@ import {
   YEAR_OPTIONS
 } from 'constants/filters';
 import { CROP_OPTIONS } from 'constants/crops';
-import { EQUIVALENCE_WATER_INDICATORS } from 'constants/water-indicators';
+import {
+  EQUIVALENCE_WATER_INDICATORS,
+  DEFAULT_BASELINE_WATER_INDICATOR,
+  DEFAULT_PROJECTED_WATER_INDICATOR
+} from 'constants/water-indicators';
 
 class Filters extends PureComponent {
   constructor(props) {
@@ -72,18 +76,36 @@ class Filters extends PureComponent {
       )
     ) {
       this.updateFilters('absolute', 'type');
-      this.updateFilters('baseline', 'year');
     }
   }
 
   handleTimeframe(selected) {
-    const { filters: { indicator } } = this.props;
+    const {
+      filters: {
+        indicator,
+        year: currentYear
+      }
+    } = this.props;
 
     if (selected && selected.value === 'baseline') this.updateFilters('absolute', 'type');
     if (selected) {
-      this.updateFilters(selected.value, 'year');
-      const isBaseline = selected.value === 'baseline';
-      if (EQUIVALENCE_WATER_INDICATORS[indicator]) this.updateFilters(EQUIVALENCE_WATER_INDICATORS[indicator], 'indicator');
+      const { value } = selected;
+      this.updateFilters(value, 'year');
+
+      if (currentYear === 'baseline' && value !== 'baseline') {
+        if (EQUIVALENCE_WATER_INDICATORS[indicator]) {
+          this.updateFilters(EQUIVALENCE_WATER_INDICATORS[indicator], 'indicator');
+        } else {
+          this.updateFilters(DEFAULT_PROJECTED_WATER_INDICATOR, 'indicator');
+        }
+      }
+      if (currentYear !== 'baseline' && value === 'baseline') {
+        if (EQUIVALENCE_WATER_INDICATORS[indicator]) {
+          this.updateFilters(EQUIVALENCE_WATER_INDICATORS[indicator], 'indicator');
+        } else {
+          this.updateFilters(DEFAULT_BASELINE_WATER_INDICATOR, 'indicator');
+        }
+      }
     }
   }
 
