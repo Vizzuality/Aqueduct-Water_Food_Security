@@ -1,5 +1,4 @@
-// TO-DO: remove
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import zipObject from 'lodash/zipObject';
@@ -18,41 +17,36 @@ import {
   MAP_OPTIONS
 } from 'components/map/constants';
 
-export default class CompareMaps extends React.Component {
-  constructor(props) {
-    super(props);
+class CompareMaps extends PureComponent {
+  // constructor(props) {
+  //   super(props);
 
-    this.state = { maps: [] };
+  //   this.state = { maps: [] };
 
-    // this.state = {
-    //   maps: zipObject(props.countries, [MAP_CONFIG, MAP_CONFIG])
-    // };
-  }
+  //   // this.state = {
+  //   //   maps: zipObject(props.countries, [MAP_CONFIG, MAP_CONFIG])
+  //   // };
+  // }
 
-  componentWillReceiveProps(nextProps) {
-    // if (!isEqual(nextProps.countries, this.props.countries)) {
-    //   this.setState({
-    //     maps: zipObject(nextProps.countries, [MAP_CONFIG, MAP_CONFIG])
-    //   });
-    // }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (!isEqual(nextProps.countries, this.props.countries)) {
+  //     this.setState({
+  //       maps: zipObject(nextProps.countries, [MAP_CONFIG, MAP_CONFIG])
+  //     });
+  //   }
+  // }
 
 
   render() {
-    const { mapConfig } = this.state;
-    const items = Array.from(Array(this.props.items));
-
-    console.log(this.state);
+    const { compareConfig } = this.props;
     console.log(this.props);
-    console.log(items)
-    return null;
 
 
     return (
       <div className="c-compareitem-maps">
         <div className="c-compareitem-row">
-          {items.map((item, i) => {
-            const country = this.props.countries[i];
+          {compareConfig.map((_compareConfig) => {
+            const { country, mapConfig } = _compareConfig;
 
             if (!country) {
               return (
@@ -67,25 +61,25 @@ export default class CompareMaps extends React.Component {
               );
             }
 
-            const filters = Object.assign({}, this.props.filters, {
-              country,
-              countryName: ((this.props.countryList || []).find(c => c.id === this.props.countries[i]) || {}).name
-            });
+            // const filters = Object.assign({}, this.props.filters, {
+            //   country,
+            //   countryName: ((this.props.countryList || []).find(c => c.id === this.props.countries[i]) || {}).name
+            // });
 
-            const layersActive = this.props.layersActive.map(l => Object.assign({}, l, {
-              country,
-              countryName: ((this.props.countryList || []).find(c => c.id === this.props.countries[i]) || {}).name
-            }));
+            // const layersActive = this.props.layersActive.map(l => Object.assign({}, l, {
+            //   country,
+            //   countryName: ((this.props.countryList || []).find(c => c.id === this.props.countries[i]) || {}).name
+            // }));
 
-            const mapConfig = Object.assign({}, this.state.maps[country].mapConfig, { bounds: this.props.countryList.find(c => c.id === country) })
+            // const mapConfig = Object.assign({}, this.state.maps[country].mapConfig, { bounds: this.props.countryList.find(c => c.id === country) })
 
             return (
               <div key={country} className="compareitem-column">
                 <div className="compareitem-map">
                   <VizzMap
-                    mapOptions={MAP_OPTIONS}
+                    mapOptions={mapConfig}
                     // events={mapEvents}
-                    bounds={mapState.bounds}
+                    bounds={mapConfig.bounds}
                     basemap={BASEMAP_LAYER_CONFIG}
                     label={LABEL_LAYER_CONFIG}
                     // mapConfig={mapConfig}
@@ -104,12 +98,12 @@ export default class CompareMaps extends React.Component {
                     // }}
                   />
                   {/* Map controls */}
-                  <MapControls className="-left">
+                  {/* <MapControls className="-left">
                     <LegendMobile />
-                  </MapControls>
+                  </MapControls> */}
 
                   {/* Map controls */}
-                  <MapControls>
+                  {/* <MapControls>
                     <ZoomControl
                       zoom={mapConfig.zoom}
                       onZoomChange={(zoom) => {
@@ -123,7 +117,7 @@ export default class CompareMaps extends React.Component {
                         });
                       }}
                     />
-                  </MapControls>
+                  </MapControls> */}
                 </div>
               </div>
             );
@@ -138,8 +132,9 @@ CompareMaps.propTypes = {
   context: PropTypes.string,
   countryList: PropTypes.array,
   country: PropTypes.string,
-  loading: PropTypes.bool,
   widgetsActive: PropTypes.array,
   filters: PropTypes.object,
   layersActive: PropTypes.array
 };
+
+export default CompareMaps;

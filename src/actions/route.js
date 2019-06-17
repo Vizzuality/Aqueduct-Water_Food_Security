@@ -49,7 +49,7 @@ export function onEnterMapPage({ location }, replace, done) {
 }
 
 export function onEnterComparePage({ location }, replace, done) {
-  const { crop, countries, food, irrigation, period, period_value, scope, year, indicator, type } = location.query;
+  const { crop, country, countries, food, irrigation, period, period_value, scope, year, indicator, type } = location.query;
   // If thera are country params
   if (countries) {
     countries.split(',').forEach((c, i) => {
