@@ -1,52 +1,32 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import isEqual from 'lodash/isEqual';
-import zipObject from 'lodash/zipObject';
 import { MapControls, ZoomControl, Icon } from 'aqueduct-components';
 import { Map as VizzMap } from 'vizzuality-components/dist/bundle';
 import { LayerManager, Layer } from 'layer-manager/dist/components';
+import { PluginLeaflet } from 'layer-manager/dist/layer-manager';
 
 // components
 import LegendMobile from 'components/legend';
-// import LayerManager from 'utils/layers/LayerManager';
 
 // constants
 import {
   BASEMAP_LAYER_CONFIG,
-  LABEL_LAYER_CONFIG,
-  MAP_OPTIONS
+  LABEL_LAYER_CONFIG
 } from 'components/map/constants';
 
 class CompareMaps extends PureComponent {
-  // constructor(props) {
-  //   super(props);
-
-  //   this.state = { maps: [] };
-
-  //   // this.state = {
-  //   //   maps: zipObject(props.countries, [MAP_CONFIG, MAP_CONFIG])
-  //   // };
-  // }
-
-  // componentWillReceiveProps(nextProps) {
-  //   if (!isEqual(nextProps.countries, this.props.countries)) {
-  //     this.setState({
-  //       maps: zipObject(nextProps.countries, [MAP_CONFIG, MAP_CONFIG])
-  //     });
-  //   }
-  // }
-
-
   render() {
     const { compareConfig } = this.props;
     console.log(this.props);
-
 
     return (
       <div className="c-compareitem-maps">
         <div className="c-compareitem-row">
           {compareConfig.map((_compareConfig) => {
-            const { country, mapConfig } = _compareConfig;
+            const { country, mapConfig, activeLayer } = _compareConfig || {};
+            console.log('---')
+            // console.log(activeLayer)
+            // console.log(country)
 
             if (!country) {
               return (
@@ -61,63 +41,54 @@ class CompareMaps extends PureComponent {
               );
             }
 
-            // const filters = Object.assign({}, this.props.filters, {
-            //   country,
-            //   countryName: ((this.props.countryList || []).find(c => c.id === this.props.countries[i]) || {}).name
-            // });
-
-            // const layersActive = this.props.layersActive.map(l => Object.assign({}, l, {
-            //   country,
-            //   countryName: ((this.props.countryList || []).find(c => c.id === this.props.countries[i]) || {}).name
-            // }));
-
-            // const mapConfig = Object.assign({}, this.state.maps[country].mapConfig, { bounds: this.props.countryList.find(c => c.id === country) })
-
             return (
-              <div key={country} className="compareitem-column">
+              <div
+                key={country}
+                className="compareitem-column"
+              >
                 <div className="compareitem-map">
                   <VizzMap
                     mapOptions={mapConfig}
-                    // events={mapEvents}
                     bounds={mapConfig.bounds}
                     basemap={BASEMAP_LAYER_CONFIG}
                     label={LABEL_LAYER_CONFIG}
-                    // mapConfig={mapConfig}
-                    // filters={filters}
-                    // layersActive={layersActive}
-                    // LayerManager={LayerManager}
-                    // setMapParams={(newMapConfig) => {
-                    //   this.setState({
-                    //     [country]: {
-                    //       mapConfig: {
-                    //         ...mapConfig,
-                    //         ...newMapConfig
-                    //       }
-                    //     }
-                    //   });
-                    // }}
-                  />
-                  {/* Map controls */}
-                  {/* <MapControls className="-left">
-                    <LegendMobile />
-                  </MapControls> */}
+                  >
+                    {_map => (
+                      <Fragment>
+                        <LayerManager
+                          map={_map}
+                          plugin={PluginLeaflet}
+                        >
+                          {activeLayer.map((l, i) => (
+                            <Layer
+                              {...l}
+                              key={l.id}
+                              opacity={l.opacity}
+                              zIndex={1000 - i}
+                              {...l.params && { params: l.params }}
+                              {...l.sqlParams && { sqlParams: l.sqlParams }}
+                              {...l.decodeParams && { decodeParams: l.decodeParams }}
+                              {...l.interactionConfig && {
+                                interactivity: ['carto', 'cartodb'].includes(l.provider)
+                                  ? (l.interactionConfig.output || []).map(o => o.column)
+                                  : true
+                              }}
+                            />
+                          ))}
+                        </LayerManager>
 
-                  {/* Map controls */}
-                  {/* <MapControls>
-                    <ZoomControl
-                      zoom={mapConfig.zoom}
-                      onZoomChange={(zoom) => {
-                        this.setState({
-                          [country]: {
-                            mapConfig: {
-                              ...mapConfig,
-                              zoom
-                            }
-                          }
-                        });
-                      }}
-                    />
-                  </MapControls> */}
+                        {/* Map controls */}
+                        <MapControls className="-left">
+                          <LegendMobile />
+                        </MapControls>
+
+                        {/* Map controls */}
+                        <MapControls>
+                          <ZoomControl zoom={mapConfig.zoom} />
+                        </MapControls>
+                      </Fragment>
+                    )}
+                  </VizzMap>
                 </div>
               </div>
             );
@@ -128,13 +99,6 @@ class CompareMaps extends PureComponent {
   }
 }
 
-CompareMaps.propTypes = {
-  context: PropTypes.string,
-  countryList: PropTypes.array,
-  country: PropTypes.string,
-  widgetsActive: PropTypes.array,
-  filters: PropTypes.object,
-  layersActive: PropTypes.array
-};
+CompareMaps.propTypes = { compareConfig: PropTypes.array.isRequired };
 
 export default CompareMaps;

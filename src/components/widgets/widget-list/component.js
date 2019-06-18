@@ -13,8 +13,6 @@ class WidgetList extends PureComponent {
       [grid]: !!grid
     });
 
-    console.log(widgets)
-
     return (
       <div className="c-widget-list">
         <div className="row collapse">

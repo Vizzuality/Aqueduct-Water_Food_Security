@@ -13,6 +13,7 @@ const initialState = {
   indicator: 'none',
   irrigation: 'all',
   type: 'absolute',
+  scenario: 'business_as_usual',
   iso: null
 };
 

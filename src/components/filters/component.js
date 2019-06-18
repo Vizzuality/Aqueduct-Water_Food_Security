@@ -22,13 +22,13 @@ import {
   FOOD_OPTIONS,
   SCOPE_OPTIONS,
   DATA_TYPE_OPTIONS,
-  YEAR_OPTIONS
 } from 'constants/filters';
 import { CROP_OPTIONS } from 'constants/crops';
 import {
   EQUIVALENCE_WATER_INDICATORS,
   DEFAULT_BASELINE_WATER_INDICATOR,
-  DEFAULT_PROJECTED_WATER_INDICATOR
+  DEFAULT_PROJECTED_WATER_INDICATOR,
+  EQUIVALENCE_WATER_INDICATORS_PROJECTED
 } from 'constants/water-indicators';
 
 class Filters extends PureComponent {
@@ -123,15 +123,26 @@ class Filters extends PureComponent {
     setFilters(newFilter);
   }
 
+  handleType(type) {
+    const { filters: { indicator } } = this.props;
+    this.updateFilters(type, 'type');
+
+    if (EQUIVALENCE_WATER_INDICATORS_PROJECTED[indicator]) this.updateFilters(EQUIVALENCE_WATER_INDICATORS_PROJECTED[indicator], 'indicator');
+  }
+
   render() {
     const {
       waterOptions,
+      yearOptions,
       filters,
       className,
       withScope
     } = this.props;
     const disablesTimeline = !filters.indicator || filters.indicator === 'none';
     const componentClass = classnames('c-filters', { [className]: !!className });
+
+    console.log('waterOptions', waterOptions);
+    console.log('indicator', filters.indicator)
 
     const timeline = (
       <div className="c-filters-item">
@@ -151,8 +162,8 @@ class Filters extends PureComponent {
         </div>
 
         <Timeline
-          items={YEAR_OPTIONS}
-          selected={YEAR_OPTIONS.find(i => i.value === filters.year)}
+          items={yearOptions}
+          selected={yearOptions.find(i => i.value === filters.year)}
           disabled={disablesTimeline}
           onChange={(selected) => { this.handleTimeframe(selected); }}
         />
@@ -164,7 +175,7 @@ class Filters extends PureComponent {
               items={DATA_TYPE_OPTIONS}
               name="type"
               selected={filters.type}
-              onChange={selected => this.updateFilters(selected.value, 'type')}
+              onChange={({ value }) => { this.handleType(value); }}
             />
           )}
       </div>
@@ -361,6 +372,7 @@ Filters.propTypes = {
   withScope: PropTypes.bool,
   className: PropTypes.string,
   waterOptions: PropTypes.array.isRequired,
+  yearOptions: PropTypes.array.isRequired,
   setFilters: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired
 };
