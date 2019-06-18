@@ -5,7 +5,7 @@ import { toggleModal } from 'aqueduct-components';
 import { setFilters } from 'actions/filters';
 
 // selectors
-import { getWaterOptions } from './selectors';
+import { getWaterOptions, getTimelineOptions } from './selectors';
 
 // component
 import Filters from './component';
@@ -13,7 +13,8 @@ import Filters from './component';
 export default connect(
   state => ({
     filters: state.filters,
-    waterOptions: getWaterOptions(state)
+    waterOptions: getWaterOptions(state),
+    yearOptions: getTimelineOptions(state)
   }),
   {
     toggleModal,

@@ -6,12 +6,22 @@ import { SCOPE_OPTIONS, FOOD_OPTIONS } from 'constants/filters';
 import { CROP_OPTIONS } from 'constants/crops';
 import {
   BASELINE_WATER_INDICATORS,
-  PROJECTED_WATER_INDICATORS
+  PROJECTED_WATER_INDICATORS_ABSOLUTE,
+  PROJECTED_WATER_INDICATORS_CHANGE
 } from 'constants/water-indicators';
 
 export const getDictionary = (filters = {}, countries = []) => {
-  const { country: _iso, scope: _scope, year } = filters;
-  const waterIndicators = year === 'baseline' ? BASELINE_WATER_INDICATORS : PROJECTED_WATER_INDICATORS;
+  const { country: _iso, scope: _scope, year, type } = filters;
+  let waterIndicators = [];
+
+  if (year === 'baseline') waterIndicators = BASELINE_WATER_INDICATORS;
+
+  if (year !== 'baseline') {
+    waterIndicators = type === 'absolute'
+      ? PROJECTED_WATER_INDICATORS_ABSOLUTE : PROJECTED_WATER_INDICATORS_CHANGE;
+  }
+
+  debugger
 
   return {
     crop(crop) {
@@ -42,7 +52,16 @@ export const getDictionary = (filters = {}, countries = []) => {
 
 export const getMapHeaderTemplate = (filters = {}) => {
   const { scope: scopeF, crop, year, type, indicator, food, irrigation, countryName } = filters;
-  const waterIndicators = year === 'baseline' ? BASELINE_WATER_INDICATORS : PROJECTED_WATER_INDICATORS;
+  let waterIndicators = [];
+
+  if (year === 'baseline') waterIndicators = BASELINE_WATER_INDICATORS;
+
+  if (year !== 'baseline') {
+    if (type === 'absolute') waterIndicators = PROJECTED_WATER_INDICATORS_ABSOLUTE;
+
+    waterIndicators = PROJECTED_WATER_INDICATORS_CHANGE;
+  }
+
   const scope = (scopeF === 'country' && !countryName) ? 'global' : scopeF;
   const existsIndicator = indicator !== 'none';
   const existsFood = food !== 'none';

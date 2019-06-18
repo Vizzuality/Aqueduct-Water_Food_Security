@@ -6,7 +6,8 @@ import { SCOPE_OPTIONS } from 'constants/filters';
 import { CROP_OPTIONS } from 'constants/crops';
 import {
   BASELINE_WATER_INDICATORS,
-  PROJECTED_WATER_INDICATORS
+  PROJECTED_WATER_INDICATORS_ABSOLUTE,
+  PROJECTED_WATER_INDICATORS_CHANGE
 } from 'constants/water-indicators';
 
 // states
@@ -16,8 +17,15 @@ const getFilters = state => state.filters;
 export const getDictionary = createSelector(
   [getCountries, getFilters],
   (_countries, _filters) => {
-    const { country: _iso, scope: _scope, year } = _filters;
-    const waterIndicators = year === 'baseline' ? BASELINE_WATER_INDICATORS : PROJECTED_WATER_INDICATORS;
+    const { country: _iso, scope: _scope, year, type } = _filters;
+    let waterIndicators = [];
+
+    if (year === 'baseline') waterIndicators = BASELINE_WATER_INDICATORS;
+
+    if (year !== 'baseline') {
+      waterIndicators = type === 'absolute'
+        ? PROJECTED_WATER_INDICATORS_ABSOLUTE : PROJECTED_WATER_INDICATORS_CHANGE;
+    }
 
     return {
       crop(crop) {

@@ -135,6 +135,8 @@ class Map extends PureComponent {
     } = this.state;
     const mapEvents = { moveend: (e, _map) => { this.updateMap(e, _map); } };
 
+    console.log('layers', layers);
+
     return (
       <div className="l-map">
         <Spinner
@@ -168,7 +170,7 @@ class Map extends PureComponent {
                     {...l.params && { params: l.params }}
                     {...l.sqlParams && { sqlParams: l.sqlParams }}
                     {...l.decodeParams && { decodeParams: l.decodeParams }}
-                    {... l.interactionConfig && {
+                    {...l.interactionConfig && {
                       interactivity: ['carto', 'cartodb'].includes(l.provider)
                         ? (l.interactionConfig.output || []).map(o => o.column)
                         : true
