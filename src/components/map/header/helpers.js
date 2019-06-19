@@ -21,8 +21,6 @@ export const getDictionary = (filters = {}, countries = []) => {
       ? PROJECTED_WATER_INDICATORS_ABSOLUTE : PROJECTED_WATER_INDICATORS_CHANGE;
   }
 
-  debugger
-
   return {
     crop(crop) {
       return (crop !== 'all') ? CROP_OPTIONS.find(v => v.value === crop).label : '';

@@ -124,7 +124,9 @@ class Map extends PureComponent {
     const {
       mapState,
       countries,
-      filters
+      filters,
+      mapControls,
+      legend
     } = this.props;
     const {
       layers,
@@ -134,8 +136,6 @@ class Map extends PureComponent {
       mapElem
     } = this.state;
     const mapEvents = { moveend: (e, _map) => { this.updateMap(e, _map); } };
-
-    console.log('layers', layers);
 
     return (
       <div className="l-map">
@@ -179,24 +179,30 @@ class Map extends PureComponent {
                 ))}
               </LayerManager>
 
-              <MapControls>
-                <ZoomControl
-                  zoom={mapState.zoom}
-                  onZoomChange={(zoom) => { this.handleZoomChange(zoom); }}
-                />
+              {mapControls && (
+                <MapControls>
+                  <ZoomControl
+                    zoom={mapState.zoom}
+                    onZoomChange={(zoom) => { this.handleZoomChange(zoom); }}
+                  />
 
-                <ShareButton onClick={() => { this.toggleShareModal(); }} />
-                <DownloadMapControl mapElem={mapElem._mapPane} />
-              </MapControls>
+                  <ShareButton onClick={() => { this.toggleShareModal(); }} />
+                  <DownloadMapControl mapElem={mapElem._mapPane} />
+                </MapControls>
+              )}
+
 
               {countries.length > 0 && (<MapHeader />)}
 
-              <Legend
-                className="-map"
-                filters={filters}
-                layers={layers}
-                onToggleInfo={this.toggleSourceModal}
-              />
+              {legend && (
+                <Legend
+                  className="-map"
+                  expanded
+                  filters={filters}
+                  layers={layers}
+                  onToggleInfo={this.toggleSourceModal}
+                />
+              )}
             </Fragment>
           )}
         </VizzMap>
@@ -209,10 +215,17 @@ Map.propTypes = {
   mapState: PropTypes.object.isRequired,
   filters: PropTypes.object.isRequired,
   layers: PropTypes.array.isRequired,
+  mapControls: PropTypes.bool,
+  legend: PropTypes.bool,
   foodLayers: PropTypes.array.isRequired,
   countries: PropTypes.array.isRequired,
   toggleModal: PropTypes.func.isRequired,
   setMapLocation: PropTypes.func.isRequired
+};
+
+Map.defaultProps = {
+  mapControls: true,
+  legend: true
 };
 
 export default Map;

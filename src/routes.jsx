@@ -8,7 +8,7 @@ import App from 'components/app';
 import MapPage from 'components/pages/map';
 import ComparePage from 'containers/pages/ComparePage';
 import EmbedPage from 'containers/pages/EmbedPage';
-import ReportPage from 'containers/pages/ReportPage';
+import ReportPage from 'components/pages/report';
 import AboutPage from 'containers/pages/AboutPage';
 
 // Routing actions

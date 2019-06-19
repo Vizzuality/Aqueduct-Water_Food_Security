@@ -140,10 +140,6 @@ class Filters extends PureComponent {
     } = this.props;
     const disablesTimeline = !filters.indicator || filters.indicator === 'none';
     const componentClass = classnames('c-filters', { [className]: !!className });
-
-    console.log('waterOptions', waterOptions);
-    console.log('indicator', filters.indicator)
-
     const timeline = (
       <div className="c-filters-item">
         {/* Year */}
