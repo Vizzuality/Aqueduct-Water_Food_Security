@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import WidgetList from 'components/widgets/WidgetList';
+import WidgetList from 'components/widgets/widget-list';
 import { Map, MapControls, ZoomControl, Icon } from 'aqueduct-components';
 import LegendMobile from 'components/legend';
 import Summary from 'components/summary';

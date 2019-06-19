@@ -40,10 +40,7 @@ class MapPageDesktop extends PureComponent {
   }
 
   render() {
-    const {
-      filters,
-      countries
-    } = this.props;
+    const { filters } = this.props;
     const { stickyFilterTopPosition, showStickyFilters } = this.state;
 
     return (
