@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "build": "NODE_ENV=production webpack --config ./config/webpack.config.js --progress --colors",
+    "postinstall": "npm run build",
     "test": "eslint .",
     "dev": "node server.js"
   },
