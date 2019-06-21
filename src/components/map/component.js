@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import isEqual from 'react-fast-compare';
 import { PluginLeaflet } from 'layer-manager/dist/layer-manager';
 import { LayerManager, Layer } from 'layer-manager/dist/components';
-// import { Map as VizzMap } from 'vizzuality-components/dist/bundle';
+import { Map as VizzMap } from 'vizzuality-components/dist/bundle';
 import {
   MapControls,
   ShareButton,
