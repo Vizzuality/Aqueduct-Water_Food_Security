@@ -164,7 +164,7 @@ class Map extends PureComponent {
           isLoading={loading}
           className="-map"
         />
-        {/* <VizzMap
+        <VizzMap
           mapOptions={mapState}
           events={mapEvents}
           bounds={mapState.bounds}
@@ -226,7 +226,7 @@ class Map extends PureComponent {
               )}
             </Fragment>
           )}
-        </VizzMap> */}
+        </VizzMap>
       </div>
     );
   }
