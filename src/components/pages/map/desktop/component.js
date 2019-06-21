@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Sticky } from 'aqueduct-components';
 
 // components
-// import Map from 'components/map';
+import Map from 'components/map';
 import Sidebar from 'components/sidebar';
 import Filters from 'components/filters';
 import StickyFilters from 'components/filters/sticky';
@@ -83,7 +83,7 @@ class MapPageDesktop extends PureComponent {
 
         {/* Map */}
         <div className="c-map-container">
-          {/* <Map /> */}
+          <Map />
         </div>
       </div>
     );
