@@ -111,9 +111,7 @@
   @include only-mobile {
     height: calc(100vh - 212px);
   }
-  @include only-desktop {
-    height: 430px;
-  }
+
   position: relative;
   width: 100%;
   & > div {

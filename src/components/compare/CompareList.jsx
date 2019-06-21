@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 
 // components
 import CompareMaps from 'components/compare/compare-maps';
-import CompareSummaries from 'components/compare/CompareSummaries';
+import CompareSummaries from 'components/compare/compare-summaries';
 import CompareWidgetList from 'components/compare/CompareWidgetList';
 
 class CompareList extends PureComponent {
