@@ -112,11 +112,30 @@ class Map extends PureComponent {
   }
 
   updateMap(event, map) {
-    const { setMapLocation } = this.props;
+    const {
+      mapState: { bounds },
+      setMapLocation
+    } = this.props;
+
+    // center: _bbox.bbox ? ({
+    //   lat: _bbox.bbox[3],
+    //   lng: _bbox.bbox[2],
+    // }) : _mapState.center,
+
+    // console.log('bbox', bbox)
+
+    console.log('MOVEEND')
 
     setMapLocation({
       zoom: map.getZoom(),
-      center: map.getCenter()
+      center: map.getCenter(),
+
+      // center: bounds.bbox ?
+      //   ({
+      //     lat: bounds.bbox[3],
+      //     lng: bounds.bbox[2],
+      //   })
+      //   : map.getCenter()
     });
   }
 
@@ -136,6 +155,8 @@ class Map extends PureComponent {
       mapElem
     } = this.state;
     const mapEvents = { moveend: (e, _map) => { this.updateMap(e, _map); } };
+
+    console.log(mapState.bounds)
 
     return (
       <div className="l-map">

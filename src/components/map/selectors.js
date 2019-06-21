@@ -38,6 +38,10 @@ export const parseMapState = createSelector(
     ...MAP_OPTIONS,
     zoom: _mapState.zoom,
     center: _mapState.center,
+    // center: _bbox.bbox ? ({
+    //   lat: _bbox.bbox[3],
+    //   lng: _bbox.bbox[2],
+    // }) : _mapState.center,
     bounds: {
       ...MAP_OPTIONS.bounds,
       ..._bbox,

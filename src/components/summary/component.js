@@ -117,7 +117,7 @@ class Summary extends PureComponent {
       filters: { crop },
       countryName
     } = this.props;
-    const _crop = (crop !== 'all') ? `(${capitalizeFirstLetter(crop)})` : '';
+    const _crop = (crop && crop !== 'all') ? `(${capitalizeFirstLetter(crop)})` : '';
     return `${countryName} summary ${_crop}`;
   }
 
