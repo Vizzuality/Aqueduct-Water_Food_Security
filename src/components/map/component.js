@@ -1,15 +1,15 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'react-fast-compare';
-// import { PluginLeaflet } from 'layer-manager/dist/layer-manager';
-// import { LayerManager, Layer } from 'layer-manager/dist/components';
+import { PluginLeaflet } from 'layer-manager/dist/layer-manager';
+import { LayerManager, Layer } from 'layer-manager/dist/components';
 import { Map as VizzMap } from 'vizzuality-components/dist/bundle';
-import {
-  MapControls,
-  ShareButton,
-  ZoomControl,
-  Spinner
-} from 'aqueduct-components';
+// import {
+//   MapControls,
+//   ShareButton,
+//   ZoomControl,
+//   Spinner
+// } from 'aqueduct-components';
 
 // components
 import ShareModal from 'components/modal/share';
@@ -160,10 +160,10 @@ class Map extends PureComponent {
 
     return (
       <div className="l-map">
-        <Spinner
+        {/* <Spinner
           isLoading={loading}
           className="-map"
-        />
+        /> */}
         <VizzMap
           mapOptions={mapState}
           events={mapEvents}
@@ -173,7 +173,7 @@ class Map extends PureComponent {
         >
           {_map => (
             <Fragment>
-              {/* <LayerManager
+              <LayerManager
                 map={_map}
                 plugin={PluginLeaflet}
                 onReady={() => {
@@ -200,7 +200,7 @@ class Map extends PureComponent {
                 ))}
               </LayerManager>
 
-              {mapControls && (
+              {/* {mapControls && (
                 <MapControls>
                   <ZoomControl
                     zoom={mapState.zoom}
