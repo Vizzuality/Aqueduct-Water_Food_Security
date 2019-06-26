@@ -1,7 +1,5 @@
-const autoprefixer = require('autoprefixer');
-
 module.exports = {
   plugins: [
-    autoprefixer()
+    require('autoprefixer') // eslint-disable-line
   ]
 };

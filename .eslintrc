@@ -29,7 +29,7 @@
   "settings": {
     "import/resolver": {
       "webpack": {
-        "config": "config/webpack.config.js"
+        "config": "config/webpack/webpack.config.js"
       }
     }
   }
