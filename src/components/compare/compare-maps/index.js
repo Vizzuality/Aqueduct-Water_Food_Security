@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
 
 // selectors
-import { getCompareConfig, getLayers } from './selectors';
+import { getFoodLayers, getActiveLayers } from 'components/map/selectors';
+import { getCompareConfig } from './selectors';
 
 // component
 import CompareMaps from './component';
@@ -9,8 +10,8 @@ import CompareMaps from './component';
 export default connect(
   state => ({
     compareConfig: getCompareConfig(state),
-    layers: getLayers(state),
-    countries: state.countries.list,
+    layers: getActiveLayers(state),
+    foodLayers: getFoodLayers(state),
     filters: state.filters
   }),
   null

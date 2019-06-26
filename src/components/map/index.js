@@ -8,7 +8,8 @@ import { setMapLocation } from 'actions/map';
 import {
   parseMapState,
   getActiveLayers,
-  getFoodLayers
+  getFoodLayers,
+  getCountryBounds
 } from './selectors';
 
 // component
@@ -17,6 +18,7 @@ import Map from './component';
 export default connect(
   state => ({
     mapState: parseMapState(state),
+    bounds: getCountryBounds(state),
     layers: getActiveLayers(state),
     foodLayers: getFoodLayers(state),
     countries: state.countries.list,

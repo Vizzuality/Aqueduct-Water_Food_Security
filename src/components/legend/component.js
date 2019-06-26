@@ -4,13 +4,14 @@ import { Legend, Icon } from 'aqueduct-components';
 
 class LegendMobile extends PureComponent {
   toggle() {
-    const { toggleModal } = this.props;
+    const { toggleModal, layersActive } = this.props;
 
     toggleModal(true, {
       children: Legend,
       childrenProps: {
         isModal: true,
-        ...this.props
+        ...this.props,
+        layers: layersActive
       }
     });
   }
@@ -27,6 +28,9 @@ class LegendMobile extends PureComponent {
   }
 }
 
-LegendMobile.propTypes = { toggleModal: PropTypes.func.isRequired };
+LegendMobile.propTypes = {
+  layersActive: PropTypes.array.isRequired,
+  toggleModal: PropTypes.func.isRequired,
+};
 
 export default LegendMobile;

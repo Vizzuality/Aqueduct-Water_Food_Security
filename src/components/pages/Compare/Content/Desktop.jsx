@@ -126,7 +126,6 @@ export default class ComparePageDesktop extends React.Component {
           countries={this.props.compare.countries}
           loading={this.props.loading}
           widgetsActive={this.props.widgetsActive}
-          layersActive={this.props.layersActive}
           items={this.state.items}
         />
       </div>

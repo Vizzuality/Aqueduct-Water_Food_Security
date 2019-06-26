@@ -7,10 +7,6 @@ export const MAP_OPTIONS = {
   center: {
     lat: 30,
     lng: -15
-  },
-  bounds: {
-    bbox: null,
-    options: { paddingTopLeft: [0, 0] }
   }
 };
 

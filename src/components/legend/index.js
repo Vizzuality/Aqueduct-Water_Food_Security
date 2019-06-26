@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { toggleModal } from 'aqueduct-components';
 
 // selectors
-import getActiveLayers from 'selectors/layers_active';
+import { getActiveLayers } from 'components/map/selectors';
 
 // component
 import LegendMobile from './component';
