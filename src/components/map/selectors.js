@@ -16,8 +16,8 @@ const getCountries = state => state.countries.list;
 const getSidebarWidth = state => state.sidebar.width;
 
 export const getCountryBounds = createSelector(
-  [getFilters, getCountries],
-  (_filters = {}, _countries = []) => {
+  [getFilters, getCountries, getSidebarWidth],
+  (_filters = {}, _countries = [], _sidebarWidth) => {
     const { scope, country } = _filters;
 
     if (!_countries.length) return ({ bbox: null });
@@ -25,31 +25,27 @@ export const getCountryBounds = createSelector(
     if (scope === 'country' && country) {
       const countryData = _countries.find(_country => _country.id === country);
 
-      if (countryData) return ({ bbox: getBounds(countryData) });
+      if (countryData) {
+        return ({
+          bbox: getBounds(countryData),
+          paddingTopLeft: [_sidebarWidth, 0]
+        });
+      }
     }
 
-    return ({ bbox: null });
+    return ({
+      bbox: null,
+      paddingTopLeft: [_sidebarWidth, 0]
+    });
   }
 );
 
 export const parseMapState = createSelector(
-  [getMapState, getCountryBounds, getSidebarWidth],
-  (_mapState = {}, _bbox, _sidebarWidth) => ({
+  [getMapState],
+  (_mapState = {}) => ({
     ...MAP_OPTIONS,
     zoom: _mapState.zoom,
-    center: _mapState.center,
-    // center: _bbox.bbox ? ({
-    //   lat: _bbox.bbox[3],
-    //   lng: _bbox.bbox[2],
-    // }) : _mapState.center,
-    bounds: {
-      ...MAP_OPTIONS.bounds,
-      ..._bbox,
-      options: {
-        ...MAP_OPTIONS.bounds.options,
-        paddingTopLeft: [_sidebarWidth, 0]
-      }
-    }
+    center: _mapState.center
   })
 );
 

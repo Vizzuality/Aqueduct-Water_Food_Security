@@ -123,10 +123,15 @@ export const prepareMarkerLayer = async (_layer = {}, _params = {}, _zoom) => {
     })
     .catch((error) => { console.error(error.message); });
 
-  const topMarkers = getMarkersByZoom(layer, geojson.features, _zoom);
-  const markerLayer = getMarkerLayer(topMarkers, _layer);
+  const markers = getMarkersByZoom(layer, geojson.features, _zoom);
 
-  return markerLayer;
+  if (params.country) {
+    const countryMaker = markers.filter(_marker => _marker.properties.iso === params.country);
+
+    return getMarkerLayer(countryMaker, _layer);
+  }
+
+  return getMarkerLayer(markers, _layer);
 };
 
 export default {

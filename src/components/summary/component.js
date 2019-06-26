@@ -30,10 +30,18 @@ class Summary extends PureComponent {
     this._mounted = true;
   }
 
-  componentWillReceiveProps(nextProps) {
+  // componentWillReceiveProps(nextProps) {
+  //   const { filters } = this.props;
+  //   const { filters: nextFilters } = nextProps;
+  //   const filtersChanged = !isEqual(nextFilters, filters);
+
+  //   if (filtersChanged) this.getData();
+  // }
+
+  componentDidUpdate(prevProps) {
     const { filters } = this.props;
-    const { filters: nextFilters } = nextProps;
-    const filtersChanged = !isEqual(nextFilters, filters);
+    const { filters: prevFilters } = prevProps;
+    const filtersChanged = !isEqual(prevFilters, filters);
 
     if (filtersChanged) this.getData();
   }

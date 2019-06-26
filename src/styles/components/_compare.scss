@@ -104,7 +104,9 @@
 }
 
 .c-compareitem-maps {
+  position: relative;
   width: 100%;
+  z-index: 1;
 }
 
 .compareitem-map {

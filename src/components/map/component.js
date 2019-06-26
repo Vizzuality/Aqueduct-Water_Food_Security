@@ -18,7 +18,7 @@ import MapHeader from './header';
 import Legend from './legend';
 
 // helpers
-// import { updateCartoCSS, prepareMarkerLayer } from './helpers';
+import { prepareMarkerLayer, updateCartoCSS } from './helpers';
 
 // constants
 import { BASEMAP_LAYER_CONFIG, LABEL_LAYER_CONFIG } from './constants';
@@ -37,67 +37,67 @@ class Map extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    // const {
-    //   layers,
-    //   filters,
-    //   foodLayers,
-    //   mapState
-    // } = this.props;
-    // const {
-    //   layers: nextLayers,
-    //   filters: nextFilters,
-    //   foodLayers: nextFoodLayers,
-    //   mapState: nextMapState
-    // } = nextProps;
-    // const { zoom } = mapState;
-    // const { zoom: nextZoom } = nextMapState;
-    // const layersChanged = !isEqual(layers, nextLayers);
-    // const filtersChanged = !isEqual(filters, nextFilters);
-    // const foodLayersChanged = !isEqual(foodLayers, nextFoodLayers);
-    // const zoomChanged = zoom !== nextZoom;
-    // const isSingleCropLayer = '064a524f-0e58-41fb-b948-f7bb66f43ef0';
-    // const isAllCropsLayer = 'a533c717-8473-412c-add8-89b0a008e3ac';
+    const {
+      layers,
+      filters,
+      foodLayers,
+      mapState
+    } = this.props;
+    const {
+      layers: nextLayers,
+      filters: nextFilters,
+      foodLayers: nextFoodLayers,
+      mapState: nextMapState
+    } = nextProps;
+    const { zoom } = mapState;
+    const { zoom: nextZoom } = nextMapState;
+    const layersChanged = !isEqual(layers, nextLayers);
+    const filtersChanged = !isEqual(filters, nextFilters);
+    const foodLayersChanged = !isEqual(foodLayers, nextFoodLayers);
+    const zoomChanged = zoom !== nextZoom;
+    const isSingleCropLayer = '064a524f-0e58-41fb-b948-f7bb66f43ef0';
+    const isAllCropsLayer = 'a533c717-8473-412c-add8-89b0a008e3ac';
 
-    // if ((foodLayersChanged || filtersChanged || zoomChanged) && nextFoodLayers[0]) {
-    //   this.setState({ loading: true }, () => {
-    //     prepareMarkerLayer(nextFoodLayers[0], nextFilters, nextZoom)
-    //       .then((markerLayer) => {
-    //         const { layers: currenLayers } = this.state;
-    //         const filteredLayers = currenLayers.filter(_layer => !_layer.isMarkerLayer);
-    //         this.setState({ layers: [markerLayer, ...filteredLayers] });
-    //       });
-    //   });
-    // }
+    if ((foodLayersChanged || filtersChanged || zoomChanged) && nextFoodLayers[0]) {
+      this.setState({ loading: true }, () => {
+        prepareMarkerLayer(nextFoodLayers[0], nextFilters, nextZoom)
+          .then((markerLayer) => {
+            const { layers: currenLayers } = this.state;
+            const filteredLayers = currenLayers.filter(_layer => !_layer.isMarkerLayer);
+            this.setState({ layers: [markerLayer, ...filteredLayers] });
+          });
+      });
+    }
 
-    // // if the incoming layer is the one crop one we need to update its cartoCSS manually
-    // if (layersChanged && (nextLayers[0] && nextLayers[0].id === isSingleCropLayer)) {
-    //   this.setState({
-    //     loading: true,
-    //     loadingCartoCSS: true
-    //   }, () => {
-    //     updateCartoCSS(nextLayers[0], nextFilters)
-    //       .then((updatedLayer) => {
-    //         const { layers: currentLayers } = this.state;
-    //         // filters any previous all crop layer and one crop layer present.
-    //         const filteredLayers = currentLayers.filter(
-    //           _layer => ![isAllCropsLayer, isSingleCropLayer].includes(_layer.id)
-    //         );
+    // if the incoming layer is the one crop one we need to update its cartoCSS manually
+    if (layersChanged && (nextLayers[0] && nextLayers[0].id === isSingleCropLayer)) {
+      this.setState({
+        loading: true,
+        loadingCartoCSS: true
+      }, () => {
+        updateCartoCSS(nextLayers[0], nextFilters)
+          .then((updatedLayer) => {
+            const { layers: currentLayers } = this.state;
+            // filters any previous all crop layer and one crop layer present.
+            const filteredLayers = currentLayers.filter(
+              _layer => ![isAllCropsLayer, isSingleCropLayer].includes(_layer.id)
+            );
 
-    //         this.setState({
-    //           loadingCartoCSS: false,
-    //           loading: true,
-    //           layers: [updatedLayer, ...filteredLayers]
-    //         });
-    //       });
-    //   });
-    // }
+            this.setState({
+              loadingCartoCSS: false,
+              loading: true,
+              layers: [updatedLayer, ...filteredLayers]
+            });
+          });
+      });
+    }
 
-    // if (layersChanged && (nextLayers[0] && nextLayers[0].id !== isSingleCropLayer)) {
-    //   this.setState({
-    //     layers: nextLayers,
-    //     loading: true
-    //   });
-    // }
+    if (layersChanged && (nextLayers[0] && nextLayers[0].id !== isSingleCropLayer)) {
+      this.setState({
+        layers: nextLayers,
+        loading: true
+      });
+    }
   }
 
   toggleShareModal() {
@@ -112,36 +112,18 @@ class Map extends PureComponent {
   }
 
   updateMap(event, map) {
-    const {
-      mapState: { bounds },
-      setMapLocation
-    } = this.props;
-
-    // center: _bbox.bbox ? ({
-    //   lat: _bbox.bbox[3],
-    //   lng: _bbox.bbox[2],
-    // }) : _mapState.center,
-
-    // console.log('bbox', bbox)
-
-    console.log('MOVEEND')
+    const { setMapLocation } = this.props;
 
     setMapLocation({
       zoom: map.getZoom(),
       center: map.getCenter(),
-
-      // center: bounds.bbox ?
-      //   ({
-      //     lat: bounds.bbox[3],
-      //     lng: bounds.bbox[2],
-      //   })
-      //   : map.getCenter()
     });
   }
 
   render() {
     const {
       mapState,
+      bounds,
       countries,
       filters,
       mapControls,
@@ -156,8 +138,6 @@ class Map extends PureComponent {
     } = this.state;
     const mapEvents = { moveend: (e, _map) => { this.updateMap(e, _map); } };
 
-    // console.log(mapState.bounds)
-
     return (
       <div className="l-map">
         <Spinner
@@ -167,7 +147,7 @@ class Map extends PureComponent {
         <VizzMap
           mapOptions={mapState}
           events={mapEvents}
-          bounds={mapState.bounds}
+          bounds={bounds}
           basemap={BASEMAP_LAYER_CONFIG}
           label={LABEL_LAYER_CONFIG}
         >
@@ -234,6 +214,7 @@ class Map extends PureComponent {
 
 Map.propTypes = {
   mapState: PropTypes.object.isRequired,
+  bounds: PropTypes.object.isRequired,
   filters: PropTypes.object.isRequired,
   layers: PropTypes.array.isRequired,
   mapControls: PropTypes.bool,

@@ -6,10 +6,6 @@ import { MAP_OPTIONS } from 'components/map/constants';
 
 // utils
 import { getBounds } from 'utils/map';
-// import { reduceParams, reduceSqlParams } from 'utils/layers/params-parser';
-
-// selectors
-import { getActiveLayers } from 'components/map/selectors';
 
 // states
 const getCompareCountries = state => state.compare.countries;
@@ -35,13 +31,8 @@ export const getCompareConfig = createSelector(
 
       return ({
         country: _compareCountry,
-        mapConfig: {
-          ...MAP_OPTIONS,
-          bounds: {
-            ...MAP_OPTIONS.bounds,
-            bbox: getBounds(countryData)
-          }
-        },
+        mapConfig: MAP_OPTIONS,
+        bounds: { bbox: getBounds(countryData) },
         filters: updatedFilters,
         layers: []
       });
@@ -49,34 +40,4 @@ export const getCompareConfig = createSelector(
   }
 );
 
-export const getLayers = createSelector(
-  [getFilters, getActiveLayers],
-  (_filters, _activeLayer) => {
-    // const { irrigation, crop, ...restFilters } = _filters;
-    // const updatedFilters = {
-    //   ...restFilters,
-    //   ...irrigation !== 'all' && { irrigation },
-    //   ...crop !== 'all' && { crop },
-    //   // iso: _compareCountry,
-    //   // country: _compareCountry,
-    //   // countryName: countryData.name
-    // };
-
-    return _activeLayer;
-
-
-    // return _activeLayer.length ? ({
-    //   ..._activeLayer[0],
-    //   ..._activeLayer[0].layerConfig.params_config
-    //   && { params: reduceParams(_activeLayer[0].layerConfig.params_config, updatedFilters) },
-    //   ..._activeLayer[0].layerConfig.sql_config
-    //   && { sqlParams: reduceSqlParams(_activeLayer[0].layerConfig.sql_config, updatedFilters) }
-    //   // id: `${_activeLayer[0].id}${Date.now()}`,
-    // }) : [];
-  }
-);
-
-export default {
-  getCompareConfig,
-  getLayers
-};
+export default { getCompareConfig };
