@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { render } from 'react-dom';
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { browserHistory } from 'react-router';
 import thunk from 'redux-thunk';
@@ -38,7 +38,7 @@ const store = createStore(
   composeWithDevTools(
     /* The router middleware MUST be before thunk otherwise the URL changes
     * inside a thunk function won't work properly */
-   applyMiddleware(middlewareRouter, thunk)
+    applyMiddleware(middlewareRouter, thunk)
   )
 );
 

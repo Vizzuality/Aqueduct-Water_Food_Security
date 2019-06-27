@@ -95,11 +95,7 @@ export default class ComparePageDesktop extends React.Component {
           </div>
           <div className="compare-filters-wrapper">
             <div className="compare-filters-section -collapsed">
-              <Filters
-                className="-compare"
-                filters={this.props.filters}
-                setFilters={this.props.setFilters}
-              />
+              <Filters className="-compare" />
             </div>
           </div>
         </div>
