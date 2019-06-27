@@ -10,8 +10,12 @@ import axios from 'axios';
 import { LEGEND_OPACITY_RANGE } from 'components/map/legend/constants';
 import { CROP_OPTIONS } from 'constants/crops';
 import { CATEGORIES } from 'constants/filters';
+import {
+  BASELINE_WATER_INDICATORS_IDS,
+  PROJECTED_WATER_INDICATORS_IDS
+} from 'constants/water-indicators';
 
-// Utils
+// utils
 import { getObjectConversion } from 'utils/filters';
 import { applyOpacity } from './helpers';
 
@@ -79,7 +83,7 @@ class LegendItem extends PureComponent {
           return;
         }
 
-        const { color } = CROP_OPTIONS.find(c => c.value === crop) || {};
+        const { color } = CROP_OPTIONS.find(c => c.value === crop) || {};
         const items = buckets.map((bucket, i) => ({
           value: `(< ${format('.3s')(bucket)})`,
           color: applyOpacity(color, LEGEND_OPACITY_RANGE[i]),
@@ -113,19 +117,25 @@ class LegendItem extends PureComponent {
   }
 
   render() {
+    const { waterLayerName } = this.props;
     const {
       layer,
       loading,
       error
     } = this.state;
+    const waterLayer = [
+      ...BASELINE_WATER_INDICATORS_IDS,
+      ...PROJECTED_WATER_INDICATORS_IDS
+    ].includes(layer.id);
+    const layerCategory = (waterLayer && waterLayerName) ? 'water' : layer.category;
 
     return (
       <li className="c-legend-item">
         <header className="legend-item-header">
           <h3>
-            {layer.category
-              && (<span className="category">{CATEGORIES[layer.category]} -</span>)}
-            <span className="name">{layer.name}</span>
+            {layerCategory
+              && (<span className="category">{CATEGORIES[layerCategory]} -</span>)}
+            <span className="name">{waterLayer ? waterLayerName : layer.name}</span>
           </h3>
           <LegendButtons triggerAction={this.triggerAction} />
         </header>
@@ -140,11 +150,15 @@ class LegendItem extends PureComponent {
 }
 
 LegendItem.propTypes = {
+  waterLayerName: PropTypes.string,
   layer: PropTypes.object.isRequired,
   filters: PropTypes.object.isRequired,
   onToggleInfo: PropTypes.func
 };
 
-LegendItem.defaultProps = { onToggleInfo: null };
+LegendItem.defaultProps = {
+  onToggleInfo: null,
+  waterLayerName: null
+};
 
 export default LegendItem;
