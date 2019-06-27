@@ -78,53 +78,6 @@ export const DATASETS = [
     category: 'water',
     family: 'projected'
   },
-  // // water datasets
-  // {
-  //   id: 'water-datasets',
-  //   datasets: {
-  //     baseline: 'f0559cb4-320c-4f69-a62f-e1595623806f',
-  //     projected: 'c6569326-2deb-4cdb-9c3e-16e1ce549f2a'
-  //   },
-  //   name: 'Water stress',
-  //   category: 'water',
-  //   timeline: true,
-  //   warning: 'not-rainfed-relevant'
-  // },
-  // {
-  //   id: 'd9785282-2140-463f-a82d-f7296687055a',
-  //   layerId: '58e85d31-a59f-416a-bd83-16a2c6e68c33',
-  //   layerAbsoluteId: 'e35cdf8e-0601-477c-9a0d-8d4874d296a7',
-  //   layerProjectedId: '83b9c999-22f3-4413-9793-5eb806630117',
-  //   name: 'Seasonal variability',
-  //   category: 'water',
-  //   timeline: true
-  // },
-  // {
-  //   id: 'bf657e60-de9c-4b7e-8736-d573d38e3ce1',
-  //   layerId: 'db89786d-0862-44f7-8a21-9d21cd52ab15',
-  //   name: 'Inter-annual variability',
-  //   category: 'water'
-  // },
-  // {
-  //   id: '9c450642-f976-40eb-96b4-0c904d519578',
-  //   layerId: '39c5649f-aaf7-4d32-9493-26441d8f80f0',
-  //   name: 'Drought severity (soil moisture)',
-  //   category: 'water'
-  // },
-  // {
-  //   id: 'b53ef8c5-8554-4a4a-a100-fdf5a022cb4e',
-  //   layerId: 'a1007109-4462-43ac-8412-e1acc6c84174',
-  //   name: 'Groundwater stress',
-  //   category: 'water',
-  //   warning: 'not-rainfed-relevant'
-  // },
-  // {
-  //   id: 'cbd0d0f8-edf9-47bc-93ef-71c1a5e5fed7',
-  //   layerId: '1c825957-f34f-4f49-8c19-20c952722ba9',
-  //   name: 'Groundwater table declining trend',
-  //   category: 'water',
-  //   warning: 'not-rainfed-relevant'
-  // },
   // country mask
   {
     id: 'e844accd-9e65-414b-84e7-efc5bd65aa17',

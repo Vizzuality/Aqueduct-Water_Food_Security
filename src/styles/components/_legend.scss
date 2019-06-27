@@ -219,8 +219,8 @@
             display: block;
 
             @include only-mobile {
-              width: 12px;
-              height: 12px;
+              min-width: 12px;
+              min-height: 12px;
               border: 1px solid $border-color-2;
             }
 
@@ -344,16 +344,10 @@
           display: flex;
           flex-basis: 25%;
           align-items: center;
-          margin: 0 $space-1 5px 0;
+          margin: $space-1 0 0;
 
-          &:last-child {
-            margin: 0;
-          }
-
-          @include only-desktop {
-            &:last-child {
-              margin: 0;
-            }
+          &:not(:first-child) {
+            margin: $space-1 0 0 $space-1;
           }
 
           @include only-print {
@@ -365,8 +359,8 @@
 
           .color {
             display: block;
-            width: 12px;
-            height: 12px;
+            min-width: 12px;
+            min-height: 12px;
             border: 1px solid $border-color-2;
           }
 
