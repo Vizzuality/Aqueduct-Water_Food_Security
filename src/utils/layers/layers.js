@@ -136,7 +136,7 @@ export const DATASETS = [
   {
     id: 'a57a457a-cee7-44a6-af0a-5c27176e0ec0',
     layerId: 'a57a457a-cee7-44a6-af0a-5c27176e0ec0',
-    name: 'All crops',
+    name: 'All available crops',
     category: 'crop'
   }
 ];
