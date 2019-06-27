@@ -62,7 +62,10 @@ class WidgetChart extends PureComponent {
             }, () => { toggleLoading(false); });
           });
         })
-        .catch(() => { toggleLoading(false); });
+        .catch(() => {
+          toggleLoading(false);
+          if (toggleVisibility) toggleVisibility(false);
+        });
     }
   }
 
