@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import isEqual from 'react-fast-compare';
 import axios from 'axios';
 import { MapControls, ZoomControl, Icon, Spinner } from 'aqueduct-components';
-import { Map as VizzMap } from 'vizzuality-components/dist/bundle';
+import VizzMap from 'vizzuality-components/dist/map';
 import { LayerManager, Layer } from 'layer-manager/dist/components';
 import { PluginLeaflet } from 'layer-manager/dist/layer-manager';
 
