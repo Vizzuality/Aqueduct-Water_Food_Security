@@ -7,7 +7,7 @@
   "scripts": {
     "build": "webpack --config ./config/webpack.config.js --progress --colors",
     "test": "eslint .",
-    "dev": "NODE_ENV=development webpack-dev-server --config ./config/webpack/webpack.config.dev.j"
+    "dev": "NODE_ENV=development webpack-dev-server --config ./config/webpack/webpack.config.dev.js"
   },
   "repository": {
     "type": "git",

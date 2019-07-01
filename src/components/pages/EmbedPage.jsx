@@ -10,6 +10,8 @@ export default class EmbedPage extends React.Component {
   }
 
   render() {
+    console.log(this.props);
+
     return (
       <div className="l-embed l-fullheight">
         {this.props.error}
