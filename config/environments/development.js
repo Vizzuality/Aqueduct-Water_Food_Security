@@ -10,7 +10,7 @@ const webpackMiddleware = require('webpack-dev-middleware');
 const pdf = require('html-pdf');
 const config = require('../webpack/webpack.config.dev');
 
-const indexPath = path.join(process.cwd(), 'dist/index.html');
+// const indexPath = path.join(process.cwd(), 'dist/index.html');
 
 module.exports = (app) => {
   const compiler = webpack(config);
@@ -26,7 +26,7 @@ module.exports = (app) => {
     });
   });
 
-  app.get('/*', (req, res) => res.sendFile(path.join(process.cwd(), 'dist', 'index.html')));
+  // app.get('/*', (req, res) => res.sendFile(path.join(process.cwd(), 'dist', 'index.html')));
 
   // Logs
   app.use(logger('dev'));

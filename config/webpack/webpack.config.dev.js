@@ -8,13 +8,14 @@ module.exports = merge(webpackBaseConfig, {
   output: {
     filename: '[name].[hash].js',
     chunkFilename: '[name].[hash].js',
-    path: path.resolve(__dirname, '..', 'dist')
+    path: path.resolve(process.cwd(), 'dist'),
+    // publicPath: '/'
   },
   devtool: '#eval-source-map',
   devServer: {
-    contentBase: path.join(__dirname, 'src'),
+    contentBase: path.resolve(process.cwd(), 'public'),
     port: 5000,
-    host: '0.0.0.0',
+    // host: '0.0.0.0',
     historyApiFallback: true
   },
   plugins: [new webpack.NamedModulesPlugin()],
