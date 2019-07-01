@@ -81,7 +81,7 @@ export default class VegaChart extends React.Component {
         vis.update();
 
         // TOOLTIP
-        const tooltip = config.interactionConfig && config.interactionConfig.find(i => i.name === 'tooltip');
+        const tooltip = config.interaction_config && config.interaction_config.find(i => i.name === 'tooltip');
 
         if (tooltip) {
           const { type, config } = tooltip;
