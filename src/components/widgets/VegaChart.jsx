@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as vega from 'vega';
-import * as d3 from 'd3';
+import vega from 'vega';
+import { bisector } from 'd3-array';
 import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';
 import VegaChartTooltip from 'components/widgets/VegaChartTooltip';
+import camelcaseKeys from 'camelcase-keys';
 
 export default class VegaChart extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -43,7 +43,7 @@ export default class VegaChart extends React.Component {
   }
 
   parseVega() {
-    const { data, widgetConfig } = this.props;
+    const { data, widgetConfig, theme } = this.props;
 
     const defaultPadding = { left: 20, right: 20 };
     const padding = widgetConfig.padding || defaultPadding;
@@ -59,13 +59,15 @@ export default class VegaChart extends React.Component {
     widgetConfig.data[0] = {
       ...widgetConfig.data[0],
       values: data
-    }
+    };
 
     const config = Object.assign({}, widgetConfig, size);
 
     this.mounted && this.props.toggleLoading && this.props.toggleLoading(true);
 
-    vega.parse.spec(config, this.props.theme, (err, chart) => {
+    const parsedConfig = camelcaseKeys(config, { deep: true });
+
+    vega.parse.spec(({ ...parsedConfig, data: widgetConfig.data }), theme, (err, chart) => {
       if (!this.mounted) {
         return;
       }
@@ -82,8 +84,8 @@ export default class VegaChart extends React.Component {
         const tooltip = config.interactionConfig && config.interactionConfig.find(i => i.name === 'tooltip');
 
         if (tooltip) {
-          const type = tooltip.type;
-          const config = tooltip.config;
+          const { type, config } = tooltip;
+
           // TODO: Type signal
           if (type === 'signal') {
             vis.onSignal('onMousemove', (event, { xval }) => {
@@ -92,7 +94,7 @@ export default class VegaChart extends React.Component {
 
               if (typeof xval === 'number') {
                 const bisectVal = config.table.bisect;
-                const bisectDate = d3.bisector(d => d[bisectVal]).left;
+                const bisectDate = bisector(d => d[bisectVal]).left;
                 const i = bisectDate(visData, xval, 1);
                 const d0 = visData[i - 1];
                 const d1 = visData[i];
