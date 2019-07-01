@@ -26,11 +26,7 @@ module.exports = (app) => {
     });
   });
 
-
-  app.get('*', (req, res) => {
-    res.write(middleware.fileSystem.readFileSync(indexPath));
-    res.end();
-  });
+  app.get('/*', (req, res) => res.sendFile(path.join(process.cwd(), 'dist', 'index.html')));
 
   // Logs
   app.use(logger('dev'));

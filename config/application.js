@@ -42,6 +42,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // Serving assets from public folder
 app.use(express.static(path.join(rootPath, 'public')));
+app.use(express.static(path.join(rootPath, 'dist')));
 
 
 // Load environment config

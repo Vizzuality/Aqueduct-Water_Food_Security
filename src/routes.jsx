@@ -12,7 +12,7 @@ import ReportPage from 'components/pages/report';
 import AboutPage from 'containers/pages/AboutPage';
 
 // Routing actions
-import { onEnterMapPage, onEnterComparePage, onEnterEmbedPage, onEnterReportPage, onEnterAboutPage } from 'actions/route';
+import { onEnterMapPage, onEnterComparePage, onEnterEmbedPage, onEnterReportPage } from 'actions/route';
 
 const Routes = ({ history }) => (
   <Router history={history}>
