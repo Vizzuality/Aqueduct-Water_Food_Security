@@ -36,7 +36,7 @@ class MapPageDesktop extends PureComponent {
 
     if (stickyFilterTopPosition === newStickyFilterTopPosition) return;
 
-    this.setState({ stickyFilterTopPosition });
+    this.setState({ stickyFilterTopPosition: newStickyFilterTopPosition });
   }
 
   render() {
