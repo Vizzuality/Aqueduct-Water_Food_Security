@@ -25,21 +25,37 @@ class StickyFilters extends PureComponent {
     setFilters(newFilter);
   }
 
+  handleWaterRiskIndicator(selected) {
+    const {
+      filters: { food },
+      waterOptions
+    } = this.props;
+
+    if (selected) this.updateFilters(selected.value, 'indicator');
+
+    if (
+      selected
+      && (
+        (selected.value !== 'none' && !waterOptions.find(w => w.value === selected.value).timeline)
+        || (selected.value === 'none' && !FOOD_OPTIONS.find(w => w.value === food).timeline)
+      )
+    ) {
+      this.updateFilters('absolute', 'type');
+    }
+  }
+
   render() {
     const {
       className,
       countriesCompare,
       waterOptions,
+      isTimeFrameDisabled,
       filters,
       withScope,
       setCompareCountry
     } = this.props;
     const stickyFilterClass = classnames('c-sticky-filters', { [className]: className });
     const compareCountryClass = classnames('-gray', { '-disabled': !countriesCompare[0] });
-    const isTimeline = (
-      waterOptions.find(w => w.value === filters.indicator).timeline
-      || (filters.indicator === 'none' && FOOD_OPTIONS.find(w => w.value === filters.food).timeline)
-    );
 
     return (
       <div className={stickyFilterClass}>
@@ -109,20 +125,7 @@ class StickyFilters extends PureComponent {
               className="-gray"
               options={waterOptions}
               value={filters.indicator}
-              onValueChange={(selected) => {
-                if (selected) this.updateFilters(selected.value, 'indicator');
-
-                if (
-                  selected
-                  && (
-                    (selected.value !== 'none' && !waterOptions.find(w => w.value === selected.value).timeline)
-                    || (selected.value === 'none' && !FOOD_OPTIONS.find(w => w.value === filters.food).timeline)
-                  )
-                ) {
-                  this.updateFilters('absolute', 'type');
-                  this.updateFilters('baseline', 'year');
-                }
-              }}
+              onValueChange={(selected) => { this.handleWaterRiskIndicator(selected); }}
             />
           </div>
           <div>
@@ -151,7 +154,7 @@ class StickyFilters extends PureComponent {
               className="-gray"
               options={YEAR_OPTIONS}
               value={YEAR_OPTIONS.find(i => i.value === filters.year).value}
-              disabled={!isTimeline}
+              disabled={isTimeFrameDisabled}
               onValueChange={(selected) => {
                 if (selected && selected.value === 'baseline') this.updateFilters('absolute', 'type');
                 if (selected) this.updateFilters(selected.value, 'year');
@@ -176,6 +179,7 @@ class StickyFilters extends PureComponent {
 StickyFilters.propTypes = {
   className: PropTypes.string,
   withScope: PropTypes.bool,
+  isTimeFrameDisabled: PropTypes.bool.isRequired,
   countriesCompare: PropTypes.array,
   waterOptions: PropTypes.array.isRequired,
   setCompareCountry: PropTypes.func.isRequired,

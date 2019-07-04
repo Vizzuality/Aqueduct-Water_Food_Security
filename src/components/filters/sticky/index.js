@@ -7,6 +7,7 @@ import { setFilters } from 'actions/filters';
 
 // selectors
 import { getWaterOptions } from '../selectors';
+import { isTimeFrameDisabled } from './selectors';
 
 // component
 import StickyFilters from './component';
@@ -14,7 +15,8 @@ import StickyFilters from './component';
 export default connect(
   state => ({
     filters: state.filters,
-    waterOptions: getWaterOptions(state)
+    waterOptions: getWaterOptions(state),
+    isTimeFrameDisabled: isTimeFrameDisabled(state)
   }),
   {
     toggleModal,
