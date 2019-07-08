@@ -82,7 +82,7 @@ class Summary extends PureComponent {
 
         const fields = [{
           title: 'Area',
-          value: `${(areaData) ? format('.3s')(areaData.value * 1000) : '-'} ha`
+          value: `${(areaData) ? format('.3s')(areaData.value) : '-'} ha`
         }, {
           title: 'Pop. at risk of hunger',
           value: `${(popRiskHungerData) ? format('.2f')(popRiskHungerData.value) : '-'} %`
