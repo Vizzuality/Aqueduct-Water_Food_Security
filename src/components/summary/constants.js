@@ -13,7 +13,7 @@ export const SQL_CONFIG = [
       { key: 'iso' },
       { key: 'irrigation' },
       { key: 'year', dictionary: 'food' },
-      { key: 'commodity' }
+      { key: 'crop' }
     ]
   },
   {
@@ -26,32 +26,41 @@ export const SQL_CONFIG = [
 ];
 
 export const URL = `https://wri-rw.carto.com/api/v2/sql?q=
-  with b as(SELECT * FROM water_risk_rankings_v3 WHERE irrigation='irrigated' AND indicator='water_stress' {{and}} and value is not null order by iso asc),
-  c as (SELECT * FROM water_risk_rankings_v3 WHERE irrigation='rainfed' AND indicator='drought_stress' {{and}} and value is not null order by iso asc)
+    with a as (SELECT * FROM crops_risk_rankings
+               WHERE irrigation='irrigated' AND indicator='water_stress' {{and}} and value is not null
+               ORDER BY iso asc),
+         b as (SELECT *
+               FROM crops_risk_rankings
+               WHERE irrigation='rainfed' AND indicator='drought_risk' {{and}} and value is not null
+               ORDER BY iso asc)
 
-  SELECT impactparameter AS name, sum(value) AS value, null as label
-  FROM combined01_prepared WHERE impactparameter in ('Area') and scenario = 'SSP2-MIRO'
-  {{and1}} group by impactparameter
+
+    SELECT 'Area' as name, sum(area) as value, null as label
+    FROM crops_risk_stats
+    WHERE indicator='water_stress' {{and1}}
+
+    UNION ALL
+
+    SELECT 'Yield' as name, sum(prod)/sum(area) as value, null as label
+    FROM crops_risk_stats
+    WHERE indicator='water_stress' {{and1}}
+
+    UNION ALL
+
+    SELECT impactparameter AS name, sum(value) AS value, null as label
+    FROM combined01_prepared_new
+    WHERE impactparameter in ('Share Pop. at risk of hunger') and scenario = 'SSP2-MIRO' {{and2}}
+    GROUP BY impactparameter
+
+    UNION ALL
+
+    SELECT 'Irrigated Area Water Stress Score' as name, value as value, label
+    FROM a
 
   UNION ALL
 
-  SELECT impactparameter AS name, avg(value) AS value, null as label
-  FROM combined01_prepared WHERE impactparameter in ('Yield') and scenario = 'SSP2-MIRO'
-  {{and1}} group by impactparameter
-
-  UNION ALL
-
-  SELECT impactparameter AS name, sum(value) AS value, null as label
-  FROM combined01_prepared WHERE impactparameter in ('Share Pop. at risk of hunger') and scenario = 'SSP2-MIRO'
-  {{and2}} group by impactparameter
-
-  UNION ALL
-
-  SELECT 'Irrigated Area Water Stress Score' as name, value as value, label from b
-
-  UNION ALL
-
-  SELECT 'Rainfed Area Drought Severity Risk Score' as name, value as value, label from c
+    SELECT 'Rainfed Area Drought Severity Risk Score' as name, value as value, label
+    FROM b
 `;
 
 export default {
