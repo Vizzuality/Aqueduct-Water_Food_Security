@@ -78,7 +78,7 @@ export const getActiveLayers = createSelector(
           }
         }
 
-        if (isCrop) currentLayer = dataset.layer.find(_layer => _filters.crop !== 'all' ? _layer.legendConfig.sqlQuery : _layer.default)
+        if (isCrop) currentLayer = dataset.layer.find(_layer => _filters.crop !== 'all' ? _layer.legendConfig.sqlQuery : _layer.default);
         if (isOneCrop) currentLayer = dataset.layer.find(_layer => _layer.id === '064a524f-0e58-41fb-b948-f7bb66f43ef0');
         if (isMask) currentLayer = dataset.layer.find(_layer => _layer.default);
 
