@@ -79,9 +79,9 @@ class Map extends PureComponent {
           .then((updatedLayer) => {
             const { layers: currentLayers } = this.state;
             // filters any previous all crop layer and one crop layer present.
-            const filteredLayers = currentLayers.filter(
-              _layer => ![isAllCropsLayer, isSingleCropLayer].includes(_layer.id)
-            );
+            const filteredLayers = currentLayers
+              .filter(_layer => _layer.category !== 'water')
+              .filter(_layer => ![isAllCropsLayer, isSingleCropLayer].includes(_layer.id));
 
             this.setState({
               loadingCartoCSS: false,
