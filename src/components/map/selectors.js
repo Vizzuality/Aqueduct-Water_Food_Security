@@ -28,14 +28,14 @@ export const getCountryBounds = createSelector(
       if (countryData) {
         return ({
           bbox: getBounds(countryData),
-          paddingTopLeft: [_sidebarWidth, 0]
+          options: { paddingTopLeft: [_sidebarWidth, 0] }
         });
       }
     }
 
     return ({
       bbox: null,
-      paddingTopLeft: [_sidebarWidth, 0]
+      options: { paddingTopLeft: [_sidebarWidth, 0] }
     });
   }
 );
