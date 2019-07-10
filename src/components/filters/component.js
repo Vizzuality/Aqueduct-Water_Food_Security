@@ -66,7 +66,10 @@ class Filters extends PureComponent {
       waterOptions
     } = this.props;
 
-    if (selected) this.updateFilters(selected.value, 'indicator');
+    if (selected) {
+      this.updateFilters(selected.value, 'indicator');
+      if (selected.value === 'none') this.updateFilters('baseline', 'year');
+    }
 
     if (
       selected
