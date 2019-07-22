@@ -6,7 +6,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import { browserHistory } from 'react-router';
+import { hashHistory } from 'react-router';
 import thunk from 'redux-thunk';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -35,7 +35,7 @@ const reducer = combineReducers({
  * @info(http://redux.js.org/docs/basics/Store.html)
  * @type {Object}
  */
-const middlewareRouter = routerMiddleware(browserHistory);
+const middlewareRouter = routerMiddleware(hashHistory);
 const store = createStore(
   reducer,
   composeWithDevTools(
@@ -55,7 +55,7 @@ function dispatch(action) {
  * @info(https://github.com/reactjs/react-router/tree/master/docs)
  * @type {Object}
  */
-const history = syncHistoryWithStore(browserHistory, store);
+const history = syncHistoryWithStore(hashHistory, store);
 
 export { store, history, dispatch };
 
