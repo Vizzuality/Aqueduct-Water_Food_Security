@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { Icon, OnlyOn, SourceModal } from 'aqueduct-components';
+import { SourceModal } from 'aqueduct-components';
 
 // components
 import LegendItem from './legend-item';
@@ -31,7 +31,6 @@ class Legend extends PureComponent {
 
   render() {
     const {
-      isModal,
       layers,
       className,
       filters
@@ -44,23 +43,6 @@ class Legend extends PureComponent {
 
     return (
       <div className={componentClass}>
-        {!isModal && (
-          <OnlyOn device="desktop">
-            <div
-              className="legend-header"
-              onClick={() => this.toggleExpand()}
-            >
-              <span className="legend-header-title">{expanded ? 'Legend' : 'View Legend'}</span>
-              <button
-                className="legend-btn"
-                type="button"
-              >
-                <Icon name="icon-arrow-up-2" className="legend-open-icon" />
-                <Icon name="icon-arrow-down-2" className="legend-close-icon" />
-              </button>
-            </div>
-          </OnlyOn>
-        )}
         <div className="legend-content">
           <ul>
             {layers.map(layer => (
@@ -82,8 +64,7 @@ Legend.defaultProps = {
   layers: [],
   filters: [],
   className: '',
-  expanded: false,
-  isModal: false
+  expanded: false
 };
 
 Legend.propTypes = {
@@ -91,7 +72,6 @@ Legend.propTypes = {
   filters: PropTypes.object,
   className: PropTypes.string,
   expanded: PropTypes.bool,
-  isModal: PropTypes.bool,
   toggleModal: PropTypes.func.isRequired
 };
 

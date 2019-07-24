@@ -7,6 +7,7 @@ import Toastr from 'react-redux-toastr';
 import Modal from 'components/modal';
 import Tooltip from 'components/tooltip';
 import UserReport from 'components/user-report';
+import { Icons } from 'vizzuality-components';
 
 class App extends PureComponent {
   componentWillMount() {
@@ -25,6 +26,7 @@ class App extends PureComponent {
 
     return (
       <div className="l-app">
+        <Icons />
         {header}
 
         <main role="main" className={mainClass}>

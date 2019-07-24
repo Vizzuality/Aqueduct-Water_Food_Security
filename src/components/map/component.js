@@ -3,12 +3,20 @@ import PropTypes from 'prop-types';
 import isEqual from 'react-fast-compare';
 import { PluginLeaflet } from 'layer-manager/dist/layer-manager';
 import { LayerManager, Layer } from 'layer-manager/dist/components';
-import VizzMap from 'vizzuality-components/dist/map';
+import {
+  Map as VizzMap,
+  Legend as VizzLegend,
+  LegendItemToolbar,
+  LegendListItem,
+  LegendItemButtonInfo,
+  LegendItemButtonOpacity
+} from 'vizzuality-components/dist/bundle';
 import {
   MapControls,
   ShareButton,
   ZoomControl,
-  Spinner
+  Spinner,
+  SourceModal
 } from 'aqueduct-components';
 
 // components
@@ -93,8 +101,12 @@ class Map extends PureComponent {
     }
 
     if (layersChanged && (nextLayers[0] && nextLayers[0].id !== isSingleCropLayer)) {
+      const { layers: currentLayers } = this.state;
+      const incomingLayersIds = nextLayers.map(_layer => _layer.id);
+      const keepLayers = currentLayers.filter(_layer => !incomingLayersIds.includes(_layer.id));
+
       this.setState({
-        layers: nextLayers,
+        layers: [...keepLayers, ...nextLayers],
         loading: true
       });
     }
@@ -120,6 +132,24 @@ class Map extends PureComponent {
     });
   }
 
+  openLayerInfo(_layerGroup) {
+    const { toggleModal } = this.props;
+    const { layers } = _layerGroup;
+    if (layers[0]) {
+      toggleModal(true, {
+        children: SourceModal,
+        childrenProps: { layer: layers[0] }
+      });
+    }
+  }
+
+  handleLayerOpacity(layer, opacity) {
+    const { id } = layer;
+    const { setLayerParametrization } = this.props;
+
+    setLayerParametrization({ [id]: { opacity } });
+  }
+
   render() {
     const {
       mapState,
@@ -127,7 +157,8 @@ class Map extends PureComponent {
       countries,
       filters,
       mapControls,
-      legend
+      legend,
+      layerGroup
     } = this.props;
     const {
       layers,
@@ -137,6 +168,8 @@ class Map extends PureComponent {
       mapElem
     } = this.state;
     const mapEvents = { moveend: (e, _map) => { this.updateMap(e, _map); } };
+
+    console.log(layers)
 
     return (
       <div className="l-map">
@@ -195,14 +228,42 @@ class Map extends PureComponent {
 
               {countries.length > 0 && (<MapHeader />)}
 
-              {legend && (
-                <Legend
-                  className="-map"
-                  expanded
-                  filters={filters}
-                  layers={layers}
-                  onToggleInfo={this.toggleSourceModal}
-                />
+              {legend && layerGroup.length && (
+                <div className="l-map-legend">
+                  <VizzLegend
+                    sortable={false}
+                    maxHeight={350}
+                  >
+                    {layerGroup.map((_layerGroup, i) => (
+                      <LegendListItem
+                        index={i}
+                        key={_layerGroup.dataset}
+                        onChangeInfo={() => { this.openLayerInfo(_layerGroup); }}
+                        onChangeOpacity={(_layer, _opacity) => { this.handleLayerOpacity(_layer, _opacity); }}
+                        layerGroup={_layerGroup}
+                        toolbar={(
+                          <LegendItemToolbar>
+                            {_layerGroup.disableOpacity && (
+                              <LegendItemButtonOpacity
+                                trackStyle={{ backgroundColor: '#2E57B8' }}
+                                handleStyle={{ backgroundColor: '#2E57B8' }}
+                              />
+                            )}
+                            <LegendItemButtonInfo />
+                          </LegendItemToolbar>
+                        )}
+                      >
+                        <Legend
+                          className="-map"
+                          expanded
+                          filters={filters}
+                          layers={_layerGroup.layers}
+                          onToggleInfo={this.toggleSourceModal}
+                        />
+                      </LegendListItem>
+                    ))}
+                  </VizzLegend>
+                </div>
               )}
             </Fragment>
           )}
@@ -217,12 +278,14 @@ Map.propTypes = {
   bounds: PropTypes.object.isRequired,
   filters: PropTypes.object.isRequired,
   layers: PropTypes.array.isRequired,
+  layerGroup: PropTypes.array.isRequired,
   mapControls: PropTypes.bool,
   legend: PropTypes.bool,
   foodLayers: PropTypes.array.isRequired,
   countries: PropTypes.array.isRequired,
   toggleModal: PropTypes.func.isRequired,
-  setMapLocation: PropTypes.func.isRequired
+  setMapLocation: PropTypes.func.isRequired,
+  setLayerParametrization: PropTypes.func.isRequired
 };
 
 Map.defaultProps = {
