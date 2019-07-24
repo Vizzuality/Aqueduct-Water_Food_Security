@@ -2,14 +2,15 @@ import { connect } from 'react-redux';
 
 // actions
 import { toggleModal } from 'aqueduct-components';
-import { setMapLocation } from 'actions/map';
+import { setMapLocation, setLayerParametrization } from 'actions/map';
 
 // selectors
 import {
   parseMapState,
   getActiveLayers,
   getFoodLayers,
-  getCountryBounds
+  getCountryBounds,
+  getLayerGroup
 } from './selectors';
 
 // component
@@ -20,12 +21,14 @@ export default connect(
     mapState: parseMapState(state),
     bounds: getCountryBounds(state),
     layers: getActiveLayers(state),
+    layerGroup: getLayerGroup(state),
     foodLayers: getFoodLayers(state),
     countries: state.countries.list,
     filters: state.filters
   }),
   {
     setMapLocation,
+    setLayerParametrization,
     toggleModal
   }
 )(Map);
