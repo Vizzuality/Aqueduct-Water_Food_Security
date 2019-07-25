@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 // actions
 import { toggleModal } from 'aqueduct-components';
-import { setMapLocation, setLayerParametrization } from 'actions/map';
+import { setMapLocation } from 'actions/map';
 
 // selectors
 import {
@@ -28,7 +28,6 @@ export default connect(
   }),
   {
     setMapLocation,
-    setLayerParametrization,
     toggleModal
   }
 )(Map);

@@ -19,7 +19,6 @@ const getDatasets = state => state.datasets.list;
 const getFilters = state => state.filters;
 const getCountries = state => state.countries.list;
 const getSidebarWidth = state => state.sidebar.width;
-const getLayerParametrization = state => state.map.layerParametrization;
 
 export const getCountryBounds = createSelector(
   [getFilters, getCountries, getSidebarWidth],
@@ -56,8 +55,8 @@ export const parseMapState = createSelector(
 );
 
 export const getActiveLayers = createSelector(
-  [getDatasets, getFilters, getLayerParametrization, getWaterLayerName],
-  (_datasets, _filters = {}, _layerParametrization, _waterLayerName) => {
+  [getDatasets, getFilters, getWaterLayerName],
+  (_datasets, _filters = {}, _waterLayerName) => {
     const layerList = [];
     const isWater = (_filters.indicator !== 'none');
     let isMask;
@@ -137,8 +136,6 @@ export const getActiveLayers = createSelector(
             category: layerSpecAttrs.category,
             options: layerSpecAttrs.layerOptions,
             metadata,
-            ..._layerParametrization[currentLayer.id] &&
-              { ..._layerParametrization[currentLayer.id] },
             ...paramsConfig && { params: reduceParams(paramsConfig, filters) },
             ...sqlConfig && { sqlParams: reduceSqlParams(sqlConfig, filters) },
           };
@@ -178,8 +175,7 @@ export const getFoodLayers = createSelector(
       layers.push({
         ...layerFound,
         name: `${CATEGORIES[currentLayerSpec.category] || ''} - ${currentLayerSpec.name}`,
-        ...currentLayerSpec && { options: currentLayerSpec.layerOptions },
-        isFoodLayer: true
+        ...currentLayerSpec && { options: currentLayerSpec.layerOptions }
       });
     }
 
@@ -196,8 +192,7 @@ export const getLayerGroup = createSelector(
       layers: [({
         ..._layer,
         active: true
-      })],
-      disableOpacity: !_layer.isFoodLayer
+      })]
     }))
 );
 

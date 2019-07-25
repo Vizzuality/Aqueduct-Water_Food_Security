@@ -8,8 +8,7 @@ import {
   Legend as VizzLegend,
   LegendItemToolbar,
   LegendListItem,
-  LegendItemButtonInfo,
-  LegendItemButtonOpacity
+  LegendItemButtonInfo
 } from 'vizzuality-components/dist/bundle';
 import {
   MapControls,
@@ -101,12 +100,8 @@ class Map extends PureComponent {
     }
 
     if (layersChanged && (nextLayers[0] && nextLayers[0].id !== isSingleCropLayer)) {
-      const { layers: currentLayers } = this.state;
-      const incomingLayersIds = nextLayers.map(_layer => _layer.id);
-      const keepLayers = currentLayers.filter(_layer => !incomingLayersIds.includes(_layer.id));
-
       this.setState({
-        layers: [...keepLayers, ...nextLayers],
+        layers: nextLayers,
         loading: true
       });
     }
@@ -143,13 +138,6 @@ class Map extends PureComponent {
     }
   }
 
-  handleLayerOpacity(layer, opacity) {
-    const { id } = layer;
-    const { setLayerParametrization } = this.props;
-
-    setLayerParametrization({ [id]: { opacity } });
-  }
-
   render() {
     const {
       mapState,
@@ -168,8 +156,6 @@ class Map extends PureComponent {
       mapElem
     } = this.state;
     const mapEvents = { moveend: (e, _map) => { this.updateMap(e, _map); } };
-
-    console.log(layers)
 
     return (
       <div className="l-map">
@@ -239,16 +225,9 @@ class Map extends PureComponent {
                         index={i}
                         key={_layerGroup.dataset}
                         onChangeInfo={() => { this.openLayerInfo(_layerGroup); }}
-                        onChangeOpacity={(_layer, _opacity) => { this.handleLayerOpacity(_layer, _opacity); }}
                         layerGroup={_layerGroup}
                         toolbar={(
                           <LegendItemToolbar>
-                            {_layerGroup.disableOpacity && (
-                              <LegendItemButtonOpacity
-                                trackStyle={{ backgroundColor: '#2E57B8' }}
-                                handleStyle={{ backgroundColor: '#2E57B8' }}
-                              />
-                            )}
                             <LegendItemButtonInfo />
                           </LegendItemToolbar>
                         )}
@@ -284,8 +263,7 @@ Map.propTypes = {
   foodLayers: PropTypes.array.isRequired,
   countries: PropTypes.array.isRequired,
   toggleModal: PropTypes.func.isRequired,
-  setMapLocation: PropTypes.func.isRequired,
-  setLayerParametrization: PropTypes.func.isRequired
+  setMapLocation: PropTypes.func.isRequired
 };
 
 Map.defaultProps = {
