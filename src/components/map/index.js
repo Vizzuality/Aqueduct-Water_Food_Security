@@ -9,7 +9,8 @@ import {
   parseMapState,
   getActiveLayers,
   getFoodLayers,
-  getCountryBounds
+  getCountryBounds,
+  getLayerGroup
 } from './selectors';
 
 // component
@@ -20,6 +21,7 @@ export default connect(
     mapState: parseMapState(state),
     bounds: getCountryBounds(state),
     layers: getActiveLayers(state),
+    layerGroup: getLayerGroup(state),
     foodLayers: getFoodLayers(state),
     countries: state.countries.list,
     filters: state.filters

@@ -7,7 +7,12 @@ import { getBounds } from 'utils/map';
 
 // constants
 import { BASELINE_WATER_INDICATORS_IDS } from 'constants/water-indicators';
+import { CATEGORIES } from 'constants/filters';
+import { CROP_OPTIONS } from 'constants/crops';
 import { MAP_OPTIONS } from './constants';
+
+// helpers
+import { getWaterLayerName } from './legend/legend-item/selectors';
 
 const getMapState = state => state.map;
 const getDatasets = state => state.datasets.list;
@@ -50,8 +55,8 @@ export const parseMapState = createSelector(
 );
 
 export const getActiveLayers = createSelector(
-  [getDatasets, getFilters],
-  (_datasets, _filters = {}) => {
+  [getDatasets, getFilters, getWaterLayerName],
+  (_datasets, _filters = {}, _waterLayerName) => {
     const layerList = [];
     const isWater = (_filters.indicator !== 'none');
     let isMask;
@@ -110,17 +115,29 @@ export const getActiveLayers = createSelector(
               rank: '1'
             };
           }
+          const layerCategory = isWater ? 'water' : layerSpecAttrs.category;
+
+          const getLayerName = () => {
+            if (isWater) return `${CATEGORIES[layerCategory]} - ${layerSpecAttrs.name} - ${_waterLayerName}`;
+            if (isOneCrop) {
+              const crop = CROP_OPTIONS.find(_crop => _crop.value === filters.crop) || {};
+              return `${CATEGORIES[layerCategory] || ''} - ${crop.label}`;
+            }
+            if (isCrop) return `${CATEGORIES[layerCategory] || ''} - ${layerSpecAttrs.name}`;
+
+            return `${CATEGORIES[layerCategory] || ''} - ${layerSpecAttrs.name}`;
+          };
 
           const layer = {
             ...currentLayer,
             id: currentLayer.id,
-            name: layerSpecAttrs.name,
+            name: getLayerName(),
             country: _filters.country,
             category: layerSpecAttrs.category,
             options: layerSpecAttrs.layerOptions,
             metadata,
             ...paramsConfig && { params: reduceParams(paramsConfig, filters) },
-            ...sqlConfig && { sqlParams: reduceSqlParams(sqlConfig, filters) }
+            ...sqlConfig && { sqlParams: reduceSqlParams(sqlConfig, filters) },
           };
 
           layerList.push(layer);
@@ -157,6 +174,7 @@ export const getFoodLayers = createSelector(
     if (layerFound) {
       layers.push({
         ...layerFound,
+        name: `${CATEGORIES[currentLayerSpec.category] || ''} - ${currentLayerSpec.name}`,
         ...currentLayerSpec && { options: currentLayerSpec.layerOptions }
       });
     }
@@ -165,8 +183,22 @@ export const getFoodLayers = createSelector(
   }
 );
 
+export const getLayerGroup = createSelector(
+  [getActiveLayers, getFoodLayers],
+  (_layers, _foodLayers) => [..._layers, ..._foodLayers].filter(_layer => !_layer.isMarkerLayer)
+    .map((_layer, index) => ({
+      dataset: `random_id-${index}`,
+      visibility: true,
+      layers: [({
+        ..._layer,
+        active: true
+      })]
+    }))
+);
+
 export default {
   getMapState,
   getActiveLayers,
-  getFoodLayers
+  getFoodLayers,
+  getLayerGroup
 };
