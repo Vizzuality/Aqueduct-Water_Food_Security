@@ -3,12 +3,4 @@ export const setMapLocation = locationParams => ({
   payload: locationParams
 });
 
-export const setLayerParametrization = layerParametrization => ({
-  type: 'SET_LAYER_PARAMETRIZATION',
-  payload: layerParametrization
-});
-
-export default {
-  setMapLocation,
-  setLayerParametrization
-};
+export default { setMapLocation };
