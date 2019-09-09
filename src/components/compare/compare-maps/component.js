@@ -1,6 +1,5 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import isEqual from 'react-fast-compare';
 import axios from 'axios';
 import { MapControls, ZoomControl, Icon, Spinner } from 'aqueduct-components';
 import VizzMap from 'vizzuality-components/dist/map';
@@ -12,11 +11,12 @@ import LegendMobile from 'components/legend';
 
 // helpers
 import { updateCartoCSS, prepareMarkerLayer } from 'components/map/helpers';
+
 import { reduceParams, reduceSqlParams } from 'utils/layers/params-parser';
 
 // constants
 import {
-  BASEMAP_LAYER_CONFIG,
+  BASEMAPS,
   LABEL_LAYER_CONFIG
 } from 'components/map/constants';
 
@@ -169,6 +169,28 @@ class CompareMaps extends PureComponent {
     this.setState({ compareConfig: nextCompareConfig });
   }
 
+  handleBasemap(index, basemap) {
+    const { compareConfig } = this.state;
+    const nextCompareConfig = [...compareConfig];
+    const nextBasemap = BASEMAPS[basemap] || {};
+    const { value, options, id } = nextBasemap;
+    const newCompareConfig = {
+      ...compareConfig[index],
+      mapConfig: {
+        ...compareConfig[index].mapConfig,
+        basemap: {
+          id,
+          url: value,
+          options
+        }
+      }
+    };
+
+    nextCompareConfig.splice(index, 1, newCompareConfig);
+
+    this.setState({ compareConfig: nextCompareConfig });
+  }
+
   render() {
     const { compareConfig, loading } = this.state;
 
@@ -207,7 +229,7 @@ class CompareMaps extends PureComponent {
                   <VizzMap
                     mapOptions={mapConfig}
                     bounds={bounds}
-                    basemap={BASEMAP_LAYER_CONFIG}
+                    basemap={mapConfig.basemap}
                     label={LABEL_LAYER_CONFIG}
                   >
                     {_map => (

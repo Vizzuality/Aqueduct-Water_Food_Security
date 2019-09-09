@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 
 // constants
-import { MAP_OPTIONS } from 'components/map/constants';
+import { MAP_OPTIONS, BASEMAPS } from 'components/map/constants';
 
 // utils
 import { getBounds } from 'utils/map';
@@ -11,10 +11,11 @@ import { getBounds } from 'utils/map';
 const getCompareCountries = state => state.compare.countries;
 const getCountries = state => state.countries.list;
 const getFilters = state => state.filters;
+const getBasemap = state => state.map.basemap;
 
 export const getCompareConfig = createSelector(
-  [getCompareCountries, getCountries, getFilters],
-  (_compareCountries, _countries, _filters) => {
+  [getCompareCountries, getCountries, getFilters, getBasemap],
+  (_compareCountries, _countries, _filters, _basemap) => {
     if (isEmpty(_compareCountries) || !_countries.length) return [{}, {}];
 
     return _compareCountries.map((_compareCountry) => {
@@ -31,7 +32,13 @@ export const getCompareConfig = createSelector(
 
       return ({
         country: _compareCountry,
-        mapConfig: MAP_OPTIONS,
+        mapConfig: {
+          ...MAP_OPTIONS,
+          basemap: {
+            url: BASEMAPS[_basemap].value,
+            options: BASEMAPS[_basemap].options
+          }
+        },
         bounds: { bbox: getBounds(countryData) },
         filters: updatedFilters,
         layers: []

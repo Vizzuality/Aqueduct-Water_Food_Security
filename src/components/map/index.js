@@ -7,6 +7,7 @@ import { setMapLocation } from 'actions/map';
 // selectors
 import {
   parseMapState,
+  getBasemap,
   getActiveLayers,
   getFoodLayers,
   getCountryBounds,
@@ -19,6 +20,7 @@ import Map from './component';
 export default connect(
   state => ({
     mapState: parseMapState(state),
+    basemap: getBasemap(state),
     bounds: getCountryBounds(state),
     layers: getActiveLayers(state),
     layerGroup: getLayerGroup(state),
