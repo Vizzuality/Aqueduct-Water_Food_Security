@@ -31,6 +31,7 @@ export default class ComparePageDesktop extends React.Component {
   componentWillMount() {
     this.props.updateCompareUrl();
   }
+
   componentDidMount() {
     this.setStickyFilterPosition();
   }
@@ -95,7 +96,7 @@ export default class ComparePageDesktop extends React.Component {
           </div>
           <div className="compare-filters-wrapper">
             <div className="compare-filters-section -collapsed">
-              <Filters className="-compare" />
+              <Filters className="-compare" {...this.props} />
             </div>
           </div>
         </div>

@@ -53,7 +53,7 @@
     "js-cookie": "^2.1.4",
     "json-loader": "^0.5.4",
     "jsonapi-serializer": "^3.4.1",
-    "layer-manager": "^1.15.2",
+    "layer-manager": "1.15.3",
     "leaflet": "^1.1.0",
     "lodash": "^4.17.2",
     "moment": "^2.24.0",
