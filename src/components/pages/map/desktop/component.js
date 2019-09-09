@@ -55,6 +55,7 @@ class MapPageDesktop extends PureComponent {
             <Filters
               className="-sidebar"
               withScope
+              {...this.props}
             />
           </div>
 

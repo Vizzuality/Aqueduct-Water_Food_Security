@@ -31,7 +31,7 @@ class MapPage extends PureComponent {
           <MapPageMobile {...this.props} />
         </OnlyOn>
         <OnlyOn device="desktop">
-          <MapPageDesktop />
+          <MapPageDesktop  {...this.props} />
         </OnlyOn>
       </div>
     );

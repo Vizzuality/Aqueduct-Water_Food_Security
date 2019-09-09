@@ -5315,7 +5315,18 @@ klaw@^1.0.0:
   optionalDependencies:
     graceful-fs "^4.1.9"
 
-layer-manager@^1.10.0, layer-manager@^1.15.2:
+layer-manager@1.15.3:
+  version "1.15.3"
+  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.15.3.tgz#0ea11a46f5cf2250b1b69558ca5e9c886bc71fc9"
+  integrity sha512-9JoTKElXisKck9BgZ/H7uzccNmWfiU45NRWCCYK93MuQR9suFCp2udfL9E4SlpM5pw1rE+hKp+kMv6KyzL8fkA==
+  dependencies:
+    axios "^0.18.0"
+    lodash "^4.17.11"
+    prop-types "^15.6.2"
+    supercluster "^4.1.1"
+    wri-json-api-serializer "^1.0.1"
+
+layer-manager@^1.10.0:
   version "1.15.2"
   resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.15.2.tgz#45f3003cd4dc60420d8ff37c035722f5fc8d6eb2"
   integrity sha512-cmm/3CTy9stXIUI8OjOh5Fbi2PuDv+Hi3jh8v8ejnQHdn6uo40821+scHSBcJmeOA1Hf4Bz3GY6RGTqOTs0OYQ==

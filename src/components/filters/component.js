@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { browserHistory } from 'react-router';
 import {
   APP_DEFINITIONS,
   IRRIGATION_OPTIONS,
@@ -43,10 +42,13 @@ class Filters extends PureComponent {
   }
 
   onSelectCountryToCompare(selected) {
-    const { filters: { country } } = this.props;
+    const {
+      filters: { country },
+      router
+    } = this.props;
     const countriesParam = `countries=${country},${selected.value}`;
 
-    browserHistory.push(`/compare?${countriesParam}`);
+    router.push(`/compare?countries=${country},${selected.value}`);
   }
 
   openModal(slug) {
@@ -368,6 +370,7 @@ class Filters extends PureComponent {
 
 Filters.propTypes = {
   filters: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired,
   withScope: PropTypes.bool,
   className: PropTypes.string,
   waterOptions: PropTypes.array.isRequired,
