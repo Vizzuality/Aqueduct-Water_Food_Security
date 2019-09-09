@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import {
-  APP_DEFINITIONS,
   IRRIGATION_OPTIONS,
   SegmentedUi,
   Accordion,
@@ -17,6 +16,7 @@ import {
 import CountrySelect from 'components/country-select';
 
 // constants
+import { APP_DEFINITIONS } from 'constants/definitions';
 import {
   FOOD_OPTIONS,
   SCOPE_OPTIONS,
@@ -46,7 +46,6 @@ class Filters extends PureComponent {
       filters: { country },
       router
     } = this.props;
-    const countriesParam = `countries=${country},${selected.value}`;
 
     router.push(`/compare?countries=${country},${selected.value}`);
   }

@@ -7,7 +7,7 @@ export default class MapPDFModal extends React.Component {
         className="c-iframe -responsive"
         width={800}
         height={800}
-        src={`/report${window.location.search}`}
+        src={`/#/report${window.location.search}`}
       />
     );
   }

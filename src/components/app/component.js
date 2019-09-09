@@ -43,7 +43,7 @@ class App extends PureComponent {
           transitionOut="fadeOut"
         />
 
-        <UserReport />
+        <UserReport {...this.props} />
       </div>
     );
   }
