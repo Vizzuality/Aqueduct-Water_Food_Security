@@ -3,4 +3,12 @@ export const setMapLocation = locationParams => ({
   payload: locationParams
 });
 
-export default { setMapLocation };
+export const setBasemap = basemap => ({
+  type: 'SET_BASEMAP',
+  payload: basemap
+});
+
+export default {
+  setMapLocation,
+  setBasemap
+};

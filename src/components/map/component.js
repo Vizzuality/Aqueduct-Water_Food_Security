@@ -21,6 +21,7 @@ import {
 // components
 import ShareModal from 'components/modal/share';
 import DownloadMapControl from 'components/map/map-controls/download-map';
+import BasemapControl from 'components/map/map-controls/basemap';
 import MapHeader from './header';
 import Legend from './legend';
 
@@ -28,7 +29,7 @@ import Legend from './legend';
 import { prepareMarkerLayer, updateCartoCSS } from './helpers';
 
 // constants
-import { BASEMAP_LAYER_CONFIG, LABEL_LAYER_CONFIG } from './constants';
+import { LABEL_LAYER_CONFIG } from './constants';
 
 class Map extends PureComponent {
   constructor(props) {
@@ -141,6 +142,7 @@ class Map extends PureComponent {
   render() {
     const {
       mapState,
+      basemap,
       bounds,
       countries,
       filters,
@@ -167,7 +169,7 @@ class Map extends PureComponent {
           mapOptions={mapState}
           events={mapEvents}
           bounds={bounds}
-          basemap={BASEMAP_LAYER_CONFIG}
+          basemap={basemap}
           label={LABEL_LAYER_CONFIG}
         >
           {_map => (
@@ -205,6 +207,8 @@ class Map extends PureComponent {
                     zoom={mapState.zoom}
                     onZoomChange={(zoom) => { this.handleZoomChange(zoom); }}
                   />
+
+                  <BasemapControl />
 
                   <ShareButton onClick={() => { this.toggleShareModal(); }} />
                   <DownloadMapControl mapElem={mapElem._mapPane} />
@@ -254,6 +258,7 @@ class Map extends PureComponent {
 
 Map.propTypes = {
   mapState: PropTypes.object.isRequired,
+  basemap: PropTypes.object.isRequired,
   bounds: PropTypes.object.isRequired,
   filters: PropTypes.object.isRequired,
   layers: PropTypes.array.isRequired,

@@ -15,7 +15,8 @@ export function onEnterMapPage({ location }, replace, done) {
       center: {
         lat: +location.query.lat,
         lng: +location.query.lng
-      }
+      },
+      ...location.query.basemap && { basemap: location.query.basemap }
     };
     dispatch(setMapLocation(map));
   }
