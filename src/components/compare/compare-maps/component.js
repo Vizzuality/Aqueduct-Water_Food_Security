@@ -258,7 +258,7 @@ class CompareMaps extends PureComponent {
 
                         {/* Map controls */}
                         <MapControls className="-left">
-                          <LegendMobile />
+                          <LegendMobile className="-compare-maps" />
                         </MapControls>
 
                         {/* Map controls */}
