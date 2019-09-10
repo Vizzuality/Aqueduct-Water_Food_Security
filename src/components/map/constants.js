@@ -3,7 +3,7 @@ export const MAP_OPTIONS = {
   scrollWheelZoom: true,
   zoom: 3,
   minZoom: 2,
-  maxZoom: 15,
+  maxZoom: 7,
   center: {
     lat: 30,
     lng: -15
