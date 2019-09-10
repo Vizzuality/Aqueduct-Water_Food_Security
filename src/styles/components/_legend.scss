@@ -61,6 +61,12 @@
       // }
     }
   }
+
+  &.-compare-maps {
+    .legend-content {
+      padding: $space-1 * 3;
+    }
+  }
 }
 
 // ITEM
