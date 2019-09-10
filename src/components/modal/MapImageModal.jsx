@@ -55,8 +55,8 @@ export default class WidgetImageModal extends React.Component {
       widget,
       filters,
       widget.widgetConfig.dictionary || 'widget-2010',
-      widget.widgetConfig.paramsConfig,
-      widget.widgetConfig.sqlConfig
+      widget.widgetConfig.params_config,
+      widget.widgetConfig.sql_config
     );
 
     const { name, description } = widgetParsed;
