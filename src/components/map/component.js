@@ -205,6 +205,8 @@ class Map extends PureComponent {
                 <MapControls>
                   <ZoomControl
                     zoom={mapState.zoom}
+                    minZoom={mapState.minZoom}
+                    maxZoom={mapState.maxZoom}
                     onZoomChange={(zoom) => { this.handleZoomChange(zoom); }}
                   />
 
