@@ -30,11 +30,18 @@ export const APP_DEFINITIONS = {
             <td class='-a-center'>✔</td>
           </tr>
           <tr>
-            <td>Seasonal variability</td>
-            <td>Seasonal variability measures the average within-year variability of available water supply, including both renewable surface and groundwater supplies. Higher values indicate wider variations of available supply within a year.</td>
+            <td>Baseline Water Depletion</td>
+            <td>Baseline water depletion measures the ratio of total water consumption to available renewable water supplies. Total water consumption includes domestic, industrial, irrigation and livestock consumptive uses. Available renewable water supplies include surface and groundwater supplies and considers the impact of upstream consumptive water users and large dams on downstream water availability. Higher values indicate larger impact on the local water supply and decreased water availability for downstream users.</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Groundwater Table Decline</td>
+            <td>Groundwater table decline measures the average annual decline of the groundwater table. Higher values indicate higher levels of unsustainable groundwater withdrawals.</td>
             <td class='-a-center'>✔</td>
-            <td class='-a-center'>✔</td>
-            <td class='-a-center'>✔</td>
+            <td></td>
+            <td></td>
           </tr>
           <tr>
             <td>Inter-annual variability</td>
@@ -44,28 +51,70 @@ export const APP_DEFINITIONS = {
             <td></td>
           </tr>
           <tr>
-            <td>Drought severity (soil moisture)</td>
+            <td>Seasonal variability</td>
+            <td>Seasonal variability measures the average within-year variability of available water supply, including both renewable surface and groundwater supplies. Higher values indicate wider variations of available supply within a year.</td>
+            <td class='-a-center'>✔</td>
+            <td class='-a-center'>✔</td>
+            <td class='-a-center'>✔</td>
+          </tr>
+          <tr>
+            <td>Drought risk</td>
             <td>Drought risk measures where droughts are likely to occur, the population and assets exposed, and the vulnerability of the population and assets to suffering adverse effects. Higher values indicate higher risk of drought.</td>
             <td class='-a-center'>✔</td>
             <td class='-a-center'>✔</td>
             <td></td>
           </tr>
           <tr>
-            <td>Groundwater stress</td>
-            <td>Measures the relative ratio of groundwater withdrawal to recharge rate. Values above one indicate that groundwater is being depleted faster than it is being restored. Unsustainable groundwater consumption could affect groundwater availability and groundwater-dependent ecosystems. Baseline values are generated using hydrological modeling of long-term trends from 1990 to 2014.</td>
-            <td class='-a-center'>✔</td>
+            <td>Riverine flood risk</td>
+            <td>Riverine flood risk measures the percentage of population expected to be affected by riverine flooding in an average year, accounting for existing flood protection standards. Higher values indicate greater proportion of the population is expected to be impacted by riverine floods.</td>
+            <td></td>
             <td></td>
             <td></td>
           </tr>
           <tr>
-            <td>Groundwater table declining trend</td>
-            <td>Groundwater table decline measures the average annual decline of the groundwater table. Higher values indicate higher levels of unsustainable groundwater withdrawals.</td>
-            <td class='-a-center'>✔</td>
+            <td>Coastal flood risk</td>
+            <td>Coastal Flood Risk measures the percentage of population expected to be affected by coastal flooding in an average year, accounting for existing flood protection standards. Higher values indicate greater proportion of the population is expected to be impacted by coastal floods.</td>
             <td></td>
             <td></td>
-            </tr>
-          </table>
-        <div>`,
+            <td></td>
+          </tr>
+          <tr>
+            <td>Untreated Collected Wastewater</td>
+            <td>Untreated connected wastewater measures the percentage of domestic wastewater that is connected through a sewerage system and not treated to at least a primary treatment level. Higher values indicate higher percentages of point source wastewater discharged without treatment.</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Coastal Eutrophication Potential</td>
+            <td>Coastal Eutrophication Potential measures the potential for riverine loadings of nitrogen, phosphorus and silica to stimulate harmful algal blooms in coastal waters. Higher values indicate higher levels of excess nutrients with respect to silica, creating more favorable conditions for harmful algal growth and eutrophication in coastal waters downstream.</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Unimproved/no drinking water</td>
+            <td>Unimproved/ no drinking water measures the percentage of the population that relies on drinking water from an unprotected dug well or spring, or direct surface water. Higher values indicate areas where people have less access to safe drinking water supplies.</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Unimproved/no sanitation</td>
+            <td>Unimproved/ no sanitation measures the percentage of population using pit latrines without a slab or platform, or a hanging or bucket latrine. Higher values indicate areas where people have less access to improved sanitation services.</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Peak RepRisk country ESG risk index</td>
+            <td>The Peak RepRisk country ESG risk index quantifies business conduct risk exposure related to environmental, social, and governance (ESG) issues in the corresponding country. The index provides insights into potential finan-cial, reputational, and compliance risks, such as human rights violations and environmental destruction. RepRisk is a leading business intelligence provider that specializes in ESG and business conduct risk research for companies, projects, sectors, countries, ESG issues, NGOs, and more, by leveraging artificial intelligence and human analysis in 20 languages. WRI has elected to include the Peak RepRisk country ESG risk index in Aqueduct to reflect the broader regulatory and reputational risks that may threaten water quantity, quality, and access. While the underlying algorithm is proprietary, we believe that our inclusion of the Peak RepRisk country ESG risk index, normally unavailable to the public, is a value-add to the Aqueduct community. The peak value equals the high-est level of the index in a given country over the last two years. The higher the value, the higher the risk exposure.</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+      <div>`,
     source: 'For seasonal variability and future projections of water stress, see <a href="https://www.wri.org/publication/aqueduct-water-stress-projections-decadal-projections-water-supply-and-demand-using" target="_blank" rel="noopener noreferrer">WRI Aqueduct 2015</a>. For all other baseline water risk indicators, see <a href="https://www.wri.org/publication/aqueduct-30" target="_blank" rel="noopener noreferrer">WRI Aqueduct 2019</a>.'
   },
   'food-security': {
