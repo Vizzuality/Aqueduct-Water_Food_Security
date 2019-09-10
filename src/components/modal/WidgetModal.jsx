@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import WidgetChart from 'components/widgets/widget/chart';
 import { Spinner } from 'aqueduct-components';
@@ -6,8 +6,7 @@ import { Spinner } from 'aqueduct-components';
 // utils
 import { getObjectConversion } from 'utils/filters';
 
-export default class InfoModal extends React.Component {
-
+export default class InfoModal extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,10 +24,6 @@ export default class InfoModal extends React.Component {
     this.mounted = false;
   }
 
-  toggleLoading(loading) {
-    this.mounted && this.setState({ loading });
-  }
-
   getName(widgetParsed) {
     const { filters } = this.props;
     const { name, widgetConfig } = widgetParsed;
@@ -38,9 +33,14 @@ export default class InfoModal extends React.Component {
     return (widgetConfig.titleConfig) ? widgetConfig.titleConfig[proyection] : name;
   }
 
+  toggleLoading(loading) {
+    if (this.mounted) this.setState({ loading });
+  }
+
   render() {
     const notAvailable = 'Not available';
     const { widget, filters } = this.props;
+    const { loading } = this.state;
     const widgetParsed = getObjectConversion(
       widget,
       filters,
@@ -62,7 +62,7 @@ export default class InfoModal extends React.Component {
             <div className="small-12 medium-8 columns">
               <div className="info-widget">
                 <div className="widget-content">
-                  <Spinner isLoading={this.state.loading} />
+                  <Spinner isLoading={loading} />
                   <WidgetChart
                     widget={widget}
                     filters={filters}
@@ -75,39 +75,38 @@ export default class InfoModal extends React.Component {
               <div className="info-description">
                 <dl>
                   <dt>Description:</dt>
-                  <dd>{metadata && metadata.description || notAvailable}</dd>
+                  <dd>{(metadata && metadata.description) || notAvailable}</dd>
 
-                  {metadata && metadata.info && metadata.info.sources &&
+                  {metadata && metadata.info && metadata.info.sources && (
                     <dt>Source:</dt>
-                  }
-                  {metadata && metadata.info && metadata.info.sources &&
+                  )}
+                  {metadata && metadata.info && metadata.info.sources && (
                     <dd>
                       {metadata.info.sources.map((s, i) => {
-                        if (s.sourceUrl) {
+                        if (s['source-url']) {
                           return (
-                            <span>
+                            <span key={s['source-name']}>
                               {i !== 0 && ', '}
                               <a
-                                key={s.sourceName}
-                                rel="noopener noreferrer"
+                                href={s['source-url']}
                                 target="_blank"
-                                href={s.sourceUrl}
+                                rel="noopener noreferrer"
                               >
-                                {s.sourceName}
+                                {s['source-name']}
                               </a>
                             </span>
                           );
                         }
 
                         return (
-                          <span>
+                          <span key={s['source-name']}>
                             {i !== 0 && ', '}
-                            {s.sourceName}
+                            {s['source-name']}
                           </span>
                         );
                       })}
                     </dd>
-                  }
+                  )}
                 </dl>
               </div>
             </div>
@@ -119,7 +118,6 @@ export default class InfoModal extends React.Component {
 }
 
 InfoModal.propTypes = {
-  widget: PropTypes.object,
-  filters: PropTypes.object,
-  topics: PropTypes.array
+  widget: PropTypes.object.isRequired,
+  filters: PropTypes.object.isRequired
 };
