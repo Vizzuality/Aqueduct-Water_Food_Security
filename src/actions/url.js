@@ -9,6 +9,7 @@ export function updateMapUrl() {
       query: {
         lat: map.center.lat.toFixed(2),
         lng: map.center.lng.toFixed(2),
+        basemap: map.basemap,
         zoom: map.zoom,
         period,
         period_value,

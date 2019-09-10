@@ -1,0 +1,20 @@
+.c-basemap-tooltip {
+  position: fixed;
+  padding: $space-1 * 2;
+  background-color: palette(white);
+  border-radius: 4px;
+  box-shadow: 0 20px 30px 0 rgba(palette(black), .1);
+  z-index: 10001;
+
+  &:after {
+    content: '';
+    position: absolute;
+    right: 8px;
+    top: -14px;
+    border-top: 7px solid palette(white);
+    border-bottom: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-left: 7px solid transparent;
+    transform: rotate(180deg);
+  }
+}

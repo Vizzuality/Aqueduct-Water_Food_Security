@@ -9,12 +9,13 @@ import { getBounds } from 'utils/map';
 import { BASELINE_WATER_INDICATORS_IDS } from 'constants/water-indicators';
 import { CATEGORIES } from 'constants/filters';
 import { CROP_OPTIONS } from 'constants/crops';
-import { MAP_OPTIONS } from './constants';
+import { MAP_OPTIONS, BASEMAPS } from './constants';
 
 // helpers
 import { getWaterLayerName } from './legend/legend-item/selectors';
 
 const getMapState = state => state.map;
+const getBasemapId = state => state.map.basemap;
 const getDatasets = state => state.datasets.list;
 const getFilters = state => state.filters;
 const getCountries = state => state.countries.list;
@@ -52,6 +53,19 @@ export const parseMapState = createSelector(
     zoom: _mapState.zoom,
     center: _mapState.center
   })
+);
+
+export const getBasemap = createSelector(
+  [getBasemapId],
+  (_basemapId) => {
+    const currentBasemap = BASEMAPS[_basemapId] || {};
+    const { value, options } = currentBasemap;
+
+    return ({
+      url: value,
+      options
+    });
+  }
 );
 
 export const getActiveLayers = createSelector(
