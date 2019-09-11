@@ -23,7 +23,7 @@ export const APP_DEFINITIONS = {
             <th>Future Projections?</th>
           </tr>
           <tr>
-            <td>Baseline Water Stress</td>
+            <td>Water Stress</td>
             <td>Baseline water stress measures the ratio of total water
             withdrawals to available renewable surface and groundwater supplies. Water withdrawals include domestic,
             industrial, irrigation, and livestock consumptive and
@@ -36,7 +36,7 @@ export const APP_DEFINITIONS = {
             <td class='-a-center'>✔</td>
           </tr>
           <tr>
-            <td>Baseline Water Depletion</td>
+            <td>Water Depletion</td>
             <td>Baseline water depletion measures the ratio of total water
             consumption to available renewable water supplies.
             Total water consumption includes domestic, industrial,
