@@ -1,12 +1,12 @@
 export const BASELINE_WATER_INDICATORS = [
   {
-    name: 'Baseline Water Stress',
+    name: 'Water Stress',
     value: '1a1d4f61-f1b3-4c1a-bfb5-9d0444ecdd56',
     warning: 'not-rainfed-relevant',
     timeline: true
   },
   {
-    name: 'Baseline Water Depletion',
+    name: 'Water Depletion',
     value: '1f918367-a7b7-44b2-a1eb-4e288969563f',
     warning: 'not-rainfed-relevant'
   },
