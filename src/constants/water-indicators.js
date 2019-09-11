@@ -1,6 +1,6 @@
 export const BASELINE_WATER_INDICATORS = [
   {
-    name: 'Water Stress',
+    name: 'Baseline Water Stress',
     value: '1a1d4f61-f1b3-4c1a-bfb5-9d0444ecdd56',
     warning: 'not-rainfed-relevant',
     timeline: true
@@ -40,7 +40,7 @@ export const BASELINE_WATER_INDICATORS = [
     warning: 'not-rainfed-relevant'
   },
   {
-    name: 'Untreated Collected Wastewater',
+    name: 'Untreated Connected Wastewater',
     value: 'a1da2419-1271-4db1-b3b4-0bf16632436c',
     warning: 'not-rainfed-relevant'
   },
@@ -50,17 +50,17 @@ export const BASELINE_WATER_INDICATORS = [
     warning: 'not-rainfed-relevant'
   },
   {
-    name: 'Unimproved/no Drinking Wwater',
+    name: 'Unimproved/no Drinking Water',
     value: 'e2702e54-1cb0-445e-b01a-439802a1eb48',
     warning: 'not-rainfed-relevant'
   },
   {
-    name: 'Unimproved/no Sanitation',
+    name: 'Unimproved/No Sanitation',
     value: '6ad0e01e-ebc2-4747-988c-2e82902b6214',
     warning: 'not-rainfed-relevant'
   },
   {
-    name: 'RepRisk Index',
+    name: 'Peak RepRisk Country ESG Risk Index',
     value: 'bada4f7f-792b-4b58-b7c0-453414b9e0cf',
     warning: 'not-rainfed-relevant'
   }

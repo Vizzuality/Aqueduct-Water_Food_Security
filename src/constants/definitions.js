@@ -23,7 +23,7 @@ export const APP_DEFINITIONS = {
             <th>Future Projections?</th>
           </tr>
           <tr>
-            <td>Water stress</td>
+            <td>Baseline Water Stress</td>
             <td>Baseline water stress measures the ratio of total water
             withdrawals to available renewable surface and groundwater supplies. Water withdrawals include domestic,
             industrial, irrigation, and livestock consumptive and
@@ -49,12 +49,12 @@ export const APP_DEFINITIONS = {
             Baseline water depletion is similar to baseline water
             stress; however, instead of looking at total water withdrawal (consumptive plus nonconsumptive), baseline
             water depletion is calculated using consumptive withdrawal only. </td>
-            <td></td>
+            <td class='-a-center'>✔</td>
             <td></td>
             <td></td>
           </tr>
           <tr>
-            <td>Inter-annual variability</td>
+            <td>Interannual Variability </td>
             <td>Interannual variability measures the average betweenyear variability of available water supply, including both
             renewable surface and groundwater supplies. Higher
             values indicate wider variations in available supply from year to year.
@@ -64,7 +64,7 @@ export const APP_DEFINITIONS = {
             <td></td>
           </tr>
           <tr>
-            <td>Seasonal variability</td>
+            <td>Seasonal Variability</td>
             <td>Seasonal variability measures the average within-year
             variability of available water supply, including both
             renewable surface and groundwater supplies. Higher
@@ -86,7 +86,7 @@ export const APP_DEFINITIONS = {
             <td></td>
           </tr>
           <tr>
-          <td>Riverine flood risk</td>
+          <td>Riverine Flood Risk</td>
           <td>Riverine flood risk measures the percentage of population
           expected to be affected by riverine flooding in an average
           year, accounting for existing flood-protection standards.
@@ -100,12 +100,12 @@ export const APP_DEFINITIONS = {
           are averaged with more common, less newsworthy flood
           years to produce the “expected annual affected population.” Higher values indicate that a greater proportion of the population is expected to be impacted
           by riverine floods on average.</td>
-          <td></td>
-          <td></td>
+          <td class='-a-center'>✔</td>
+          <td class='-a-center'>✔</td>
           <td></td>
           </tr>
           <tr>
-          <td>Coastal flood risk</td>
+          <td>Coastal Flood Risk</td>
           <td>Coastal flood risk measures the percentage of the population expected to be affected by coastal flooding in an
           average year, accounting for existing flood protection
           standards. Flood risk is assessed using hazard (inundation caused by storm surge), exposure (population in
@@ -119,12 +119,12 @@ export const APP_DEFINITIONS = {
           affected population.” Higher values indicate that a
           greater proportion of the population is expected
           to be impacted by coastal floods on average.</td>
-          <td></td>
-          <td></td>
+          <td class='-a-center'>✔</td>
+          <td class='-a-center'>✔</td>
           <td></td>
           </tr>
           <tr>
-            <td>Drought risk</td>
+            <td>Drought Risk</td>
             <td>Drought risk measures where droughts are likely to
             occur, the population and assets exposed, and the vulnerability of the population and assets to adverse effects.
             Higher values indicate higher risk of drought.</td>
@@ -133,7 +133,7 @@ export const APP_DEFINITIONS = {
             <td></td>
           </tr>
           <tr>
-          <td>Untreated Collected Wastewater</td>
+          <td>Untreated Connected Wastewater</td>
             <td>Untreated connected wastewater measures the percentage of domestic wastewater that is connected through
             a sewerage system and not treated to at least a primary
             treatment level. Wastewater discharge without adequate
@@ -150,8 +150,8 @@ export const APP_DEFINITIONS = {
             rates (below 1 percent), and high connection rates with
             little treatment. Higher values indicate higher percentages of point source wastewater discharged
             without treatment.</td>
-            <td></td>
-            <td></td>
+            <td class='-a-center'>✔</td>
+            <td class='-a-center'>✔</td>
             <td></td>
           </tr>
           <tr>
@@ -173,12 +173,12 @@ export const APP_DEFINITIONS = {
             of excess nutrients with respect to silica, creating more favorable conditions for harmful algal
             growth and eutrophication in coastal waters
             downstream.</td>
-            <td></td>
-            <td></td>
+            <td class='-a-center'>✔</td>
+            <td class='-a-center'>✔</td>
             <td></td>
           </tr>
           <tr>
-            <td>Unimproved/no drinking water</td>
+            <td>Unimproved/No Drinking Water</td>
             <td>Unimproved/no drinking water reflects the percentage of the population collecting drinking water from an
             unprotected dug well or spring, or directly from a river,
             dam, lake, pond, stream, canal, or irrigation canal (WHO
@@ -187,12 +187,12 @@ export const APP_DEFINITIONS = {
             Monitoring Programme (JMP)—the lowest tiers of drinking water services. Higher values indicate areas
             where people have less access to safe drinking
             water supplies.</td>
-            <td></td>
-            <td></td>
+            <td class='-a-center'>✔</td>
+            <td class='-a-center'>✔</td>
             <td></td>
           </tr>
           <tr>
-            <td>Unimproved/no sanitation</td>
+            <td>Unimproved/No Sanitation</td>
             <td>Unimproved/no sanitation reflects the percentage of the
             population using pit latrines without a slab or platform,
             hanging/bucket latrines, or directly disposing human
@@ -203,12 +203,12 @@ export const APP_DEFINITIONS = {
             the lowest tier of sanitation services. Higher values
             indicate areas where people have less access to
             improved sanitation services.</td>
-            <td></td>
-            <td></td>
+            <td class='-a-center'>✔</td>
+            <td class='-a-center'>✔</td>
             <td></td>
           </tr>
           <tr>
-            <td>Peak RepRisk country ESG risk index</td>
+            <td>Peak RepRisk Country ESG Risk Index</td>
             <td>The Peak RepRisk country ESG risk index quantifies
             business conduct risk exposure related to environmental,
             social, and governance (ESG) issues in the corresponding
@@ -228,8 +228,8 @@ export const APP_DEFINITIONS = {
             Aqueduct community. The peak value equals the highest level of the index in a given country over the last two
             years. The higher the value, the higher the risk
             exposure.</td>
-            <td></td>
-            <td></td>
+            <td class='-a-center'>✔</td>
+            <td class='-a-center'>✔</td>
             <td></td>
           </tr>
         </table>
