@@ -106,3 +106,10 @@
   border-radius: 4px;
   box-shadow: 0 0 2px rgba(palette(black),.25);
 }
+
+.toastr-info {
+  a {
+    color: palette(white);
+    text-decoration: underline;
+  }
+}
