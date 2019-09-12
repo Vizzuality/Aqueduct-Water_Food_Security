@@ -1,25 +1,25 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { IndexRoute, Router, Route } from 'react-router';
-
-// Components
-import App from 'containers/app/App';
 import { Header } from 'aqueduct-components';
-import MapPage from 'containers/pages/MapPage';
+
+// components
+import App from 'components/app';
+import MapPage from 'components/pages/map';
 import ComparePage from 'containers/pages/ComparePage';
 import EmbedPage from 'containers/pages/EmbedPage';
-import ReportPage from 'containers/pages/ReportPage';
+import ReportPage from 'components/pages/report';
 import AboutPage from 'containers/pages/AboutPage';
 
 // Routing actions
-import { onEnterMapPage, onEnterComparePage, onEnterEmbedPage, onEnterReportPage, onEnterAboutPage } from 'actions/route';
+import { onEnterMapPage, onEnterComparePage, onEnterEmbedPage, onEnterReportPage } from 'actions/route';
 
 const Routes = ({ history }) => (
   <Router history={history}>
     <Route path="/" component={App}>
-      <IndexRoute components={{ header: () => <Header title="Food" />, main: MapPage }} onEnter={onEnterMapPage} />
+      <IndexRoute components={{ header: () => <Header title="Water Food Security" appRoute="https://www.wri.org/applications/aqueduct/water-food-security/" />, main: MapPage }} onEnter={onEnterMapPage} />
       <Route path="compare">
-        <IndexRoute components={{ header: () => <Header title="Food" />, main: ComparePage }} onEnter={onEnterComparePage} />
+        <IndexRoute components={{ header: () => <Header title="Water Food Security" appRoute="https://www.wri.org/applications/aqueduct/water-food-security/" />, main: ComparePage }} onEnter={onEnterComparePage} />
       </Route>
       <Route path="embed">
         <IndexRoute components={{ main: EmbedPage }} onEnter={onEnterEmbedPage} />
@@ -34,8 +34,6 @@ const Routes = ({ history }) => (
   </Router>
 );
 
-Routes.propTypes = {
-  history: React.PropTypes.object
-};
+Routes.propTypes = { history: PropTypes.object.isRequired };
 
-export default connect()(Routes);
+export default Routes;

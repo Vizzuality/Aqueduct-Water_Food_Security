@@ -1,8 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import domtoimage from 'dom-to-image';
 import snakeCase from 'lodash/snakeCase';
-import WidgetChart from 'containers/widgets/WidgetChart';
-import { Spinner, getObjectConversion, saveAsFile } from 'aqueduct-components';
+import WidgetChart from 'components/widgets/widget/chart';
+import { Spinner, saveAsFile } from 'aqueduct-components';
+
+// utils
+import { getObjectConversion } from 'utils/filters';
 
 export default class WidgetImageModal extends React.Component {
 
@@ -51,8 +55,8 @@ export default class WidgetImageModal extends React.Component {
       widget,
       filters,
       widget.widgetConfig.dictionary || 'widget-2010',
-      widget.widgetConfig.paramsConfig,
-      widget.widgetConfig.sqlConfig
+      widget.widgetConfig.params_config,
+      widget.widgetConfig.sql_config
     );
 
     const { name, description } = widgetParsed;
@@ -94,6 +98,6 @@ export default class WidgetImageModal extends React.Component {
 }
 
 WidgetImageModal.propTypes = {
-  filters: React.PropTypes.object,
-  widget: React.PropTypes.object
+  filters: PropTypes.object,
+  widget: PropTypes.object
 };

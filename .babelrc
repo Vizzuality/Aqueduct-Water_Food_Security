@@ -1,4 +1,6 @@
 {
-  "presets": ["env", "react", "latest", "stage-3"],
-  "plugins": ["add-react-displayname"]
+  "presets": [
+    ["@babel/preset-env", { "useBuiltIns": "entry", "corejs": 3 }],
+    "@babel/preset-react"
+  ]
 }

@@ -1,8 +1,14 @@
-export const SET_MAP_LOCATION = 'SET_MAP_LOCATION';
+export const setMapLocation = locationParams => ({
+  type: 'SET_MAP_LOCATION',
+  payload: locationParams
+});
 
-export function setMapLocation(locationParams) {
-  return {
-    type: SET_MAP_LOCATION,
-    payload: locationParams
-  };
-}
+export const setBasemap = basemap => ({
+  type: 'SET_BASEMAP',
+  payload: basemap
+});
+
+export default {
+  setMapLocation,
+  setBasemap
+};

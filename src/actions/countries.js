@@ -6,7 +6,7 @@ import {
 
 import {
   SET_FILTERS
-} from 'constants/filters'
+} from 'constants/filters';
 
 import { store } from 'main';
 

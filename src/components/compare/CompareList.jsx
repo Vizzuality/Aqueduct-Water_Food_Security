@@ -1,17 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react';
 
-// Components
-import CompareMaps from 'components/compare/CompareMaps';
-import CompareSummaries from 'components/compare/CompareSummaries';
+// components
+import CompareMaps from 'components/compare/compare-maps';
+import CompareSummaries from 'components/compare/compare-summaries';
 import CompareWidgetList from 'components/compare/CompareWidgetList';
 
-export default class CompareList extends React.Component {
+class CompareList extends PureComponent {
   render() {
     return (
       <div className="c-comparelist">
         <div className="comparelist-content">
-          <CompareMaps {...this.props} />
+          <CompareMaps />
           <CompareSummaries {...this.props} />
           <CompareWidgetList {...this.props} />
         </div>
@@ -20,13 +19,4 @@ export default class CompareList extends React.Component {
   }
 }
 
-CompareList.propTypes = {
-  countries: PropTypes.array,
-  countryList: PropTypes.array,
-  loading: PropTypes.bool,
-  items: PropTypes.number,
-  widgetsActive: PropTypes.array,
-  filters: PropTypes.object,
-  layersActive: PropTypes.array,
-  active: PropTypes.number
-};
+export default CompareList;

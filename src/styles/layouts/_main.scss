@@ -96,3 +96,20 @@
   display: flex;
   align-items: center;
 }
+
+.l-map-legend {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  width: 400px;
+  z-index: 9;
+  border-radius: 4px;
+  box-shadow: 0 0 2px rgba(palette(black),.25);
+}
+
+.toastr-info {
+  a {
+    color: palette(white);
+    text-decoration: underline;
+  }
+}

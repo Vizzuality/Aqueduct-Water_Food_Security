@@ -7,8 +7,9 @@ export function updateMapUrl() {
     const locationDescriptor = {
       pathname: '/',
       query: {
-        lat: map.latLng.lat.toFixed(2),
-        lng: map.latLng.lng.toFixed(2),
+        lat: map.center.lat.toFixed(2),
+        lng: map.center.lng.toFixed(2),
+        basemap: map.basemap,
         zoom: map.zoom,
         period,
         period_value,
@@ -56,8 +57,8 @@ export function updateReportUrl() {
     const locationDescriptor = {
       pathname: '/report',
       query: {
-        lat: map.latLng.lat.toFixed(2),
-        lng: map.latLng.lng.toFixed(2),
+        lat: map.center.lat.toFixed(2),
+        lng: map.center.lng.toFixed(2),
         zoom: map.zoom,
         period,
         period_value,

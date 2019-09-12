@@ -1,9 +1,7 @@
 import React from 'react';
-import classnames from 'classnames';
-import isEqual from 'lodash/isEqual';
+import PropTypes from 'prop-types';
 
-import Widget from 'components/widgets/Widget';
-import { Spinner } from 'aqueduct-components';
+import Widget from 'components/widgets/widget';
 
 export default class CompareWidgetList extends React.Component {
   render() {
@@ -55,10 +53,10 @@ export default class CompareWidgetList extends React.Component {
 }
 
 CompareWidgetList.propTypes = {
-  grid: React.PropTypes.string,
+  grid: PropTypes.string,
   // STORE
-  loading: React.PropTypes.bool,
-  filters: React.PropTypes.object,
+  loading: PropTypes.bool,
+  filters: PropTypes.object,
   // SELECTOR
-  widgetsActive: React.PropTypes.array
+  widgetsActive: PropTypes.array
 };

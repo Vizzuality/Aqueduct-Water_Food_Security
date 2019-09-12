@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import WidgetList from 'components/widgets/WidgetList';
+import WidgetList from 'components/widgets/widget-list';
 import { Map, MapControls, ZoomControl, Icon } from 'aqueduct-components';
-import LegendMobile from 'components/legend/LegendMobile';
-import Summary from 'components/summary/Summary';
+import LegendMobile from 'components/legend';
+import Summary from 'components/summary';
 import LayerManager from 'utils/layers/LayerManager';
 
 export default class CompareItem extends React.Component {
@@ -69,10 +69,7 @@ export default class CompareItem extends React.Component {
         />
         {/* Map controls */}
         <MapControls className="-left">
-          <LegendMobile
-            filters={this.props.filters}
-            layers={this.props.layersActive}
-          />
+          <LegendMobile />
         </MapControls>
 
         {/* Map controls */}

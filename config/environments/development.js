@@ -7,33 +7,14 @@ const PrettyError = require('pretty-error');
 // Webpack middleware
 const webpack = require('webpack');
 const webpackMiddleware = require('webpack-dev-middleware');
-const config = require('../webpack.config.js');
-
-const rootPath = process.cwd();
-const indexPath = path.join(process.cwd(), 'dist/index.html');
-
 const pdf = require('html-pdf');
+const config = require('../webpack/webpack.config.dev');
+
+// const indexPath = path.join(process.cwd(), 'dist/index.html');
 
 module.exports = (app) => {
-  config.resolve = Object.assign(config.resolve, {
-    alias: {
-      'aqueduct-components': path.resolve(rootPath, '..', 'aqueduct-components', 'lib')
-    }
-  });
-
   const compiler = webpack(config);
-  const middleware = webpackMiddleware(compiler, {
-    publicPath: config.output.publicPath,
-    contentBase: 'src',
-    stats: {
-      colors: true,
-      hash: false,
-      timings: true,
-      chunks: false,
-      chunkModules: false,
-      modules: false
-    }
-  });
+  const middleware = webpackMiddleware(compiler);
 
   app.use(middleware);
 
@@ -45,11 +26,7 @@ module.exports = (app) => {
     });
   });
 
-
-  app.get('*', (req, res) => {
-    res.write(middleware.fileSystem.readFileSync(indexPath));
-    res.end();
-  });
+  // app.get('/*', (req, res) => res.sendFile(path.join(process.cwd(), 'dist', 'index.html')));
 
   // Logs
   app.use(logger('dev'));

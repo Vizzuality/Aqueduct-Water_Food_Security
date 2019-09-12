@@ -9,6 +9,9 @@
 /* LIB */
 @import "lib/foundation";
 
+/* Vizzuality components */
+@import "~vizzuality-components/dist/bundle";
+
 /* Aqueduct-components */
 @import "~aqueduct-components/styles/accordion";
 @import "~aqueduct-components/styles/btn";
@@ -19,7 +22,6 @@
 @import "~aqueduct-components/styles/iframe";
 @import "~aqueduct-components/styles/info";
 @import "~aqueduct-components/styles/header";
-@import "~aqueduct-components/styles/legend";
 @import "~aqueduct-components/styles/map";
 @import "~aqueduct-components/styles/map-controls";
 @import "~aqueduct-components/styles/map-header";
@@ -34,18 +36,20 @@
 @import "~aqueduct-components/styles/spinner";
 @import "~aqueduct-components/styles/table";
 @import "~aqueduct-components/styles/timeline";
-@import "~leaflet/dist/leaflet.css";
 @import '~react-redux-toastr/src/styles/index';
 
 /* LAYOUTS */
 @import "layouts/main";
 
 /* COMPONENTS */
+@import "components/basemap-selector";
 @import "components/bubble-marker";
 @import "components/chart";
 @import "components/compare";
 @import "components/embed";
+@import "components/filters";
 @import "components/infowindow";
+@import "components/legend";
 @import "components/report";
 @import "components/summary";
 @import "components/text";

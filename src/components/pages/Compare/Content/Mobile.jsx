@@ -1,13 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { dispatch } from 'main';
-import ShareModal from 'containers/modal/ShareModal';
+import ShareModal from 'components/modal/share';
 
 // Components
 import { Link } from 'react-router';
 import { SegmentedUi, toggleModal } from 'aqueduct-components';
 import CompareListMobile from 'components/compare/CompareListMobile';
-import MobileFilters from 'components/filters/MobileFilters';
-import CountrySelect from 'containers/countries/CountrySelect';
+import MobileFilters from 'components/filters/mobile';
+import CountrySelect from 'components/country-select';
 
 export default class ComparePageMobile extends React.Component {
 
@@ -126,14 +127,14 @@ export default class ComparePageMobile extends React.Component {
 }
 
 ComparePageMobile.propTypes = {
-  compare: React.PropTypes.object,
-  loading: React.PropTypes.bool,
-  countries: React.PropTypes.object,
-  filters: React.PropTypes.object,
-  setFilters: React.PropTypes.func,
-  updateCompareUrl: React.PropTypes.func,
-  setCompareCountry: React.PropTypes.func,
-  emptyCompareCountries: React.PropTypes.func,
-  widgetsActive: React.PropTypes.array,
-  layersActive: React.PropTypes.array
+  compare: PropTypes.object,
+  loading: PropTypes.bool,
+  countries: PropTypes.object,
+  filters: PropTypes.object,
+  setFilters: PropTypes.func,
+  updateCompareUrl: PropTypes.func,
+  setCompareCountry: PropTypes.func,
+  emptyCompareCountries: PropTypes.func,
+  widgetsActive: PropTypes.array,
+  layersActive: PropTypes.array
 };

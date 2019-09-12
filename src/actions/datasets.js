@@ -1,3 +1,4 @@
+import WRISerializer from 'wri-json-api-serializer';
 import 'whatwg-fetch';
 import {
   GET_DATASETS_SUCCESS,
@@ -5,9 +6,6 @@ import {
   GET_DATASETS_LOADING
 }
 from 'constants/datasets';
-import { Deserializer } from 'jsonapi-serializer';
-
-const deserializer = new Deserializer({ keyForAttribute: 'camelCase' });
 
 export function getDatasets() {
   return (dispatch) => {
@@ -20,16 +18,9 @@ export function getDatasets() {
       throw new Error(response.statusText);
     })
     .then((data) => {
-      // Transforn JSON-API-like data
-      deserializer.deserialize(data, (err, datasets) => {
-        if (err) throw new Error('Error deserializing json api');
-        // Fetch from server ok -> Dispatch datasets
-        dispatch({
-          type: GET_DATASETS_SUCCESS,
-          payload: {
-            data: datasets
-          }
-        });
+      dispatch({
+        type: GET_DATASETS_SUCCESS,
+        payload: WRISerializer(data)
       });
     })
     .catch((err) => {

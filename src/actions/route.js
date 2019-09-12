@@ -12,10 +12,11 @@ export function onEnterMapPage({ location }, replace, done) {
   if (zoom) {
     const map = {
       zoom: +location.query.zoom,
-      latLng: {
+      center: {
         lat: +location.query.lat,
         lng: +location.query.lng
-      }
+      },
+      ...location.query.basemap && { basemap: location.query.basemap }
     };
     dispatch(setMapLocation(map));
   }
@@ -35,6 +36,7 @@ export function onEnterMapPage({ location }, replace, done) {
       year,
       indicator,
       type,
+      iso: country,
       page: 'map'
     };
     dispatch(setFilters(filtersObj));
@@ -48,7 +50,7 @@ export function onEnterMapPage({ location }, replace, done) {
 }
 
 export function onEnterComparePage({ location }, replace, done) {
-  const { crop, countries, food, irrigation, period, period_value, scope, year, indicator, type } = location.query;
+  const { crop, country, countries, food, irrigation, period, period_value, scope, year, indicator, type } = location.query;
   // If thera are country params
   if (countries) {
     countries.split(',').forEach((c, i) => {
@@ -67,6 +69,7 @@ export function onEnterComparePage({ location }, replace, done) {
       indicator,
       irrigation,
       type,
+      iso: country,
       page: 'compare'
     };
     dispatch(setFilters(filtersObj));
@@ -95,7 +98,7 @@ export function onEnterReportPage({ location }, replace, done) {
   if (location.query.zoom) {
     const map = {
       zoom: +location.query.zoom,
-      latLng: {
+      center: {
         lat: +location.query.lat,
         lng: +location.query.lng
       }
@@ -116,6 +119,7 @@ export function onEnterReportPage({ location }, replace, done) {
       year,
       indicator,
       type,
+      iso: country,
       page: 'map'
     };
     dispatch(setFilters(filtersObj));

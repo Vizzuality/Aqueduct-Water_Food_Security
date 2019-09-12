@@ -104,16 +104,16 @@
 }
 
 .c-compareitem-maps {
+  position: relative;
   width: 100%;
+  z-index: 1;
 }
 
 .compareitem-map {
   @include only-mobile {
     height: calc(100vh - 212px);
   }
-  @include only-desktop {
-    height: 430px;
-  }
+
   position: relative;
   width: 100%;
   & > div {

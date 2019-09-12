@@ -5,7 +5,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const basicAuth = require('basic-auth');
 
-const env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV || 'production';
 const envPath = path.join(__dirname, 'environments', env);
 const rootPath = path.join(process.cwd());
 
@@ -21,7 +21,7 @@ function checkBasicAuth(users) {
       res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
       return res.sendStatus(401);
     }
-  
+
     return nextAction();
   };
 }
@@ -42,7 +42,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // Serving assets from public folder
 app.use(express.static(path.join(rootPath, 'public')));
-
 
 // Load environment config
 require(envPath)(app);

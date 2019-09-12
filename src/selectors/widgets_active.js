@@ -1,38 +1,42 @@
 import { createSelector } from 'reselect';
-import { widgetsFilter } from 'aqueduct-components';
 
-// Get the datasets and filters from state
-const datasets = state => state.datasets;
+// states
+const datasets = state => state.datasets.list;
 const filters = state => state.filters;
 const compare = state => state.compare;
 
-// Create a function to compare the current active datasets and the current datasetsIds
 const getActiveWidgets = (_datasets, _filters, _compare) => {
-  // TODO: filter _datasets using _filters
+  const { scope, crop, country } = _filters;
+  const cropScope = crop === 'all' ? 'all_crops' : 'one_crop';
+  const geographyScope = ((scope === 'country' && country) || _compare.countries.length) ? 'country' : 'global';
   const widgetList = [];
-  let widget;
 
-  _datasets.list.forEach((dataset) => {
+  _datasets.forEach((dataset) => {
     if (dataset.widget && dataset.widget.length) {
-      widget = Object.assign({}, dataset.widget[0].attributes, {
-        id: dataset.widget[0].id,
-        metadata: (dataset.metadata && dataset.metadata.length) ? dataset.metadata[0].attributes : null
-      });
-
+      const widget = {
+        ...dataset.widget[0],
+        ...(dataset.metadata && dataset.metadata.length) && { metadata: dataset.metadata[0] }
+      };
       // NOTE: legacy vocabulary stores former used tags
-      const vocabulary = dataset.vocabulary.find(v => v.attributes.name === 'legacy');
-      const datasetTags = vocabulary ? vocabulary.attributes.tags : null;
+      const vocabulary = dataset.vocabulary.find(v => v.name === 'legacy' || v.name === 'attributes');
+      const datasetTags = vocabulary ? vocabulary.tags : [];
+      const cropFilter = datasetTags.includes(cropScope);
+      const geographyFilter = datasetTags.includes(geographyScope);
+      const validWidgetFilter = (!Object.prototype.hasOwnProperty.call(widget.widgetConfig, 'type') || widget.widgetConfig.type === 'text');
 
-      // Vega type widget doesn't have 'type' property
-      if (widget.widgetConfig && (!Object.prototype.hasOwnProperty.call(widget.widgetConfig, 'type') || widget.widgetConfig.type === 'text') && widgetsFilter(widget, _filters, _compare, datasetTags)) {
+      if (
+        widget.widgetConfig
+        && validWidgetFilter
+        && cropFilter
+        && geographyFilter) {
         widgetList.push(widget);
       }
     }
   });
+
   return widgetList;
 };
 
-// Export the selector
 export default createSelector(
   datasets,
   filters,
