@@ -30,6 +30,9 @@ import {
   EQUIVALENCE_WATER_INDICATORS_PROJECTED
 } from 'constants/water-indicators';
 
+// utils
+import { logEvent } from 'utils/analytics';
+
 class Filters extends PureComponent {
   constructor(props) {
     super(props);
@@ -165,7 +168,10 @@ class Filters extends PureComponent {
           items={yearOptions}
           selected={yearOptions.find(i => i.value === filters.year)}
           disabled={disablesTimeline}
-          onChange={(selected) => { this.handleTimeframe(selected); }}
+          onChange={(selected) => {
+            this.handleTimeframe(selected);
+            logEvent('[AQ-Food] Map', 'select timeframe', selected.label);
+          }}
         />
 
         {filters.year !== 'baseline'
@@ -239,6 +245,7 @@ class Filters extends PureComponent {
                             this.updateFilters(selected && selected.value, 'country');
                             this.updateFilters(selected && selected.label, 'countryName');
                             this.updateFilters(selected && selected.value, 'iso');
+                            logEvent('[AQ-Food] Map', 'select country', selected.label);
                           }}
                         />
                       </div>
@@ -249,7 +256,11 @@ class Filters extends PureComponent {
                         <CountrySelect
                           className={filters.country ? '-country-compare' : '-disabled'}
                           placeholder="Compare with..."
-                          onValueChange={selected => this.onSelectCountryToCompare(selected)}
+                          onValueChange={(selected) => {
+                            this.onSelectCountryToCompare(selected);
+
+                            if (selected) logEvent('[AQ-Food] Map', 'select country to compare', selected.label);
+                          }}
                         />
                       </div>
                     </div>
@@ -279,13 +290,21 @@ class Filters extends PureComponent {
                       search
                       options={CROP_OPTIONS.sort((c1, c2) => c1.label > c2.label ? 1 : -1)}
                       value={filters.crop}
-                      onValueChange={selected => selected && this.updateFilters(selected.value, 'crop')}
+                      onValueChange={(selected) => {
+                        if (selected) {
+                          this.updateFilters(selected.value, 'crop');
+                          logEvent('[AQ-Food] Map', 'select crop', selected.label);
+                        }
+                      }}
                     />
 
                     <RadioGroup
                       name="irrigation"
                       items={IRRIGATION_OPTIONS}
-                      onChange={selected => this.updateFilters(selected.value, 'irrigation')}
+                      onChange={(selected) => {
+                        this.updateFilters(selected.value, 'irrigation');
+                        if (selected.value) logEvent('[AQ-Food] Map', 'select irrigation', selected.label);
+                      }}
                       selected={filters.irrigation}
                       className="-inline"
                     />
@@ -312,7 +331,10 @@ class Filters extends PureComponent {
                     <CustomSelect
                       options={waterOptions}
                       value={filters.indicator}
-                      onValueChange={(selected) => { this.handleWaterRiskIndicator(selected); }}
+                      onValueChange={(selected) => {
+                        this.handleWaterRiskIndicator(selected);
+                        if (selected.value) logEvent('[AQ-Food] Map', 'select water risk indicator', selected.label);
+                      }}
                     />
                   </div>
                 </div>
@@ -337,7 +359,10 @@ class Filters extends PureComponent {
                       options={FOOD_OPTIONS}
                       value={filters.food}
                       onValueChange={(selected) => {
-                        if (selected) this.updateFilters(selected.value, 'food');
+                        if (selected) {
+                          this.updateFilters(selected.value, 'food');
+                          logEvent('[AQ-Food] Map', 'select food security', selected.label);
+                        }
 
                         if (
                           selected

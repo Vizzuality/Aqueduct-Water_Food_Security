@@ -11,6 +11,9 @@ import CountrySelect from 'components/country-select';
 import StickyFilters from 'components/filters/sticky';
 import Filters from 'components/filters';
 
+// utils
+import { logEvent } from 'utils/analytics';
+
 export default class ComparePageDesktop extends React.Component {
   static toggleShareModal() {
     dispatch(toggleModal(true, {
@@ -73,7 +76,10 @@ export default class ComparePageDesktop extends React.Component {
               className="-fixed"
               value={this.props.compare.countries[i] || null}
               onValueChange={(selected) => {
-                selected && this.props.setCompareCountry({ index: i, iso: selected.value });
+                if (selected) this.props.setCompareCountry({ index: i, iso: selected.value });
+
+                const countrySide = i === 0 ? 'left' : 'right';
+                logEvent('[AQ-Food] Compare', `user sets ${countrySide} country`, selected.label);
               }}
             />
           </div>

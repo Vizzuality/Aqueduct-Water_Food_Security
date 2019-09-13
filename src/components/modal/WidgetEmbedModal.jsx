@@ -5,6 +5,7 @@ import { Spinner, CustomSelect } from 'aqueduct-components';
 
 // utils
 import { getObjectConversion } from 'utils/filters';
+import { logEvent } from 'utils/analytics';
 
 const embedOptions = [
   { label: 'Small (320x420 pixels)', value: '320x420' },
@@ -41,6 +42,7 @@ export default class WidgetEmbedModal extends React.Component {
   onCopy() {
     const range = document.createRange();
     const selection = getSelection();
+    logEvent('[AQ-Food] Map', 'user copies share URL', '');
 
     range.selectNodeContents(this.code);
     selection.removeAllRanges();

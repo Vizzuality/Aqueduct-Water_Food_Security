@@ -18,6 +18,9 @@ import {
   SourceModal
 } from 'aqueduct-components';
 
+// utils
+import { logEvent } from 'utils/analytics';
+
 // components
 import ShareModal from 'components/modal/share';
 import DownloadMapControl from 'components/map/map-controls/download-map';
@@ -111,6 +114,7 @@ class Map extends PureComponent {
   toggleShareModal() {
     const { toggleModal } = this.props;
     toggleModal(true, { children: ShareModal });
+    logEvent('[AQ-Food] Map', 'user clicks on share map', '');
   }
 
   handleZoomChange(zoom) {
