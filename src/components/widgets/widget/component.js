@@ -13,6 +13,7 @@ import WidgetImageModal from 'components/modal/WidgetImageModal';
 
 // utils
 import { getObjectConversion } from 'utils/filters';
+import { logEvent } from 'utils/analytics';
 import { getMinWidgetContentHeight } from './utils';
 
 class Widget extends PureComponent {
@@ -56,6 +57,10 @@ class Widget extends PureComponent {
 
   triggerAction(action) {
     const { toggleModal, filters, widget } = this.props;
+    const { name } = widget;
+
+
+    logEvent(`[AQ-Food] Widget - ${name}`, 'select widget action', action);
 
     switch (action) {
       case 'info':
@@ -134,6 +139,7 @@ class Widget extends PureComponent {
               </div>
 
               <WidgetButtons
+                widget={widget}
                 widgetElem={this.widgetElem}
                 queryUrl={queryUrl}
                 triggerAction={this.triggerAction}

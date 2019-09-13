@@ -17,6 +17,9 @@ import {
 } from 'constants/filters';
 import { CROP_OPTIONS } from 'constants/crops';
 
+// utils
+import { logEvent } from 'utils/analytics';
+
 class StickyFilters extends PureComponent {
   updateFilters(value, field) {
     const { setFilters } = this.props;
@@ -87,7 +90,10 @@ class StickyFilters extends PureComponent {
                       className="-gray"
                       value={countriesCompare[0] || null}
                       onValueChange={(selected) => {
-                        if (selected) setCompareCountry({ index: 0, iso: selected.value });
+                        if (selected) {
+                          setCompareCountry({ index: 0, iso: selected.value });
+                          logEvent('[AQ-Food] Compare', 'user sets left country', selected.label);
+                        }
                       }}
                     />
                   </div>
@@ -100,7 +106,10 @@ class StickyFilters extends PureComponent {
                       placeholder="Country name..."
                       value={countriesCompare[1] || null}
                       onValueChange={(selected) => {
-                        if (selected) setCompareCountry({ index: 1, iso: selected.value });
+                        if (selected) {
+                          setCompareCountry({ index: 1, iso: selected.value });
+                          logEvent('[AQ-Food] Compare', 'user sets right country', selected.label);
+                        }
                       }}
                     />
                   </div>
@@ -116,7 +125,12 @@ class StickyFilters extends PureComponent {
               className="-gray"
               options={CROP_OPTIONS}
               value={filters.crop}
-              onValueChange={selected => selected && this.updateFilters(selected.value, 'crop')}
+              onValueChange={(selected) => {
+                if (selected) {
+                  this.updateFilters(selected.value, 'crop');
+                  logEvent('[AQ-Food] Map', 'select crop', selected.label);
+                }
+              }}
             />
           </div>
           <div>
@@ -125,7 +139,10 @@ class StickyFilters extends PureComponent {
               className="-gray"
               options={waterOptions}
               value={filters.indicator}
-              onValueChange={(selected) => { this.handleWaterRiskIndicator(selected); }}
+              onValueChange={(selected) => {
+                this.handleWaterRiskIndicator(selected);
+                if (selected.value) logEvent('[AQ-Food] Map', 'select water risk indicator', selected.label);
+              }}
             />
           </div>
           <div>
@@ -135,7 +152,10 @@ class StickyFilters extends PureComponent {
               options={FOOD_OPTIONS}
               value={filters.food}
               onValueChange={(selected) => {
-                if (selected) this.updateFilters(selected.value, 'food');
+                if (selected) {
+                  this.updateFilters(selected.value, 'food');
+                  logEvent('[AQ-Food] Map', 'select food security', selected.label);
+                }
 
                 if (
                   selected
@@ -157,7 +177,10 @@ class StickyFilters extends PureComponent {
               disabled={isTimeFrameDisabled}
               onValueChange={(selected) => {
                 if (selected && selected.value === 'baseline') this.updateFilters('absolute', 'type');
-                if (selected) this.updateFilters(selected.value, 'year');
+                if (selected) {
+                  this.updateFilters(selected.value, 'year');
+                  logEvent('[AQ-Food] Map', 'select timeframe', selected.label);
+                }
               }}
             />
             {filters.period_value !== 'baseline'
@@ -166,7 +189,10 @@ class StickyFilters extends PureComponent {
                   className="-gray"
                   options={DATA_TYPE_OPTIONS}
                   value={filters.type}
-                  onValueChange={selected => this.updateFilters(selected.value, 'change_from_baseline')}
+                  onValueChange={(selected) => {
+                    this.updateFilters(selected.value, 'change_from_baseline');
+                    logEvent('[AQ-Food] Map', 'select timeframe', selected.label);
+                  }}
                 />
               )}
           </div>

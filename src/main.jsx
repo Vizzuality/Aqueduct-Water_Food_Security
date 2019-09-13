@@ -13,6 +13,9 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 // es6 shim for .finally() in promises
 import finallyShim from 'promise.prototype.finally';
 
+// utils
+import { initGA, logPageView } from 'utils/analytics';
+
 import * as reducers from './reducers';
 import Routes from './routes';
 
@@ -61,6 +64,14 @@ export { store, history, dispatch };
 
 // Google Analytics
 // process.env.NODE_ENV === 'production' && ReactGA.initialize(process.env.GA);
+
+// Google Analytics
+if (!window.GA_INITIALIZED) {
+  initGA();
+  window.GA_INITIALIZED = true;
+}
+logPageView();
+
 
 render(
   <Provider store={store}>
