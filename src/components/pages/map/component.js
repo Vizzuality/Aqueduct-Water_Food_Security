@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import isEqual from 'react-fast-compare';
 import { OnlyOn } from 'aqueduct-components';
 
+
 // components
 import MapPageDesktop from './desktop';
 import MapPageMobile from './mobile';
+
 
 class MapPage extends PureComponent {
   componentWillReceiveProps(nextProps) {

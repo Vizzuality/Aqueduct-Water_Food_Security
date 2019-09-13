@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon, DropdownButton } from 'aqueduct-components';
 
-class WidgetButtons extends React.Component {
+// utils
+import { logEvent } from 'utils/analytics';
 
+class WidgetButtons extends React.Component {
   constructor(props) {
     super(props);
 
@@ -17,12 +19,22 @@ class WidgetButtons extends React.Component {
    * @param {string} format
    */
   onDownload(format) {
+    const {
+      widget: { name },
+      queryUrl,
+      triggerAction
+    } = this.props;
+    logEvent(`[AQ-Food] Widget - ${name}`, 'select widget download format', format);
     if (format === 'json' || format === 'csv') {
       const link = document.createElement('a');
-      link.href = `${config.API_URL}/${(this.props.queryUrl || '').replace('query', 'download')}&format=${format}`;
+      const endpoint = queryUrl.split('?')[0];
+      const sql = queryUrl.split('?')[1].split('=')[1];
+      link.href = `${config.API_URL}/${endpoint}?sql=${encodeURIComponent(sql)}&format=${format}`;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
       link.click();
     } else if (format === 'embed' || format === 'image' || format === 'pdf') {
-      this.props.triggerAction(format);
+      triggerAction(format);
     } else {
       // Reserved for other formats.
     }
@@ -43,10 +55,11 @@ class WidgetButtons extends React.Component {
   }
 
   render() {
+    const { queryUrl } = this.props;
     const downloadOptions = [
       { label: 'Embed widget', value: 'embed' },
-      { label: 'Download CSV', value: 'csv' },
-      { label: 'Download JSON', value: 'json' },
+      ...queryUrl ? [{ label: 'Download CSV', value: 'csv' }] : [],
+      ...queryUrl ? [{ label: 'Download JSON', value: 'json' }] : [],
       { label: 'Download image', value: 'image' },
       { label: 'Download report', value: 'pdf' }
     ];
@@ -76,8 +89,11 @@ class WidgetButtons extends React.Component {
 
 WidgetButtons.propTypes = {
   queryUrl: PropTypes.string,
-  triggerAction: PropTypes.func
+  triggerAction: PropTypes.func.isRequired,
+  widget: PropTypes.object.isRequired
 };
+
+WidgetButtons.defaultProps = { queryUrl: null };
 
 
 export default WidgetButtons;
