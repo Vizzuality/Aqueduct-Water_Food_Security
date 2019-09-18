@@ -84,6 +84,7 @@ class LegendGraph extends PureComponent {
         return (
           <div className={`graph -${config.type}`}>
             <div className="graph-units">Units: {config.units}</div>
+            {config.scenario && (<div className="graph-units">Scenario: {config.scenario}</div>)}
             <div className="graph-description">{config.description}</div>
             <div className="graph-list">
               {config.items.map(item => (
@@ -101,6 +102,7 @@ class LegendGraph extends PureComponent {
         return (
           <div className={`graph -${config.type}`}>
             {config.units && <div className="graph-units">Units: {config.units}</div>}
+            {config.scenario && (<div className="graph-units">Scenario: {config.scenario}</div>)}
             <OnlyOn device="desktop">
               <div>
                 <div className="graph-list">
