@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 // actions
 import { toggleModal } from 'aqueduct-components';
-import { setMapLocation } from 'actions/map';
+import { setMapLocation, setLayerParametrization } from 'actions/map';
 
 // selectors
 import {
@@ -26,10 +26,12 @@ export default connect(
     layerGroup: getLayerGroup(state),
     foodLayers: getFoodLayers(state),
     countries: state.countries.list,
-    filters: state.filters
+    filters: state.filters,
+    parametrization: state.map.parametrization
   }),
   {
     setMapLocation,
-    toggleModal
+    toggleModal,
+    setLayerParametrization
   }
 )(Map);

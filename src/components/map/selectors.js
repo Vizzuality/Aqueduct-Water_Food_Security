@@ -16,6 +16,7 @@ import { getWaterLayerName } from './legend/legend-item/selectors';
 
 const getMapState = state => state.map;
 const getBasemapId = state => state.map.basemap;
+const getLayerParametrization = state => state.map.parametrization;
 const getDatasets = state => state.datasets.list;
 const getFilters = state => state.filters;
 const getCountries = state => state.countries.list;
@@ -69,8 +70,8 @@ export const getBasemap = createSelector(
 );
 
 export const getActiveLayers = createSelector(
-  [getDatasets, getFilters, getWaterLayerName],
-  (_datasets, _filters = {}, _waterLayerName) => {
+  [getDatasets, getFilters, getWaterLayerName, getLayerParametrization],
+  (_datasets, _filters = {}, _waterLayerName, _layerParametrization) => {
     const layerList = [];
     const isWater = (_filters.indicator !== 'none');
     let isMask;
@@ -151,6 +152,7 @@ export const getActiveLayers = createSelector(
             metadata,
             ...paramsConfig && { params: reduceParams(paramsConfig, filters) },
             ...sqlConfig && { sqlParams: reduceSqlParams(sqlConfig, filters) },
+            ...{ opacity: currentLayer.opacity || _layerParametrization.opacity }
           };
 
           layerList.push(layer);
@@ -176,7 +178,7 @@ export const getFoodLayers = createSelector(
   [getDatasets, getFilters],
   (_datasets, _filters) => {
     const layers = [];
-    if (!_filters.food || !_filters.food === 'none') return layers;
+    if (!_filters.food || _filters.food === 'none') return [];
 
     const currentLayerSpec = layerSpec.find(_layerSpec => _layerSpec.id === _filters.food);
     const datasetFound = _datasets.find(_dataset => _dataset.id === _filters.food);
@@ -187,6 +189,8 @@ export const getFoodLayers = createSelector(
     if (layerFound) {
       layers.push({
         ...layerFound,
+        name: `${CATEGORIES[currentLayerSpec.category] || ''} - ${currentLayerSpec.name}`,
+        disableOpacity: true,
         ...currentLayerSpec && { options: currentLayerSpec.layerOptions }
       });
     }
@@ -201,6 +205,7 @@ export const getLayerGroup = createSelector(
     .map((_layer, index) => ({
       dataset: `random_id-${index}`,
       visibility: true,
+      ..._layer.disableOpacity && { disableOpacity: true },
       layers: [({
         ..._layer,
         active: true
