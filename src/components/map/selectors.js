@@ -129,17 +129,16 @@ export const getActiveLayers = createSelector(
               rank: '1'
             };
           }
-          const layerCategory = isWater ? 'water' : layerSpecAttrs.category;
 
           const getLayerName = () => {
-            if (isWater) return `${CATEGORIES[layerCategory]} - ${layerSpecAttrs.name} - ${_waterLayerName}`;
+            if (isWater) return _waterLayerName;
             if (isOneCrop) {
               const crop = CROP_OPTIONS.find(_crop => _crop.value === filters.crop) || {};
-              return `${CATEGORIES[layerCategory] || ''} - ${crop.label}`;
+              return crop.label;
             }
-            if (isCrop) return `${CATEGORIES[layerCategory] || ''} - ${layerSpecAttrs.name}`;
+            if (isCrop) return layerSpecAttrs.name;
 
-            return `${CATEGORIES[layerCategory] || ''} - ${layerSpecAttrs.name}`;
+            return layerSpecAttrs.name;
           };
 
           const layer = {
@@ -188,7 +187,6 @@ export const getFoodLayers = createSelector(
     if (layerFound) {
       layers.push({
         ...layerFound,
-        name: `${CATEGORIES[currentLayerSpec.category] || ''} - ${currentLayerSpec.name}`,
         ...currentLayerSpec && { options: currentLayerSpec.layerOptions }
       });
     }
