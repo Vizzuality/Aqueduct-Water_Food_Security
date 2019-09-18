@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import WidgetChart from 'components/widgets/widget/chart';
 import { Spinner } from 'aqueduct-components';
@@ -77,35 +77,56 @@ export default class InfoModal extends PureComponent {
                   <dt>Description:</dt>
                   <dd>{(metadata && metadata.description) || notAvailable}</dd>
 
-                  {metadata && metadata.info && metadata.info.sources && (
-                    <dt>Source:</dt>
+                  {(metadata && metadata.units) && (
+                    <Fragment>
+                      <dt>Units:</dt>
+                      <dd>{metadata.units}</dd>
+                    </Fragment>
                   )}
+
+                  {(metadata && metadata.scenario) && (
+                    <Fragment>
+                      <dt>Scenario:</dt>
+                      <dd>{metadata.scenario}</dd>
+                    </Fragment>
+                  )}
+
+                  {(metadata && metadata.resolution) && (
+                    <Fragment>
+                      <dt>Resolution:</dt>
+                      <dd>{metadata.resolution}</dd>
+                    </Fragment>
+                  )}
+
                   {metadata && metadata.info && metadata.info.sources && (
-                    <dd>
-                      {metadata.info.sources.map((s, i) => {
-                        if (s['source-url']) {
+                    <Fragment>
+                      <dt>Source:</dt>
+                      <dd>
+                        {metadata.info.sources.map((s, i) => {
+                          if (s['source-url']) {
+                            return (
+                              <span key={s['source-name']}>
+                                {i !== 0 && ', '}
+                                <a
+                                  href={s['source-url']}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  {s['source-name']}
+                                </a>
+                              </span>
+                            );
+                          }
+
                           return (
                             <span key={s['source-name']}>
                               {i !== 0 && ', '}
-                              <a
-                                href={s['source-url']}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                {s['source-name']}
-                              </a>
+                              {s['source-name']}
                             </span>
                           );
-                        }
-
-                        return (
-                          <span key={s['source-name']}>
-                            {i !== 0 && ', '}
-                            {s['source-name']}
-                          </span>
-                        );
-                      })}
-                    </dd>
+                        })}
+                      </dd>
+                    </Fragment>
                   )}
                 </dl>
               </div>
