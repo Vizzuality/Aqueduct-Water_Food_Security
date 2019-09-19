@@ -143,7 +143,8 @@ class Filters extends PureComponent {
       yearOptions,
       filters,
       className,
-      withScope
+      withScope,
+      setLayerParametrization
     } = this.props;
     const disablesTimeline = !filters.indicator || filters.indicator === 'none';
     const componentClass = classnames('c-filters', { [className]: !!className });
@@ -333,6 +334,7 @@ class Filters extends PureComponent {
                       value={filters.indicator}
                       onValueChange={(selected) => {
                         this.handleWaterRiskIndicator(selected);
+                        setLayerParametrization({ opacity: 0.5 });
                         if (selected.value) logEvent('[AQ-Food] Map', 'select water risk indicator', selected.label);
                       }}
                     />
@@ -400,7 +402,8 @@ Filters.propTypes = {
   waterOptions: PropTypes.array.isRequired,
   yearOptions: PropTypes.array.isRequired,
   setFilters: PropTypes.func.isRequired,
-  toggleModal: PropTypes.func.isRequired
+  toggleModal: PropTypes.func.isRequired,
+  setLayerParametrization: PropTypes.func.isRequired
 };
 
 Filters.defaultProps = {

@@ -40,7 +40,6 @@ const getMarkersClass = (properties, layer) => {
 
 const getMarker = (geojson, layer) => {
   const { geometry, properties } = geojson;
-
   const divHtmlIcon = getMarkup(properties.value);
   const divHtmlInfowindow = getInfowWindow(properties);
   const bubbleSize = getSize(properties);

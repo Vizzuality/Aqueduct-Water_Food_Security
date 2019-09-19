@@ -1,6 +1,6 @@
 // Route actions won't be dispatched inside connect, so dispatch funcion is needed
 import { dispatch } from 'main';
-import { setMapLocation } from 'actions/map';
+import { setMapLocation, setLayerParametrization } from 'actions/map';
 import { setFilters } from 'actions/filters';
 import { setCompareCountry } from 'actions/compare';
 import { setEmbed } from 'actions/embed';
@@ -19,6 +19,7 @@ export function onEnterMapPage({ location }, replace, done) {
       ...location.query.basemap && { basemap: location.query.basemap }
     };
     dispatch(setMapLocation(map));
+    if (location.query.opacity) dispatch(setLayerParametrization({ opacity: location.query.opacity }));
   }
 
   // TODO: this check is not as consistent as it should be. The right solution could be grouping all filter params inside "filters"
