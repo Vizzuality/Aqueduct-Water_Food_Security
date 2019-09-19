@@ -189,7 +189,7 @@ export const getFoodLayers = createSelector(
     if (layerFound) {
       layers.push({
         ...layerFound,
-        name: `${CATEGORIES[currentLayerSpec.category] || ''} - ${currentLayerSpec.name}`,
+        name: currentLayerSpec.name,
         disableOpacity: true,
         ...currentLayerSpec && { options: currentLayerSpec.layerOptions }
       });
