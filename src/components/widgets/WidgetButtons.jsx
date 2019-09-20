@@ -32,7 +32,8 @@ class WidgetButtons extends React.Component {
       link.href = `${config.API_URL}/${endpoint}?sql=${encodeURIComponent(sql)}&format=${format}`;
       link.target = '_blank';
       link.rel = 'noopener noreferrer';
-      link.click();
+      link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+
     } else if (format === 'embed' || format === 'image' || format === 'pdf') {
       triggerAction(format);
     } else {
