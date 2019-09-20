@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'react-fast-compare';
 import { OnlyOn } from 'aqueduct-components';
+import { toastr } from 'react-redux-toastr';
 
 
 // components
@@ -24,6 +25,15 @@ class MapPage extends PureComponent {
     const filtersChanged = !isEqual(filters, nextFilters);
 
     if (mapStateChanged || filtersChanged) updateMapUrl();
+
+    const showWidgetInfo = localStorage.getItem('AQ_WIDGETS_INFO_HIDE');
+
+    if (!showWidgetInfo) {
+      toastr.info('Widgets contain information about irrigated and rainfed crops and multiple indicators.', {
+        onHideComplete: () => { localStorage.setItem('AQ_WIDGETS_INFO_HIDE', true); },
+        timeout: 5500
+      });
+    }
   }
 
   render() {
