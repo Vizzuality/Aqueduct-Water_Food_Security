@@ -29,7 +29,7 @@ class MapPage extends PureComponent {
     const showWidgetInfo = localStorage.getItem('AQ_WIDGETS_INFO_HIDE');
 
     if (!showWidgetInfo) {
-      toastr.info('Widgets contain information about irrigated and rainfed crops and multiple indicators.', {
+      toastr.info('Note that widgets are not always limited to the current selection and can contain information about irrigated, rained and total agriculture as well as various indicators and timeframes.', {
         onHideComplete: () => { localStorage.setItem('AQ_WIDGETS_INFO_HIDE', true); },
         timeout: 5500
       });
