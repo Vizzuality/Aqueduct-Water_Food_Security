@@ -27,17 +27,13 @@ class WidgetButtons extends React.Component {
     logEvent(`[AQ-Food] Widget - ${name}`, 'select widget download format', format);
     if (format === 'json' || format === 'csv') {
       const link = document.createElement('a');
-      const endpoint = queryUrl.split('?')[0];
-      const sql = queryUrl.split('?')[1].split('=')[1];
-      link.href = `${config.API_URL}/${endpoint}?sql=${encodeURIComponent(sql)}&format=${format}`;
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-      link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
-
+      link.href = `${config.API_URL}/${(queryUrl || '').replace('query', 'download')}&format=${format}`;
+      const body = document.getElementsByTagName('body')[0];
+      body.appendChild(link);
+      link.click();
+      body.removeChild(link);
     } else if (format === 'embed' || format === 'image' || format === 'pdf') {
       triggerAction(format);
-    } else {
-      // Reserved for other formats.
     }
   }
 
