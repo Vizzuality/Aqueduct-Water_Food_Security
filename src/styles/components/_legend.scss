@@ -158,6 +158,10 @@
         font-size: $font-size-small;
         font-weight: 500;
         margin: 0 0 $space-1;
+
+        &:not(:first-child) {
+          margin: $space-1 0 0 0;
+        }
       }
 
       .graph-list {
@@ -261,6 +265,10 @@
         color: $color-text-1;
         font-size: $font-size-small;
         font-weight: 500;
+
+        &:not(:first-child) {
+          margin: $space-1 0 0 0;
+        }
       }
 
       .graph-description {

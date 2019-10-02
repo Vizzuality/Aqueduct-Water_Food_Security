@@ -8,9 +8,9 @@ import { getObjectConversion } from 'utils/filters';
 import { logEvent } from 'utils/analytics';
 
 const embedOptions = [
-  { label: 'Small (320x420 pixels)', value: '320x420' },
-  { label: 'Medium (600x420 pixels)', value: '600x420' },
-  { label: 'Large (900x420 pixels)', value: '900x420' }
+  { label: 'Small (320x465 pixels)', value: '320x465' },
+  { label: 'Medium (600x465 pixels)', value: '600x465' },
+  { label: 'Large (900x465 pixels)', value: '900x465' }
 ];
 
 export default class WidgetEmbedModal extends React.Component {
@@ -93,7 +93,7 @@ export default class WidgetEmbedModal extends React.Component {
       embed: { id: this.props.widget.dataset }
     };
 
-    return `${location.origin}/embed?state=${btoa(JSON.stringify(state))}`;
+    return `${location.origin}/#/embed?state=${btoa(JSON.stringify(state))}`;
   }
 
   toggleLoading(loading) {

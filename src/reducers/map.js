@@ -6,7 +6,8 @@ const { center, zoom } = MAP_OPTIONS;
 const initialState = {
   center,
   zoom,
-  basemap: 'hydro'
+  basemap: 'hydro',
+  parametrization: { opacity: 0.5 }
 };
 
 export default function (state = initialState, action) {
@@ -15,6 +16,8 @@ export default function (state = initialState, action) {
       return { ...state, ...action.payload };
     case 'SET_BASEMAP':
       return { ...state, basemap: action.payload };
+    case 'SET_PARAMETRIZATION':
+      return { ...state, parametrization: { ...state.parametrization, ...action.payload } };
     default:
       return state;
   }

@@ -20,7 +20,8 @@ export function updateMapUrl() {
         irrigation,
         scope,
         indicator,
-        type
+        type,
+        opacity: map.parametrization.opacity
       }
     };
     dispatch(replace(locationDescriptor));

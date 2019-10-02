@@ -8,7 +8,13 @@ export const setBasemap = basemap => ({
   payload: basemap
 });
 
+export const setLayerParametrization = params => ({
+  type: 'SET_PARAMETRIZATION',
+  payload: params
+});
+
 export default {
   setMapLocation,
-  setBasemap
+  setBasemap,
+  setLayerParametrization
 };

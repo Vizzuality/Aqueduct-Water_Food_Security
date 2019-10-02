@@ -11,7 +11,7 @@ export default class EmbedPage extends React.Component {
 
   render() {
     return (
-      <div className="l-embed l-fullheight">
+      <div className="l-embed">
         {this.props.error}
         {!this.props.error && <Spinner isLoading={!this.props.widget} />}
         {!this.props.error && this.props.widget && <Widget className="-embed" widget={this.props.widget} filters={this.props.filters} />}

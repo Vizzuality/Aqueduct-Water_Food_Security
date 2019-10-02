@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'react-fast-compare';
 import { OnlyOn } from 'aqueduct-components';
+import { toastr } from 'react-redux-toastr';
 
 
 // components
@@ -24,6 +25,15 @@ class MapPage extends PureComponent {
     const filtersChanged = !isEqual(filters, nextFilters);
 
     if (mapStateChanged || filtersChanged) updateMapUrl();
+
+    const showWidgetInfo = localStorage.getItem('AQ_WIDGETS_INFO_HIDE');
+
+    if (!showWidgetInfo) {
+      toastr.info('Note that widgets are not always limited to the current selection and can contain information about irrigated, rained and total agriculture as well as various indicators and timeframes.', {
+        onHideComplete: () => { localStorage.setItem('AQ_WIDGETS_INFO_HIDE', true); },
+        timeout: 5500
+      });
+    }
   }
 
   render() {
@@ -33,7 +43,7 @@ class MapPage extends PureComponent {
           <MapPageMobile {...this.props} />
         </OnlyOn>
         <OnlyOn device="desktop">
-          <MapPageDesktop  {...this.props} />
+          <MapPageDesktop {...this.props} />
         </OnlyOn>
       </div>
     );

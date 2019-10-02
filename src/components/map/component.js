@@ -8,7 +8,8 @@ import {
   Legend as VizzLegend,
   LegendItemToolbar,
   LegendListItem,
-  LegendItemButtonInfo
+  LegendItemButtonInfo,
+  LegendItemButtonOpacity
 } from 'vizzuality-components/dist/bundle';
 import {
   MapControls,
@@ -52,13 +53,16 @@ class Map extends PureComponent {
       layers,
       filters,
       foodLayers,
-      mapState
+      mapState,
+      parametrization,
+      setLayerParametrization
     } = this.props;
     const {
       layers: nextLayers,
       filters: nextFilters,
       foodLayers: nextFoodLayers,
-      mapState: nextMapState
+      mapState: nextMapState,
+      parametrization: nextParametrization
     } = nextProps;
     const { zoom } = mapState;
     const { zoom: nextZoom } = nextMapState;
@@ -66,18 +70,26 @@ class Map extends PureComponent {
     const filtersChanged = !isEqual(filters, nextFilters);
     const foodLayersChanged = !isEqual(foodLayers, nextFoodLayers);
     const zoomChanged = zoom !== nextZoom;
+    const parametrizationChanged = !isEqual(parametrization, nextParametrization);
     const isSingleCropLayer = '064a524f-0e58-41fb-b948-f7bb66f43ef0';
     const isAllCropsLayer = 'a533c717-8473-412c-add8-89b0a008e3ac';
 
-    if ((foodLayersChanged || filtersChanged || zoomChanged) && nextFoodLayers[0]) {
+    if ((foodLayersChanged || filtersChanged || zoomChanged || parametrizationChanged) && nextFoodLayers[0]) {
       this.setState({ loading: true }, () => {
-        prepareMarkerLayer(nextFoodLayers[0], nextFilters, nextZoom)
+        prepareMarkerLayer(nextFoodLayers[0], nextFilters, nextZoom, nextParametrization)
           .then((markerLayer) => {
             const { layers: currenLayers } = this.state;
             const filteredLayers = currenLayers.filter(_layer => !_layer.isMarkerLayer);
             this.setState({ layers: [markerLayer, ...filteredLayers] });
           });
       });
+    }
+
+    // removes current marker layer if there's no next one
+    if (foodLayersChanged && !nextFoodLayers[0]) {
+      const { layers: currentLayers } = this.state;
+      const layersWithoutMarker = currentLayers.filter(_layer => !_layer.isMarkerLayer);
+      this.setState({ layers: layersWithoutMarker });
     }
 
     // if the incoming layer is the one crop one we need to update its cartoCSS manually
@@ -141,6 +153,12 @@ class Map extends PureComponent {
         childrenProps: { layer: layers[0] }
       });
     }
+  }
+
+  handleLayerOpacity(layer, opacity) {
+    const { setLayerParametrization } = this.props;
+
+    setLayerParametrization({ opacity });
   }
 
   render() {
@@ -235,10 +253,17 @@ class Map extends PureComponent {
                         index={i}
                         key={_layerGroup.dataset}
                         onChangeInfo={() => { this.openLayerInfo(_layerGroup); }}
+                        onChangeOpacity={(_layer, _opacity) => { this.handleLayerOpacity(_layer, _opacity); }}
                         layerGroup={_layerGroup}
                         toolbar={(
                           <LegendItemToolbar>
                             <LegendItemButtonInfo />
+                            {!_layerGroup.disableOpacity && (
+                              <LegendItemButtonOpacity
+                                trackStyle={{ backgroundColor: '#2E57B8' }}
+                                handleStyle={{ backgroundColor: '#2E57B8' }}
+                              />
+                            )}
                           </LegendItemToolbar>
                         )}
                       >
@@ -267,6 +292,7 @@ Map.propTypes = {
   basemap: PropTypes.object.isRequired,
   bounds: PropTypes.object.isRequired,
   filters: PropTypes.object.isRequired,
+  parametrization: PropTypes.object.isRequired,
   layers: PropTypes.array.isRequired,
   layerGroup: PropTypes.array.isRequired,
   mapControls: PropTypes.bool,
@@ -274,7 +300,8 @@ Map.propTypes = {
   foodLayers: PropTypes.array.isRequired,
   countries: PropTypes.array.isRequired,
   toggleModal: PropTypes.func.isRequired,
-  setMapLocation: PropTypes.func.isRequired
+  setMapLocation: PropTypes.func.isRequired,
+  setLayerParametrization: PropTypes.func.isRequired
 };
 
 Map.defaultProps = {
