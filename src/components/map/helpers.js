@@ -13,11 +13,16 @@ import { getMarkerLayer } from 'utils/layers/markers/bubble-layer';
 import { CROP_OPTIONS } from 'constants/crops';
 import { ZOOM_DISPLAYS_TOP } from './constants';
 
-export const getBuckets = (layer = {}) => {
-  const { layerConfig, legendConfig, sqlParams } = layer;
-  const { account } = layerConfig;
+export const getBuckets = (layer = {}, filters = {}) => {
+  const _filters = {
+    ...filters,
+    iso: filters.iso || 'world'
+  };
+  const { layerConfig, legendConfig } = layer;
+  const { account, sql_config: sqlConfig } = layerConfig;
+  const _sqlParams = reduceSqlParams(sqlConfig, _filters);
   const url = `https://${account}.carto.com/api/v2/sql`;
-  const sqlQuery = concatenation(legendConfig.sql_query, sqlParams);
+  const sqlQuery = concatenation(legendConfig.sql_query, _sqlParams);
 
   return fetchQuery(url, { q: sqlQuery });
 };
