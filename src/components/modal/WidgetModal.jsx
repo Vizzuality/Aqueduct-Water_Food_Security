@@ -50,8 +50,6 @@ export default class InfoModal extends PureComponent {
     );
     const { metadata } = widgetParsed;
 
-    console.log(metadata)
-
     return (
       <div className="c-info">
         <div className="info-header">

@@ -16,15 +16,16 @@ import { ZOOM_DISPLAYS_TOP } from './constants';
 export const getBuckets = (layer = {}, filters = {}) => {
   const _filters = {
     ...filters,
-    iso: filters.iso || 'world'
+    iso: filters.iso || 'WORLD'
   };
   const { layerConfig, legendConfig } = layer;
-  const { account, sql_config: sqlConfig } = layerConfig;
-  const _sqlParams = reduceSqlParams(sqlConfig, _filters);
+  const { sql_query: sqlQuery, sql_config: sqlConfig } = legendConfig;
+  const { account } = layerConfig;
+  const _sqlParams = reduceSqlParams(sqlConfig, filters);
   const url = `https://${account}.carto.com/api/v2/sql`;
-  const sqlQuery = concatenation(legendConfig.sql_query, _sqlParams);
+  const query = concatenation(sqlQuery, _sqlParams);
 
-  return fetchQuery(url, { q: sqlQuery });
+  return fetchQuery(url, { q: query });
 };
 
 export const generateCartoCSS = (cartocss, params) => {
