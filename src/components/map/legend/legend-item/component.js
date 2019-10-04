@@ -5,15 +5,12 @@ import isEqual from 'lodash/isEqual';
 import capitalize from 'lodash/capitalize';
 import { Spinner } from 'aqueduct-components';
 import axios from 'axios';
+import { concatenation } from 'layer-manager/dist/layer-manager';
+import { reduceSqlParams } from 'utils/layers/params-parser';
 
 // constants
 import { LEGEND_OPACITY_RANGE } from 'components/map/legend/constants';
 import { CROP_OPTIONS } from 'constants/crops';
-import { CATEGORIES } from 'constants/filters';
-import {
-  BASELINE_WATER_INDICATORS_IDS,
-  PROJECTED_WATER_INDICATORS_IDS
-} from 'constants/water-indicators';
 
 // utils
 import { getObjectConversion } from 'utils/filters';
@@ -58,11 +55,27 @@ class LegendItem extends PureComponent {
       return;
     }
 
-    const legendConfigConverted = Object.assign({}, getObjectConversion(legendConfig, filters, 'water', legendConfig.params_config, legendConfig.sql_config));
-    const { sql_query: sqlQuery } = legendConfigConverted;
-    const { crop } = filters;
+    const legendConfigConverted = Object.assign({}, getObjectConversion(
+      legendConfig,
+      {
+        ...filters,
+        iso: filters.iso || 'WORLD'
+      },
+      'water',
+      legendConfig.params_config,
+      legendConfig.sql_config
+    ));
 
-    axios.get(`https://${layerConfig.account}.carto.com/api/v2/sql?q=${sqlQuery}`)
+    const _filters = {
+      ...filters,
+      iso: filters.iso || 'WORLD'
+    };
+    const { crop } = _filters;
+    const { sql_query: sqlQuery, sql_config: sqlConfig } = legendConfig;
+    const _sqlParams = reduceSqlParams(sqlConfig, _filters);
+    const query = concatenation(sqlQuery, _sqlParams);
+
+    axios.get(`https://${layerConfig.account}.carto.com/api/v2/sql?q=${query}`)
       .then(({ data }) => {
         const buckets = data.rows[0].bucket;
 

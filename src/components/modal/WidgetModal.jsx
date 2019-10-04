@@ -77,24 +77,24 @@ export default class InfoModal extends PureComponent {
                   <dt>Description:</dt>
                   <dd>{(metadata && metadata.description) || notAvailable}</dd>
 
-                  {(metadata && metadata.units) && (
+                  {(metadata && metadata.info && metadata.info.units) && (
                     <Fragment>
                       <dt>Units:</dt>
-                      <dd>{metadata.units}</dd>
+                      <dd>{metadata.info.units}</dd>
                     </Fragment>
                   )}
 
-                  {(metadata && metadata.scenario) && (
+                  {(metadata && metadata.info && metadata.info.scenario) && (
                     <Fragment>
                       <dt>Scenario:</dt>
-                      <dd>{metadata.scenario}</dd>
+                      <dd>{metadata.info.scenario}</dd>
                     </Fragment>
                   )}
 
-                  {(metadata && metadata.resolution) && (
+                  {(metadata && metadata.info && metadata.info.resolution) && (
                     <Fragment>
                       <dt>Resolution:</dt>
-                      <dd>{metadata.resolution}</dd>
+                      <dd>{metadata.info.resolution}</dd>
                     </Fragment>
                   )}
 
