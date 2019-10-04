@@ -16,6 +16,3 @@ package-lock.json
 
 # ENV variables
 .env
-
-# Compiled assets
-/dist
