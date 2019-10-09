@@ -2,6 +2,7 @@ import template from 'lodash/template';
 import { concatenation } from 'layer-manager/dist/layer-manager';
 import axios from 'axios';
 import capitalize from 'lodash/capitalize';
+import { toastr } from 'react-redux-toastr';
 
 // services
 import { fetchQuery } from 'services/query';
@@ -131,6 +132,8 @@ export const prepareMarkerLayer = async (_layer = {}, _params = {}, _zoom) => {
       return data;
     })
     .catch((error) => { console.error(error.message); });
+
+  if (!geojson.features || !geojson.features.length) toastr.warning('No data available', 'No data available to display from food security parameters with the current combination of filters.');
 
   const markers = getMarkersByZoom(layer, geojson.features || [], _zoom);
 
