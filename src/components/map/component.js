@@ -54,8 +54,7 @@ class Map extends PureComponent {
       filters,
       foodLayers,
       mapState,
-      parametrization,
-      setLayerParametrization
+      parametrization
     } = this.props;
     const {
       layers: nextLayers,

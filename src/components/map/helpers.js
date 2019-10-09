@@ -1,6 +1,7 @@
 import template from 'lodash/template';
 import { concatenation } from 'layer-manager/dist/layer-manager';
 import axios from 'axios';
+import capitalize from 'lodash/capitalize';
 
 // services
 import { fetchQuery } from 'services/query';
@@ -14,10 +15,6 @@ import { CROP_OPTIONS } from 'constants/crops';
 import { ZOOM_DISPLAYS_TOP } from './constants';
 
 export const getBuckets = (layer = {}, filters = {}) => {
-  const _filters = {
-    ...filters,
-    iso: filters.iso || 'WORLD'
-  };
   const { layerConfig, legendConfig } = layer;
   const { sql_query: sqlQuery, sql_config: sqlConfig } = legendConfig;
   const { account } = layerConfig;
@@ -64,7 +61,7 @@ export const updateCartoCSS = async (layer = {}, options = {}) => {
   });
 };
 
-export const getMarkersByZoom = (layer, _markers, zoom) => {
+export const getMarkersByZoom = (layer, _markers = [], zoom) => {
   let markers = _markers;
   const { options } = layer;
   const { sort, topSize, dataManipulator } = options || {};
@@ -107,6 +104,11 @@ export const prepareMarkerLayer = async (_layer = {}, _params = {}, _zoom) => {
     };
   }
 
+  params = {
+    ...params,
+    ...(params.crop !== 'all') && { commodity: capitalize(params.crop) }
+  };
+
   const layer = {
     ..._layer,
     ...paramsConfig && { params: reduceParams(paramsConfig, params) },
@@ -125,11 +127,12 @@ export const prepareMarkerLayer = async (_layer = {}, _params = {}, _zoom) => {
     .then((response) => {
       const { status, statusText, data } = response;
       if (status >= 300) throw new Error(statusText);
+
       return data;
     })
     .catch((error) => { console.error(error.message); });
 
-  const markers = getMarkersByZoom(layer, geojson.features, _zoom);
+  const markers = getMarkersByZoom(layer, geojson.features || [], _zoom);
 
   if (params.country) {
     const countryMaker = markers.filter(_marker => _marker.properties.iso === params.country);
