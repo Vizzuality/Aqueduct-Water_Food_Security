@@ -46,14 +46,25 @@ class WidgetChart extends PureComponent {
       widget.widgetConfig.params_config,
       widget.widgetConfig.sql_config
     );
-    const { url } = widgetParsed.widgetConfig.data[0] || widgetParsed.widgetConfig.data;
 
-    if (url) {
+    if (!widgetParsed.widgetConfig.data) return;
+
+    let _url = null;
+
+    if (Array.isArray(widgetParsed.widgetConfig.data)) {
+      const dataUrl = (widgetParsed.widgetConfig.data).find(_d => 'url' in _d) || {};
+      if (dataUrl) _url = dataUrl.url;
+    } else {
+      _url = widgetParsed.widgetConfig.data.url;
+    }
+
+    if (_url) {
       toggleLoading(true);
 
-      axios.get(url)
+      axios.get(_url)
         .then((response) => {
           if (toggleVisibility) toggleVisibility(!!response.data.rows.length);
+
 
           requestAnimationFrame(() => {
             this.setState({
