@@ -5,7 +5,7 @@ import { bisector } from 'd3-array';
 import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';
 import VegaChartTooltip from 'components/widgets/VegaChartTooltip';
-import camelcaseKeys from 'camelcase-keys';
+import camelcaseKeys from '../../../lib/camelcase-keys';
 
 export default class VegaChart extends React.Component {
   constructor(props) {
