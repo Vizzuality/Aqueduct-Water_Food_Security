@@ -40,23 +40,25 @@ class WidgetButtons extends React.Component {
   // HELPERS
   // - getDownloadUrl
   getDownloadUrl() {
-    const downloadUrl = this.props.queryUrl || '';
+    const { queryUrl } = this.props;
+    const downloadUrl = queryUrl || '';
     return `${config.API_URL}/${downloadUrl.replace('query', 'download')}`;
   }
 
   // UI EVENTS
   // - triggerAction
   triggerAction(e) {
-    const action = e.currentTarget.dataset.action;
-    this.props.triggerAction(action);
+    const { triggerAction } = this.props;
+    const { action } = e.currentTarget.dataset;
+    triggerAction(action);
   }
 
   render() {
     const { queryUrl } = this.props;
     const downloadOptions = [
       { label: 'Embed widget', value: 'embed' },
-      ...queryUrl ? [{ label: 'Download CSV', value: 'csv' }] : [],
-      ...queryUrl ? [{ label: 'Download JSON', value: 'json' }] : [],
+      ...queryUrl ? [{ label: 'Download CSV', value: 'csv', disabled: true }] : [],
+      ...queryUrl ? [{ label: 'Download JSON', value: 'json', disabled: true }] : [],
       { label: 'Download image', value: 'image' },
       { label: 'Download report', value: 'pdf' }
     ];
@@ -69,13 +71,13 @@ class WidgetButtons extends React.Component {
             options={downloadOptions}
             onSelect={item => this.onDownload(item.value)}
           >
-            <button className="widget-button">
+            <button type="button" className="widget-button">
               <Icon name="icon-download" />
             </button>
           </DropdownButton>
         </li>
         <li>
-          <button data-action="info" className="widget-button" onClick={this.triggerAction}>
+          <button type="button" data-action="info" className="widget-button" onClick={this.triggerAction}>
             <Icon name="icon-info" />
           </button>
         </li>
