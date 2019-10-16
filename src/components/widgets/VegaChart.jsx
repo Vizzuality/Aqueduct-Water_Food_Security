@@ -22,7 +22,8 @@ export default class VegaChart extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return !isEqual(nextProps.widgetConfig, this.props.widgetConfig);
+    const { widgetConfig } = this.props;
+    return !isEqual(nextProps.widgetConfig, widgetConfig);
   }
 
   componentDidUpdate() {
@@ -43,7 +44,7 @@ export default class VegaChart extends React.Component {
   }
 
   parseVega() {
-    const { data, widgetConfig, theme } = this.props;
+    const { data, widgetConfig, theme, toggleLoading, toggleTooltip } = this.props;
 
     const defaultPadding = { left: 20, right: 20 };
     const padding = widgetConfig.padding || defaultPadding;
@@ -63,15 +64,17 @@ export default class VegaChart extends React.Component {
 
     const config = Object.assign({}, widgetConfig, size);
 
-    this.mounted && this.props.toggleLoading && this.props.toggleLoading(true);
+    if (this.mounted && toggleLoading) toggleLoading(true);
 
     const parsedConfig = camelcaseKeys(config, { deep: true });
+
+    console.log(theme);
 
     vega.parse.spec(({ ...parsedConfig, data: widgetConfig.data }), theme, (err, chart) => {
       if (!this.mounted) {
         return;
       }
-      this.props.toggleLoading && this.props.toggleLoading(false);
+      if (toggleLoading) toggleLoading(false);
       if (!err) {
         const vis = chart({
           el: this.chart,
@@ -84,7 +87,7 @@ export default class VegaChart extends React.Component {
         const tooltip = config.interaction_config && config.interaction_config.find(i => i.name === 'tooltip');
 
         if (tooltip) {
-          const { type, config } = tooltip;
+          const { type, _config } = tooltip;
 
           // TODO: Type signal
           if (type === 'signal') {
@@ -98,17 +101,18 @@ export default class VegaChart extends React.Component {
                 const i = bisectDate(visData, xval, 1);
                 const d0 = visData[i - 1];
                 const d1 = visData[i];
-                const selected = (d0 && d1 && (xval - d0[bisectVal] > d1[bisectVal] - xval)) ? d1 : d0;
+                const selected = (d0 && d1 && (xval - d0[bisectVal] > d1[bisectVal] - xval))
+                  ? d1 : d0;
                 items = visData.filter(d => d[bisectVal] === selected[bisectVal]);
               }
 
               if (items.length) {
-                return this.props.toggleTooltip(true, {
+                return toggleTooltip(true, {
                   follow: true,
                   children: VegaChartTooltip,
                   childrenProps: {
                     data: items,
-                    config
+                    config: _config
                   }
                 });
               }
@@ -117,7 +121,7 @@ export default class VegaChart extends React.Component {
           } else {
             vis.on('mousemove', (e, item) => {
               if (item && item.type !== 'axis') {
-                return this.props.toggleTooltip(true, {
+                return toggleTooltip(true, {
                   position: {
                     x: e.clientX,
                     y: e.clientY
@@ -133,9 +137,7 @@ export default class VegaChart extends React.Component {
             });
           }
 
-          vis.on('mouseout', () => {
-            return this.props.toggleTooltip(false);
-          });
+          vis.on('mouseout', () => toggleTooltip(false));
         }
       }
     });
@@ -166,4 +168,10 @@ VegaChart.propTypes = {
   theme: PropTypes.object,
   toggleLoading: PropTypes.func,
   toggleTooltip: PropTypes.func
+};
+
+VegaChart.defaultProps = {
+  theme: null,
+  toggleLoading: () => null,
+  toggleTooltip: () => null,
 };
