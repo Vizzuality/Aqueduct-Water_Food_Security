@@ -5,7 +5,7 @@ import { bisector } from 'd3-array';
 import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';
 import VegaChartTooltip from 'components/widgets/VegaChartTooltip';
-import camelcaseKeys from '../../../lib/camelcase-keys';
+import camelcaseKeys from 'camelcase-keys';
 
 export default class VegaChart extends React.Component {
   constructor(props) {
@@ -67,8 +67,6 @@ export default class VegaChart extends React.Component {
     if (this.mounted && toggleLoading) toggleLoading(true);
 
     const parsedConfig = camelcaseKeys(config, { deep: true });
-
-    console.log(theme);
 
     vega.parse.spec(({ ...parsedConfig, data: widgetConfig.data }), theme, (err, chart) => {
       if (!this.mounted) {
