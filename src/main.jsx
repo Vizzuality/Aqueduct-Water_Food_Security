@@ -10,8 +10,6 @@ import { hashHistory } from 'react-router';
 import thunk from 'redux-thunk';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-// es6 shim for .finally() in promises
-import finallyShim from 'promise.prototype.finally';
 
 // utils
 import { initGA, logPageView } from 'utils/analytics';
@@ -21,6 +19,9 @@ import Routes from './routes';
 
 import './styles/index.scss';
 
+// es6 shim for .finally() in promises
+require('es6-promise').polyfill();
+const finallyShim = require('promise.prototype.finally');
 finallyShim.shim();
 
 /**
