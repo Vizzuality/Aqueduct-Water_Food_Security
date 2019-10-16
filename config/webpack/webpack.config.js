@@ -20,8 +20,19 @@ const config = {
     rules: [
       {
         test: /\.(js|jsx)?$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+            plugins: ['@babel/plugin-proposal-object-rest-spread']
+          }
+        },
+        include: [
+          path.join(__dirname, '..', '..', 'src'),
+          path.join(__dirname, '..', '..', 'lib'),
+          path.join(__dirname, '..', '..', 'node_modules', 'camelcase'),
+          path.join(__dirname, '..', '..', 'node_modules', 'camelcase-keys'),
+        ]
       },
       {
         test: /\.css$/,
