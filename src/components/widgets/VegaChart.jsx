@@ -85,16 +85,16 @@ export default class VegaChart extends React.Component {
         const tooltip = config.interaction_config && config.interaction_config.find(i => i.name === 'tooltip');
 
         if (tooltip) {
-          const { type, _config } = tooltip;
+          const { type, config: _config } = tooltip;
 
           // TODO: Type signal
           if (type === 'signal') {
             vis.onSignal('onMousemove', (event, { xval }) => {
-              const visData = vis.data()[config.table.from];
+              const visData = vis.data()[_config.table.from];
               let items = [];
 
               if (typeof xval === 'number') {
-                const bisectVal = config.table.bisect;
+                const bisectVal = _config.table.bisect;
                 const bisectDate = bisector(d => d[bisectVal]).left;
                 const i = bisectDate(visData, xval, 1);
                 const d0 = visData[i - 1];
@@ -110,7 +110,7 @@ export default class VegaChart extends React.Component {
                   children: VegaChartTooltip,
                   childrenProps: {
                     data: items,
-                    config: _config
+                    config: _config,
                   }
                 });
               }
@@ -127,7 +127,7 @@ export default class VegaChart extends React.Component {
                   children: VegaChartTooltip,
                   childrenProps: {
                     data: item.datum,
-                    config: tooltip.config
+                    config: _config,
                   }
                 });
               }
