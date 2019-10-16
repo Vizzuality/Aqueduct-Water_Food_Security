@@ -12,50 +12,53 @@ import { store } from 'main';
 
 export function getCountries() {
   return (dispatch) => {
+    // 2019-10-16 client wanted to remove Taiwan in countries list
     const query = `https://wri-01.carto.com/api/v2/sql?q=
-    SELECT iso as id, name_engli as name, json(bbox) as geometry from gadm28_countries WHERE bbox IS NOT NULL ORDER BY name ASC`;
+    SELECT iso as id, name_engli as name, json(bbox) as geometry from gadm28_countries WHERE bbox IS NOT NULL AND iso != 'TWN' ORDER BY name ASC`;
     // Start loading
     dispatch({
       type: GET_COUNTRIES_LOADING,
       payload: true
     });
     fetch(new Request(query))
-    .then((response) => {
-      if (response.ok) return response.json();
-      throw new Error(response.statusText);
-    })
-    .then((data) => {
-      dispatch({
-        type: GET_COUNTRIES_SUCCESS,
-        payload: data.rows
-      });
-      // End loading
-      dispatch({
-        type: GET_COUNTRIES_LOADING,
-        payload: false
-      });
-
-      // Sets country name
-      const { filters } = store.getState();
-      const { country } = filters;
-      const countryName = ((data.rows || []).find(c => c.id === country) || {}).name;
-
-      dispatch({
-        type: SET_FILTERS,
-        payload: { countryName }
+      .then((response) => {
+        if (response.ok) return response.json();
+        throw new Error(response.statusText);
       })
-    })
-    .catch((err) => {
-      // Fetch from server ko -> Dispatch error
-      dispatch({
-        type: GET_COUNTRIES_ERROR,
-        payload: err.message
+      .then((data) => {
+        dispatch({
+          type: GET_COUNTRIES_SUCCESS,
+          payload: data.rows
+        });
+        // End loading
+        dispatch({
+          type: GET_COUNTRIES_LOADING,
+          payload: false
+        });
+
+        // Sets country name
+        const { filters } = store.getState();
+        const { country } = filters;
+        const countryName = ((data.rows || []).find(c => c.id === country) || {}).name;
+
+        dispatch({
+          type: SET_FILTERS,
+          payload: { countryName }
+        });
+      })
+      .catch((err) => {
+        // Fetch from server ko -> Dispatch error
+        dispatch({
+          type: GET_COUNTRIES_ERROR,
+          payload: err.message
+        });
+        // End loading
+        dispatch({
+          type: GET_COUNTRIES_LOADING,
+          payload: false
+        });
       });
-      // End loading
-      dispatch({
-        type: GET_COUNTRIES_LOADING,
-        payload: false
-      });
-    });
   };
 }
+
+export default getCountries;

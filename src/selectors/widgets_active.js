@@ -34,7 +34,15 @@ const getActiveWidgets = (_datasets, _filters, _compare) => {
     }
   });
 
-  return widgetList;
+  // 2019-10-16 client wanted the world commodity widget at the bottom
+  let result = widgetList;
+  const existWorldCommodity = widgetList.find(w => w.slug === 'world-price-usd-ton');
+  if (existWorldCommodity) {
+    result = result.slice(1, widgetList.length);
+    result.push(existWorldCommodity);
+  }
+
+  return result;
 };
 
 export default createSelector(
