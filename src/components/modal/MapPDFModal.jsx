@@ -16,7 +16,4 @@ const MapPDFModal = () => {
   );
 };
 
-MapPDFModal.propTypes = {
-};
-
 export default MapPDFModal;
