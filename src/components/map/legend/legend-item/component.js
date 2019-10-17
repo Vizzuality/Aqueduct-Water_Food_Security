@@ -138,7 +138,7 @@ class LegendItem extends PureComponent {
           ? <LegendGraph config={layer.legendConfig} />
           : <span className="error-message">{error}</span>
         }
-        <Spinner isLoading={loading} />
+        {loading && <Spinner isLoading={loading} />}
       </li>
     );
   }
