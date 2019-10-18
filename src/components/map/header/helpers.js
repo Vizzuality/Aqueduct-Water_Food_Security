@@ -52,11 +52,11 @@ export const getMapHeaderTemplate = (filters = {}) => {
   const { scope: scopeF, crop, year, type, indicator, food, irrigation, countryName } = filters;
   let waterIndicators = [];
 
-  if (year === 'baseline') waterIndicators = BASELINE_WATER_INDICATORS;
-
-  if (year !== 'baseline') {
-    if (type === 'absolute') waterIndicators = PROJECTED_WATER_INDICATORS_ABSOLUTE;
-
+  if (year === 'baseline') {
+    waterIndicators = BASELINE_WATER_INDICATORS;
+  } else if (year !== 'baseline' && type === 'absolute') {
+    waterIndicators = PROJECTED_WATER_INDICATORS_ABSOLUTE;
+  } else {
     waterIndicators = PROJECTED_WATER_INDICATORS_CHANGE;
   }
 
@@ -70,8 +70,9 @@ export const getMapHeaderTemplate = (filters = {}) => {
     ? (waterIndicators.find(w => w.value === indicator) || {}).name : null;
   const cropName = crop !== 'all' ? (CROP_OPTIONS.find(cr => cr.value === crop) || {}).label : null;
   const irrigationString = irrigation === 'all' ? IRRIGATION_OPTIONS.filter(irr => irr.value !== 'all').map(irr => capitalize(irr.label)).join(' & ') : capitalize(irrigation);
-  const isWaterStress = indicator === '4b000ded-5f4d-4dbd-83c9-03f2dfcd36db';
-  const isSeasonalVariability = indicator === 'd9785282-2140-463f-a82d-f7296687055a';
+  const isWaterStress = !!PROJECTED_WATER_INDICATORS_CHANGE.find(w => w.value === indicator);
+  const isSeasonalVariability = !!PROJECTED_WATER_INDICATORS_ABSOLUTE
+    .find(w => w.value === indicator);
 
   // Global, all crops, baseline
   if (scope === 'global' && crop === 'all' && year === 'baseline') {
