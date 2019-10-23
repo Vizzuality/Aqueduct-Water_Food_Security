@@ -1,6 +1,7 @@
 import layerSpec from 'utils/layers/layers';
 
 export const SET_FILTERS = 'SET_FILTERS';
+export const RESET_FILTERS = 'RESET_FILTERS';
 
 // FOOD OPTIONS
 export const FOOD_OPTIONS = layerSpec.filter(layer => layer.category === 'food').map((layer) => {

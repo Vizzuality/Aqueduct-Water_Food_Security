@@ -144,7 +144,8 @@ class Filters extends PureComponent {
       filters,
       className,
       withScope,
-      setLayerParametrization
+      setLayerParametrization,
+      resetFilters
     } = this.props;
     const disablesTimeline = !filters.indicator || filters.indicator === 'none';
     const componentClass = classnames('c-filters', { [className]: !!className });
@@ -190,17 +191,18 @@ class Filters extends PureComponent {
 
     return (
       <div className={componentClass}>
-        <a
-          href="/"
+        <button
+          type="button"
           style={{
             color: '#FFF',
             position: 'absolute',
             right: 20,
             bottom: 19
           }}
+          onClick={() => { resetFilters(); }}
         >
           Reset filters
-        </a>
+        </button>
 
         {/* Scope */}
         {withScope
@@ -403,7 +405,8 @@ Filters.propTypes = {
   yearOptions: PropTypes.array.isRequired,
   setFilters: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
-  setLayerParametrization: PropTypes.func.isRequired
+  setLayerParametrization: PropTypes.func.isRequired,
+  resetFilters: PropTypes.func.isRequired
 };
 
 Filters.defaultProps = {

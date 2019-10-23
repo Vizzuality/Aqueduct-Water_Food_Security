@@ -1,4 +1,4 @@
-import { SET_FILTERS } from 'constants/filters';
+import { SET_FILTERS, RESET_FILTERS } from 'constants/filters';
 
 const initialState = {
   page: '',
@@ -22,6 +22,9 @@ export default function (state = initialState, action) {
     case SET_FILTERS: {
       const newState = Object.assign({}, state, action.payload);
       return newState;
+    }
+    case RESET_FILTERS: {
+      return initialState;
     }
     default:
       return state;

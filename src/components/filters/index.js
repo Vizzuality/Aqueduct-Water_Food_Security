@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 // actions
 import { toggleModal } from 'aqueduct-components';
-import { setFilters } from 'actions/filters';
+import { setFilters, resetFilters } from 'actions/filters';
 import { setLayerParametrization } from 'actions/map';
 
 // selectors
@@ -20,6 +20,7 @@ export default connect(
   {
     toggleModal,
     setFilters,
+    resetFilters,
     setLayerParametrization
   }
 )(Filters);
