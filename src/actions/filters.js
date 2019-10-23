@@ -2,7 +2,7 @@ import * as Cookies from 'js-cookie';
 import { toastr } from 'react-redux-toastr';
 
 // constants
-import { SET_FILTERS } from 'constants/filters';
+import { SET_FILTERS, RESET_FILTERS } from 'constants/filters';
 import { MESSAGES } from 'constants/messages';
 import {
   BASELINE_WATER_INDICATORS,
@@ -40,6 +40,12 @@ export function setFilters(filters) {
       type: SET_FILTERS,
       payload: filters
     });
+  };
+}
+
+export function resetFilters() {
+  return (dispatch) => {
+    dispatch({ type: RESET_FILTERS });
   };
 }
 
