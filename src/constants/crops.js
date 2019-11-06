@@ -12,7 +12,7 @@ export const CROP_COLOR_DICTIONARY = {
 };
 
 export const CROP_OPTIONS = [
-  { value: 'all', label: 'All available crops' },
+  { value: 'all', label: 'All crops' },
   { value: 'arabica coffee', label: 'Arabica coffee', color: CROP_COLOR_DICTIONARY.stimulants },
   { value: 'banana', label: 'Banana', color: CROP_COLOR_DICTIONARY.fruit_nuts },
   { value: 'barley', label: 'Barley', color: CROP_COLOR_DICTIONARY.cereals },
