@@ -21,18 +21,15 @@ export const BASELINE_WATER_INDICATORS = [
   },
   {
     name: 'Drought Risk',
-    value: '57124c97-e121-4673-9b24-3a3c9e342477',
-    warning: 'not-rainfed-relevant'
+    value: '57124c97-e121-4673-9b24-3a3c9e342477'
   },
   {
     name: 'Coastal Eutrophication Potential',
-    value: 'ff9b7610-01d7-452f-81ae-18080e0d9e50',
-    warning: 'not-rainfed-relevant'
+    value: 'ff9b7610-01d7-452f-81ae-18080e0d9e50'
   },
   {
     name: 'Unimproved/no Drinking Water',
-    value: 'e2702e54-1cb0-445e-b01a-439802a1eb48',
-    warning: 'not-rainfed-relevant'
+    value: 'e2702e54-1cb0-445e-b01a-439802a1eb48'
   }
 ];
 
