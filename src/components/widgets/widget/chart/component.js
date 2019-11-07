@@ -81,7 +81,7 @@ class WidgetChart extends PureComponent {
   }
 
   render() {
-    const { toggleLoading, toggleTooltip } = this.props;
+    const { filters, toggleLoading, toggleTooltip } = this.props;
     const { widgetConfig, data } = this.state;
 
     if (widgetConfig.type === 'text') {
@@ -89,6 +89,7 @@ class WidgetChart extends PureComponent {
         <WidgetText
           widgetConfig={widgetConfig}
           data={data}
+          filters={filters}
           toggleLoading={toggleLoading}
         />
       );
