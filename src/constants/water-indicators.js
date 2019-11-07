@@ -26,10 +26,6 @@ export const BASELINE_WATER_INDICATORS = [
   {
     name: 'Coastal Eutrophication Potential',
     value: 'ff9b7610-01d7-452f-81ae-18080e0d9e50'
-  },
-  {
-    name: 'Unimproved/no Drinking Water',
-    value: 'e2702e54-1cb0-445e-b01a-439802a1eb48'
   }
 ];
 
