@@ -3,12 +3,29 @@ import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 
 class WidgetText extends PureComponent {
+  getWidgetTemplate() {
+    const { widgetConfig, filters } = this.props;
+    const { year } = filters;
+    const {
+      template,
+      template_baseline: templateBaseline,
+      template_future: templateFuture
+    } = widgetConfig;
+    const isBaseline = year === 'baseline';
+    let widgetTemplate = template || '';
+
+    if (isBaseline && templateBaseline) widgetTemplate = templateBaseline;
+    if (!isBaseline && templateFuture) widgetTemplate = templateFuture;
+
+    return widgetTemplate;
+  }
+
   render() {
     const { widgetConfig, data } = this.props;
     const { template_config: templateConfig } = widgetConfig;
     const _data = data[0];
 
-    let { template } = widgetConfig;
+    let template = this.getWidgetTemplate();
 
     if (_data) {
       templateConfig.forEach((param) => {
@@ -41,6 +58,7 @@ class WidgetText extends PureComponent {
 
 WidgetText.propTypes = {
   data: PropTypes.array,
+  filters: PropTypes.object.isRequired,
   widgetConfig: PropTypes.object.isRequired
 };
 
