@@ -99,20 +99,6 @@ export const APP_DEFINITIONS = {
             <td class='-a-center'>✔</td>
             <td></td>
           </tr>
-          <tr>
-            <td>Unimproved/No Drinking Water</td>
-            <td>Unimproved/no drinking water reflects the percentage of the population collecting drinking water from an
-            unprotected dug well or spring, or directly from a river,
-            dam, lake, pond, stream, canal, or irrigation canal (WHO
-            and UNICEF 2017). Specifically, the indicator aligns with
-            the unimproved and surface water categories of the Joint
-            Monitoring Programme (JMP)—the lowest tiers of drinking water services. Higher values indicate areas
-            where people have less access to safe drinking
-            water supplies.</td>
-            <td class='-a-center'>✔</td>
-            <td class='-a-center'>✔</td>
-            <td></td>
-          </tr>
         </table>
       <div>`,
     source: 'For seasonal variability and future projections of water stress, see <a href="https://www.wri.org/publication/aqueduct-water-stress-projections-decadal-projections-water-supply-and-demand-using" target="_blank" rel="noopener noreferrer">WRI Aqueduct 2015</a>. For all other baseline water risk indicators, see <a href="https://www.wri.org/publication/aqueduct-30" target="_blank" rel="noopener noreferrer">WRI Aqueduct 2019</a>.'
