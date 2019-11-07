@@ -6,11 +6,6 @@ export const BASELINE_WATER_INDICATORS = [
     timeline: true
   },
   {
-    name: 'Water Depletion',
-    value: '1f918367-a7b7-44b2-a1eb-4e288969563f',
-    warning: 'not-rainfed-relevant'
-  },
-  {
     name: 'Groundwater Table Decline',
     value: '2b180d04-237e-4ed9-b7a7-a643751f0ff0',
     warning: 'not-rainfed-relevant'
@@ -26,43 +21,15 @@ export const BASELINE_WATER_INDICATORS = [
   },
   {
     name: 'Drought Risk',
-    value: '57124c97-e121-4673-9b24-3a3c9e342477',
-    warning: 'not-rainfed-relevant'
-  },
-  {
-    name: 'Riverine Flood Risk',
-    value: '5c8093ce-025e-47a7-a6c8-060e4a061a73',
-    warning: 'not-rainfed-relevant'
-  },
-  {
-    name: 'Coastal Flood Risk',
-    value: '658feec8-d3c3-48aa-accf-caaddcdb9a32',
-    warning: 'not-rainfed-relevant'
-  },
-  {
-    name: 'Untreated Connected Wastewater',
-    value: 'a1da2419-1271-4db1-b3b4-0bf16632436c',
-    warning: 'not-rainfed-relevant'
+    value: '57124c97-e121-4673-9b24-3a3c9e342477'
   },
   {
     name: 'Coastal Eutrophication Potential',
-    value: 'ff9b7610-01d7-452f-81ae-18080e0d9e50',
-    warning: 'not-rainfed-relevant'
+    value: 'ff9b7610-01d7-452f-81ae-18080e0d9e50'
   },
   {
     name: 'Unimproved/no Drinking Water',
-    value: 'e2702e54-1cb0-445e-b01a-439802a1eb48',
-    warning: 'not-rainfed-relevant'
-  },
-  {
-    name: 'Unimproved/No Sanitation',
-    value: '6ad0e01e-ebc2-4747-988c-2e82902b6214',
-    warning: 'not-rainfed-relevant'
-  },
-  {
-    name: 'Peak RepRisk Country ESG Risk Index',
-    value: 'bada4f7f-792b-4b58-b7c0-453414b9e0cf',
-    warning: 'not-rainfed-relevant'
+    value: 'e2702e54-1cb0-445e-b01a-439802a1eb48'
   }
 ];
 
