@@ -26,7 +26,6 @@ export const CROP_OPTIONS = [
   { value: 'groundnut', label: 'Groundnut', color: CROP_COLOR_DICTIONARY.oilseed_crops },
   { value: 'lentil', label: 'Lentil', color: CROP_COLOR_DICTIONARY.pulses_leguminous },
   { value: 'maize', label: 'Maize', color: CROP_COLOR_DICTIONARY.cereals },
-  { value: 'millet', label: 'Millet', color: CROP_COLOR_DICTIONARY.cereals },
   { value: 'oilpalm', label: 'Oilpalm', color: CROP_COLOR_DICTIONARY.oilseed_crops },
   { value: 'other cereals', label: 'Other cereals', color: CROP_COLOR_DICTIONARY.cereals },
   { value: 'other fibre crops', label: 'Other fibres', color: CROP_COLOR_DICTIONARY.fibres },
