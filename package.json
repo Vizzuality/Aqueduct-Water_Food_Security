@@ -95,7 +95,7 @@
     "vega-lib": "^4.4.0",
     "vizzuality-components": "^2.0.0",
     "webpack": "^4.35.0",
-    "webpack-bundle-analyzer": "^2.4.0",
+    "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.3.5",
     "webpack-dev-middleware": "^3.7.0",
     "webpack-dev-server": "^3.7.2",
