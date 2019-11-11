@@ -59,7 +59,7 @@ export const URL = `https://wri-rw.carto.com/api/v2/sql?q=
 
   UNION ALL
 
-    SELECT 'Rainfed Area Drought Severity Risk Score' as name, value as value, label
+    SELECT 'Rainfed Area Drought Risk Score' as name, value as value, label
     FROM b
 `;
 

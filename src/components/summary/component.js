@@ -97,9 +97,9 @@ class Summary extends PureComponent {
             value: `${(IAWSSData) ? format('.2f')(IAWSSData.value) : '-'}`,
           });
 
-          const RADSRSData = data.rows.find(r => r.name === 'Rainfed Area Drought Severity Risk Score');
+          const RADSRSData = data.rows.find(r => r.name === 'Rainfed Area Drought Risk Score');
           fields.push({
-            title: 'Rainfed Area Drought Severity Risk Score',
+            title: 'Rainfed Area Drought Risk Score',
             label: RADSRSData && RADSRSData.label ? `${capitalizeFirstLetter(RADSRSData.label)}:` : null,
             value: `${(RADSRSData) ? format('.2f')(RADSRSData.value) : '-'}`
           });
