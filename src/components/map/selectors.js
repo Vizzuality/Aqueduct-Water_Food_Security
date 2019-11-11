@@ -201,7 +201,7 @@ export const getFoodLayers = createSelector(
 
 export const getLayerGroup = createSelector(
   [getActiveLayers, getFoodLayers],
-  (_layers, _foodLayers) => [..._layers, ..._foodLayers].filter(_layer => !_layer.isMarkerLayer)
+  (_layers, _foodLayers) => [..._layers, ..._foodLayers].filter(_layer => !_layer.isMarkerLayer && _layer.category !== 'mask')
     .map((_layer, index) => ({
       dataset: `random_id-${index}`,
       visibility: true,
