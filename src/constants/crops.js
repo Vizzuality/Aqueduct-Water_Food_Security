@@ -1,14 +1,14 @@
 export const CROP_COLOR_DICTIONARY = {
-  cereals: '#d95997',
-  pulses_leguminous: '#1230a5',
-  roots_tubers: '#32866d',
-  fruit_nuts: '#ffe01b',
-  oilseed_crops: '#6e23bd',
-  sugar_crops: '#ccf517',
-  fibres: '#6582a5',
-  stimulants: '#45539d',
-  vegetables: '#99c960',
-  other_crops: '#dc3355'
+  cereals: '#C71585',
+  pulses_leguminous: '#0000FF',
+  roots_tubers: '#A52A2A',
+  fruit_nuts: '#FFA500',
+  oilseed_crops: '#6B8E23',
+  sugar_crops: '#FFDAB9',
+  fibres: '#E6E6FA',
+  stimulants: '#8B4513',
+  vegetables: '#008000',
+  other_crops: '#2F4F4F'
 };
 
 export const CROP_OPTIONS = [

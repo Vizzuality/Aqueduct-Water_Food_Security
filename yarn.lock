@@ -1033,10 +1033,10 @@ aproba@^1.0.3, aproba@^1.1.1:
   resolved "https://registry.yarnpkg.com/aproba/-/aproba-1.2.0.tgz#6802e6264efd18c790a1b0d517f0f2627bf2c94a"
   integrity sha512-Y9J6ZjXtoYh8RnXVCMOU/ttDmk1aBjunq9vO0ta5x85WDQiQfUF9sIPBITdbiiIVcBo03Hi3jMxigBtsddlXRw==
 
-aqueduct-components@0.3.11:
-  version "0.3.11"
-  resolved "https://registry.yarnpkg.com/aqueduct-components/-/aqueduct-components-0.3.11.tgz#4a158807e43594991ca8b0adb911d29167a4a43f"
-  integrity sha512-et8piqxIO63uUf3qIxah9VqKRZRLZu9DIJRC4VsuCHsdA2VnZc3jxztO7qChaSLwUxdzr8eUy2RmEq3D9+EQxw==
+aqueduct-components@^0.3.12:
+  version "0.3.12"
+  resolved "https://registry.yarnpkg.com/aqueduct-components/-/aqueduct-components-0.3.12.tgz#99847dcf61cd2707b243b989aa9a43a2baece40e"
+  integrity sha512-qVloOUp7pPKZEIBIhWgUBz3wO3Psj2tGjnXB5gTwAftRXVvhDU7TMFYndspNg0TJYJWg2vCwN0zbvu77oXQwKg==
   dependencies:
     classnames "^2.2.5"
     clipboard "^1.6.1"
