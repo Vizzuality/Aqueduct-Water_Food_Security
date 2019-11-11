@@ -31,6 +31,7 @@ import Legend from './legend';
 
 // helpers
 import { prepareMarkerLayer, updateCartoCSS } from './helpers';
+import { parseMetadataLayer } from './utils';
 
 // constants
 import { LABEL_LAYER_CONFIG } from './constants';
@@ -149,7 +150,7 @@ class Map extends PureComponent {
     if (layers[0]) {
       toggleModal(true, {
         children: SourceModal,
-        childrenProps: { layer: layers[0] }
+        childrenProps: { layer: parseMetadataLayer(layers[0]) }
       });
     }
   }
