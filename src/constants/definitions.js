@@ -121,6 +121,28 @@ export const APP_DEFINITIONS = {
       For future water risk projections, see <a href="https://www.wri.org/publication/aqueduct-water-stress-projections-decadal-projections-water-supply-and-demand-using" target="_blank" rel="noopener noreferrer">WRI Aqueduct 2015</a>.
       For food security data (baseline and projections), see <a href="https://www.ifpri.org/program/impact-model" target="_blank" rel="noopener noreferrer">IFPRI IMPACT Model 2015</a>.
     `
+  },
+  area: {
+    title: 'Area',
+    source: '<a href="http://mapspam.info/data/" target="_blank" rel="noopener noreferrer">MapSPAM 2010</a>'
+  },
+  yield: {
+    title: 'Yield',
+    source: '<a href="http://mapspam.info/data/" target="_blank" rel="noopener noreferrer">MapSPAM 2010</a>'
+  },
+  'pop-risk-hunger': {
+    title: 'Population at risk of hunger',
+    source: '<a href="https://www.ifpri.org/program/impact-model" target="_blank" rel="noopener noreferrer">IFPRI IMPACT Model 2015</a>'
+  },
+  'irrigated-area-water-stress-score': {
+    title: 'Irrigated Area Water Stress Score',
+    source: `<a href="http://mapspam.info/data/" target="_blank" rel="noopener noreferrer">MapSPAM 2010</a>,
+      <a href="http://mapspam.info/data/" target="_blank" rel="noopener noreferrer">MapSPAM 2010</a>'`
+  },
+  'rainfed-area-drought-risk-score': {
+    title: 'Rainfed Area Drought Risk Score',
+    source: `<a href="http://mapspam.info/data/" target="_blank" rel="noopener noreferrer">MapSPAM 2010</a>,
+      <a href="https://www.wri.org/publication/aqueduct-30" target="_blank" rel="noopener noreferrer">Aqueduct 2019</a>'`
   }
 };
 

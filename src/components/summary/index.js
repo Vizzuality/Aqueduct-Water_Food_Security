@@ -1,5 +1,8 @@
 import { connect } from 'react-redux';
 
+// actions
+import { toggleModal } from 'aqueduct-components';
+
 // selectors
 import { getCountryName } from './selectors';
 
@@ -11,5 +14,5 @@ export default connect(
     countryName: getCountryName(state),
     filters: state.filters
   }),
-  null
+  { toggleModal }
 )(Summary);

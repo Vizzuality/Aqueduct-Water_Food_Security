@@ -2,12 +2,13 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'react-fast-compare';
 import { format } from 'd3-format';
-import { Spinner, capitalizeFirstLetter } from 'aqueduct-components';
+import { Spinner, capitalizeFirstLetter, Icon, InfoModal } from 'aqueduct-components';
 
 // utils
 import { getObjectConversion } from 'utils/filters';
 
 // constants
+import { APP_DEFINITIONS } from 'constants/definitions';
 import { SQL_CONFIG, URL } from './constants';
 
 class Summary extends PureComponent {
@@ -82,9 +83,11 @@ class Summary extends PureComponent {
 
         const fields = [{
           title: 'Area',
+          slug: 'area',
           value: `${(areaData) ? format('.3s')(areaData.value) : '-'} ha`
         }, {
           title: 'Pop. at risk of hunger',
+          slug: 'pop-risk-hunger',
           value: `${(popRiskHungerData) ? format('.2f')(popRiskHungerData.value) : '-'} %`
         }];
 
@@ -93,6 +96,7 @@ class Summary extends PureComponent {
           const IAWSSData = data.rows.find(r => r.name === 'Irrigated Area Water Stress Score');
           fields.push({
             title: 'Irrigated Area Water Stress Score',
+            slug: 'irrigated-area-water-stress-score',
             label: IAWSSData && IAWSSData.label ? `${capitalizeFirstLetter(IAWSSData.label)}:` : null,
             value: `${(IAWSSData) ? format('.2f')(IAWSSData.value) : '-'}`,
           });
@@ -100,6 +104,7 @@ class Summary extends PureComponent {
           const RADSRSData = data.rows.find(r => r.name === 'Rainfed Area Drought Risk Score');
           fields.push({
             title: 'Rainfed Area Drought Risk Score',
+            slug: 'rainfed-area-drought-risk-score',
             label: RADSRSData && RADSRSData.label ? `${capitalizeFirstLetter(RADSRSData.label)}:` : null,
             value: `${(RADSRSData) ? format('.2f')(RADSRSData.value) : '-'}`
           });
@@ -107,6 +112,7 @@ class Summary extends PureComponent {
           const yieldData = data.rows.find(r => r.name === 'Yield');
           fields.splice(1, 0, {
             title: 'Yield',
+            slug: 'yield',
             value: `${(yieldData) ? format('.3s')(yieldData.value) : '-'} tons/ha`
           });
         }
@@ -129,6 +135,17 @@ class Summary extends PureComponent {
     return `${countryName} summary ${_crop}`;
   }
 
+  openModal(slug) {
+    const { toggleModal } = this.props;
+
+    toggleModal(true, {
+      children: InfoModal,
+      childrenProps: {
+        info: APP_DEFINITIONS[slug] || {}
+      }
+    });
+  }
+
   render() {
     const { loading, fields } = this.state;
 
@@ -140,7 +157,19 @@ class Summary extends PureComponent {
           <ul className="summary-list">
             {!!fields && fields.map(_field => (
               <li key={`${_field.value}`}>
-                <span className="title">{_field.title}</span>
+                <span className="title">
+                  {_field.title}
+                  <button
+                    type="button"
+                    className="icon-container"
+                    onClick={() => this.openModal(_field.slug)}
+                  >
+                    <Icon
+                      name="icon-question"
+                      className="title-icon"
+                    />
+                  </button>
+                </span>
                 <span className="amount">{_field.label} {_field.value}</span>
               </li>
             ))}
@@ -153,7 +182,8 @@ class Summary extends PureComponent {
 
 Summary.propTypes = {
   filters: PropTypes.object.isRequired,
-  countryName: PropTypes.string.isRequired
+  countryName: PropTypes.string.isRequired,
+  toggleModal: PropTypes.func.isRequired
 };
 
 
