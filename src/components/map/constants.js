@@ -63,20 +63,20 @@ export const MARKER_LAYER = {
 
 export const WATER_INDICATORS_METADATA = {
   'Water-Stress': {
-    description: 'Water stress measures the ratio of total water withdrawals to available renewable surface and groundwater supplies. Water withdrawals include domestic, industrial, irrigation, and livestock consumptive and nonconsumptive uses. Available renewable water supplies include the impact of upstream consumptive water users and large dams on downstream water availability. Higher values indicate more competition among users.',
+    description: 'Measures the ratio of total annual water withdrawals to total available annual renewable supply, accounting for upstream consumptive use. Higher values indicate less water availability and more competition among users. Baseline values are generated using hydrological modeling of long-term trends from 1960 to 2014.',
     sources: [
-      {
-        'source-url': 'https://www.wri.org/publication/aqueduct-30',
-        'source-name': 'WRI Aqueduct 2019'
-      },
       {
         'source-url': 'https://www.wri.org/publication/aqueduct-water-stress-projections-decadal-projections-water-supply-and-demand-using',
         'source-name': 'WRI Aqueduct 2015'
+      },
+      {
+        'source-url': 'https://www.wri.org/publication/aqueduct-30',
+        'source-name': 'WRI Aqueduct 2019'
       }
     ]
   },
   'Groundwater-Table-Decline': {
-    description: 'Groundwater table decline measures the average decline of the groundwater table as the average change for the period of study (1990–2014). The result is expressed in centimeters per year (cm/yr). Higher values indicate higher levels of unsustainable groundwater withdrawals.',
+    description: 'Measures trends in the decline of the groundwater table. The slope of the decline correlates to the severity of the trend. Baseline values are generated using hydrological modeling from 1990 to 2014.',
     sources: [
       {
         'source-url': 'https://www.wri.org/publication/aqueduct-30',
@@ -85,7 +85,7 @@ export const WATER_INDICATORS_METADATA = {
     ]
   },
   'Interannual-Variability': {
-    description: 'Interannual variability measures the average betweenyear variability of available water supply, including both renewable surface and groundwater supplies. Higher values indicate wider variations in available supply from year to year.',
+    description: 'Measures the variability in water supply from year to year. It is an indicator of the unpredictability of supply. Baseline values are generated using hydrological modeling of long-term trends from 1960 to 2014.',
     sources: [
       {
         'source-url': 'https://www.wri.org/publication/aqueduct-30',
@@ -94,8 +94,12 @@ export const WATER_INDICATORS_METADATA = {
     ]
   },
   'Seasonal-Variability': {
-    description: 'Seasonal variability measures the average within-year variability of available water supply, including both renewable surface and groundwater supplies. Higher values indicate wider variations of available supply within a year.',
+    description: 'Measures the variation in water supply between months of the year. Areas with high seasonal variability may have extreme wet and/or dry seasons. Baseline values are generated using hydrological modeling of long-term trends from 1960 to 2014.',
     sources: [
+      {
+        'source-url': 'http://www.wri.org/publication/aqueduct-water-stress-projections-decadal-projections-water-supply-and-demand-using',
+        'source-name': 'WRI Aqueduct 2015'
+      },
       {
         'source-url': 'https://www.wri.org/publication/aqueduct-30',
         'source-name': 'WRI Aqueduct 2019'
@@ -103,7 +107,7 @@ export const WATER_INDICATORS_METADATA = {
     ]
   },
   'Drought-Risk': {
-    description: 'Drought risk measures where droughts are likely to occur, the population and assets exposed, and the vulnerability of the population and assets to adverse effects. Higher values indicate higher risk of drought.',
+    description: 'Estimates the average magnitude of droughts based on the severity and frequency of periods of time during which soil moisture remains low. Baseline values are generated using hydrological modeling of long-term trends from 1960 to 2014.',
     sources: [
       {
         'source-url': 'https://www.wri.org/publication/aqueduct-30',

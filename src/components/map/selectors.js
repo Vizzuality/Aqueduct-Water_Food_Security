@@ -184,6 +184,7 @@ export const getFoodLayers = createSelector(
     const datasetFound = _datasets.find(_dataset => _dataset.id === _filters.food);
 
     if (!datasetFound) return layers;
+    const { metadata } = datasetFound;
 
     const layerFound = datasetFound.layer.find(_layer => FOOD_LAYERS.includes(_layer.id));
     if (layerFound) {
@@ -191,7 +192,8 @@ export const getFoodLayers = createSelector(
         ...layerFound,
         name: currentLayerSpec.name,
         disableOpacity: true,
-        ...currentLayerSpec && { options: currentLayerSpec.layerOptions }
+        ...currentLayerSpec && { options: currentLayerSpec.layerOptions },
+        ...(metadata && metadata[0]) && { metadata: metadata[0] }
       });
     }
 
