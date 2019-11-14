@@ -336,7 +336,7 @@ class Filters extends PureComponent {
                       value={filters.indicator}
                       onValueChange={(selected) => {
                         this.handleWaterRiskIndicator(selected);
-                        setLayerParametrization({ opacity: 0.5 });
+                        setLayerParametrization({ opacity: 1 });
                         if (selected.value) logEvent('[AQ-Food] Map', 'select water risk indicator', selected.label);
                       }}
                     />
