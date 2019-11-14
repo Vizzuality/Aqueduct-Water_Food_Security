@@ -7,7 +7,7 @@ const initialState = {
   center,
   zoom,
   basemap: 'hydro',
-  parametrization: { opacity: 0.5 }
+  parametrization: { opacity: 1 }
 };
 
 export default function (state = initialState, action) {

@@ -24,13 +24,11 @@ export const APP_DEFINITIONS = {
           </tr>
           <tr>
             <td>Water Stress</td>
-            <td>Baseline water stress measures the ratio of total water
-            withdrawals to available renewable surface and groundwater supplies. Water withdrawals include domestic,
-            industrial, irrigation, and livestock consumptive and
-            nonconsumptive uses. Available renewable water supplies include the impact of upstream consumptive water
-            users and large dams on downstream water availability.
-            Higher values indicate more competition among
-            users. </td>
+            <td>Water stress measures the ratio of total water withdrawals to available renewable surface and groundwater supplies.
+              Water withdrawals include domestic, industrial, irrigation, and livestock consumptive and nonconsumptive uses.
+              Available renewable water supplies include the impact of upstream consumptive water users and large dams on
+              downstream water availability. Higher values indicate more competition among users.
+            </td>
             <td class='-a-center'>✔</td>
             <td></td>
             <td class='-a-center'>✔</td>
@@ -106,7 +104,16 @@ export const APP_DEFINITIONS = {
   'food-security': {
     title: 'Food security',
     instructions: "Select a country-level dataset to learn about the demand, production, and trade for your selected crop(s). Or, view average kilocalories per person and share of population at risk of hunger to learn more about the country's risk of food insecurity.",
-    description: '<p>The following datasets are available at a country scale for baseline (2010) and future years. Future projections are not available if water risk indicators without future projections have been selected (i.e., inter-annual variability, drought severity, groundwater stress, and groundwater table declining trend).</p><ul><li>Food demand for crop represents the household food demand for the selected crop(s).</li><li>Total crop production represents crop area harvested * crop yield.</li><li>Crop net trade represents the amount traded, where positive values indicate greater exports than imports.</li><li>Kilocalories per person represents the availability of calories per person.</li><li>Share of population at risk of hunger represents the percentage of the population at risk of suffering from malnourishment.</li></ul>',
+    description: `<p>The following datasets are available at a country scale for baseline (2010) and future years.
+      Future projections are not available if water risk indicators without future projections have been selected (i.e., interannual variability, drought risk, groundwater table decline, and coastal eutrophication potential).
+      </p>
+      <ul>
+        <li>Food demand for crop represents the household food demand for the selected crop(s).</li>
+        <li>Total crop production represents crop area harvested * crop yield.</li>
+        <li>Crop net trade represents the amount traded, where positive values indicate greater exports than imports.</li>
+        <li>Kilocalories per person represents the availability of calories per person.</li>
+        <li>Share of population at risk of hunger represents the percentage of the population at risk of suffering from malnourishment.</li>
+      </ul>`,
     source: '<a href="https://www.ifpri.org/program/impact-model" target="_blank" rel="noopener noreferrer">IFPRI IMPACT Model 2015</a>'
   },
   timeframe: {
@@ -115,12 +122,29 @@ export const APP_DEFINITIONS = {
     description: `
       <p>Baseline reflects different years depending on the dataset. Crop area baseline data are from 2010, food security baseline data is from 2010, and water risk baseline data is based on 1960-2014. Future projections are not available if water risk indicators without future projections have been selected (i.e., inter-annual variability, drought severity, groundwater stress, and groundwater table declining trend).</p>
       <p>In future years, select "absolute value" to see the projected water risk in the selected year or "change from baseline" to see the degree to which water risk is expected to increase or decrease over time. Future projections are based on business-as-usual climate change and water demand projections.</p>
-    `,
-    source: `
-      For baseline water risk methodology, see <a href="https://www.wri.org/publication/aqueduct-30" target="_blank" rel="noopener noreferrer">WRI Aqueduct 2019</a>.
-      For future water risk projections, see <a href="https://www.wri.org/publication/aqueduct-water-stress-projections-decadal-projections-water-supply-and-demand-using" target="_blank" rel="noopener noreferrer">WRI Aqueduct 2015</a>.
-      For food security data (baseline and projections), see <a href="https://www.ifpri.org/program/impact-model" target="_blank" rel="noopener noreferrer">IFPRI IMPACT Model 2015</a>.
     `
+  },
+  area: {
+    title: 'Area',
+    source: '<a href="http://mapspam.info/data/" target="_blank" rel="noopener noreferrer">MapSPAM 2010</a>'
+  },
+  yield: {
+    title: 'Yield',
+    source: '<a href="http://mapspam.info/data/" target="_blank" rel="noopener noreferrer">MapSPAM 2010</a>'
+  },
+  'pop-risk-hunger': {
+    title: 'Population at risk of hunger',
+    source: '<a href="https://www.ifpri.org/program/impact-model" target="_blank" rel="noopener noreferrer">IFPRI IMPACT Model 2015</a>'
+  },
+  'irrigated-area-water-stress-score': {
+    title: 'Irrigated Area Water Stress Score',
+    source: `<a href="http://mapspam.info/data/" target="_blank" rel="noopener noreferrer">MapSPAM 2010</a>,
+      <a href="http://mapspam.info/data/" target="_blank" rel="noopener noreferrer">MapSPAM 2010</a>'`
+  },
+  'rainfed-area-drought-risk-score': {
+    title: 'Rainfed Area Drought Risk Score',
+    source: `<a href="http://mapspam.info/data/" target="_blank" rel="noopener noreferrer">MapSPAM 2010</a>,
+      <a href="https://www.wri.org/publication/aqueduct-30" target="_blank" rel="noopener noreferrer">Aqueduct 2019</a>'`
   }
 };
 
