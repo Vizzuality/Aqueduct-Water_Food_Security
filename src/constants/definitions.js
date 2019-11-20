@@ -139,12 +139,12 @@ export const APP_DEFINITIONS = {
   'irrigated-area-water-stress-score': {
     title: 'Irrigated Area Water Stress Score',
     source: `<a href="http://mapspam.info/data/" target="_blank" rel="noopener noreferrer">MapSPAM 2010</a>,
-      <a href="http://mapspam.info/data/" target="_blank" rel="noopener noreferrer">MapSPAM 2010</a>'`
+      <a href="https://www.wri.org/publication/aqueduct-30" target="_blank" rel="noopener noreferrer">Aqueduct 2019</a>`
   },
   'rainfed-area-drought-risk-score': {
     title: 'Rainfed Area Drought Risk Score',
     source: `<a href="http://mapspam.info/data/" target="_blank" rel="noopener noreferrer">MapSPAM 2010</a>,
-      <a href="https://www.wri.org/publication/aqueduct-30" target="_blank" rel="noopener noreferrer">Aqueduct 2019</a>'`
+      <a href="https://www.wri.org/publication/aqueduct-30" target="_blank" rel="noopener noreferrer">Aqueduct 2019</a>`
   }
 };
 
