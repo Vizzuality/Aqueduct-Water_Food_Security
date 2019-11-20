@@ -104,12 +104,12 @@ export const APP_DEFINITIONS = {
   'food-security': {
     title: 'Food security',
     instructions: "Select a country-level dataset to learn about the demand, production, and trade for your selected crop(s). Or, view average kilocalories per person and share of population at risk of hunger to learn more about the country's risk of food insecurity.",
-    description: `<p>The following datasets are available at a country scale for baseline (2010) and future years.
-      Future projections are not available if water risk indicators without future projections have been selected (i.e., interannual variability, drought risk, groundwater table decline, and coastal eutrophication potential).
+    description: `<p>
+        The following datasets are available for a subset of the crops at a country scale for baseline (2010) and future years. Future projections are not available if water risk indicators without future projections have been selected (i.e., interannual variability, drought risk, groundwater table decline, and coastal eutrophication potential).
       </p>
       <ul>
         <li>Food demand for crop represents the household food demand for the selected crop(s).</li>
-        <li>Total crop production represents crop area harvested * crop yield.</li>
+        <li>Total crop production represents crop area harvested * crop yield. Crop net trade represents the amount traded, where positive values indicate greater exports than imports.</li>
         <li>Crop net trade represents the amount traded, where positive values indicate greater exports than imports.</li>
         <li>Kilocalories per person represents the availability of calories per person.</li>
         <li>Share of population at risk of hunger represents the percentage of the population at risk of suffering from malnourishment.</li>
@@ -120,8 +120,8 @@ export const APP_DEFINITIONS = {
     title: 'Timeframe',
     instructions: 'Select baseline or future years of 2030 or 2040 to learn about water risk over time. In future years, select "absolute value" to see the projected water risk in the selected year or "change from baseline" to see the degree to which water risk is expected to increase or decrease over time.',
     description: `
-      <p>Baseline reflects different years depending on the dataset. Crop area baseline data are from 2010, food security baseline data is from 2010, and water risk baseline data is based on 1960-2014. Future projections are not available if water risk indicators without future projections have been selected (i.e., inter-annual variability, drought severity, groundwater stress, and groundwater table declining trend).</p>
-      <p>In future years, select "absolute value" to see the projected water risk in the selected year or "change from baseline" to see the degree to which water risk is expected to increase or decrease over time. Future projections are based on business-as-usual climate change and water demand projections.</p>
+      <p>Baseline reflects different years depending on the dataset. Crop area baseline data are from 2010, food security baseline data are from 2010, and water risk baseline data are based on 1960-2014. Future projections are not available if water risk indicators without future projections have been selected (i.e., interannual variability, drought risk, groundwater table decline, and coastal eutrophication potential).</p>
+      <p>In future years, select "absolute value" to see the projected water risk in the selected year or "change from baseline" to see the degree to which water risk is expected to increase or decrease over time. Future projections are based on business-as-usual climate change and water demand projections. Note: Baseline and future projection water risk data are derived from different data sources. See sources for more information.</p>
     `
   },
   area: {
