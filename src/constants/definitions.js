@@ -99,7 +99,7 @@ export const APP_DEFINITIONS = {
           </tr>
         </table>
       <div>`,
-    source: 'For seasonal variability and future projections of water stress, see <a href="https://www.wri.org/publication/aqueduct-water-stress-projections-decadal-projections-water-supply-and-demand-using" target="_blank" rel="noopener noreferrer">WRI Aqueduct 2015</a>. For all other baseline water risk indicators, see <a href="https://www.wri.org/publication/aqueduct-30" target="_blank" rel="noopener noreferrer">WRI Aqueduct 2019</a>.'
+    source: 'For baseline water risk indicators, see <a href="https://www.wri.org/publication/aqueduct-30" target="_blank" rel="noopener noreferrer">WRI Aqueduct 2019</a>. For future projections of seasonal variability and water stress, see <a href="http://www.wri.org/publication/aqueduct-water-stress-projections-decadal-projections-water-supply-and-demand-using" target="_blank" rel="noopener noreferrer">WRI Aqueduct 2015</a>.'
   },
   'food-security': {
     title: 'Food security',
@@ -122,7 +122,8 @@ export const APP_DEFINITIONS = {
     description: `
       <p>Baseline reflects different years depending on the dataset. Crop area baseline data are from 2010, food security baseline data are from 2010, and water risk baseline data are based on 1960-2014. Future projections are not available if water risk indicators without future projections have been selected (i.e., interannual variability, drought risk, groundwater table decline, and coastal eutrophication potential).</p>
       <p>In future years, select "absolute value" to see the projected water risk in the selected year or "change from baseline" to see the degree to which water risk is expected to increase or decrease over time. Future projections are based on business-as-usual climate change and water demand projections. Note: Baseline and future projection water risk data are derived from different data sources. See sources for more information.</p>
-    `
+    `,
+    source: 'For baseline water risk methodology, see <a href="https://www.wri.org/publication/aqueduct-30" target="_blank" rel="noopener noreferrer">WRI Aqueduct 2019</a>. For future water risk projections, see <a href="http://www.wri.org/publication/aqueduct-water-stress-projections-decadal-projections-water-supply-and-demand-using" target="_blank" rel="noopener noreferrer">WRI Aqueduct 2015</a>. For food security data (baseline and projections), see <a href="https://www.ifpri.org/program/impact-model" target="_blank" rel="noopener noreferrer">IFPRI IMPACT Model 2015</a>.'
   },
   area: {
     title: 'Area',
