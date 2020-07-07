@@ -118,7 +118,7 @@ class Widget extends PureComponent {
       widget.widgetConfig.params_config,
       widget.widgetConfig.sql_config
     );
-    const { widgetConfig, queryUrl } = widgetParsed;
+    const { widgetConfig } = widgetParsed;
     const minHeight = getMinWidgetContentHeight(widgetConfig);
 
     const componentClass = classnames('c-widget', {
@@ -127,10 +127,7 @@ class Widget extends PureComponent {
     });
 
     return (
-      <div
-        className={componentClass}
-        ref={(el) => { this.widgetElem = el; }}
-      >
+      <div className={componentClass}>
         <div>
           {widgetConfig.type !== 'text' && (
             <header className="widget-header">
@@ -140,9 +137,8 @@ class Widget extends PureComponent {
 
               <WidgetButtons
                 widget={widget}
-                widgetElem={this.widgetElem}
-                queryUrl={queryUrl}
                 triggerAction={this.triggerAction}
+                filters={filters}
               />
             </header>
           )}

@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon, DropdownButton } from 'aqueduct-components';
+import { saveAs } from 'file-saver';
+import dateFnsFormat from 'date-fns/format';
 
 // utils
 import { logEvent } from 'utils/analytics';
+import { getObjectConversion } from 'utils/filters';
 
 class WidgetButtons extends React.Component {
   constructor(props) {
@@ -20,29 +23,53 @@ class WidgetButtons extends React.Component {
    */
   onDownload(format) {
     const {
-      widget: { name },
-      queryUrl,
+      widget,
+      filters,
       triggerAction
     } = this.props;
+    const { name, widgetConfig } = widget;
     logEvent(`[AQ-Food] Widget - ${name}`, 'select widget download format', format);
-    if (format === 'json' || format === 'csv') {
-      const link = document.createElement('a');
-      link.href = `${config.API_URL}/${(queryUrl || '').replace('query', 'download')}&format=${format}`;
-      const body = document.getElementsByTagName('body')[0];
-      body.appendChild(link);
-      link.click();
-      body.removeChild(link);
-    } else if (format === 'embed' || format === 'image' || format === 'pdf') {
+    if (['json', 'csv'].includes(format)) {
+      if (widgetConfig && widgetConfig.data && Array.isArray(widgetConfig.data)) {
+        const dataURL = widgetConfig.data.find(_data => Object.keys(_data).includes('url'));
+
+        if (!dataURL) return null;
+
+        const { url: urlString } = dataURL;
+        const url = new window.URL(urlString);
+        const searchParams = new URLSearchParams(url.searchParams);
+        const fileName = `${name}-${dateFnsFormat(Date.now(), 'yyyy-MM-dd\'T\'HH:mm:ss')}.${format}`;
+
+        if (widget.widgetConfig.params_config || widget.widgetConfig.sql_config) {
+          const widgetParsed = getObjectConversion(
+            widget,
+            filters,
+            widget.widgetConfig.dictionary || 'widget-2010',
+            widget.widgetConfig.params_config,
+            widget.widgetConfig.sql_config
+          );
+          const dataUrlParsedString = widgetParsed.widgetConfig.data.find(_data => Object.keys(_data).includes('url'));
+          const dataUrlParsed = new window.URL(dataUrlParsedString.url);
+          const dataUrlParsedSearchParams = new URLSearchParams(dataUrlParsed.searchParams);
+
+          searchParams.delete('q');
+          searchParams.append('q', dataUrlParsedSearchParams.get('q'));
+        }
+
+        searchParams.append('format', format);
+        url.search = searchParams.toString();
+
+        if (window.navigator.msSaveBlob) {
+          window.navigator.msSaveBlob(url.href, fileName);
+        } else {
+          saveAs(url.href, fileName);
+        }
+      }
+    } else if (['embed', 'image', 'pdf'].includes(format)) {
       triggerAction(format);
     }
-  }
 
-  // HELPERS
-  // - getDownloadUrl
-  getDownloadUrl() {
-    const { queryUrl } = this.props;
-    const downloadUrl = queryUrl || '';
-    return `${config.API_URL}/${downloadUrl.replace('query', 'download')}`;
+    return true;
   }
 
   // UI EVENTS
@@ -54,11 +81,10 @@ class WidgetButtons extends React.Component {
   }
 
   render() {
-    const { queryUrl } = this.props;
     const downloadOptions = [
       { label: 'Embed widget', value: 'embed' },
-      ...queryUrl ? [{ label: 'Download CSV', value: 'csv', disabled: true }] : [],
-      ...queryUrl ? [{ label: 'Download JSON', value: 'json', disabled: true }] : [],
+      { label: 'Download CSV', value: 'csv' },
+      { label: 'Download JSON', value: 'json' },
       { label: 'Download image', value: 'image' },
       { label: 'Download report', value: 'pdf' }
     ];
@@ -87,12 +113,10 @@ class WidgetButtons extends React.Component {
 }
 
 WidgetButtons.propTypes = {
-  queryUrl: PropTypes.string,
   triggerAction: PropTypes.func.isRequired,
-  widget: PropTypes.object.isRequired
+  widget: PropTypes.object.isRequired,
+  filters: PropTypes.object.isRequired
 };
-
-WidgetButtons.defaultProps = { queryUrl: null };
 
 
 export default WidgetButtons;
