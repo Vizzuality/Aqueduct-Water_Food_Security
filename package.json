@@ -59,7 +59,7 @@
     "jsonapi-serializer": "^3.4.1",
     "layer-manager": "1.15.3",
     "leaflet": "^1.1.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "moment": "^2.24.0",
     "morgan": "^1.7.0",
     "node-gyp": "^3.4.0",
