@@ -4,6 +4,8 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const isProduction = process.env.NODE_ENV;
+
 const config = {
   entry: [
     path.join(__dirname, '..', '..', 'src/main.jsx')
@@ -13,7 +15,7 @@ const config = {
     path: path.join(__dirname, '..', '..', 'dist/'),
     filename: '[name]-[hash].js',
     chunkFilename: '[name]-[hash].js',
-    publicPath: '/'
+    publicPath: isProduction ? './' : '/'
   },
 
   module: {
