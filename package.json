@@ -18,7 +18,7 @@
   "bugs": {
     "url": "https://github.com/Vizzuality/Aqueduct-Water_Food_Security/issues"
   },
-  "homepage": "http://vizzuality.github.io/Aqueduct-Water_Food_Security/",
+  "homepage": ".",
   "dependencies": {
     "@babel/core": "^7.4.5",
     "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
