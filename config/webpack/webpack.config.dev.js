@@ -9,12 +9,12 @@ module.exports = merge(webpackBaseConfig, {
     filename: '[name].[hash].js',
     chunkFilename: '[name].[hash].js',
     path: path.resolve(process.cwd(), 'dist'),
-    // publicPath: '/'
+    publicPath: '/',
   },
   devtool: '#eval-source-map',
   devServer: {
     contentBase: path.resolve(process.cwd(), 'public'),
-    port: 3000,
+    port: process.env.PORT,
     // host: '0.0.0.0',
     historyApiFallback: true
   },

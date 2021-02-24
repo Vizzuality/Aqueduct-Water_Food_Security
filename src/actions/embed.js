@@ -13,7 +13,7 @@ export function setEmbed(embed) {
 export function getWidget() {
   return (dispatch) => {
     const state = store.getState();
-    axios.get(`${config.API_URL}/dataset/${state.embed.id}?app=aqueduct&includes=widget`)
+    axios.get(`${config.API_URL}/dataset/${state.embed.id}?application=aqueduct&includes=widget`)
       .then(({ data }) => {
         const dataSerialized = WRISerializer(data);
         dispatch({

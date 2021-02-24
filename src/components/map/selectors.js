@@ -7,7 +7,6 @@ import { getBounds } from 'utils/map';
 
 // constants
 import { BASELINE_WATER_INDICATORS_IDS } from 'constants/water-indicators';
-import { CATEGORIES } from 'constants/filters';
 import { CROP_OPTIONS } from 'constants/crops';
 import { MAP_OPTIONS, BASEMAPS } from './constants';
 
@@ -82,9 +81,9 @@ export const getActiveLayers = createSelector(
     _datasets.forEach((dataset) => {
       if (dataset.layer && dataset.layer.length) {
         // isFood = (dataset.id === _filters.food);
-        isMask = (_filters.scope === 'country' && _filters.country && dataset.id === 'e844accd-9e65-414b-84e7-efc5bd65aa17');
-        isCrop = (_filters.indicator === 'none' && dataset.id === 'a57a457a-cee7-44a6-af0a-5c27176e0ec0');
-        isOneCrop = (_filters.indicator === 'none' && _filters.crop !== 'all' && dataset.id === 'a57a457a-cee7-44a6-af0a-5c27176e0ec0');
+        isMask = (_filters.scope === 'country' && _filters.country && dataset.id === 'ea9dacf1-c11e-4e6a-ad63-8804111a75ba');
+        isCrop = (_filters.indicator === 'none' && dataset.id === '4a2b250e-25ab-4da3-9b83-dc318995eee1');
+        isOneCrop = (_filters.indicator === 'none' && _filters.crop !== 'all' && dataset.id === '4a2b250e-25ab-4da3-9b83-dc318995eee1');
 
         if (isWater) {
           const family = _filters.year === 'baseline' ? 'baseline' : 'projected';
@@ -98,8 +97,8 @@ export const getActiveLayers = createSelector(
           }
         }
 
-        if (isCrop) currentLayer = dataset.layer.find(_layer => _filters.crop !== 'all' ? _layer.legendConfig.sqlQuery : _layer.default);
-        if (isOneCrop) currentLayer = dataset.layer.find(_layer => _layer.id === '064a524f-0e58-41fb-b948-f7bb66f43ef0');
+        if (isCrop) currentLayer = dataset.layer.find(_layer => (_filters.crop !== 'all' ? _layer.legendConfig.sqlQuery : _layer.default));
+        if (isOneCrop) currentLayer = dataset.layer.find(_layer => _layer.id === '32e964db-a2a0-4329-9bb1-470ebc99b622');
         if (isMask) currentLayer = dataset.layer.find(_layer => _layer.default);
 
         if (currentLayer && (isWater || isMask || isCrop || isOneCrop)) {
@@ -162,7 +161,7 @@ export const getActiveLayers = createSelector(
 
     // puts country mask always in the last place
     layerList.sort((current, next) => {
-      const maskLayerId = '87e294b1-80fe-4ddc-baac-d2e2e28d9894';
+      const maskLayerId = 'ea9dacf1-c11e-4e6a-ad63-8804111a75ba';
 
       if (current.id === maskLayerId && next.id !== maskLayerId) return 1;
       if (current.id !== maskLayerId && next.id === maskLayerId) return -1;

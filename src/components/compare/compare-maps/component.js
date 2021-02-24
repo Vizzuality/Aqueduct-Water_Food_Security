@@ -36,8 +36,8 @@ class CompareMaps extends PureComponent {
       foodLayers: nextFoodLayers,
       compareConfig: nextCompareConfig,
     } = nextProps;
-    const isSingleCropLayer = '064a524f-0e58-41fb-b948-f7bb66f43ef0';
-    const isAllCropsLayer = 'a533c717-8473-412c-add8-89b0a008e3ac';
+    const isSingleCropLayer = '32e964db-a2a0-4329-9bb1-470ebc99b622';
+    const isAllCropsLayer = 'f67f5553-cc70-441c-9d1a-59044d552d58';
 
     this.setState({ compareConfig: nextCompareConfig }, () => {
       if (nextFoodLayers[0]) {

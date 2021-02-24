@@ -71,10 +71,11 @@ class Map extends PureComponent {
     const foodLayersChanged = !isEqual(foodLayers, nextFoodLayers);
     const zoomChanged = zoom !== nextZoom;
     const parametrizationChanged = !isEqual(parametrization, nextParametrization);
-    const isSingleCropLayer = '064a524f-0e58-41fb-b948-f7bb66f43ef0';
-    const isAllCropsLayer = 'a533c717-8473-412c-add8-89b0a008e3ac';
+    const isSingleCropLayer = '32e964db-a2a0-4329-9bb1-470ebc99b622';
+    const isAllCropsLayer = 'f67f5553-cc70-441c-9d1a-59044d552d58';
 
-    if ((foodLayersChanged || filtersChanged || zoomChanged || parametrizationChanged) && nextFoodLayers[0]) {
+    if ((foodLayersChanged || filtersChanged || zoomChanged || parametrizationChanged)
+      && nextFoodLayers[0]) {
       this.setState({ loading: true }, () => {
         prepareMarkerLayer(nextFoodLayers[0], nextFilters, nextZoom, nextParametrization)
           .then((markerLayer) => {
@@ -253,7 +254,9 @@ class Map extends PureComponent {
                         index={i}
                         key={_layerGroup.dataset}
                         onChangeInfo={() => { this.openLayerInfo(_layerGroup); }}
-                        onChangeOpacity={(_layer, _opacity) => { this.handleLayerOpacity(_layer, _opacity); }}
+                        onChangeOpacity={
+                          (_layer, _opacity) => { this.handleLayerOpacity(_layer, _opacity); }
+                        }
                         layerGroup={_layerGroup}
                         toolbar={(
                           <LegendItemToolbar>
