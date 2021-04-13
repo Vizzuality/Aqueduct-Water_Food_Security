@@ -1,4 +1,4 @@
-FROM node:8.11.2
+FROM node:10.20.1
 
 ENV NODE_ENV production
 ENV API_URL https://api.resourcewatch.org/v1
