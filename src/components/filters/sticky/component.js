@@ -136,13 +136,10 @@ class StickyFilters extends PureComponent {
           <div>
             <span className="title">Water Risk</span>
             <CustomSelect
-              className="-gray"
-              options={waterOptions}
-              value={filters.indicator}
-              onValueChange={(selected) => {
-                this.handleWaterRiskIndicator(selected);
-                if (selected.value) logEvent('[AQ-Food] Map', 'select water risk indicator', selected.label);
-              }}
+              className="-disabled -gray"
+              options={[{category: "water", label: "Disabled", name: "Disabled", value: "disabled" }]}
+              value={'disabled'}
+              onValueChange={(selected) => { }}
             />
           </div>
           <div>

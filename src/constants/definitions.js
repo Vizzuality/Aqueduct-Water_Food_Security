@@ -6,9 +6,9 @@ export const APP_DEFINITIONS = {
     source: '<a href="http://mapspam.info/data/" target="_blank" rel="noopener noreferrer">MapSPAM 2010</a>'
   },
   'water-risk': {
-    title: 'Water Risk',
+    title: 'Water Risk (This filter is temporarily disabled)',
     instructions: 'Select an indicator to learn about current and future water risks in areas where selected crops are grown.',
-    description: `
+    escription: `
       <p>The map displays the level of water risk in areas producing the selected crop(s).</p>
       <p>The table below describes each of the water risk indicators. Note that some are more relevant for irrigated agriculture,
         and some are more relevant for rainfed agriculture. Future projections are only available for water stress and seasonal variability

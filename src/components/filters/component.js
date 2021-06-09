@@ -14,6 +14,7 @@ import {
 
 // components
 import CountrySelect from 'components/country-select';
+import Tooltip from 'components/tooltip';
 
 // constants
 import { APP_DEFINITIONS } from 'constants/definitions';
@@ -316,7 +317,7 @@ class Filters extends PureComponent {
 
                 <div className="small-12 medium-4 columns">
                   {/* Water */}
-                  <div className="c-filters-item">
+                  <div className="c-filters-item disabled">
                     <div className="filter-item-header">
                       <span className="title">Water Risk</span>
                       <button
@@ -332,13 +333,10 @@ class Filters extends PureComponent {
                     </div>
 
                     <CustomSelect
-                      options={waterOptions}
-                      value={filters.indicator}
-                      onValueChange={(selected) => {
-                        this.handleWaterRiskIndicator(selected);
-                        setLayerParametrization({ opacity: 1 });
-                        if (selected.value) logEvent('[AQ-Food] Map', 'select water risk indicator', selected.label);
-                      }}
+                      options={[{category: "water", label: "Disabled", name: "Disabled", value: "disabled" }]}
+                      className='-disabled'
+                      value={'disabled'}
+                      onValueChange={(selected) => { }}
                     />
                   </div>
                 </div>
