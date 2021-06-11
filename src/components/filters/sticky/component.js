@@ -133,7 +133,7 @@ class StickyFilters extends PureComponent {
               }}
             />
           </div>
-          <div>
+          <div title="This filter is temporarily unavailable.">
             <span className="title">Water Risk</span>
             <CustomSelect
               className="-disabled -gray"

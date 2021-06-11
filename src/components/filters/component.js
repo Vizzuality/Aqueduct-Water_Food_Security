@@ -317,7 +317,7 @@ class Filters extends PureComponent {
 
                 <div className="small-12 medium-4 columns">
                   {/* Water */}
-                  <div className="c-filters-item disabled">
+                  <div className="c-filters-item disabled" title="This filter is temporarily unavailable.">
                     <div className="filter-item-header">
                       <span className="title">Water Risk</span>
                       <button
