@@ -14,7 +14,6 @@ import {
 
 // components
 import CountrySelect from 'components/country-select';
-import Tooltip from 'components/tooltip';
 
 // constants
 import { APP_DEFINITIONS } from 'constants/definitions';
