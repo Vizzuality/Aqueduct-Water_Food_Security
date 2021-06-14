@@ -316,7 +316,7 @@ class Filters extends PureComponent {
 
                 <div className="small-12 medium-4 columns">
                   {/* Water */}
-                  <div className="c-filters-item disabled" title="This filter is temporarily unavailable.">
+                  <div className="c-filters-item">
                     <div className="filter-item-header">
                       <span className="title">Water Risk</span>
                       <button
@@ -332,10 +332,13 @@ class Filters extends PureComponent {
                     </div>
 
                     <CustomSelect
-                      options={[{category: "water", label: "Disabled", name: "Disabled", value: "disabled" }]}
-                      className='-disabled'
-                      value={'disabled'}
-                      onValueChange={(selected) => { }}
+                      options={waterOptions}
+                      value={filters.indicator}
+                      onValueChange={(selected) => {
+                        this.handleWaterRiskIndicator(selected);
+                        setLayerParametrization({ opacity: 1 });
+                        if (selected.value) logEvent('[AQ-Food] Map', 'select water risk indicator', selected.label);
+                      }}
                     />
                   </div>
                 </div>
