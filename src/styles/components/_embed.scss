@@ -60,8 +60,15 @@
       border-color: $border-color-2;
       background: palette(white);
 
-      &::after {
+      ::after {
         right: $space-1 * 2;
+      }
+
+      &.-disabled {
+        .custom-select-text {
+          font-weight: normal;
+          font-style: italic;
+        }
       }
 
       .custom-select-text {

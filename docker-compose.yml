@@ -1,15 +1,47 @@
-version: "2"
+# This is for development (not deployment)
+version: '2.1'
+
+x-app: &app
+  image: aqueduct-water-food-security:0.10
+  stdin_open: true
+  tty: true
+  build:
+    context: .
+    dockerfile: docker/Dockerfile
+    args:
+      NODE_VERSION: '10.20.1'
+  environment: &env
+    EDITOR: vi
+    HISTFILE: /log/.bash_history
+    NODE_ENV: ${NODE_ENV:-development}
+    REACT_APP_WRI_API_URL: //api.resourcewatch.org/v1
+    API_URL: https://api.resourcewatch.org/v1
+    BASEMAP_TILE_URL: https://api.tiles.mapbox.com/v4/wri.c974eefc/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoid3JpIiwiYSI6IjU3NWNiNGI4Njc4ODk4MmIyODFkYmJmM2NhNDgxMWJjIn0.v1tciCeBElMdpnrikGDrPg
+    # USERNAME: aqueduct
+    # PASSWORD: password
+  env_file: &env_file
+    - .env
+  tmpfs:
+    - /tmp
+  volumes:
+    - .:/app:cached
+    - node_modules:/node_modules
+
 services:
-  app:
-    command: "yarn start"
-    build:
-      context: .
-      dockerfile: Dockerfile
-    env_file: .env
-    environment:
-      - NODE_ENV=production
-      - PORT=3000
+  web:
+    <<: *app
+    # This might be helpful:
+    #   docker-compose run web yarn build
+    # but I'm not sure how Pantheon works yet.
+    command: yarn start
+    expose:
+      - "3000"
     ports:
-      - "3000:3000"
-    restart: always
-    container_name: aq-water-food-security
+      - "3040:3000"
+    # environment:
+    #   <<: *env
+    # env_file:
+    #   <<: *env_file
+
+volumes:
+  node_modules:

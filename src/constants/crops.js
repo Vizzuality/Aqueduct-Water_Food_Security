@@ -53,7 +53,9 @@ export const CROP_COLOR_DICTIONARY = {
 };
 
 export const CROP_OPTIONS = [
-  { value: 'all', label: 'All crops' },
+  // Disabled Jun 14, 2021
+  // NOTE: Disabling "All Crops" options until other issues can be debugged and resolved
+  // { value: 'all', label: 'All crops' },
   { value: 'arabica coffee', label: 'Arabica coffee', color: CROP_COLOR_DICTIONARY['arabica coffee'] },
   { value: 'banana', label: 'Banana', color: CROP_COLOR_DICTIONARY.banana },
   { value: 'barley', label: 'Barley', color: CROP_COLOR_DICTIONARY.barley },
