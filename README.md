@@ -14,9 +14,17 @@ This tool uses the IFPRI IMPACT Model: [https://www.ifpri.org/program/impact-mod
 3. Copy `.env.sample` to `.env` and set variables.
 4. Run `docker-compose up`. Visit localhost:3040.
 
+
 ## Deployment
+
 1. Run `docker-compose run web yarn build` to compile.
 2. Copy the build to the wriorg repo aqueduct-gr branch build directory.
 3. From the wriorg repo, commit and push changes to the aqueduct-gr branch. Enter your Pantheon password when prompted.
 
 
+## Git Flow
+
+1. Create all new branches by branching off `main`.
+2. Open pull requests against `main` as well.
+3. Merge branches into `develop` when they are ready to be deployed for testing. Add the `on develop` label to the PR so others know it should be there.
+4. When a change is ready to be deployed to the production website, merge it into `main`.
