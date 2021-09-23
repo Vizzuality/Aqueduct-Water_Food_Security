@@ -20,7 +20,7 @@ export const getIndicator = ({ indicator }) => {
     '4b000ded-5f4d-4dbd-83c9-03f2dfcd36db': 'water_stress',
     // Seasonal variability
     'd9785282-2140-463f-a82d-f7296687055a': 'seasonal_variability',
-    // Interannual variability
+    // Interannual Variability
     'bf657e60-de9c-4b7e-8736-d573d38e3ce1': 'interannual_variability',
     // Drought severity soil moisture
     '9c450642-f976-40eb-96b4-0c904d519578': 'drought_severity_soil',
@@ -39,7 +39,7 @@ export const getIndicator = ({ indicator }) => {
 export const getWaterColumn = ({ indicator, year, type }, sufix, widget) => {
   const layers = {
     // Water stress
-    '4b000ded-5f4d-4dbd-83c9-03f2dfcd36db': {
+    '8074ac9b-9cca-4aaf-a112-26166a8e9c7d': {
       indicator: 'ws',
       dataType: type === 'change_from_baseline' && !widget ? 'c' : 't',
       sufix: type === 'change_from_baseline' && !widget ? 'l' : 'r'
