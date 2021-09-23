@@ -7,7 +7,8 @@ export const APP_DEFINITIONS = {
   },
   'water-risk': {
     title: 'Water Risk',
-    instructions: 'Select an indicator to learn about current and future water risks in areas where selected crops are grown.',
+    instructions: 'This filter is temporarily unavailable as the site undergoes maintainance. Please check back later to use this functionality.',
+    // instructions: 'Select an indicator to learn about current and future water risks in areas where selected crops are grown.',
     description: `
       <p>The map displays the level of water risk in areas producing the selected crop(s).</p>
       <p>The table below describes each of the water risk indicators. Note that some are more relevant for irrigated agriculture,

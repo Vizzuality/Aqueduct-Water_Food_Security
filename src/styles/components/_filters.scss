@@ -4,4 +4,13 @@
       margin: 0 0 0 $space-1;
     }
   }
+  &.disabled .c-custom-select {
+    opacity: .45;
+    cursor: not-allowed;
+    pointer-events: none;
+    .custom-select-text {
+      font-weight: normal;
+      font-style: italic;
+    }
+  }
 }
