@@ -59,6 +59,36 @@ export const IDS = {
       projectedChange: null,
     }
   },
+  bwd: {
+    baseline: '160be93f-8c21-428a-b4c7-214b7ea4232d',
+    projectedAbsolute: null,
+    projectedChange: null,
+    legacy: {
+      baseline: '160be93f-8c21-428a-b4c7-214b7ea4232d',
+      projectedAbsolute: null,
+      projectedChange: null,
+    }
+  },
+  udw: {
+    baseline: '11a98f9a-c03c-4757-b144-c2a78757f281',
+    projectedAbsolute: null,
+    projectedChange: null,
+    legacy: {
+      baseline: '11a98f9a-c03c-4757-b144-c2a78757f281',
+      projectedAbsolute: null,
+      projectedChange: null,
+    }
+  },
+  usa: {
+    baseline: '3c3d5714-1200-4af1-b7c9-e1e01402319e',
+    projectedAbsolute: null,
+    projectedChange: null,
+    legacy: {
+      baseline: '3c3d5714-1200-4af1-b7c9-e1e01402319e',
+      projectedAbsolute: null,
+      projectedChange: null,
+    }
+  },
   // Template for when we have to add more indicators/ids
   // indicator_name: {
   //   baseline: null,
@@ -100,7 +130,19 @@ export const BASELINE_WATER_INDICATORS = [
   {
     name: 'Coastal Eutrophication Potential',
     value: IDS.cep.baseline,
-  }
+  },
+  {
+    name: 'Baseline Water Depletion',
+    value: IDS.bwd.baseline,
+  },
+  {
+    name: 'Unimproved Access to Drinking Water',
+    value: IDS.udw.baseline,
+  },
+  {
+    name: 'Unimproved Access to Sanitation',
+    value: IDS.usa.baseline,
+  },
 ];
 
 export const PROJECTED_WATER_INDICATORS_ABSOLUTE = [

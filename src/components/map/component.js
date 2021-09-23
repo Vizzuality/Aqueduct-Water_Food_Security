@@ -206,31 +206,7 @@ class Map extends PureComponent {
                   if (!loadingCartoCSS && !loadingMarkers) this.setState({ loading: false });
                 }}
               >
-                {layers.map((layer, i) => {
-                  // REMOVE ME BEFORE MERGING
-                  // console.log('LAYER', l, { layers })
-                  // let l = layer
-                  // if (layer.id === '32e964db-a2a0-4329-9bb1-470ebc99b622') {
-                  //   l = {
-                  //     ...l,
-                  //     layerConfig: {
-                  //       ...l.layerConfig,
-                  //       body: {
-                  //         ...l.layerConfig.body,
-                  //         layers: [
-                  //           {
-                  //             ...l.layerConfig.body.layers[0],
-                  //             options: {
-                  //               ...l.layerConfig.body.layers[0].options,
-                  //               // sql: `SELECT p.cartodb_id, r.the_geom_webmercator, r.the_geom, prod_total, bws_cat as water_risk, name_cntr FROM crops_projected p INNER JOIN y2018m12d06_rh_master_shape_v01 r ON ST_intersects(r.the_geom, p.the_geom) INNER JOIN water_risk_indicators_annual w ON w.aq30_id = r.aq30_id {{where}}`,
-                  //             }
-                  //           }
-                  //         ]
-                  //       }
-                  //     },
-                  //   }
-                  // }
-                  return (
+                {layers.map((l, i) => (
                     <Layer
                       {...l}
                       key={l.id}
@@ -245,8 +221,7 @@ class Map extends PureComponent {
                           : true
                       }}
                     />
-                  )
-                })}
+                  ))}
               </LayerManager>
 
               {mapControls && (

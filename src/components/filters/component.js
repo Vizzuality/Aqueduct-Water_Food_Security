@@ -148,7 +148,6 @@ class Filters extends PureComponent {
       resetFilters
     } = this.props;
     const disablesTimeline = !filters.indicator || filters.indicator === 'none';
-    console.log({ filters })
     const componentClass = classnames('c-filters', { [className]: !!className });
     const timeline = (
       <div className="c-filters-item">

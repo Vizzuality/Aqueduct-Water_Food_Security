@@ -92,14 +92,10 @@ export const getActiveLayers = createSelector(
 
           if (!currentWaterSpec) return;
 
-          console.log({ isWater, currentWaterSpec, dataset })
-
           if (dataset.id === currentWaterSpec.id) {
             currentLayer = dataset.layer.find(_layer => _layer.id === _filters.indicator);
           }
         }
-
-        console.log({ currentLayer })
 
         if (isCrop) currentLayer = dataset.layer.find(_layer => (_filters.crop !== 'all' ? _layer.legendConfig.sqlQuery : _layer.default));
         if (isOneCrop) currentLayer = dataset.layer.find(_layer => _layer.id === '32e964db-a2a0-4329-9bb1-470ebc99b622');
