@@ -131,18 +131,18 @@ export const BASELINE_WATER_INDICATORS = [
     name: 'Coastal Eutrophication Potential',
     value: IDS.cep.baseline,
   },
-  {
-    name: 'Baseline Water Depletion',
-    value: IDS.bwd.baseline,
-  },
-  {
-    name: 'Unimproved Access to Drinking Water',
-    value: IDS.udw.baseline,
-  },
-  {
-    name: 'Unimproved Access to Sanitation',
-    value: IDS.usa.baseline,
-  },
+  // {
+  //   name: 'Baseline Water Depletion',
+  //   value: IDS.bwd.baseline,
+  // },
+  // {
+  //   name: 'Unimproved Access to Drinking Water',
+  //   value: IDS.udw.baseline,
+  // },
+  // {
+  //   name: 'Unimproved Access to Sanitation',
+  //   value: IDS.usa.baseline,
+  // },
 ];
 
 export const PROJECTED_WATER_INDICATORS_ABSOLUTE = [
