@@ -131,6 +131,7 @@ export const BASELINE_WATER_INDICATORS = [
     name: 'Coastal Eutrophication Potential',
     value: IDS.cep.baseline,
   },
+  // UNCOMMENT FOR NEW INDICATORS
   // {
   //   name: 'Baseline Water Depletion',
   //   value: IDS.bwd.baseline,
