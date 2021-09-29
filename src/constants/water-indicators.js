@@ -109,11 +109,11 @@ export const BASELINE_WATER_INDICATORS = [
     warning: 'not-rainfed-relevant',
     timeline: true
   },
-  {
-    name: 'Groundwater Table Decline',
-    value: IDS.gtd.baseline,
-    warning: 'not-rainfed-relevant'
-  },
+  // UNCOMMENT FOR NEW INDICATORS
+  // {
+  //   name: 'Water Depletion',
+  //   value: IDS.bwd.baseline,
+  // },
   {
     name: 'Interannual Variability',
     value: IDS.iav.baseline,
@@ -124,6 +124,11 @@ export const BASELINE_WATER_INDICATORS = [
     timeline: true
   },
   {
+    name: 'Groundwater Table Decline',
+    value: IDS.gtd.baseline,
+    warning: 'not-rainfed-relevant'
+  },
+  {
     name: 'Drought Risk',
     value: IDS.drr.baseline,
   },
@@ -132,10 +137,6 @@ export const BASELINE_WATER_INDICATORS = [
     value: IDS.cep.baseline,
   },
   // UNCOMMENT FOR NEW INDICATORS
-  // {
-  //   name: 'Baseline Water Depletion',
-  //   value: IDS.bwd.baseline,
-  // },
   // {
   //   name: 'Unimproved Access to Drinking Water',
   //   value: IDS.udw.baseline,
