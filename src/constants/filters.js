@@ -13,7 +13,7 @@ export const FOOD_OPTIONS = layerSpec.filter(layer => layer.category === 'food')
 });
 
 // Add 'none' option
-FOOD_OPTIONS.push({
+FOOD_OPTIONS.unshift({
   label: 'None',
   value: 'none'
 });
