@@ -83,7 +83,7 @@ export const getActiveLayers = createSelector(
         // isFood = (dataset.id === _filters.food);
         isMask = (_filters.scope === 'country' && _filters.country && dataset.id === 'ea9dacf1-c11e-4e6a-ad63-8804111a75ba');
         isCrop = (_filters.indicator === 'none' && dataset.id === '4a2b250e-25ab-4da3-9b83-dc318995eee1');
-        isOneCrop = (_filters.indicator === 'none' && _filters.crop !== 'all' && dataset.id === '4a2b250e-25ab-4da3-9b83-dc318995eee1');
+        isOneCrop = (!isWater && _filters.indicator === 'none' && _filters.crop !== 'all' && dataset.id === '4a2b250e-25ab-4da3-9b83-dc318995eee1');
 
         if (isWater) {
           const family = _filters.year === 'baseline' ? 'baseline' : 'projected';

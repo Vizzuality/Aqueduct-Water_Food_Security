@@ -67,14 +67,14 @@ export const DATASETS = [
   // baseline water
   {
     id: '113258c9-14fc-4624-8b5c-76b064ac1ae9',
-    name: 'Water stress',
+    name: 'Water Risk',
     category: 'water',
     family: 'baseline'
   },
   // projected water
   {
     id: '3cca5144-63d2-4ddb-af53-094603b702f3',
-    name: 'Projected Water stress',
+    name: 'Projected Water Risk',
     category: 'water',
     family: 'projected'
   },
