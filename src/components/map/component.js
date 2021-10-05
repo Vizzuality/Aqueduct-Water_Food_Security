@@ -207,21 +207,21 @@ class Map extends PureComponent {
                 }}
               >
                 {layers.map((l, i) => (
-                  <Layer
-                    {...l}
-                    key={l.id}
-                    opacity={l.opacity}
-                    zIndex={1000 - i}
-                    {...l.params && { params: l.params }}
-                    {...l.sqlParams && { sqlParams: l.sqlParams }}
-                    {...l.decodeParams && { decodeParams: l.decodeParams }}
-                    {...l.interactionConfig && {
-                      interactivity: ['carto', 'cartodb'].includes(l.provider)
-                        ? (l.interactionConfig.output || []).map(o => o.column)
-                        : true
-                    }}
-                  />
-                ))}
+                    <Layer
+                      {...l}
+                      key={l.id}
+                      opacity={l.opacity}
+                      zIndex={1000 - i}
+                      {...l.params && { params: l.params }}
+                      {...l.sqlParams && { sqlParams: l.sqlParams }}
+                      {...l.decodeParams && { decodeParams: l.decodeParams }}
+                      {...l.interactionConfig && {
+                        interactivity: ['carto', 'cartodb'].includes(l.provider)
+                          ? (l.interactionConfig.output || []).map(o => o.column)
+                          : true
+                      }}
+                    />
+                  ))}
               </LayerManager>
 
               {mapControls && (
