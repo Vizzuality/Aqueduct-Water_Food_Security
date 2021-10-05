@@ -28,7 +28,7 @@ export const getWaterOptions = createSelector(
         ? PROJECTED_WATER_INDICATORS_ABSOLUTE : PROJECTED_WATER_INDICATORS_CHANGE;
     }
 
-    return [...waterIndicators, ...NONE_OPTION_WATER_INDICATORS].map(_waterIndicator => ({
+    return [...NONE_OPTION_WATER_INDICATORS, ...waterIndicators].map(_waterIndicator => ({
       ..._waterIndicator,
       label: _waterIndicator.name,
       category: 'water'
