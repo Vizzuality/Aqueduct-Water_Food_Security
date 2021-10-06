@@ -164,13 +164,13 @@ export const PROJECTED_WATER_INDICATORS_ABSOLUTE = [
 export const PROJECTED_WATER_INDICATORS_CHANGE = [
   {
     name: 'Water Stress',
-    value: IDS.bws.projectedAbsolute,
+    value: IDS.bws.projectedChange,
     warning: 'not-rainfed-relevant',
     timeline: true
   },
   {
     name: 'Seasonal Variability',
-    value: IDS.sev.projectedAbsolute,
+    value: IDS.sev.projectedChange,
     timeline: true
   }
 ];
