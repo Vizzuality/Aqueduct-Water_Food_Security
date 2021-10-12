@@ -68,11 +68,13 @@ class Filters extends PureComponent {
 
   openModal(slug) {
     const { toggleModal } = this.props;
+    const { props, ...info } = APP_DEFINITIONS[slug] || {}
 
     toggleModal(true, {
       children: InfoModal,
       childrenProps: {
-        info: APP_DEFINITIONS[slug]
+        info,
+        ...props
       }
     });
   }
@@ -276,12 +278,25 @@ class Filters extends PureComponent {
             />
           )}
         >
-          {withScope && filters.scope === 'supply_chain' && (
+          {/* UNCOMMENT IF WE WANT HEADER */}
+          {/* {withScope && filters.scope === 'supply_chain' && (
             <div className="filters-section">
               <h2>Supply Chain</h2>
-              <p>Highlight basins exceeding desired condition threshold</p>
+              <p>
+                Highlight basins exceeding desired condition threshold{' '}
+                <button
+                  type="button"
+                  className="icon-container"
+                  onClick={() => this.openModal('desired-condition-thresholds')}
+                >
+                  <Icon
+                    name="icon-question"
+                    className="-info -primary"
+                  />
+                </button>
+              </p>
             </div>
-          )}
+          )} */}
           <div>
             {withScope && filters.scope === 'country'
               && (
@@ -425,6 +440,32 @@ class Filters extends PureComponent {
             {filters.scope === 'supply_chain' && indicator && (
               <div className="filters-section" style={{ paddingRight: 24 }}>
                 <div className="row expanded collapse">
+                  <div
+                    className="small-12 medium-12 columns"
+                    style={{
+                      marginBottom: 48,
+                      display: 'flex',
+                      alignItems: 'start',
+                    }}
+                  >
+                    <div>
+                      <h4>
+                        {indicator.name} Desired Condition
+                      </h4>
+                      <p>(Adjust slider to change results)</p>
+                    </div>
+                    <button
+                      style={{ marginLeft: 8 }}
+                      type="button"
+                      className="icon-container"
+                      onClick={() => this.openModal('desired-condition-thresholds')}
+                    >
+                      <Icon
+                        name="icon-question"
+                        className="-info -primary"
+                      />
+                    </button>
+                  </div>
                   <div className="small-12 medium-12 columns">
                     <ThresholdSlider
                       threshold={parseFloat(filters.threshold) || 0}

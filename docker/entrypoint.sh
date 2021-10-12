@@ -2,8 +2,7 @@
 
 set -e
 
-yarn install --frozen-lockfile --production
-yarn cache clean
+yarn
 
 #export DOCKER_HOST_IP=$(route -n | grep UG | awk '{print $2}')
 

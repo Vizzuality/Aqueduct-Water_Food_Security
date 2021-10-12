@@ -65,7 +65,7 @@ class MapPageDesktop extends PureComponent {
             onStick={(isSticky) => { this.onSticky(isSticky); }}
             ScrollElem=".l-sidebar-content"
           >
-            {showStickyFilters && (
+            {showStickyFilters && filters.scope !== 'supply_chain' && (
               <StickyFilters
                 className="-country"
                 withScope

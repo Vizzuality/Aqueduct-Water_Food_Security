@@ -1,5 +1,6 @@
 .c-filters-item {
   > .filter-item-header {
+
     > .icon-container {
       margin: 0 0 0 $space-1;
     }
@@ -11,6 +12,21 @@
     .custom-select-text {
       font-weight: normal;
       font-style: italic;
+    }
+  }
+}
+
+.c-icon {
+  &.-info {
+    &.-primary {
+      border: 1px solid palette(blue, light);
+      fill: palette(blue, light);
+
+      &:hover {
+        fill: #2E57B8;
+        background-color: #AFC7FF;
+        border: 1px solid palette(blue, light);
+      }
     }
   }
 }
