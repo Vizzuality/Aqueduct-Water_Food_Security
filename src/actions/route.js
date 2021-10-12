@@ -6,7 +6,7 @@ import { setCompareCountry } from 'actions/compare';
 import { setEmbed } from 'actions/embed';
 
 export function onEnterMapPage({ location }, replace, done) {
-  const { crop, country, food, irrigation, scope, period, period_value, year, indicator, type, zoom } = location.query;
+  const { crop, country, food, irrigation, scope, period, period_value, year, indicator, type, zoom, threshold } = location.query;
   // TODO: this check is not as consistent as it should be. The right solution could be grouping all map params inside "map"
   // if there are map position params
   if (zoom) {
@@ -36,6 +36,7 @@ export function onEnterMapPage({ location }, replace, done) {
       period_value,
       year,
       indicator,
+      threshold,
       type,
       iso: country,
       page: 'map'

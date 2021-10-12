@@ -35,6 +35,7 @@ import { parseMetadataLayer } from './utils';
 
 // constants
 import { LABEL_LAYER_CONFIG } from './constants';
+import { ID_LOOKUP, WATER_INDICATORS } from 'constants/water-indicators'
 
 class Map extends PureComponent {
   constructor(props) {
@@ -206,22 +207,161 @@ class Map extends PureComponent {
                   if (!loadingCartoCSS && !loadingMarkers) this.setState({ loading: false });
                 }}
               >
-                {layers.map((l, i) => (
-                    <Layer
-                      {...l}
-                      key={l.id}
-                      opacity={l.opacity}
-                      zIndex={1000 - i}
-                      {...l.params && { params: l.params }}
-                      {...l.sqlParams && { sqlParams: l.sqlParams }}
-                      {...l.decodeParams && { decodeParams: l.decodeParams }}
-                      {...l.interactionConfig && {
-                        interactivity: ['carto', 'cartodb'].includes(l.provider)
-                          ? (l.interactionConfig.output || []).map(o => o.column)
-                          : true
-                      }}
-                    />
-                  ))}
+                {
+                  layers
+                  .map((layer, i) => {
+                    let l = layer
+                    // REMOVE THIS AFTER LAYER EXISTS
+                    if  (Object.keys(ID_LOOKUP).includes(l.id) && filters.scope === 'supply_chain') {
+                      const indicatorKey = ID_LOOKUP[this.props.filters.indicator]
+                      if (!indicatorKey) return null
+                      
+                      const indicator = WATER_INDICATORS[indicatorKey]
+                      if (!indicator) return null
+
+                      const newLayer = {
+                        ...l,
+                        "opacity": filters.opacity,
+                        "layerConfig": {
+                          "account": "wri-rw",
+                          "params_config": [
+                            {
+                              "key": "indicator",
+                              "required": true
+                            },
+                            {
+                              "key": "label",
+                              "required": true
+                            },
+                            {
+                              "key": "value",
+                              "required": true
+                            },
+                            {
+                              "key": "threshold",
+                              "required": false,
+                              "default": 0
+                            }
+                          ],
+                          // "sql_config": [
+                          //   {
+                          //     "key": "where",
+                          //     "key_params": [
+                          //       {
+                          //         "key": "iso",
+                          //         "required": false
+                          //       },
+                          //       {
+                          //         "key": "crop",
+                          //         "required": false
+                          //       },
+                          //       {
+                          //         "key": "irrigation",
+                          //         "required": false
+                          //       },
+                          //       {
+                          //         "key": "rank",
+                          //         "required": false
+                          //       }
+                          //     ]
+                          //   }
+                          // ],
+                          "body": {
+                            "maxzoom": 18,
+                            "minzoom": 3,
+                            "layers": [
+                              {
+                                "type": "cartodb",
+                                "options": {
+                                  "sql": "SELECT s.aq30_id as cartodb_id, coalesce(NULLIF({{label}},''), 'No Data') as label, r.the_geom, r.the_geom_webmercator, (CASE WHEN {{label}} = 'Insignificant Trend' THEN -1 ELSE coalesce({{indicator}}, -9999)END) as water_risk FROM water_risk_indicators_annual s LEFT JOIN y2018m12d06_rh_master_shape_v01 r on s.aq30_id=r.aq30_id WHERE s.pfaf_id != -9999 and s.gid_1 != '-9999' and r.aqid != -9999 and {{value}} >= {{threshold}} ORDER BY s.aq30_id",
+                                  "cartocss": "#water_risk_indicators_annual{ polygon-fill:transparent; polygon-opacity: 1; line-color:transparent; line-width: 1; line-opacity: 1; } #water_risk_indicators_annual [water_risk=4] { polygon-fill:#990000; line-color:#990000 } #water_risk_indicators_annual [water_risk=3] { polygon-fill:  #FF1900; line-color:  #FF1900 } #water_risk_indicators_annual [water_risk=2] { polygon-fill: #FF9900; line-color: #FF9900 } #water_risk_indicators_annual [water_risk=1] { polygon-fill: #FFE600; line-color:  #FFE600 } #water_risk_indicators_annual [water_risk=0] { polygon-fill: #FFFF99; line-color:  #FFFF99 } #water_risk_indicators_annual [water_risk=-1] { polygon-fill: #808080; line-color:  #808080 } #water_risk_indicators_annual [water_risk<-1] { polygon-fill: #4E4E4E; line-color:  #4E4E4E }",
+                                  "cartocss_version": "2.3.0"
+                                }
+                              },
+                              {
+                                "type": "cartodb",
+                                "options": {
+                                  "sql": "SELECT cartodb_id, the_geom_webmercator FROM crops_projected {{where}}",
+                                  "cartocss": "#layer{polygon-fill: #FF6600; polygon-opacity: 1; line-color: #FF6600; line-width: 0.5; line-opacity: 1; comp-op: dst-in;}",
+                                  "cartocss_version": "2.3.0"
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        "legendConfig": {
+                          "type": "choropleth",
+                          "items": [
+                            {
+                              "name": "Low",
+                              "value": "(<10%)",
+                              "color": "#FFFF99"
+                            },
+                            {
+                              "name": "Low-medium",
+                              "value": "(10-20%)",
+                              "color": "#FFE600"
+                            },
+                            {
+                              "name": "Medium-high",
+                              "value": "(20-40%)",
+                              "color": "#FF9900"
+                            },
+                            {
+                              "name": "High",
+                              "value": "(40-80%)",
+                              "color": "#FF1900"
+                            },
+                            {
+                              "name": "Extremely high",
+                              "value": "(>80%)",
+                              "color": "#990000"
+                            }
+                          ],
+                          "disclaimer": [
+                            {
+                              "name": "Arid and low water use",
+                              "color": "#808080"
+                            },
+                            {
+                              "name": "No data",
+                              "color": "#4E4E4E"
+                            }
+                          ]
+                        },
+                        "params": {
+                          indicator: `${indicatorKey}_cat`,
+                          label: `${indicatorKey}_label`,
+                          value: `${indicatorKey}_raw`,
+                          threshold: indicator.toRaw(filters.threshold)
+                        },
+                        // "sqlParams": {
+                        //     "where": {
+                        //         "rank": "1"
+                        //     }
+                        // },
+                      }
+
+                      l = newLayer
+                    }
+                    return (
+                      <Layer
+                        {...l}
+                        key={l.id}
+                        opacity={l.opacity}
+                        zIndex={1000 - i}
+                        {...l.params && { params: l.params }}
+                        {...l.sqlParams && { sqlParams: l.sqlParams }}
+                        {...l.decodeParams && { decodeParams: l.decodeParams }}
+                        {...l.interactionConfig && {
+                          interactivity: ['carto', 'cartodb'].includes(l.provider)
+                            ? (l.interactionConfig.output || []).map(o => o.column)
+                            : true
+                        }}
+                      />
+                    )
+                  })
+                }
               </LayerManager>
 
               {mapControls && (

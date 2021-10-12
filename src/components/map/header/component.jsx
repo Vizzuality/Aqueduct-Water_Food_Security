@@ -9,13 +9,18 @@ class MapHeader extends PureComponent {
   render() {
     const { dictionary, filters } = this.props;
 
-    return (
-      <Header
-        dictionary={dictionary}
-        filters={filters}
-        template={getMapHeaderTemplate(filters)}
-      />
-    );
+    // THROWS AN ERROR ABOUT REPLACING TEXT
+    console.log({ dictionary, filters, template: getMapHeaderTemplate(filters) })
+    
+    return null
+
+    // return (
+    //   <Header
+    //     dictionary={dictionary}
+    //     filters={filters}
+    //     template={getMapHeaderTemplate(filters)}
+    //   />
+    // );
   }
 }
 

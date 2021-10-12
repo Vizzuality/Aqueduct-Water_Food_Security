@@ -102,6 +102,406 @@ export const IDS = {
   // },
 }
 
+export const ID_LOOKUP = (
+  Object.entries(IDS)
+  .map(([k, vals]) => {
+    let result = []
+    const { legacy, ...others } = vals
+
+    result = [
+      ...result,
+      ...Object.values(others).filter(e => e),
+      ...Object.values(legacy).filter(e => e)
+    ]
+
+    return [k, result.reduce((acc, e) => acc.includes(e) ? acc : [...acc, e], [])]
+  })
+  .reduce((acc, [key, ids]) => {
+    let result = { ...acc }
+    ids.forEach(id => result[id] = key)
+    return result
+  }, {})
+)
+
+const NO_DATA_LEGEND_ITEM = {
+  color: '#4E4E4E',
+  name: 'No data'
+};
+
+const numberToRaw =  v => (v && parseFloat(v)) ? parseFloat(v) : 0
+const numberFromRaw =  v => (v && parseFloat(v)) ? parseFloat(v) : 0
+const percentToRaw =  v => (v && parseFloat(v)) ? parseFloat(v) / 100 : 0
+const percentFromRaw =  v => (v && parseFloat(v)) ? parseFloat(v) / 100 : 0
+
+export const WATER_INDICATORS = {
+  // Groundwater Table Decline
+  gtd: {
+    name: 'Groundwater Table Decline',
+    rangeValues: [-12, -6, 0, 0.5, 1, 2.5, 4, 5, 6, 26, 46],
+    toRaw: numberToRaw,
+    fromRaw: numberFromRaw,
+    defaultValue: 1,
+    unit: 'cm/y',
+    items: [
+      {
+        name: 'Low',
+        value: '(<0 cm/y)',
+        color: '#FFFF99'
+      },
+      {
+        name: 'Low-medium',
+        value: '(0-1 cm/y)',
+        color: '#FFE600'
+      },
+      {
+        name: 'Medium-high',
+        value: '(1-4 cm/y)',
+        color: '#FF9900'
+      },
+      {
+        name: 'High',
+        value: '(4-6 cm/y)',
+        color: '#FF1900'
+      },
+      {
+        name: 'Extremely high',
+        value: '(>6 cm/y)',
+        color: '#990000'
+      }
+    ],
+    disclaimer: [
+      {
+        color: '#808080',
+        name: 'Insignificant Trend'
+      },
+      NO_DATA_LEGEND_ITEM
+    ],
+    type: 'choropleth'
+  },
+  // Baseline Water Stress
+  bws: {
+    name: 'Baseline Water Stress',
+    rangeValues: [0, 5, 10, 15, 20, 30, 40, 60, 80, 90, 100],
+    toRaw: percentToRaw,
+    fromRaw: percentFromRaw,
+    defaultValue: 40,
+    unit: '%',
+    items: [
+      {
+        name: 'Low',
+        value: '(<10%)',
+        color: '#FFFF99'
+      },
+      {
+        name: 'Low-medium',
+        value: '(10-20%)',
+        color: '#FFE600'
+      },
+      {
+        name: 'Medium-high',
+        value: '(20-40%)',
+        color: '#FF9900'
+      },
+      {
+        name: 'High',
+        value: '(40-80%)',
+        color: '#FF1900'
+      },
+      {
+        name: 'Extremely high',
+        value: '(>80%)',
+        color: '#990000'
+      }
+    ],
+    disclaimer: [
+      {
+        color: '#808080',
+        name: 'Arid and low water use'
+      },
+      {
+        color: '#4E4E4E',
+        name: 'No data'
+      }
+    ],
+    type: 'choropleth'
+  },
+  // Baseline Water Depletion
+  bwd: {
+    name: 'Baseline Water Depletion',
+    rangeValues: [0, 2.5, 5, 15, 25, 37.5, 50, 62.5, 75, 87.5, 100],
+    toRaw: percentToRaw,
+    fromRaw: percentFromRaw,
+    defaultValue: 25,
+    unit: '%',
+    items: [
+      {
+        name: 'Low',
+        value: '(<5%)',
+        color: '#FFFF99'
+      },
+      {
+        name: 'Low-medium',
+        value: '(5-25%)',
+        color: '#FFE600'
+      },
+      {
+        name: 'Medium-high',
+        value: '(25-50%)',
+        color: '#FF9900'
+      },
+      {
+        name: 'High',
+        value: '(50-75%)',
+        color: '#FF1900'
+      },
+      {
+        name: 'Extremely high',
+        value: '(>75%)',
+        color: '#990000'
+      }
+    ],
+    disclaimer: [
+      {
+        color: '#808080',
+        name: 'Arid and low water use'
+      },
+      {
+        color: '#4E4E4E',
+        name: 'No data'
+      }
+    ],
+    type: 'choropleth'
+  },
+  // Interannual Variability
+  iav: {
+    name: 'Interannual Variability',
+    rangeValues: [0, 0.125, 0.25, 0.375, 0.50, 0.625, 0.75, 0.875, 1.0, 1.125, 1.25],
+    toRaw: numberToRaw,
+    fromRaw: numberFromRaw,
+    defaultValue: 0.4,
+    unit: '',
+    items: [
+      {
+        name: 'Low',
+        value: '(<0.25)',
+        color: '#FFFF99'
+      },
+      {
+        name: 'Low-medium',
+        value: '(0.25-0.50)',
+        color: '#FFE600'
+      },
+      {
+        name: 'Medium-high',
+        value: '(0.50-0.75)',
+        color: '#FF9900'
+      },
+      {
+        name: 'High',
+        value: '(0.75-1.00)',
+        color: '#FF1900'
+      },
+      {
+        name: 'Extremely high',
+        value: '(>1.00)',
+        color: '#990000'
+      }
+    ],
+    disclaimer: [NO_DATA_LEGEND_ITEM],
+    type: 'choropleth'
+  },
+  // Seasonal Variability
+  sev: {
+    name: 'Seasonal Variability',
+    rangeValues: [0, 0.165, 0.33, 0.495, 0.66, 0.825, 1.0, 1.165, 1.33, 0.495, 1.66],
+    toRaw: numberToRaw,
+    fromRaw: numberFromRaw,
+    defaultValue: 0.4,
+    unit: '',
+    items: [
+      {
+        name: 'Low',
+        value: '(<0.33)',
+        color: '#FFFF99'
+      },
+      {
+        name: 'Low-medium',
+        value: '(0.33-0.66)',
+        color: '#FFE600'
+      },
+      {
+        name: 'Medium-high',
+        value: '(0.66-1.00)',
+        color: '#FF9900'
+      },
+      {
+        name: 'High',
+        value: '(1.00-1.33)',
+        color: '#FF1900'
+      },
+      {
+        name: 'Extremely high',
+        value: '(>1.33)',
+        color: '#990000'
+      }
+    ],
+    disclaimer: [NO_DATA_LEGEND_ITEM],
+    type: 'choropleth'
+  },
+  // Drought Risk
+  drr: {
+    name: 'Drought Risk',
+    rangeValues: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+    toRaw: numberToRaw,
+    fromRaw: numberFromRaw,
+    defaultValue: 0.4,
+    unit: '',
+    items: [
+      {
+        name: 'Low',
+        value: '(0.0-0.2)',
+        color: '#FFFF99'
+      },
+      {
+        name: 'Low-medium',
+        value: '(0.2-0.4)',
+        color: '#FFE600'
+      },
+      {
+        name: 'Medium',
+        value: '(0.4-0.6)',
+        color: '#FF9900'
+      },
+      {
+        name: 'Medium-high',
+        value: '(0.6-0.8)',
+        color: '#FF1900'
+      },
+      {
+        name: 'High',
+        value: '(0.8-1.0)',
+        color: '#990000'
+      }
+    ],
+    disclaimer: [NO_DATA_LEGEND_ITEM],
+    type: 'choropleth'
+  },
+  // Coastal Eutrophication Potential
+  cep: {
+    name: 'Coastal Eutrophication Potential',
+    rangeValues: [-245, -125, -5, -2.5, 0, 0.5, 1, 3, 5, 45, 85],
+    toRaw: numberToRaw,
+    fromRaw: numberFromRaw,
+    defaultValue: 0,
+    unit: '',
+    items: [
+      {
+        name: 'Low',
+        value: '(<-5)',
+        color: '#FFFF99'
+      },
+      {
+        name: 'Low-medium',
+        value: '(-5 to 0)',
+        color: '#FFE600'
+      },
+      {
+        name: 'Medium-high',
+        value: '(0 to 1)',
+        color: '#FF9900'
+      },
+      {
+        name: 'High',
+        value: '(1 to 5)',
+        color: '#FF1900'
+      },
+      {
+        name: 'Extremely high',
+        value: '(>5)',
+        color: '#990000'
+      }
+    ],
+    disclaimer: [NO_DATA_LEGEND_ITEM],
+    type: 'choropleth'
+  },
+  // Unimproved/no drinking water
+  udw: {
+    name: 'Unimproved/No Drinking Water',
+    rangeValues: [0, 1.25, 2.5, 3.75, 5, 7.5, 10, 15, 20, 60, 100],
+    toRaw: percentToRaw,
+    fromRaw: percentFromRaw,
+    defaultValue: 5,
+    unit: '%',
+    items: [
+      {
+        name: 'Low',
+        value: '(<2.5%)',
+        color: '#FFFF99'
+      },
+      {
+        name: 'Low-medium',
+        value: '(2.5-5%)',
+        color: '#FFE600'
+      },
+      {
+        name: 'Medium-high',
+        value: '(5-10%)',
+        color: '#FF9900'
+      },
+      {
+        name: 'High',
+        value: '(10-20%)',
+        color: '#FF1900'
+      },
+      {
+        name: 'Extremely high',
+        value: '(>20%)',
+        color: '#990000'
+      }
+    ],
+    disclaimer: [NO_DATA_LEGEND_ITEM],
+    type: 'choropleth'
+  },
+  // Unimproved/no sanitation
+  usa: {
+    name: 'Unimproved/No Sanitation',
+    rangeValues: [0, 1.25, 2.5, 3.75, 5, 7.5, 10, 15, 20, 60, 100],
+    toRaw: percentToRaw,
+    fromRaw: percentFromRaw,
+    defaultValue: 5,
+    unit: '%',
+    items: [
+      {
+        name: 'Low',
+        value: '(<2.5%)',
+        color: '#FFFF99'
+      },
+      {
+        name: 'Low-medium',
+        value: '(2.5-5%)',
+        color: '#FFE600'
+      },
+      {
+        name: 'Medium-high',
+        value: '(5-10%)',
+        color: '#FF9900'
+      },
+      {
+        name: 'High',
+        value: '(10-20%)',
+        color: '#FF1900'
+      },
+      {
+        name: 'Extremely high',
+        value: '(>20%)',
+        color: '#990000'
+      }
+    ],
+    disclaimer: [NO_DATA_LEGEND_ITEM],
+    type: 'choropleth'
+  },
+}
+
 export const BASELINE_WATER_INDICATORS = [
   {
     name: 'Water Stress',

@@ -74,12 +74,14 @@ class MapPageDesktop extends PureComponent {
           </Sticky>
 
           {/* Widget List */}
-          <div className="l-sidebar-content">
-            {filters.scope === 'country' && filters.country && (
-              <Summary />
-            )}
-            <WidgetList />
-          </div>
+          {filters.scope !== 'supply_chain' && (
+            <div className="l-sidebar-content">
+              {filters.scope === 'country' && filters.country && (
+                <Summary />
+              )}
+              <WidgetList />
+            </div>
+          )}
         </Sidebar>
 
         {/* Map */}
