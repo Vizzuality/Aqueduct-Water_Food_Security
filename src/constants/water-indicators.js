@@ -511,11 +511,10 @@ export const BASELINE_WATER_INDICATORS = [
     warning: 'not-rainfed-relevant',
     timeline: true
   },
-  // UNCOMMENT FOR NEW INDICATORS
-  // {
-  //   name: 'Water Depletion',
-  //   value: IDS.bwd.baseline,
-  // },
+  {
+    name: 'Water Depletion',
+    value: IDS.bwd.baseline,
+  },
   {
     name: 'Interannual Variability',
     value: IDS.iav.baseline,
@@ -538,15 +537,14 @@ export const BASELINE_WATER_INDICATORS = [
     name: 'Coastal Eutrophication Potential',
     value: IDS.cep.baseline,
   },
-  // UNCOMMENT FOR NEW INDICATORS
-  // {
-  //   name: 'Unimproved Access to Drinking Water',
-  //   value: IDS.udw.baseline,
-  // },
-  // {
-  //   name: 'Unimproved Access to Sanitation',
-  //   value: IDS.usa.baseline,
-  // },
+  {
+    name: 'Unimproved Access to Drinking Water',
+    value: IDS.udw.baseline,
+  },
+  {
+    name: 'Unimproved Access to Sanitation',
+    value: IDS.usa.baseline,
+  },
 ];
 
 export const PROJECTED_WATER_INDICATORS_ABSOLUTE = [

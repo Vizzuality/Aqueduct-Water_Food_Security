@@ -9,6 +9,9 @@ class MapHeader extends PureComponent {
   render() {
     const { dictionary, filters } = this.props;
 
+    // This element isn't shown on the mocks
+    if (filters.scope === 'supply_chain') return null
+
     return (
       <Header
         dictionary={dictionary}
