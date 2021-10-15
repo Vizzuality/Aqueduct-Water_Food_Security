@@ -123,6 +123,8 @@ export const ID_LOOKUP = (
   }, {})
 )
 
+export const SUPPLY_CHAIN_LAYER_ID = "ffc878aa-efb1-4258-bd40-2cf9fbfb6ddd"
+
 const NO_DATA_LEGEND_ITEM = {
   color: '#4E4E4E',
   name: 'No data'

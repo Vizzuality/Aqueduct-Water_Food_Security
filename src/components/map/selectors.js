@@ -6,7 +6,7 @@ import { reduceParams, reduceSqlParams } from 'utils/layers/params-parser';
 import { getBounds } from 'utils/map';
 
 // constants
-import { BASELINE_WATER_INDICATORS_IDS } from 'constants/water-indicators';
+import { BASELINE_WATER_INDICATORS_IDS, SUPPLY_CHAIN_LAYER_ID } from 'constants/water-indicators';
 import { CROP_OPTIONS } from 'constants/crops';
 import { MAP_OPTIONS, BASEMAPS } from './constants';
 
@@ -86,14 +86,19 @@ export const getActiveLayers = createSelector(
         isOneCrop = (!isWater && _filters.indicator === 'none' && _filters.crop !== 'all' && dataset.id === '4a2b250e-25ab-4da3-9b83-dc318995eee1');
 
         if (isWater) {
-          const family = _filters.year === 'baseline' ? 'baseline' : 'projected';
+          const family = _filters.scope === 'supply_chain' ? 'baseline-threshold' : (_filters.year === 'baseline' ? 'baseline' : 'projected');
+
+          
           if (dataset.id !== WATER_SPECS[family]) return;
           const currentWaterSpec = layerSpec.find(_layer => _layer.family === family);
 
           if (!currentWaterSpec) return;
 
           if (dataset.id === currentWaterSpec.id) {
-            currentLayer = dataset.layer.find(_layer => _layer.id === _filters.indicator);
+            currentLayer = dataset.layer.find(_layer => {
+              if (_filters.scope === 'supply_chain') return _layer.id === SUPPLY_CHAIN_LAYER_ID
+              return _layer.id === _filters.indicator
+            });
           }
         }
 
