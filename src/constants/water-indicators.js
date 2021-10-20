@@ -504,6 +504,82 @@ export const WATER_INDICATORS = {
   },
 }
 
+export const SUPPLY_CHAIN_WATER_INDICATORS = [
+  {
+    name: 'Water Stress',
+    value: IDS.bws.baseline,
+    warning: 'not-rainfed-relevant',
+    timeline: true
+  },
+  {
+    name: 'Water Depletion',
+    value: IDS.bwd.baseline,
+  },
+  // {
+  //   name: 'Interannual Variability',
+  //   value: IDS.iav.baseline,
+  // },
+  // {
+  //   name: 'Seasonal Variability',
+  //   value: IDS.sev.baseline,
+  //   timeline: true
+  // },
+  {
+    name: 'Groundwater Table Decline',
+    value: IDS.gtd.baseline,
+    warning: 'not-rainfed-relevant'
+  },
+  // {
+  //   name: 'Drought Risk',
+  //   value: IDS.drr.baseline,
+  // },
+  {
+    name: 'Coastal Eutrophication Potential',
+    value: IDS.cep.baseline,
+  },
+  {
+    name: 'Unimproved Access to Drinking Water',
+    value: IDS.udw.baseline,
+  },
+  {
+    name: 'Unimproved Access to Sanitation',
+    value: IDS.usa.baseline,
+  },
+];
+
+export const ALLOWED_WATER_INDICATOR_KEYS_BY_SCOPE = {
+  global: [
+    'bws',
+    'bwd',
+    'gtd',
+    'drr',
+    'iav',
+    'sev',
+    'cep',
+    'udw',
+    'usa',
+  ],
+  country: [
+    'bws',
+    'bwd',
+    'gtd',
+    'drr',
+    'iav',
+    'sev',
+    'cep',
+    'udw',
+    'usa',
+  ],
+  supply_chain: [
+    'bws',
+    'bwd',
+    'gtd',
+    'cep',
+    'udw',
+    'usa',
+  ],
+}
+
 export const BASELINE_WATER_INDICATORS = [
   {
     name: 'Water Stress',

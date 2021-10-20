@@ -30,7 +30,8 @@ import {
   DEFAULT_PROJECTED_WATER_INDICATOR,
   EQUIVALENCE_WATER_INDICATORS_PROJECTED,
   ID_LOOKUP,
-  WATER_INDICATORS
+  WATER_INDICATORS,
+  ALLOWED_WATER_INDICATOR_KEYS_BY_SCOPE
 } from 'constants/water-indicators';
 
 // utils
@@ -49,11 +50,19 @@ class Filters extends PureComponent {
     this.updateFilters = this.updateFilters.bind(this);
   }
 
-  getIndicator(indicator) {
+  getIndicatorKey(indicator) {
     const {
       filters
     } = this.props
+
     const indicatorKey = ID_LOOKUP[indicator || filters.indicator]
+    if (!(ALLOWED_WATER_INDICATOR_KEYS_BY_SCOPE[filters.scope] || []).includes(indicatorKey)) return undefined
+
+    return indicatorKey
+  }
+
+  getIndicator(indicator) {
+    const indicatorKey = this.getIndicatorKey(indicator)
     return indicatorKey ? WATER_INDICATORS[indicatorKey] : undefined
   }
 
@@ -226,7 +235,7 @@ class Filters extends PureComponent {
 
         <CustomSelect
           options={waterOptions}
-          value={filters.indicator}
+          value={this.getIndicatorKey() ? filters.indicator : 'none'}
           onValueChange={(selected) => {
             this.handleWaterRiskIndicator(selected);
             setLayerParametrization({ opacity: 1 });
