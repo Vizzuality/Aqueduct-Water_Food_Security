@@ -136,7 +136,7 @@ export const APP_DEFINITIONS = {
   },
   'desired-condition-thresholds': {
     title: 'Desired Condition Thresholds',
-    content: 'Desired Condition Thresholds refer to the strategic goal relating to the reduction or elimination of water challenge. Editable default values are provided. The map will display catchments not meeting the specified desired conditions.',
+    content: 'A Desired condition threshold refers to the strategic goal relating to the reduction or elimination of a water challenge. Adjust the slider based on your ambition or basin needs. The provided default values represent examples of thresholds that have been adopted by the private sector for setting contextual water targets. The map will display catchments not meeting the specified desired conditions.',
     props: {
       omitDescription: true,
       omitInstructions: true

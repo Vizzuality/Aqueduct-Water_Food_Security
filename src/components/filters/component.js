@@ -15,6 +15,7 @@ import {
 
 // components
 import CountrySelect from 'components/country-select';
+import TooltipIcon from 'components/ui/TooltipIcon';
 
 // constants
 import { APP_DEFINITIONS } from 'constants/definitions';
@@ -447,46 +448,72 @@ class Filters extends PureComponent {
               </div>
             )}
             {filters.scope === 'supply_chain' && indicator && (
-              <div className="filters-section" style={{ paddingRight: 24 }}>
-                <div className="row expanded collapse">
-                  <div
-                    className="small-12 medium-12 columns"
-                    style={{
-                      marginBottom: 48,
-                      display: 'flex',
-                      alignItems: 'start',
-                    }}
-                  >
-                    <div>
-                      <h4>
-                        {indicator.name} Desired Condition
-                      </h4>
-                      <p>(Adjust slider to change results)</p>
+              <div className="filters-section">
+                <div className="c-filters-item">
+                  <div className="filter-item-header" style={{ marginBottom: 60 }}>
+                    <div className="title">
+                      <div>
+                        <p>
+                          <strong>{indicator.name} Desired Condition </strong>{' '}
+                          <TooltipIcon handleClick={() => this.openModal('desired-condition-thresholds')} />
+                          {/* <span className="title-icon">
+                            <Icon name="icon-question" handleClick={() => this.openModal('desired-condition-thresholds')} />
+                          </span> */}
+                        </p>
+                        <p style={{ fontSize: 16 }}>(Adjust slider to set a desired condition threshold)</p>
+                      </div>
                     </div>
-                    <button
-                      style={{ marginLeft: 8 }}
-                      type="button"
-                      className="icon-container"
-                      onClick={() => this.openModal('desired-condition-thresholds')}
-                    >
-                      <Icon
-                        name="icon-question"
-                        className="-info -primary"
-                      />
-                    </button>
                   </div>
-                  <div className="small-12 medium-12 columns">
-                    <ThresholdSlider
-                      threshold={parseFloat(filters.threshold) || 0}
-                      onChange={threshold => this.updateFilters(threshold, 'threshold')}
-                      values={indicator.rangeValues}
-                      defaultValue={indicator.defaultValue}
-                      unit={indicator.unit}
-                      ranges={indicator.items}
-                    />
-                  </div>
+                  <ThresholdSlider
+                    threshold={parseFloat(filters.threshold) || 0}
+                    onChange={threshold => this.updateFilters(threshold, 'threshold')}
+                    values={indicator.rangeValues}
+                    defaultValue={indicator.defaultValue}
+                    unit={indicator.unit}
+                    ranges={indicator.items}
+                  />
                 </div>
               </div>
+              // <div className="filters-section" style={{ paddingRight: 24 }}>
+              //   <div className="row expanded collapse">
+              //     <div
+              //       className="small-12 medium-12 columns"
+              //       style={{
+              //         marginBottom: 48,
+              //         display: 'flex',
+              //         alignItems: 'start',
+              //       }}
+              //     >
+              //       <div>
+              //         <h4>
+              //           {indicator.name} Desired Condition
+              //         </h4>
+              //         <p>(Adjust slider to set a desired condition threshold)</p>
+              //       </div>
+              //       <button
+              //         style={{ marginLeft: 8 }}
+              //         type="button"
+              //         className="icon-container"
+              //         onClick={() => this.openModal('desired-condition-thresholds')}
+              //       >
+              //         <Icon
+              //           name="icon-question"
+              //           className="-info -primary"
+              //         />
+              //       </button>
+              //     </div>
+              //     <div className="small-12 medium-12 columns">
+              //       <ThresholdSlider
+              //         threshold={parseFloat(filters.threshold) || 0}
+              //         onChange={threshold => this.updateFilters(threshold, 'threshold')}
+              //         values={indicator.rangeValues}
+              //         defaultValue={indicator.defaultValue}
+              //         unit={indicator.unit}
+              //         ranges={indicator.items}
+              //       />
+              //     </div>
+              //   </div>
+              // </div>
             )}
             {filters.scope !== 'supply_chain' && (
               <div className="filters-section">

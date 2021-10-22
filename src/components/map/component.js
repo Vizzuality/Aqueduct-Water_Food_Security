@@ -35,7 +35,6 @@ import { parseMetadataLayer } from './utils';
 
 // constants
 import { LABEL_LAYER_CONFIG } from './constants';
-import { ID_LOOKUP, WATER_INDICATORS } from 'constants/water-indicators'
 
 class Map extends PureComponent {
   constructor(props) {
