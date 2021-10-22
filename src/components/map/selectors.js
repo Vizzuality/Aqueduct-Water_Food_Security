@@ -6,7 +6,7 @@ import { reduceParams, reduceSqlParams } from 'utils/layers/params-parser';
 import { getBounds } from 'utils/map';
 
 // constants
-import { BASELINE_WATER_INDICATORS_IDS, SUPPLY_CHAIN_LAYER_ID, ALLOWED_WATER_INDICATOR_KEYS_BY_SCOPE, ID_LOOKUP } from 'constants/water-indicators';
+import { BASELINE_WATER_INDICATORS_IDS, SUPPLY_CHAIN_LAYER_ID, ALLOWED_WATER_INDICATOR_KEYS_BY_SCOPE, ID_LOOKUP, WATER_INDICATORS } from 'constants/water-indicators';
 import { CROP_OPTIONS } from 'constants/crops';
 import { MAP_OPTIONS, BASEMAPS } from './constants';
 
@@ -86,7 +86,8 @@ export const getActiveLayers = createSelector(
         isOneCrop = (!isWater && _filters.crop !== 'all' && dataset.id === '4a2b250e-25ab-4da3-9b83-dc318995eee1');
 
         if (isWater) {
-          if (!(ALLOWED_WATER_INDICATOR_KEYS_BY_SCOPE[_filters.scope] || []).includes(ID_LOOKUP[_filters.indicator])) return;
+          const indicatorKey = ID_LOOKUP[_filters.indicator]
+          if (!(ALLOWED_WATER_INDICATOR_KEYS_BY_SCOPE[_filters.scope] || []).includes(indicatorKey)) return;
 
           const family = _filters.scope === 'supply_chain' ? 'baseline-threshold' : (_filters.year === 'baseline' ? 'baseline' : 'projected');
           
@@ -101,6 +102,9 @@ export const getActiveLayers = createSelector(
               return _layer.id === _filters.indicator
             });
           }
+
+          // Override the legend based on indicator, since this layer doesn't imply a specific indicator
+          if (currentLayer && indicatorKey && WATER_INDICATORS[indicatorKey]) currentLayer.legendConfig = WATER_INDICATORS[indicatorKey]
         }
 
         if (isCrop) currentLayer = dataset.layer.find(_layer => (_filters.crop !== 'all' ? _layer.legendConfig.sqlQuery : _layer.default));
