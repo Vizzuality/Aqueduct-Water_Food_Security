@@ -96,9 +96,9 @@ class Filters extends PureComponent {
     } = this.props;
     const indicator = this.getIndicator(selected.value)
 
-    if (selected && indicator) {
+    if (selected && (indicator || selected.value === 'none')) {
       this.updateFilters(selected.value, 'indicator');
-      this.updateFilters(indicator.defaultValue, 'threshold');
+      this.updateFilters(indicator?.defaultValue || null, 'threshold');
       if (selected.value === 'none') this.updateFilters('baseline', 'year');
     }
 
