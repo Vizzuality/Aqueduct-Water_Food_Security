@@ -515,6 +515,7 @@ export const SUPPLY_CHAIN_WATER_INDICATORS = [
     name: 'Water Depletion',
     value: IDS.bwd.baseline,
   },
+<<<<<<< HEAD
   // {
   //   name: 'Interannual Variability',
   //   value: IDS.iav.baseline,
@@ -524,6 +525,8 @@ export const SUPPLY_CHAIN_WATER_INDICATORS = [
   //   value: IDS.sev.baseline,
   //   timeline: true
   // },
+=======
+>>>>>>> origin/develop
   {
     name: 'Groundwater Table Decline',
     value: IDS.gtd.baseline,
