@@ -8,6 +8,7 @@ import Sidebar from 'components/sidebar';
 import Filters from 'components/filters';
 import StickyFilters from 'components/filters/sticky';
 import WidgetList from 'components/widgets/widget-list';
+import Analyzer from 'components/analyzer'
 import Summary from 'components/summary';
 // import DownloadMapControl from 'components/map/map-controls/download-map';
 
@@ -74,13 +75,15 @@ class MapPageDesktop extends PureComponent {
           </Sticky>
 
           {/* Widget List */}
-          {filters.scope !== 'supply_chain' && (
+          {filters.scope !== 'supply_chain' ? (
             <div className="l-sidebar-content">
               {filters.scope === 'country' && filters.country && (
                 <Summary />
               )}
               <WidgetList />
             </div>
+          ) : (
+            <Analyzer />
           )}
         </Sidebar>
 

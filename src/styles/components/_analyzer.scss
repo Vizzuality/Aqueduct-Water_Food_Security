@@ -1,0 +1,15 @@
+.analyzer {
+  padding: ($space-1 * 4);
+  color: palette(black);
+
+  h4.title {
+    font-size: $font-size-extrabig;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  p.subtitle {
+    text-transform: uppercase;
+    font-size: $font-size-small;
+  }
+}
