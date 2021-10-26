@@ -65,7 +65,7 @@ class MapPageDesktop extends PureComponent {
             onStick={(isSticky) => { this.onSticky(isSticky); }}
             ScrollElem=".l-sidebar-content"
           >
-            {showStickyFilters && (
+            {showStickyFilters && filters.scope !== 'supply_chain' && (
               <StickyFilters
                 className="-country"
                 withScope
@@ -74,12 +74,14 @@ class MapPageDesktop extends PureComponent {
           </Sticky>
 
           {/* Widget List */}
-          <div className="l-sidebar-content">
-            {filters.scope === 'country' && filters.country && (
-              <Summary />
-            )}
-            <WidgetList />
-          </div>
+          {filters.scope !== 'supply_chain' && (
+            <div className="l-sidebar-content">
+              {filters.scope === 'country' && filters.country && (
+                <Summary />
+              )}
+              <WidgetList />
+            </div>
+          )}
         </Sidebar>
 
         {/* Map */}

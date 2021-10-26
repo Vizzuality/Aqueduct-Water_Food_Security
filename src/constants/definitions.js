@@ -134,6 +134,14 @@ export const APP_DEFINITIONS = {
     title: 'Yield',
     source: '<a href="http://mapspam.info/data/" target="_blank" rel="noopener noreferrer">MapSPAM 2010</a>'
   },
+  'desired-condition-thresholds': {
+    title: 'Desired Condition Thresholds',
+    content: 'A Desired condition threshold refers to the strategic goal relating to the reduction or elimination of a water challenge. Adjust the slider based on your ambition or basin needs. The provided default values represent examples of thresholds that have been adopted by the private sector for setting contextual water targets. The map will display catchments not meeting the specified desired conditions.',
+    props: {
+      omitDescription: true,
+      omitInstructions: true
+    }
+  },
   'pop-risk-hunger': {
     title: 'Population at risk of hunger',
     source: '<a href="https://www.ifpri.org/program/impact-model" target="_blank" rel="noopener noreferrer">IFPRI IMPACT Model 2015</a>'

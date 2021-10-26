@@ -206,7 +206,9 @@ class Map extends PureComponent {
                   if (!loadingCartoCSS && !loadingMarkers) this.setState({ loading: false });
                 }}
               >
-                {layers.map((l, i) => (
+                {
+                  layers
+                  .map((l, i) => (
                     <Layer
                       {...l}
                       key={l.id}
@@ -221,7 +223,8 @@ class Map extends PureComponent {
                           : true
                       }}
                     />
-                  ))}
+                  ))
+                }
               </LayerManager>
 
               {mapControls && (

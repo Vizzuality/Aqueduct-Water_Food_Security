@@ -19,3 +19,7 @@ package-lock.json
 
 # Compiled assets
 /dist
+
+# Yalc stuff
+yalc.lock
+.yalc*

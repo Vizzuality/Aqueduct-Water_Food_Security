@@ -26,6 +26,7 @@ x-app: &app
   volumes:
     - .:/app:cached
     - node_modules:/node_modules
+    - ~/docker/volumes/yalc:/yalc
 
 services:
   web:
@@ -42,6 +43,9 @@ services:
     #   <<: *env
     # env_file:
     #   <<: *env_file
+  shell:
+    <<: *app
+    command: /bin/sh
 
 volumes:
   node_modules:

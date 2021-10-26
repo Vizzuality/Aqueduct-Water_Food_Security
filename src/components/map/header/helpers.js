@@ -74,6 +74,10 @@ export const getMapHeaderTemplate = (filters = {}) => {
   const isSeasonalVariability = !!PROJECTED_WATER_INDICATORS_ABSOLUTE
     .find(w => w.value === indicator);
 
+  if (scope === 'supply_chain') {
+    return `Supply chain`
+  }
+
   // Global, all crops, baseline
   if (scope === 'global' && crop === 'all' && year === 'baseline') {
     // only "irrigated" or "rainfed" is selected

@@ -11,6 +11,7 @@ const initialState = {
   year: 'baseline',
   food: 'none',
   indicator: 'none',
+  threshold: undefined,
   irrigation: 'all',
   type: 'absolute',
   scenario: 'business_as_usual',

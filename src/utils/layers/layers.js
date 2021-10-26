@@ -91,6 +91,13 @@ export const DATASETS = [
     layerId: '4a2b250e-25ab-4da3-9b83-dc318995eee1',
     name: 'All crops',
     category: 'crop'
+  },
+  // baseline water with threshold
+  {
+    id: '6ab25d91-bdff-4215-b0af-902f6c85141d',
+    name: 'Water Risk with Threshold',
+    category: 'water',
+    family: 'baseline-threshold'
   }
 ];
 
