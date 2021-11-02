@@ -38,7 +38,7 @@ const Analyzer = ({ filters, setFilters }) => {
       <div className="analyzer">
         {tab === 'overall' && (
           <React.Fragment>
-            <div className="row expanded collapse align-justify align-bottom my-2">
+            <div className="row expanded collapse align-justify align-bottom">
               <div className="small-12 medium-6 columns">
                 <CropFilter
                   hideHelpIcon

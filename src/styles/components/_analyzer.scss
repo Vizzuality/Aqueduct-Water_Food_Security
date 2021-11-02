@@ -1,5 +1,5 @@
 .analyzer {
-  padding: ($space-1 * 4);
+  padding: ($space-1 * 2) ($space-1 * 4);
   color: $color-text-1;
   border-color: $color-text-1;
 
@@ -16,10 +16,6 @@
 
   .c-filters-item {
     color: $color-text-1;
-
-    &.space-around {
-      margin: ($space-1 * 2) 0;
-    }
 
     & > .filter-item-header {
       color: inherit;
@@ -53,6 +49,9 @@
     }
     .custom-select-options li {
       color: inherit;
+      &.-selected {
+        background-color: palette(gray, lightest);
+      }
     }
   }
 
@@ -70,7 +69,7 @@
 }
 
 // Might make sense to move this to aqueduct-components eventually
-$dark-sand: darken(palette(sand, primary), 10%);
+$dark-sand: darken(palette(sand, primary), 8%);
 
 .analyzer-tabs {
   width: 100%;
