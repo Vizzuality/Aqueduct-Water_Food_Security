@@ -25,7 +25,7 @@ export default function (state = initialState, action) {
       return newState;
     }
     case RESET_FILTERS: {
-      return initialState;
+      return { ...initialState, scope: state.scope };
     }
     default:
       return state;

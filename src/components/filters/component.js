@@ -16,6 +16,7 @@ import {
 // components
 import CountrySelect from 'components/country-select';
 import TooltipIcon from 'components/ui/TooltipIcon';
+import CropSelect from './filter-items/crops/crop-select'
 
 // constants
 import { APP_DEFINITIONS } from 'constants/definitions';
@@ -246,6 +247,8 @@ class Filters extends PureComponent {
       </div>
     )
 
+    console.log({ CROP_OPTIONS, filters, IRRIGATION_OPTIONS })
+
     return (
       <div className={componentClass}>
         <button
@@ -346,175 +349,114 @@ class Filters extends PureComponent {
                   </div>
                 </div>
               )}
-            <div className="filters-section">
-              <div className="row expanded collapse">
-                <div className={classnames("small-12", "columns", "medium-4")}>
-                  {/* Crops */}
-                  <div className="c-filters-item">
-                    <div className="filter-item-header">
-                      <span className="title">Crops</span>
-                      <button
-                        type="button"
-                        className="icon-container"
-                        onClick={() => this.openModal('crops')}
-                      >
-                        <Icon
-                          name="icon-question"
-                          className="title-icon"
-                        />
-                      </button>
-                    </div>
-
-                    <CustomSelect
-                      search
-                      options={CROP_OPTIONS.sort((c1, c2) => c1.label > c2.label ? 1 : -1)}
-                      value={filters.crop}
-                      onValueChange={(selected) => {
+            
+            {/* Base filters for all tabs but Supply Chain */}
+            {filters.scope !== 'supply_chain' && (
+              <div className="filters-section">
+                <div className="row expanded collapse">
+                  <div className={classnames("small-12", "columns", "medium-4")}>
+                    {/* Crops */}
+                    <CropSelect
+                      crop={filters.crop}
+                      irrigation={filters.irrigation}
+                      onHelpIconClick={() => this.openModal('crops')}
+                      onCropChange={(selected) => {
                         if (selected) {
                           this.updateFilters(selected.value, 'crop');
                           logEvent('[AQ-Food] Map', 'select crop', selected.label);
                         }
                       }}
-                    />
-
-                    <RadioGroup
-                      name="irrigation"
-                      items={IRRIGATION_OPTIONS}
-                      onChange={(selected) => {
+                      onIrrigationChange={(selected) => {
                         this.updateFilters(selected.value, 'irrigation');
                         if (selected.value) logEvent('[AQ-Food] Map', 'select irrigation', selected.label);
                       }}
-                      selected={filters.irrigation}
-                      className="-inline"
                     />
+                    
+                  </div>
+                  <div className="small-12 medium-4 columns">
+                    {/* Water */}
+                    {waterRiskIndicatorSelect}
+                  </div>
+                  <div className="small-12 medium-4 columns">
+                    {/* Food */}
+                    <div className="c-filters-item">
+                      <div className="filter-item-header">
+                        <span className="title">Food Security</span>
+                        <button
+                          type="button"
+                          className="icon-container"
+                          onClick={() => this.openModal('food-security')}
+                        >
+                          <Icon
+                            name="icon-question"
+                            className="title-icon"
+                          />
+                        </button>
+                      </div>
+
+                      <CustomSelect
+                        options={FOOD_OPTIONS}
+                        value={filters.food}
+                        onValueChange={(selected) => {
+                          if (selected) {
+                            this.updateFilters(selected.value, 'food');
+                            logEvent('[AQ-Food] Map', 'select food security', selected.label);
+                          }
+
+                          if (
+                            selected
+                            && filters.indicator === 'none'
+                            && !FOOD_OPTIONS.find(w => w.value === selected.value).timeline
+                          ) {
+                            this.updateFilters('absolute', 'type');
+                            this.updateFilters('baseline', 'year');
+                          }
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
-
-                {filters.scope !== 'supply_chain' && (
-                  <React.Fragment>
-                    <div className="small-12 medium-4 columns">
-                      {/* Water */}
-                      {waterRiskIndicatorSelect}
-                    </div>
-                    <div className="small-12 medium-4 columns">
-                      {/* Food */}
-                      <div className="c-filters-item">
-                        <div className="filter-item-header">
-                          <span className="title">Food Security</span>
-                          <button
-                            type="button"
-                            className="icon-container"
-                            onClick={() => this.openModal('food-security')}
-                          >
-                            <Icon
-                              name="icon-question"
-                              className="title-icon"
-                            />
-                          </button>
-                        </div>
-
-                        <CustomSelect
-                          options={FOOD_OPTIONS}
-                          value={filters.food}
-                          onValueChange={(selected) => {
-                            if (selected) {
-                              this.updateFilters(selected.value, 'food');
-                              logEvent('[AQ-Food] Map', 'select food security', selected.label);
-                            }
-
-                            if (
-                              selected
-                              && filters.indicator === 'none'
-                              && !FOOD_OPTIONS.find(w => w.value === selected.value).timeline
-                            ) {
-                              this.updateFilters('absolute', 'type');
-                              this.updateFilters('baseline', 'year');
-                            }
-                          }}
-                        />
-                      </div>
-                    </div>
-                  </React.Fragment>
-                )}
               </div>
-            </div>
+            )}
+
+            {/* Supply Chain Filters */}
             {filters.scope === 'supply_chain' && (
-              <div className="filters-section" style={{ paddingRight: 24 }}>
+              <div className="filters-section" style={{ paddingRight: 24, paddingBottom: 0 }}>
                 <div className="row expanded collapse">
                   <div className="small-12 medium-4 columns">
                     {waterRiskIndicatorSelect}
                   </div>
                 </div>
-              </div>
-            )}
-            {filters.scope === 'supply_chain' && indicator && (
-              <div className="filters-section">
-                <div className="c-filters-item">
-                  <div className="filter-item-header" style={{ marginBottom: 60 }}>
-                    <div className="title">
-                      <div>
-                        <p>
-                          <strong>{indicator.name} Desired Condition </strong>{' '}
-                          <TooltipIcon handleClick={() => this.openModal('desired-condition-thresholds')} />
-                          {/* <span className="title-icon">
-                            <Icon name="icon-question" handleClick={() => this.openModal('desired-condition-thresholds')} />
-                          </span> */}
-                        </p>
-                        <p style={{ fontSize: 16 }}>(Adjust slider to set a desired condition threshold)</p>
+                {indicator && (
+                  <div className="c-filters-item mt-4">
+                    <div className="filter-item-header mb-6">
+                      <div className="title">
+                        <div>
+                          <p>
+                            <strong>{indicator.name} Desired Condition </strong>{' '}
+                            <TooltipIcon handleClick={() => this.openModal('desired-condition-thresholds')} />
+                            {/* <span className="title-icon">
+                              <Icon name="icon-question" handleClick={() => this.openModal('desired-condition-thresholds')} />
+                            </span> */}
+                          </p>
+                          <p style={{ fontSize: 16 }}>(Adjust slider to set a desired condition threshold)</p>
+                        </div>
                       </div>
                     </div>
+                    <ThresholdSlider
+                      threshold={parseFloat(filters.threshold) || 0}
+                      onChange={threshold => this.updateFilters(threshold, 'threshold')}
+                      values={indicator.rangeValues}
+                      defaultValue={indicator.defaultValue}
+                      unit={indicator.unit}
+                      ranges={indicator.items}
+                    />
                   </div>
-                  <ThresholdSlider
-                    threshold={parseFloat(filters.threshold) || 0}
-                    onChange={threshold => this.updateFilters(threshold, 'threshold')}
-                    values={indicator.rangeValues}
-                    defaultValue={indicator.defaultValue}
-                    unit={indicator.unit}
-                    ranges={indicator.items}
-                  />
-                </div>
+                )}
               </div>
-              // <div className="filters-section" style={{ paddingRight: 24 }}>
-              //   <div className="row expanded collapse">
-              //     <div
-              //       className="small-12 medium-12 columns"
-              //       style={{
-              //         marginBottom: 48,
-              //         display: 'flex',
-              //         alignItems: 'start',
-              //       }}
-              //     >
-              //       <div>
-              //         <h4>
-              //           {indicator.name} Desired Condition
-              //         </h4>
-              //         <p>(Adjust slider to set a desired condition threshold)</p>
-              //       </div>
-              //       <button
-              //         style={{ marginLeft: 8 }}
-              //         type="button"
-              //         className="icon-container"
-              //         onClick={() => this.openModal('desired-condition-thresholds')}
-              //       >
-              //         <Icon
-              //           name="icon-question"
-              //           className="-info -primary"
-              //         />
-              //       </button>
-              //     </div>
-              //     <div className="small-12 medium-12 columns">
-              //       <ThresholdSlider
-              //         threshold={parseFloat(filters.threshold) || 0}
-              //         onChange={threshold => this.updateFilters(threshold, 'threshold')}
-              //         values={indicator.rangeValues}
-              //         defaultValue={indicator.defaultValue}
-              //         unit={indicator.unit}
-              //         ranges={indicator.items}
-              //       />
-              //     </div>
-              //   </div>
-              // </div>
             )}
+
+            {/* Timeline */}
             {filters.scope !== 'supply_chain' && (
               <div className="filters-section">
                 <div className="row expanded collapse">

@@ -1,6 +1,7 @@
 .analyzer {
   padding: ($space-1 * 4);
-  color: palette(black);
+  color: $color-text-1;
+  border-color: $color-text-1;
 
   h4.title {
     font-size: $font-size-extrabig;
@@ -11,5 +12,59 @@
   p.subtitle {
     text-transform: uppercase;
     font-size: $font-size-small;
+  }
+
+  .c-filters-item {
+    color: $color-text-1;
+
+    &.space-around {
+      margin: ($space-1 * 2) 0;
+    }
+
+    & > .filter-item-header {
+      color: inherit;
+
+      .title-icon {
+        border: solid 1px rgba(74, 89, 106, 0.13);
+        fill: $color-text-1;
+        &:hover {
+          background-color: transparent;
+          fill: palette(black);
+        }
+      }
+
+      .title {
+        color: inherit;
+      }
+    }
+  }
+
+  .c-custom-select {
+    color: inherit;
+    border-color: inherit;
+    &:after {
+      border-bottom-color: inherit;
+    }
+    .custom-select-text {
+      color: inherit;
+    }
+    .custom-select-search {
+      color: inherit;
+    }
+    .custom-select-options li {
+      color: inherit;
+    }
+  }
+
+  .c-radio {
+    label {
+      color: palette(gray, primary);
+      span {
+        border-color: palette(blue, secondary);
+      }
+    }
+    input[type=radio]:checked + label {
+      color: inherit
+    }
   }
 }

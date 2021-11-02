@@ -9,6 +9,29 @@
   }
 }
 
+$spacings: 6;
+
+@mixin spacing-x-list {
+  @for $i from 1 through $spacings {
+      .m-#{$i} { margin: ($space-1 * $i) !important }
+      .my-#{$i} { margin-top: ($space-1 * $i) !important; margin-bottom: ($space-1 * $i) !important }
+      .mx-#{$i} { margin-left: ($space-1 * $i) !important; margin-right: ($space-1 * $i) !important }
+      .mt-#{$i} { margin-top: ($space-1 * $i) !important }
+      .mr-#{$i} { margin-right: ($space-1 * $i) !important }
+      .mb-#{$i} { margin-bottom: ($space-1 * $i) !important }
+      .ml-#{$i} { margin-left: ($space-1 * $i) !important }
+      .m-#{$i} { padding: ($space-1 * $i) !important }
+      .py-#{$i} { padding-top: ($space-1 * $i) !important; padding-bottom: ($space-1 * $i) !important }
+      .px-#{$i} { padding-left: ($space-1 * $i) !important; padding-right: ($space-1 * $i) !important }
+      .pt-#{$i} { padding-top: ($space-1 * $i) !important }
+      .pr-#{$i} { padding-right: ($space-1 * $i) !important }
+      .pb-#{$i} { padding-bottom: ($space-1 * $i) !important }
+      .pl-#{$i} { padding-left: ($space-1 * $i) !important }
+  }
+}
+
+@include spacing-x-list;
+
 /*
   Responsive
 */
