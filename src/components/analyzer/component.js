@@ -5,6 +5,7 @@ import {
   RadioGroup
 } from 'aqueduct-components';
 import CustomTable from 'components/ui/Table/Table';
+import { ExportToCsv } from 'export-to-csv';
 import {
   ID_LOOKUP,
   WATER_INDICATORS,
@@ -13,8 +14,12 @@ import {
 import CropFilter from 'components/filters/filter-items/crops/crop-select'
 import BtnMenu from 'components/ui/BtnMenu';
 
+import DATA from './TEMP_DATA.json'
+
 // components
 import { DownloadableTable } from 'components/ui/analyzer';
+
+const HEADERS = Object.keys(DATA[0]).map(k => ({ label: k, value: k }))
 
 const Analyzer = ({ filters, setFilters }) => {
   const [imported, setImported] = useState(false)
@@ -26,6 +31,16 @@ const Analyzer = ({ filters, setFilters }) => {
   const indicatorSpec = WATER_INDICATORS[indicatorKey]
 
   const tab = filters.subscope
+
+  const downloadCSV = (event) => {
+    if (event) event.preventDefault();
+    const csvExporter = new ExportToCsv({
+      showLabels: true,
+      filename: `Prioritize Basins Analyzer - ${filters.indicator.name}`,
+      headers: HEADERS.map(c => c.label)
+    });
+    csvExporter.generateCsv(DATA);
+  };
 
   return (
     <React.Fragment>
@@ -87,17 +102,8 @@ const Analyzer = ({ filters, setFilters }) => {
                     ]}
                   >
                     <CustomTable
-                      columns={[
-                        {
-                          label: 'Watershed ID',
-                          value: 'watershed_id'
-                        },
-                      ]}
-                      data={[
-                        { watershed_id: '123' },
-                        { watershed_id: '456' },
-                        { watershed_id: '789' },
-                      ]}
+                      columns={HEADERS}
+                      data={DATA}
                       pagination={{
                         // enabled: data.length > 10,
                         enabled: true,
