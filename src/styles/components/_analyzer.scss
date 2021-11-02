@@ -68,3 +68,26 @@
     }
   }
 }
+
+// Might make sense to move this to aqueduct-components eventually
+$dark-sand: darken(palette(sand, primary), 10%);
+
+.analyzer-tabs {
+  width: 100%;
+  background-color: $dark-sand;
+  .c-segmented-ui.-tabs-light {
+    background-color: inherit;
+    .segmented-ui-item.-active {
+      .segmented-ui-btn {
+        background: palette(sand, primary);
+      }
+    }
+    .segmented-ui-btn {
+      color: palette(gray, primary);
+      background-color: inherit;
+      text-transform: none;
+      letter-spacing: 0.5px;
+      font-size: 15px;
+    }
+  }
+}
