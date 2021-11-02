@@ -4,6 +4,7 @@ const initialState = {
   page: '',
   crop: 'all',
   scope: 'global',
+  subscope: null,
   country: undefined,
   countryName: undefined,
   period: 'year',

@@ -3,7 +3,7 @@ import { replace } from 'react-router-redux';
 export function updateMapUrl() {
   return (dispatch, state) => {
     const { map, filters } = state();
-    const { period, period_value, year, country, crop, food, irrigation, scope, indicator, type, threshold } = filters;
+    const { period, period_value, year, country, crop, food, irrigation, scope, indicator, type, threshold, subscope } = filters;
     const locationDescriptor = {
       pathname: '/',
       query: {
@@ -19,6 +19,7 @@ export function updateMapUrl() {
         food,
         irrigation,
         scope,
+        subscope,
         indicator,
         threshold,
         type,

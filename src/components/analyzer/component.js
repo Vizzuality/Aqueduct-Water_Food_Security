@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
   SegmentedUi,
@@ -14,13 +14,14 @@ import CropFilter from 'components/filters/filter-items/crops/crop-select'
 import { DownloadableTable } from 'components/ui/analyzer';
 
 const Analyzer = ({ filters, setFilters }) => {
-  const [tab, setTab] = useState('overall')
 
   const indicatorKey = filters.indicator ? ID_LOOKUP[filters.indicator] : undefined
 
   if (!ALLOWED_WATER_INDICATOR_KEYS_BY_SCOPE.supply_chain.includes(indicatorKey)) return null
   
   const indicatorSpec = WATER_INDICATORS[indicatorKey]
+
+  const tab = filters.subscope
 
   return (
     <React.Fragment>
@@ -31,12 +32,12 @@ const Analyzer = ({ filters, setFilters }) => {
             { value: 'overall', label: 'Select Crops' },
             { value: 'analyzer', label: 'Supply Chain Analyzer' },
           ]}
-          selected={tab}
-          onChange={selected => setTab(selected.value)}
+          selected={filters.subscope || 'overall'}
+          onChange={selected => setFilters({ subscope: selected.value })}
         />
       </div>
       <div className="analyzer">
-        {tab === 'overall' && (
+        {tab !== 'analyzer' && (
           <React.Fragment>
             <div className="row expanded collapse align-justify align-bottom">
               <div className="small-12 medium-6 columns">
