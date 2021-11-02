@@ -1,11 +1,11 @@
 .analyzer {
-  padding: ($space-1 * 2) ($space-1 * 4);
+  padding: ($space-1 * 4);
   color: $color-text-1;
   border-color: $color-text-1;
 
   h4.title {
     font-size: $font-size-extrabig;
-    font-weight: 400;
+    font-weight: 500;
     line-height: 1.6;
   }
 
@@ -87,6 +87,103 @@ $dark-sand: darken(palette(sand, primary), 8%);
       text-transform: none;
       letter-spacing: 0.5px;
       font-size: 15px;
+    }
+  }
+}
+
+.downloadable-table {
+  .analyzer-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .expand-table-icon {
+      width: 15px;
+      height: 15px;
+      fill: palette(gray, dark);
+    }
+  }
+
+  .analyzer-content {
+    position: relative;
+    min-height: 150px;
+    margin: $space-1 0 0;
+
+    > .no-data-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 150px;
+
+      > .no-data {
+        color: palette(gray, dark);
+      }
+    }
+
+    > .table-container {
+      height: 225px;
+      overflow-y: hidden;
+
+      .c-table {
+        height: calc(100% - 50px);
+      }
+    }
+  }
+
+  > .analyzer-footer {
+    display: flex;
+    justify-content: center;
+    margin: $space-1 * 2 0 0;
+
+    > .apply-analysis-btn {
+      padding: ($space-1 / 2) $space-1 * 2;
+      background: palette(blue, dark);
+      font-size: $font-size-big;
+      color: palette(white);
+      text-transform: none;
+
+      &:hover {
+        background: darken(palette(blue, dark), 10%);
+      }
+    }
+  }
+}
+
+.download-container {
+  margin: $space-1 * 2 0;
+  color: palette(blue, secondary);
+
+  ul {
+    display: inline-flex;
+
+    > li {
+      color: palette(gray, dark);
+      margin: 0 0 0 $space-1;
+
+      > button {
+        color: inherit;
+        font-weight: 500;
+        text-decoration: underline;
+
+        &:hover {
+          cursor: pointer;
+          color: palette(blue, secondary);
+        }
+      }
+
+      &.download-spinner {
+        position: relative;
+        margin: 0 0 0 $space-1 * 5;
+      }
+    }
+  }
+
+  .download-instructions {
+    margin: $space-1 0 0 0;
+
+    > a {
+      color: palette(blue, secondary);
+      text-decoration: underline;
     }
   }
 }

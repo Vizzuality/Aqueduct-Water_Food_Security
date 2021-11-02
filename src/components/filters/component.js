@@ -247,8 +247,6 @@ class Filters extends PureComponent {
       </div>
     )
 
-    console.log({ CROP_OPTIONS, filters, IRRIGATION_OPTIONS })
-
     return (
       <div className={componentClass}>
         <button
