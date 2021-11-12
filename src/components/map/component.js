@@ -306,7 +306,7 @@ class Map extends PureComponent {
                     //     }
                     //   }
                     // }
-                    console.log({ l, layer, layers, data, ranges })
+                    // console.log({ l, layer, layers, data, ranges })
                     return (
                       <Layer
                         {...l}
