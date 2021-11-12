@@ -1,6 +1,9 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import compact from 'lodash/compact'
+import uniq from 'lodash/uniq'
 import isEqual from 'react-fast-compare';
+import isEmpty from 'lodash/isEmpty';
 import { PluginLeaflet } from 'layer-manager/dist/layer-manager';
 import { LayerManager, Layer } from 'layer-manager/dist/components';
 import {
@@ -35,6 +38,13 @@ import { parseMetadataLayer } from './utils';
 
 // constants
 import { LABEL_LAYER_CONFIG } from './constants';
+// TODO: Remove this file once the analyzer is wired up
+import RESULT_DATA from 'components/analyzer/TEMP_DATA.json'
+import {
+  extractTableValues,
+} from 'constants/analyzer'
+
+const DATA = extractTableValues(RESULT_DATA)
 
 class Map extends PureComponent {
   constructor(props) {
@@ -182,6 +192,25 @@ class Map extends PureComponent {
     } = this.state;
     const mapEvents = { moveend: (e, _map) => { this.updateMap(e, _map); } };
 
+    const data = uniq(compact(DATA.map(d => parseFloat(d['Watershed ID']).toFixed(0))))
+    const step = 500
+    const ranges = [
+      data.filter((e, i) => i < step),
+      data.filter((e, i) => i >= step && i < step * 2),
+      data.filter((e, i) => i >= step * 2 && i < step * 3),
+      data.filter((e, i) => i >= step * 3 && i < step * 4),
+      data.filter((e, i) => i >= step * 4 && i < step * 5),
+      data.filter((e, i) => i >= step * 5 && i < step * 6),
+      data.filter((e, i) => i >= step * 6 && i < step * 7),
+      data.filter((e, i) => i >= step * 7 && i < step * 8),
+      data.filter((e, i) => i >= step * 8 && i < step * 9),
+      data.filter((e, i) => i >= step * 9 && i < step * 10),
+      data.filter((e, i) => i >= step * 10 && i < step * 11),
+      data.filter((e, i) => i >= step * 11 && i < step * 12),
+      data.filter((e, i) => i >= step * 12 && i < step * 13),
+      data.filter((e, i) => i >= step * 13 && i < step * 14),
+    ].filter(range => !isEmpty(range))
+
     return (
       <div className="l-map">
         <Spinner
@@ -208,22 +237,93 @@ class Map extends PureComponent {
               >
                 {
                   layers
-                  .map((l, i) => (
-                    <Layer
-                      {...l}
-                      key={l.id}
-                      opacity={l.opacity}
-                      zIndex={1000 - i}
-                      {...l.params && { params: l.params }}
-                      {...l.sqlParams && { sqlParams: l.sqlParams }}
-                      {...l.decodeParams && { decodeParams: l.decodeParams }}
-                      {...l.interactionConfig && {
-                        interactivity: ['carto', 'cartodb'].includes(l.provider)
-                          ? (l.interactionConfig.output || []).map(o => o.column)
-                          : true
-                      }}
-                    />
-                  ))
+                  .reduce((acc, layer) => {
+                    if (filters.scope === 'supply_chain' && filters.subscope === 'analyzer' && layer.id === 'ffc878aa-efb1-4258-bd40-2cf9fbfb6ddd') {
+                      return [
+                        ...acc,
+                        ...ranges.map((range, index) => {
+                          return {
+                            ...layer,
+                            id: layer.id + index.toString(),
+                            layerConfig: {
+                              ...layer.layerConfig,
+                              body: {
+                                ...layer.layerConfig.body,
+                                layers: [
+                                  {
+                                    ...layer.layerConfig.body.layers[0],
+                                    options: {
+                                      ...layer.layerConfig.body.layers[0].options,
+                                      sql: `SELECT s.aq30_id as cartodb_id, coalesce(NULLIF({{label}},''), 'No Data') as label, r.the_geom, r.the_geom_webmercator, (CASE WHEN {{label}} = 'Insignificant Trend' THEN -1 ELSE coalesce({{indicator}}, -9999)END) as water_risk FROM water_risk_indicators_annual s LEFT JOIN y2018m12d06_rh_master_shape_v01 r on s.aq30_id=r.aq30_id WHERE s.pfaf_id != -9999 and s.gid_1 != '-9999' and r.aqid != -9999 and {{value}} >= {{threshold}} and s.pfaf_id in {{watershed_ids}} ORDER BY s.aq30_id`
+                                    }
+                                  }
+                                ]
+                              },
+                              params_config: [
+                                ...layer.layerConfig.params_config,
+                                { key: 'watershed_ids', required: true },
+                              ],
+                              sql_config: []
+                            },
+                            params: {
+                              ...layer.params,
+                              watershed_ids: `(${range.join(',')})`
+                            }
+                          }
+                        })
+                      ]
+                    }
+                    return [...acc, layer]
+                  }, [])
+                  .map((layer, i) => {
+                    let l = { ...layer }
+                    // if (filters.scope === 'supply_chain' && filters.subscope === 'analyzer' && l.id === 'ffc878aa-efb1-4258-bd40-2cf9fbfb6ddd') {
+                    //   l = {
+                    //     ...layer,
+                    //     layerConfig: {
+                    //       ...layer.layerConfig,
+                    //       body: {
+                    //         ...layer.layerConfig.body,
+                    //         layers: [
+                    //           {
+                    //             ...layer.layerConfig.body.layers[0],
+                    //             options: {
+                    //               ...layer.layerConfig.body.layers[0].options,
+                    //               sql: `SELECT s.aq30_id as cartodb_id, coalesce(NULLIF({{label}},''), 'No Data') as label, r.the_geom, r.the_geom_webmercator, (CASE WHEN {{label}} = 'Insignificant Trend' THEN -1 ELSE coalesce({{indicator}}, -9999)END) as water_risk FROM water_risk_indicators_annual s LEFT JOIN y2018m12d06_rh_master_shape_v01 r on s.aq30_id=r.aq30_id WHERE s.pfaf_id != -9999 and s.gid_1 != '-9999' and r.aqid != -9999 and {{value}} >= {{threshold}} and s.pfaf_id in {{watershed_ids}} ORDER BY s.aq30_id`
+                    //             }
+                    //           }
+                    //         ]
+                    //       },
+                    //       params_config: [
+                    //         ...layer.layerConfig.params_config,
+                    //         { key: 'watershed_ids', required: true },
+                    //       ],
+                    //       sql_config: []
+                    //     },
+                    //     params: {
+                    //       ...layer.params,
+                    //       watershed_ids: `(${ranges[0].join(',')})`
+                    //     }
+                    //   }
+                    // }
+                    console.log({ l, layer, layers, data, ranges })
+                    return (
+                      <Layer
+                        {...l}
+                        key={l.id}
+                        opacity={l.opacity}
+                        zIndex={1000 - i}
+                        {...l.params && { params: l.params }}
+                        {...l.sqlParams && { sqlParams: l.sqlParams }}
+                        {...l.decodeParams && { decodeParams: l.decodeParams }}
+                        {...l.interactionConfig && {
+                          interactivity: ['carto', 'cartodb'].includes(l.provider)
+                            ? (l.interactionConfig.output || []).map(o => o.column)
+                            : true
+                        }}
+                      />
+                    )
+                  })
                 }
               </LayerManager>
 

@@ -11,13 +11,19 @@ import {
   WATER_INDICATORS,
   ALLOWED_WATER_INDICATOR_KEYS_BY_SCOPE
 } from 'constants/water-indicators';
+import {
+  extractTableValues,
+} from 'constants/analyzer'
 import CropFilter from 'components/filters/filter-items/crops/crop-select'
 import BtnMenu from 'components/ui/BtnMenu';
 
-import DATA from './TEMP_DATA.json'
+// TODO: Remove this file once the analyzer is connected
+import RESULT_DATA from './TEMP_DATA.json'
 
 // components
 import { DownloadableTable } from 'components/ui/analyzer';
+
+const DATA = extractTableValues(RESULT_DATA)
 
 const HEADERS = Object.keys(DATA[0]).map(k => ({ label: k, value: k }))
 
