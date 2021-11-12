@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 
 // actions
+import { toggleModal } from 'aqueduct-components';
 import { setFilters } from 'actions/filters';
 
 // component
@@ -11,6 +12,7 @@ export default connect(
     filters: state.filters,
   }),
   {
-    setFilters
+    toggleModal,
+    setFilters,
   }
 )(Analyzer);

@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom'
 import PropTypes from 'prop-types';
 import {
   SegmentedUi,
-  RadioGroup
+  RadioGroup,
+  InfoModal,
 } from 'aqueduct-components';
 import CustomTable from 'components/ui/Table/Table';
 import { ExportToCsv } from 'export-to-csv';
@@ -16,6 +18,7 @@ import {
 } from 'constants/analyzer'
 import CropFilter from 'components/filters/filter-items/crops/crop-select'
 import BtnMenu from 'components/ui/BtnMenu';
+import { APP_DEFINITIONS } from 'constants/definitions';
 
 // TODO: Remove this file once the analyzer is connected
 import RESULT_DATA from './TEMP_DATA.json'
@@ -27,9 +30,10 @@ const DATA = extractTableValues(RESULT_DATA)
 
 const HEADERS = Object.keys(DATA[0]).map(k => ({ label: k, value: k }))
 
-const Analyzer = ({ filters, setFilters }) => {
+const Analyzer = ({ filters, setFilters, toggleModal }) => {
   const [imported, setImported] = useState(false)
   const [mapView, setMapView] = useState('all')
+  const [modalOpen, setModalOpen] = useState(false)
   const indicatorKey = filters.indicator ? ID_LOOKUP[filters.indicator] : undefined
 
   if (!ALLOWED_WATER_INDICATOR_KEYS_BY_SCOPE.supply_chain.includes(indicatorKey)) return null
@@ -47,6 +51,18 @@ const Analyzer = ({ filters, setFilters }) => {
     });
     csvExporter.generateCsv(DATA);
   };
+
+  const openUploadModal = () => {
+    const { props, ...info } = APP_DEFINITIONS['desired-condition-thresholds']
+    toggleModal(true, {
+      children: () => (
+        <div className="analyzer-import-modal">
+          TEST THIS
+        </div>
+      )
+    });
+    setModalOpen(true)
+  }
 
   return (
     <React.Fragment>
@@ -129,7 +145,13 @@ const Analyzer = ({ filters, setFilters }) => {
                   <BtnMenu
                     className="-theme-white"
                     items={[
-                      { label: 'Import File', cb: () => setImported(true) }
+                      {
+                        label: 'Import File',
+                        cb: () => {
+                          openUploadModal()
+                          // setImported(true)
+                        }
+                      }
                     ]}
                   />
                 </div>
@@ -144,7 +166,8 @@ const Analyzer = ({ filters, setFilters }) => {
 
 Analyzer.propTypes = {
   filters: PropTypes.object.isRequired,
-  setFilters: PropTypes.func.isRequired
+  setFilters: PropTypes.func.isRequired,
+  toggleModal: PropTypes.func.isRequired,
 };
 
 export default Analyzer;

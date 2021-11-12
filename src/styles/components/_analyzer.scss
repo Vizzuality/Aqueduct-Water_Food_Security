@@ -187,3 +187,7 @@ $dark-sand: darken(palette(sand, primary), 8%);
     }
   }
 }
+
+.analyzer-import-modal {
+  padding: $space-1 * 3
+}
