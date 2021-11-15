@@ -60,6 +60,18 @@ export const extractLocations = (obj) => {
 }
 
 /**
+ * Extracts errors from the result object
+ * 
+ * @param {Object} obj - the object returned from the analysis query
+ * @returns 
+ */
+ export const extractErrors = (obj) => {
+  let errors = []
+  if (obj.errors) errors = [ ...obj.errors ]
+  return errors
+}
+
+/**
  * Extracts and processes locations into the values shown in the table
  * 
  * @param {Object} obj - the object returned from the analysis query
@@ -77,3 +89,20 @@ export const extractTableValues = obj => {
   )
 }
 
+/**
+ * Extracts and processes errors into the values shown in the table
+ * 
+ * @param {Object} obj - the object returned from the analysis query
+ */
+ export const extractErrorValues = obj => {
+  const errors = extractErrors(obj)
+  return (
+    errors.map(loc => (
+      sortBy(Object.entries(loc), ([k]) => RESULT_FIELD_ORDER.indexOf(k))
+      .reduce((acc, [k, v]) => {
+        const label = RESULT_LOOKUP[k]
+        return ({ ...acc, [label]: v })
+      }, {})
+    ))
+  )
+}

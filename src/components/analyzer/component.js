@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { createPortal } from 'react-dom'
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   SegmentedUi,
   RadioGroup,
-  InfoModal,
 } from 'aqueduct-components';
 import CustomTable from 'components/ui/Table/Table';
 import { ExportToCsv } from 'export-to-csv';
@@ -19,6 +17,7 @@ import {
 import CropFilter from 'components/filters/filter-items/crops/crop-select'
 import BtnMenu from 'components/ui/BtnMenu';
 import { APP_DEFINITIONS } from 'constants/definitions';
+import AnalyzerUploadModal from './upload-modal'
 
 // TODO: Remove this file once the analyzer is connected
 import RESULT_DATA from './TEMP_DATA.json'
@@ -27,7 +26,6 @@ import RESULT_DATA from './TEMP_DATA.json'
 import { DownloadableTable } from 'components/ui/analyzer';
 
 const DATA = extractTableValues(RESULT_DATA)
-
 const HEADERS = Object.keys(DATA[0]).map(k => ({ label: k, value: k }))
 
 const Analyzer = ({ filters, setFilters, toggleModal }) => {
@@ -55,11 +53,14 @@ const Analyzer = ({ filters, setFilters, toggleModal }) => {
   const openUploadModal = () => {
     const { props, ...info } = APP_DEFINITIONS['desired-condition-thresholds']
     toggleModal(true, {
-      children: () => (
-        <div className="analyzer-import-modal">
-          TEST THIS
-        </div>
-      )
+      children: AnalyzerUploadModal,
+      childrenProps: {
+        filters,
+        onDone: locations => {
+          toggleModal(false)
+          setModalOpen(false)
+        }
+      }
     });
     setModalOpen(true)
   }
