@@ -13,7 +13,8 @@ import {
   ALLOWED_WATER_INDICATOR_KEYS_BY_SCOPE
 } from 'constants/water-indicators';
 import {
-  extractTableValues,
+  LOCATION_RESULT_HEADERS,
+  getHeadersForIndicator,
 } from 'constants/analyzer'
 import CropFilter from 'components/filters/filter-items/crops/crop-select'
 import BtnMenu from 'components/ui/BtnMenu';
@@ -21,16 +22,11 @@ import { APP_DEFINITIONS } from 'constants/definitions';
 import AnalyzerUploadModal from './upload-modal'
 
 // TODO: Remove this file once the analyzer is connected
-import RESULT_DATA from './TEMP_DATA.json'
 
 // components
 import { DownloadableTable } from 'components/ui/analyzer';
 
-const DATA = extractTableValues(RESULT_DATA)
-const HEADERS = Object.keys(DATA[0]).map(k => ({ label: k, value: k }))
-
 const Analyzer = ({ filters, setFilters, toggleModal }) => {
-  const [imported, setImported] = useState(false)
   const [mapView, setMapView] = useState('all')
   const [modalOpen, setModalOpen] = useState(false)
   const [locations, setLocations] = useState()
@@ -42,17 +38,16 @@ const Analyzer = ({ filters, setFilters, toggleModal }) => {
 
   const tab = filters.subscope
 
-  const extractedLocations = !isEmpty(locations) ? extractTableValues({ locations, indicator: indicatorKey }) : undefined
-  const headers = !isEmpty(extractedLocations) ? Object.keys(extractedLocations[0]).map(k => ({ label: k, value: k })) : []
+  const tableHeaders = getHeadersForIndicator(LOCATION_RESULT_HEADERS, indicatorKey)
 
   const downloadCSV = (event) => {
     if (event) event.preventDefault();
     const csvExporter = new ExportToCsv({
       showLabels: true,
       filename: `Prioritize Basins Analyzer - ${filters.indicator.name}`,
-      headers: headers.map(c => c.label)
+      headers: tableHeaders.map(c => c.label)
     });
-    csvExporter.generateCsv(extractedLocations);
+    csvExporter.generateCsv(locations);
   };
 
   const openUploadModal = () => {
@@ -132,8 +127,8 @@ const Analyzer = ({ filters, setFilters, toggleModal }) => {
                     ]}
                   >
                     <CustomTable
-                      columns={headers}
-                      data={extractedLocations}
+                      columns={tableHeaders}
+                      data={locations}
                       pagination={{
                         // enabled: data.length > 10,
                         enabled: true,

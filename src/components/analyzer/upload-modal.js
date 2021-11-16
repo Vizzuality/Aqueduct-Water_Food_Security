@@ -16,13 +16,11 @@ import {
 import classNames from 'classnames';
 import {
   RESULT_LOOKUP,
-  extractTableValues,
-  extractErrorValues,
+  ERROR_RESULT_HEADERS,
+  transformResults,
 } from 'constants/analyzer'
 import { DownloadableTable } from 'components/ui/analyzer';
 import RESULT_DATA from './TEMP_DATA.json'
-
-const HEADERS = Object.entries(RESULT_LOOKUP).map(k => ({ label: k, value: k }))
 
 const LOADING_STATE_TEXT = {
   transforming: 'Preparing file',
@@ -61,7 +59,7 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
     const csvExporter = new ExportToCsv({
       showLabels: true,
       filename: `Prioritize Basins Analyzer - ${filters.indicator.name} - Rows with errors`,
-      headers: Object.keys(data[0])
+      headers: ERROR_RESULT_HEADERS.map(e => e.label)
     });
     csvExporter.generateCsv(data.map(d => Object.entries(d).reduce((acc, [k, v]) => ({ ...acc, [k]: v || '' }), {})));
   };
@@ -138,10 +136,11 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
         // })
         fakeSubmit({ includeLocations: true, includeErrors: true })
         // Promise.resolve({ data: RESULT_DATA })
-        .then(result => {
-          const hasErrors = !isEmpty(result.data.errors)
-          setModalState({ stage: hasErrors ? 'loaded-errors' : 'loaded', locations: result.data.locations, errors: result.data.errors })
-          if (!hasErrors) setTimeout(() => onDone(result.data.locations || []), 3000)
+        .then(({ data: d = {} } = {}) => {
+          const data = transformResults({ ...d, indicator: indicatorKey })
+          const hasErrors = !isEmpty(data.errors)
+          setModalState({ stage: hasErrors ? 'loaded-errors' : 'loaded', locations: data.locations, errors: data.errors })
+          if (!hasErrors) setTimeout(() => onDone(data.locations || []), 3000)
         })
         .catch(err => {
           setModalState({ stage: 'error', which: 'request', err })
@@ -162,6 +161,13 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
   }
 
   const hasProgressValue = !isNil(modalState.progress)
+
+  // if (modalState.errors) {
+  //   console.log({
+  //     columns: Object.keys(extractErrorValues({ errors: modalState.errors })[0]).map(k => ({ label: k, value: k })),
+  //     data: extractErrorValues({ errors: modalState.errors }),
+  //   })
+  // }
 
   return (
     <div>
@@ -257,12 +263,12 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
                 hideInstructions
                 noExpand // Should expand eventually
                 downloadOptions={[
-                  { name: 'CSV', action: (e) => downloadCSV(e, extractErrorValues({ errors: modalState.errors })) }
+                  { name: 'CSV', action: (e) => downloadCSV(e, modalState.errors) }
                 ]}
               >
                 <CustomTable
-                  columns={Object.keys(extractErrorValues({ errors: modalState.errors })[0]).map(k => ({ label: k, value: k }))}
-                  data={extractErrorValues({ errors: modalState.errors })}
+                  columns={ERROR_RESULT_HEADERS}
+                  data={modalState.errors}
                   pagination={{
                     // enabled: data.length > 10,
                     enabled: true,

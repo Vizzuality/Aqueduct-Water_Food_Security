@@ -1,4 +1,4 @@
-
+import compact from 'lodash/compact'
 import sortBy from 'lodash/sortBy'
 import { WATER_INDICATORS } from 'constants/water-indicators'
 
@@ -24,17 +24,40 @@ export const RESULT_LOOKUP = {
   wid: 'Watershed ID'
 }
 
-export const RESULT_FIELD_ORDER = [
-  "rn",
-  "wid",
-  "lid",
-  "ip",
-  "cn",
-  "s",
-  "rv",
-  "dc",
-  "pcr"
+const arrayToLookup = arr => arr.reduce((acc, k) => ({ ...acc, [k]: RESULT_LOOKUP[k] }), {})
+
+export const LOCATION_RESULT_FIELD_ORDER = [
+  'rn',
+  'wid',
+  'lid',
+  'ip',
+  'cn',
+  's',
+  'rv',
+  'dc',
+  'pcr',
 ]
+
+export const LOCATION_RESULT_LOOKUP = arrayToLookup(LOCATION_RESULT_FIELD_ORDER)
+export const LOCATION_RESULT_HEADERS = Object.values(LOCATION_RESULT_LOOKUP).map(label => ({ value: label, label }))
+
+export const ERROR_RESULT_FIELD_ORDER = [
+  'rn',
+  'lid',
+  'lat',
+  'lng',
+  'ra',
+  'ru',
+  'st',
+  'cy',
+  'mt',
+  'mv',
+  'as',
+  'e',
+]
+
+export const ERROR_RESULT_LOOKUP = arrayToLookup(ERROR_RESULT_FIELD_ORDER)
+export const ERROR_RESULT_HEADERS = Object.values(ERROR_RESULT_LOOKUP).map(label => ({ value: label, label }))
 
 export const WATER_INDICATORS_LOOKUP = (
   ['bws', 'bwd', 'cep', 'udw', 'usa', 'gtd']
@@ -46,6 +69,42 @@ export const WATER_INDICATORS_LOOKUP = (
   .filter(Boolean)
   .reduce((acc, [key, indicator]) => ({ ...acc, [key]: { name: indicator.name, shortName: key.toUpperCase() } }), {})
 )
+
+export const getShortNameForIndicator = indicator => {
+  let shortName
+  try {
+    shortName = WATER_INDICATORS_LOOKUP[indicator].shortName || '*'
+  } catch(e) {
+    shortName = '*'
+  }
+  return shortName
+}
+
+export const getHeadersForIndicator = (headers = [], indicator) => {
+  return compact(headers).map(h => {
+    const replaced = h.label.replace(/^(\*)/, getShortNameForIndicator(indicator))
+    return { value: replaced, label: replaced }
+  })
+}
+
+export const transformValues = (items, { indicator, orderArr = [] } = {}) => {
+  return items.map(loc => (
+    sortBy(Object.entries(loc), ([k]) => orderArr.indexOf(k))
+    .reduce((acc, [k, v]) => {
+      const label = RESULT_LOOKUP[k].replace(/^(\*)/, getShortNameForIndicator(indicator))
+      return ({ ...acc, [label]: v })
+    }, {})
+  ))
+}
+
+export const transformLocations = (locations = [], indicator) => transformValues(locations, { orderArr: LOCATION_RESULT_FIELD_ORDER, indicator })
+export const transformErrors = (errors = []) => transformValues(errors, { orderArr: ERROR_RESULT_FIELD_ORDER })
+
+export const transformResults = ({ errors = [], locations = [], indicator = '' } = {}) => ({
+  locations: transformLocations(locations, indicator),
+  errors: transformErrors(errors),
+  indicator,
+})
 
 /**
  * Extracts locations from the result object
@@ -59,17 +118,17 @@ export const extractLocations = (obj) => {
   return locations
 }
 
-/**
- * Extracts errors from the result object
- * 
- * @param {Object} obj - the object returned from the analysis query
- * @returns 
- */
- export const extractErrors = (obj) => {
-  let errors = []
-  if (obj.errors) errors = [ ...obj.errors ]
-  return errors
-}
+// /**
+//  * Extracts errors from the result object
+//  * 
+//  * @param {Object} obj - the object returned from the analysis query
+//  * @returns 
+//  */
+//  export const extractErrors = (obj) => {
+//   let errors = []
+//   if (obj.errors) errors = [ ...obj.errors ]
+//   return errors
+// }
 
 /**
  * Extracts and processes locations into the values shown in the table
@@ -80,7 +139,7 @@ export const extractTableValues = obj => {
   const locations = extractLocations(obj)
   return (
     locations.map(loc => (
-      sortBy(Object.entries(loc), ([k]) => RESULT_FIELD_ORDER.indexOf(k))
+      sortBy(Object.entries(loc), ([k]) => LOCATION_RESULT_FIELD_ORDER.indexOf(k))
       .reduce((acc, [k, v]) => {
         const label = RESULT_LOOKUP[k].replace(/^(\*)/, WATER_INDICATORS_LOOKUP[obj.indicator].shortName)
         return ({ ...acc, [label]: v })
@@ -89,20 +148,20 @@ export const extractTableValues = obj => {
   )
 }
 
-/**
- * Extracts and processes errors into the values shown in the table
- * 
- * @param {Object} obj - the object returned from the analysis query
- */
- export const extractErrorValues = obj => {
-  const errors = extractErrors(obj)
-  return (
-    errors.map(loc => (
-      sortBy(Object.entries(loc), ([k]) => RESULT_FIELD_ORDER.indexOf(k))
-      .reduce((acc, [k, v]) => {
-        const label = RESULT_LOOKUP[k]
-        return ({ ...acc, [label]: v })
-      }, {})
-    ))
-  )
-}
+// /**
+//  * Extracts and processes errors into the values shown in the table
+//  * 
+//  * @param {Object} obj - the object returned from the analysis query
+//  */
+//  export const extractErrorValues = obj => {
+//   const errors = extractErrors(obj)
+//   return (
+//     errors.map(loc => (
+//       sortBy(Object.entries(loc), ([k]) => ERROR_RESULT_FIELD_ORDER.indexOf(k))
+//       .reduce((acc, [k, v]) => {
+//         const label = RESULT_LOOKUP[k]
+//         return ({ ...acc, [label]: v })
+//       }, {})
+//     ))
+//   )
+// }
