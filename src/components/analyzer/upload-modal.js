@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import axios from 'axios'
 import PropTypes from 'prop-types';
 import isNil from 'lodash/isNil'
@@ -31,6 +31,8 @@ const LOADING_STATE_TEXT = {
   downloading: 'Downloading results',
 }
 
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+
 const AnalyzerUploadModal = ({ filters, onDone }) => {
   const [modalState, setModalState] = useState({ stage: 'initial' })
   // const [modalState, setModalState] = useState({ stage: 'uploading', progress: 0.5 })
@@ -45,8 +47,16 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
 
   const nullFn = useCallback(() => {}, [])
 
+  useEffect(() => {
+    const modalElement = document.querySelector('.c-modal.analyzer')
+    if (modalState.stage.match(/error/)) {
+      modalElement.classList.add('error')
+    } else {
+      modalElement.classList.remove('error')
+    }
+  }, [modalState])
+
   const downloadCSV = (event, data) => {
-    console.log({ data })
     if (event) event.preventDefault();
     const csvExporter = new ExportToCsv({
       showLabels: true,
@@ -61,7 +71,44 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
     reader.readAsBinaryString(file);
     reader.onload = () => resolve(btoa(reader.result));
     reader.onerror = error => reject(error);
+    
   });
+
+  const fakeSubmit = async ({ includeErrors = true, includeLocations = true } = {}) => {
+    let progress = 0
+
+    // Upload
+    while (progress < 1) {
+      let added = Math.random() * 0.05 + 0.05
+      let ms = Math.random() * 100 + 200
+      progress += added
+      if (progress > 1) progress = 1
+      await sleep(ms)
+      setModalState({ stage: 'uploading', progress })
+    }
+    
+    setModalState({ stage: 'processing' })
+    await sleep(3000 + Math.random() * 2000)
+
+    progress = 0
+    while (progress < 1) {
+      let added = Math.random() * 0.05 + 0.05
+      let ms = Math.random() * 100 + 300
+      progress += added
+      if (progress > 1) progress = 1
+      await sleep(ms)
+      setModalState({ stage: 'downloading', progress })
+    }
+
+    const { locations, errors } = RESULT_DATA
+
+    return {
+      data: {
+        locations: includeLocations ? locations : [],
+        errors: includeErrors ? errors : [],
+      }
+    }
+  }
 
   const submitFile = (file) => {
     if (file && filters.threshold && indicatorSpec) {
@@ -75,8 +122,8 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
         setModalState({ stage: 'uploading', progress: 0 })
         // axios({
         //   method: "post",
-        //   // url: `https://staging-api.resourcewatch.org/aqueduct/analysis/food-supply-chain/${indicatorKey}/${indicatorSpec.toRaw(filters.threshold)}`,
-        //   url: `http://localhost:5100/api/v1/aqueduct/analysis/food-supply-chain/${indicatorKey}/${indicatorSpec.toRaw(filters.threshold)}`,
+        //   url: `https://staging-api.resourcewatch.org/aqueduct/analysis/food-supply-chain/${indicatorKey}/${indicatorSpec.toRaw(filters.threshold)}`,
+        //   // url: `http://localhost:5100/api/v1/aqueduct/analysis/food-supply-chain/${indicatorKey}/${indicatorSpec.toRaw(filters.threshold)}`,
         //   data: data,
         //   headers: { "Content-Type": "multipart/form-data" },
         //   onDownloadProgress: e => setModalState({ stage: 'downloading', progress: e.loaded / e.total }),
@@ -89,7 +136,8 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
         //     }
         //   }
         // })
-        Promise.resolve({ data: RESULT_DATA })
+        fakeSubmit({ includeLocations: true, includeErrors: true })
+        // Promise.resolve({ data: RESULT_DATA })
         .then(result => {
           const hasErrors = !isEmpty(result.data.errors)
           setModalState({ stage: hasErrors ? 'loaded-errors' : 'loaded', locations: result.data.locations, errors: result.data.errors })
@@ -107,9 +155,11 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
     }
   }
 
-  console.log(modalState)
-  // console.log(modalState.errors)
-  console.log((modalState.errors || [])[0] ? extractErrorValues({ errors: modalState.errors }) : [])
+  const resetModal = () => {
+    setModalState({ stage: 'initial' })
+    setFilename(undefined)
+    if (formRef.current) formRef.current.reset()
+  }
 
   const hasProgressValue = !isNil(modalState.progress)
 
@@ -124,7 +174,8 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
         onChange={nullFn}
       />
       <div className="analyzer-import-modal">
-        {/* Only setting display to none here because we need the form element to exist */}
+        {/* IF IN INITIAL STATE */}
+        {/* Setting display to none here because we need the form element to stay mounted */}
         <div style={{ display: modalState.stage === 'initial' ? undefined : 'none' }}>
           <h3>Import Sourcing Locations</h3>
           <p>This functionality is in beta and under development.  Please help us improve and report bugs <a href="#">here</a>.  Thank you for your patience.</p>
@@ -157,11 +208,13 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
               />
               {filename || 'Select file to import data'}
             </label>
-            <button type="submit" disabled={!filename}>
+            <button type="submit" className="action-button" disabled={!filename}>
               Upload File
             </button>
           </form>
         </div>
+
+        {/* IF IN PROGRESS */}
         {!['initial', 'error', 'loaded-errors'].includes(modalState.stage) && (
           <>
             <h3>Import Sourcing Locations</h3>
@@ -176,12 +229,12 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
                     <div className={classNames("progress-bar", { indeterminate: !hasProgressValue })}>
                       <div
                         className={classNames("value", { indeterminate: !hasProgressValue })}
-                        style={{ width: hasProgressValue ? `${modalState.progress * 100}%` : undefined }}
+                        style={{ width: hasProgressValue ? `${Math.round(modalState.progress * 100)}%` : undefined }}
                       />
                     </div>
                     <p className="progress-text">
                       {LOADING_STATE_TEXT[modalState.stage]}
-                      {hasProgressValue ? <> ({modalState.progress * 100}%)</> : null}
+                      {hasProgressValue ? <> ({Math.round(modalState.progress * 100)}%)</> : null}
                     </p>
                   </>
                 )}
@@ -189,10 +242,16 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
             </div>
           </>
         )}
+
+        {/* IF LOADED BUT WITH ERRORS */}
         {modalState.stage === 'loaded-errors' && (
           <>
             <h3>Import entries error</h3>
-            <p>The following entries failed to match watersheds. Try updating the country or province name using <a href="#">this guide</a></p>
+            <p>
+              {isEmpty(modalState.locations) ? 'All' : `The following ${modalState.errors.length}`}{' '}
+              entries out of {modalState.errors.length + modalState.locations.length} failed to match watersheds.{' '}
+              Try updating the country or province name using <a href="#">this guide</a>
+            </p>
             <div className="downloadable-table">
               <DownloadableTable
                 hideInstructions
@@ -213,6 +272,31 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
                 />
               </DownloadableTable>
             </div>
+            <div className="buttons">
+              {!isEmpty(modalState.locations) && (
+                <button className="action-button" onClick={() => onDone(modalState.locations)}>
+                  Continue without these entries
+                </button>
+              )}
+              <button className="action-button" onClick={resetModal}>
+                Return to upload
+              </button>
+            </div>
+          </>
+        )}
+
+        {/* IF ERROR DURING PROCESSING */}
+        {modalState.stage === 'error' && (
+          <>
+            <h3>Import entries error</h3>
+            <p>The following error occurred while processing this file:</p>
+            <p className="error-text">
+              {modalState.err.message || 'Unknown error'}
+            </p>
+            <br/>
+            <button className="action-button" onClick={resetModal}>
+              Return to upload
+            </button>
           </>
         )}
       </div>

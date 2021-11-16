@@ -149,6 +149,32 @@ $dark-sand: darken(palette(sand, primary), 8%);
   }
 }
 
+.action-button {
+  padding-top: $space-1;
+  padding-bottom: $space-1;
+  padding-left: $space-1 * 3;
+  padding-right: $space-1 * 3;
+  text-transform: uppercase;
+  color: white;
+  background-color: $color-primary;
+  border-radius: 4px;
+  font-size: $font-size-small;
+  letter-spacing: 0.8px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+
+  &[disabled] {
+    background-color: $gray-9;
+    &:hover {
+      background-color: $gray-9;
+    }
+  }
+
+  &:hover {
+    background-color: lighten($color-primary, 20%);
+  }
+}
+
 .download-container {
   margin: $space-1 * 2 0;
   color: palette(blue, secondary);
@@ -203,6 +229,19 @@ $dark-sand: darken(palette(sand, primary), 8%);
 
   p {
     margin: 1em 0;
+  }
+
+  .error-text {
+    color: $color-error;
+    font-family: monospace;
+  }
+
+  .buttons {
+    display: flex;
+
+    & > *:not(:last-child) {
+      margin-right: $space-1;
+    }
   }
   
   .downloadable-table .analyzer-content > .table-container {
@@ -269,25 +308,6 @@ $dark-sand: darken(palette(sand, primary), 8%);
     margin-top: $space-1 * 2;
     display: flex;
 
-    button {
-      padding-top: $space-1;
-      padding-bottom: $space-1;
-      padding-left: $space-1 * 3;
-      padding-right: $space-1 * 3;
-      text-transform: uppercase;
-      color: white;
-      background-color: $color-primary;
-      border-radius: 4px;
-      font-size: $font-size-small;
-      letter-spacing: 0.8px;
-      font-weight: 500;
-      transition: background-color 0.2s;
-
-      &[disabled] {
-        background-color: $gray-9;
-      }
-    }
-
     .file-upload {
       flex-grow: 1;
       display: flex;
@@ -301,4 +321,8 @@ $dark-sand: darken(palette(sand, primary), 8%);
       }
     }
   }
+}
+
+.c-modal.error {
+  background: rgba(114, 10, 10, 0.9);
 }

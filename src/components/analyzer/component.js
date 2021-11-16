@@ -4,6 +4,7 @@ import {
   SegmentedUi,
   RadioGroup,
 } from 'aqueduct-components';
+import isEmpty from 'lodash/isEmpty'
 import CustomTable from 'components/ui/Table/Table';
 import { ExportToCsv } from 'export-to-csv';
 import {
@@ -32,6 +33,7 @@ const Analyzer = ({ filters, setFilters, toggleModal }) => {
   const [imported, setImported] = useState(false)
   const [mapView, setMapView] = useState('all')
   const [modalOpen, setModalOpen] = useState(false)
+  const [locations, setLocations] = useState()
   const indicatorKey = filters.indicator ? ID_LOOKUP[filters.indicator] : undefined
 
   if (!ALLOWED_WATER_INDICATOR_KEYS_BY_SCOPE.supply_chain.includes(indicatorKey)) return null
@@ -40,25 +42,30 @@ const Analyzer = ({ filters, setFilters, toggleModal }) => {
 
   const tab = filters.subscope
 
+  const extractedLocations = !isEmpty(locations) ? extractTableValues({ locations, indicator: indicatorKey }) : undefined
+  const headers = !isEmpty(extractedLocations) ? Object.keys(extractedLocations[0]).map(k => ({ label: k, value: k })) : []
+
   const downloadCSV = (event) => {
     if (event) event.preventDefault();
     const csvExporter = new ExportToCsv({
       showLabels: true,
       filename: `Prioritize Basins Analyzer - ${filters.indicator.name}`,
-      headers: HEADERS.map(c => c.label)
+      headers: headers.map(c => c.label)
     });
-    csvExporter.generateCsv(DATA);
+    csvExporter.generateCsv(extractedLocations);
   };
 
   const openUploadModal = () => {
     const { props, ...info } = APP_DEFINITIONS['desired-condition-thresholds']
     toggleModal(true, {
       children: AnalyzerUploadModal,
+      size: 'analyzer', // Actually just using this to inject a classname. I don't love this method.
       childrenProps: {
         filters,
         onDone: locations => {
           toggleModal(false)
           setModalOpen(false)
+          setLocations(locations)
         }
       }
     });
@@ -96,7 +103,7 @@ const Analyzer = ({ filters, setFilters, toggleModal }) => {
         )}
         {tab === 'analyzer' && (
           <React.Fragment>
-            {imported ? (
+            {locations ? (
               <React.Fragment>
                 <h4 className="title">Select Map View</h4>
                 <div className="my-1">
@@ -125,8 +132,8 @@ const Analyzer = ({ filters, setFilters, toggleModal }) => {
                     ]}
                   >
                     <CustomTable
-                      columns={HEADERS}
-                      data={DATA}
+                      columns={headers}
+                      data={extractedLocations}
                       pagination={{
                         // enabled: data.length > 10,
                         enabled: true,
@@ -135,6 +142,11 @@ const Analyzer = ({ filters, setFilters, toggleModal }) => {
                       }}
                     />
                   </DownloadableTable>
+                </div>
+                <div>
+                  <button className="action-button" onClick={openUploadModal}>
+                    Upload a new file
+                  </button>
                 </div>
               </React.Fragment>
             ) : (
