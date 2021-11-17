@@ -41,10 +41,10 @@ import { LABEL_LAYER_CONFIG } from './constants';
 // TODO: Remove this file once the analyzer is wired up
 import RESULT_DATA from 'components/analyzer/TEMP_DATA.json'
 import {
-  extractTableValues,
+  transformResults,
 } from 'constants/analyzer'
 
-const DATA = extractTableValues(RESULT_DATA)
+const DATA = transformResults(RESULT_DATA)
 
 class Map extends PureComponent {
   constructor(props) {
