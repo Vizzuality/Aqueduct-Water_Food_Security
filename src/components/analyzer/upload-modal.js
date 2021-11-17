@@ -17,9 +17,10 @@ import {
   transformErrors,
 } from 'constants/analyzer'
 import { downloadCSV, toBase64 } from 'utils/data'
-import { sleep } from 'utils/general'
 import { DownloadableTable } from 'components/ui/analyzer';
-import RESULT_DATA from './TEMP_DATA.json'
+import {
+  fetchAnalysis,
+} from 'services/analysis'
 
 const LOADING_STATE_TEXT = {
   transforming: 'Preparing file',
@@ -60,73 +61,36 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
     })
   };
 
-  const fakeSubmit = async ({ includeErrors = true, includeLocations = true } = {}) => {
-    let progress = 0
-
-    // Upload
-    while (progress < 1) {
-      let added = Math.random() * 0.05 + 0.05
-      let ms = Math.random() * 100 + 200
-      progress += added
-      if (progress > 1) progress = 1
-      await sleep(ms)
-      setModalState({ stage: 'uploading', progress })
-    }
-    
-    setModalState({ stage: 'processing' })
-    await sleep(3000 + Math.random() * 2000)
-
-    progress = 0
-    while (progress < 1) {
-      let added = Math.random() * 0.05 + 0.05
-      let ms = Math.random() * 100 + 300
-      progress += added
-      if (progress > 1) progress = 1
-      await sleep(ms)
-      setModalState({ stage: 'downloading', progress })
-    }
-
-    const { locations, errors } = RESULT_DATA
-
-    return {
-      data: {
-        locations: includeLocations ? locations : [],
-        errors: includeErrors ? errors : [],
-      }
-    }
-  }
-
   const submitFile = (file) => {
     if (file && filters.threshold && indicatorSpec) {
       setModalState({ stage: 'transforming' })
       toBase64(file)
       .then(value => {
-        // const newFile = new File([value], `${file.name}.b64`)
-        const newFile = file
+        const newFile = new File([value], `${file.name}.b64`) // For staging
+        // const newFile = file
         const data = new FormData(formRef.current)
         data.append('data', newFile)
         setModalState({ stage: 'uploading', progress: 0 })
-        // axios({
-        //   method: "post",
-        //   url: `https://staging-api.resourcewatch.org/aqueduct/analysis/food-supply-chain/${indicatorKey}/${indicatorSpec.toRaw(filters.threshold)}`,
-        //   // url: `http://localhost:5100/api/v1/aqueduct/analysis/food-supply-chain/${indicatorKey}/${indicatorSpec.toRaw(filters.threshold)}`,
-        //   data: data,
-        //   headers: { "Content-Type": "multipart/form-data" },
+        fetchAnalysis(data, indicatorKey, indicatorSpec.toRaw(filters.threshold), {
+          onDownloadProgress: e => setModalState({ stage: 'downloading', progress: e.loaded / e.total }),
+          onUploadProgress: e => {
+            const progress = e.loaded / e.total
+            if (progress >= 1) {
+              setModalState({ stage: 'processing' })
+            } else {
+              setModalState({ stage: 'uploading', progress })
+            }
+          },
+        })
+        // UNCOMMENT TO MOCK
+        // fakeAnalysis(null, indicatorKey, null, {
+        //   includeLocations: true,
+        //   includeErrors: true,
         //   onDownloadProgress: e => setModalState({ stage: 'downloading', progress: e.loaded / e.total }),
-        //   onUploadProgress: (e) => {
-        //     const progress = e.loaded / e.total
-        //     if (progress >= 1) {
-        //       setModalState({ stage: 'processing' })
-        //     } else {
-        //       setModalState({ stage: 'uploading', progress })
-        //     }
-        //   }
+        //   onUploadProgress: e => setModalState({ stage: 'uploading', progress: e.loaded / e.total }),
+        //   onProcessing: () => setModalState({ stage: 'processing' })
         // })
-        fakeSubmit({ includeLocations: true, includeErrors: true })
-        // Promise.resolve({ data: RESULT_DATA })
-        .then(({ data: d = {} } = {}) => {
-          // const data = transformResults({ ...d, indicator: indicatorKey })
-          const data = { ...d, indicator: indicatorKey }
+        .then(data => {
           const hasErrors = !isEmpty(data.errors)
           setModalState({ stage: hasErrors ? 'loaded-errors' : 'loaded', locations: data.locations, errors: data.errors })
           if (!hasErrors) setTimeout(() => onDone(data.locations || []), 3000)

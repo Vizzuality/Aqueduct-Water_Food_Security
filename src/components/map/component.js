@@ -38,15 +38,6 @@ import { parseMetadataLayer } from './utils';
 
 // constants
 import { LABEL_LAYER_CONFIG } from './constants';
-// TODO: Remove this file once the analyzer is wired up
-import RESULT_DATA from 'components/analyzer/TEMP_DATA.json'
-import {
-  transformResults,
-} from 'constants/analyzer'
-
-const DATA = transformResults(RESULT_DATA).locations
-
-console.log({DATA})
 class Map extends PureComponent {
   constructor(props) {
     super(props);
@@ -197,17 +188,6 @@ class Map extends PureComponent {
     } = this.state;
     const mapEvents = { moveend: (e, _map) => { this.updateMap(e, _map); } };
 
-    const filteredLocations = mapView === 'priority' ? locations.filter(l => l.pcr > 0) : locations
-    const data = uniq(compact(filteredLocations.map(d => parseFloat(d.wid).toFixed(0))))
-    const step = 500
-    const ranges = !isEmpty(locations) ? (
-      (
-        Array(Math.ceil(data.length / step)).fill()
-        .map((_n, i) => data.filter((_d, j) => j >= i * step && j < (i +1) * step))
-      )
-      .filter(range => !isEmpty(range))
-    ) : [['null']] // This will return nothing, but will make the loading indicator go away :)
-
     return (
       <div className="l-map">
         <Spinner
@@ -236,10 +216,26 @@ class Map extends PureComponent {
                   layers
                   .reduce((acc, layer) => {
                     if (filters.scope === 'supply_chain' && filters.subscope === 'analyzer' && layer.id === 'ffc878aa-efb1-4258-bd40-2cf9fbfb6ddd') {
-                      console.log({ ranges, locations, filters })
+                      // TODO: 1. Finalize microservice
+                      // TODO: 2. Once finalized, add this layer spec to the API
+                      // TODO: 3. Once layer is added, move this logic to the getActiveLayers selector
+
+                      // console.log({ resultRanges, locations, filters })
+
+                      const filteredLocations = mapView === 'priority' ? locations.filter(l => l.pcr > 0) : locations
+                      const data = uniq(compact(filteredLocations.map(d => parseFloat(d.wid).toFixed(0))))
+                      const step = 500
+                      const resultRanges = !isEmpty(locations) ? (
+                        (
+                          Array(Math.ceil(data.length / step)).fill()
+                          .map((_n, i) => data.filter((_d, j) => j >= i * step && j < (i +1) * step))
+                        )
+                        .filter(range => !isEmpty(range))
+                      ) : [['null']] // This will return nothing, but will make the loading indicator go away :)
+
                       return [
                         ...acc,
-                        ...ranges.map((range, index) => {
+                        ...resultRanges.map((range, index) => {
                           return {
                             ...layer,
                             id: layer.id + index.toString(),
@@ -274,38 +270,9 @@ class Map extends PureComponent {
                     return [...acc, layer]
                   }, [])
                   .map((layer, i) => {
-                    console.log({ mapView, layer })
+                    // TODO: Revert to compact structure once the work above is done
+                    // console.log({ mapView, layer })
                     let l = { ...layer }
-                    // if (filters.scope === 'supply_chain' && filters.subscope === 'analyzer' && l.id === 'ffc878aa-efb1-4258-bd40-2cf9fbfb6ddd') {
-                    //   l = {
-                    //     ...layer,
-                    //     layerConfig: {
-                    //       ...layer.layerConfig,
-                    //       body: {
-                    //         ...layer.layerConfig.body,
-                    //         layers: [
-                    //           {
-                    //             ...layer.layerConfig.body.layers[0],
-                    //             options: {
-                    //               ...layer.layerConfig.body.layers[0].options,
-                    //               sql: `SELECT s.aq30_id as cartodb_id, coalesce(NULLIF({{label}},''), 'No Data') as label, r.the_geom, r.the_geom_webmercator, (CASE WHEN {{label}} = 'Insignificant Trend' THEN -1 ELSE coalesce({{indicator}}, -9999)END) as water_risk FROM water_risk_indicators_annual s LEFT JOIN y2018m12d06_rh_master_shape_v01 r on s.aq30_id=r.aq30_id WHERE s.pfaf_id != -9999 and s.gid_1 != '-9999' and r.aqid != -9999 and {{value}} >= {{threshold}} and s.pfaf_id in {{watershed_ids}} ORDER BY s.aq30_id`
-                    //             }
-                    //           }
-                    //         ]
-                    //       },
-                    //       params_config: [
-                    //         ...layer.layerConfig.params_config,
-                    //         { key: 'watershed_ids', required: true },
-                    //       ],
-                    //       sql_config: []
-                    //     },
-                    //     params: {
-                    //       ...layer.params,
-                    //       watershed_ids: `(${ranges[0].join(',')})`
-                    //     }
-                    //   }
-                    // }
-                    // console.log({ l, layer, layers, data, ranges })
                     return (
                       <Layer
                         {...l}
