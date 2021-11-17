@@ -15,6 +15,7 @@ import {
 import {
   LOCATION_RESULT_HEADERS,
   getHeadersForIndicator,
+  transformLocations,
 } from 'constants/analyzer'
 import CropFilter from 'components/filters/filter-items/crops/crop-select'
 import BtnMenu from 'components/ui/BtnMenu';
@@ -26,11 +27,14 @@ import AnalyzerUploadModal from './upload-modal'
 // components
 import { DownloadableTable } from 'components/ui/analyzer';
 
-const Analyzer = ({ filters, setFilters, toggleModal }) => {
-  const [mapView, setMapView] = useState('all')
+const Analyzer = ({ filters, analysis, setFilters, toggleModal, setAnalysis }) => {
+  // const [mapView, setMapView] = useState('all')
   const [modalOpen, setModalOpen] = useState(false)
   const [locations, setLocations] = useState()
   const indicatorKey = filters.indicator ? ID_LOOKUP[filters.indicator] : undefined
+
+  const mapView = analysis.mapView
+  const setMapView = val => setAnalysis({ mapView: val })
 
   if (!ALLOWED_WATER_INDICATOR_KEYS_BY_SCOPE.supply_chain.includes(indicatorKey)) return null
   
@@ -50,6 +54,8 @@ const Analyzer = ({ filters, setFilters, toggleModal }) => {
     csvExporter.generateCsv(locations);
   };
 
+  // console.log({ mapView })
+
   const openUploadModal = () => {
     const { props, ...info } = APP_DEFINITIONS['desired-condition-thresholds']
     toggleModal(true, {
@@ -61,6 +67,7 @@ const Analyzer = ({ filters, setFilters, toggleModal }) => {
           toggleModal(false)
           setModalOpen(false)
           setLocations(locations)
+          setAnalysis({ locations })
         }
       }
     });
@@ -128,7 +135,7 @@ const Analyzer = ({ filters, setFilters, toggleModal }) => {
                   >
                     <CustomTable
                       columns={tableHeaders}
-                      data={locations}
+                      data={transformLocations(locations, indicatorKey)}
                       pagination={{
                         // enabled: data.length > 10,
                         enabled: true,
@@ -174,8 +181,10 @@ const Analyzer = ({ filters, setFilters, toggleModal }) => {
 
 Analyzer.propTypes = {
   filters: PropTypes.object.isRequired,
+  analysis: PropTypes.object.isRequired,
   setFilters: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
+  setAnalysis: PropTypes.func.isRequired,
 };
 
 export default Analyzer;

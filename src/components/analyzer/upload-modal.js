@@ -18,6 +18,7 @@ import {
   RESULT_LOOKUP,
   ERROR_RESULT_HEADERS,
   transformResults,
+  transformErrors,
 } from 'constants/analyzer'
 import { DownloadableTable } from 'components/ui/analyzer';
 import RESULT_DATA from './TEMP_DATA.json'
@@ -66,6 +67,7 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
 
   const toBase64 = file => new Promise((resolve, reject) => {
     const reader = new FileReader();
+    // reject(new Error('Unexpected error while analyzing data'))
     reader.readAsBinaryString(file);
     reader.onload = () => resolve(btoa(reader.result));
     reader.onerror = error => reject(error);
@@ -137,7 +139,8 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
         fakeSubmit({ includeLocations: true, includeErrors: true })
         // Promise.resolve({ data: RESULT_DATA })
         .then(({ data: d = {} } = {}) => {
-          const data = transformResults({ ...d, indicator: indicatorKey })
+          // const data = transformResults({ ...d, indicator: indicatorKey })
+          const data = { ...d, indicator: indicatorKey }
           const hasErrors = !isEmpty(data.errors)
           setModalState({ stage: hasErrors ? 'loaded-errors' : 'loaded', locations: data.locations, errors: data.errors })
           if (!hasErrors) setTimeout(() => onDone(data.locations || []), 3000)
@@ -268,7 +271,7 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
               >
                 <CustomTable
                   columns={ERROR_RESULT_HEADERS}
-                  data={modalState.errors}
+                  data={transformErrors(modalState.errors)}
                   pagination={{
                     // enabled: data.length > 10,
                     enabled: true,

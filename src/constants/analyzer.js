@@ -2,6 +2,9 @@ import compact from 'lodash/compact'
 import sortBy from 'lodash/sortBy'
 import { WATER_INDICATORS } from 'constants/water-indicators'
 
+export const SET_ANALYSIS = 'SET_ANALYSIS'
+export const RESET_ANALYSIS = 'RESET_ANALYSIS'
+
 export const RESULT_LOOKUP = {
   as: 'Annual Spend',
   pcr: '* % Change Required',

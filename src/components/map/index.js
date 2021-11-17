@@ -27,6 +27,7 @@ export default connect(
     foodLayers: getFoodLayers(state),
     countries: state.countries.list,
     filters: state.filters,
+    analysis: state.analysis,
     parametrization: state.map.parametrization
   }),
   {

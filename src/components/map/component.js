@@ -44,8 +44,9 @@ import {
   transformResults,
 } from 'constants/analyzer'
 
-const DATA = transformResults(RESULT_DATA)
+const DATA = transformResults(RESULT_DATA).locations
 
+console.log({DATA})
 class Map extends PureComponent {
   constructor(props) {
     super(props);
@@ -179,6 +180,10 @@ class Map extends PureComponent {
       bounds,
       countries,
       filters,
+      analysis: {
+        locations = [],
+        mapView = 'all',
+      },
       mapControls,
       legend,
       layerGroup
@@ -192,24 +197,16 @@ class Map extends PureComponent {
     } = this.state;
     const mapEvents = { moveend: (e, _map) => { this.updateMap(e, _map); } };
 
-    const data = uniq(compact(DATA.map(d => parseFloat(d['Watershed ID']).toFixed(0))))
+    const filteredLocations = mapView === 'priority' ? locations.filter(l => l.pcr > 0) : locations
+    const data = uniq(compact(filteredLocations.map(d => parseFloat(d.wid).toFixed(0))))
     const step = 500
-    const ranges = [
-      data.filter((e, i) => i < step),
-      data.filter((e, i) => i >= step && i < step * 2),
-      data.filter((e, i) => i >= step * 2 && i < step * 3),
-      data.filter((e, i) => i >= step * 3 && i < step * 4),
-      data.filter((e, i) => i >= step * 4 && i < step * 5),
-      data.filter((e, i) => i >= step * 5 && i < step * 6),
-      data.filter((e, i) => i >= step * 6 && i < step * 7),
-      data.filter((e, i) => i >= step * 7 && i < step * 8),
-      data.filter((e, i) => i >= step * 8 && i < step * 9),
-      data.filter((e, i) => i >= step * 9 && i < step * 10),
-      data.filter((e, i) => i >= step * 10 && i < step * 11),
-      data.filter((e, i) => i >= step * 11 && i < step * 12),
-      data.filter((e, i) => i >= step * 12 && i < step * 13),
-      data.filter((e, i) => i >= step * 13 && i < step * 14),
-    ].filter(range => !isEmpty(range))
+    const ranges = !isEmpty(locations) ? (
+      (
+        Array(Math.ceil(data.length / step)).fill()
+        .map((_n, i) => data.filter((_d, j) => j >= i * step && j < (i +1) * step))
+      )
+      .filter(range => !isEmpty(range))
+    ) : [['null']] // This will return nothing, but will make the loading indicator go away :)
 
     return (
       <div className="l-map">
@@ -239,6 +236,7 @@ class Map extends PureComponent {
                   layers
                   .reduce((acc, layer) => {
                     if (filters.scope === 'supply_chain' && filters.subscope === 'analyzer' && layer.id === 'ffc878aa-efb1-4258-bd40-2cf9fbfb6ddd') {
+                      console.log({ ranges, locations, filters })
                       return [
                         ...acc,
                         ...ranges.map((range, index) => {
@@ -254,7 +252,7 @@ class Map extends PureComponent {
                                     ...layer.layerConfig.body.layers[0],
                                     options: {
                                       ...layer.layerConfig.body.layers[0].options,
-                                      sql: `SELECT s.aq30_id as cartodb_id, coalesce(NULLIF({{label}},''), 'No Data') as label, r.the_geom, r.the_geom_webmercator, (CASE WHEN {{label}} = 'Insignificant Trend' THEN -1 ELSE coalesce({{indicator}}, -9999)END) as water_risk FROM water_risk_indicators_annual s LEFT JOIN y2018m12d06_rh_master_shape_v01 r on s.aq30_id=r.aq30_id WHERE s.pfaf_id != -9999 and s.gid_1 != '-9999' and r.aqid != -9999 and {{value}} >= {{threshold}} and s.pfaf_id in {{watershed_ids}} ORDER BY s.aq30_id`
+                                      sql: `SELECT s.aq30_id as cartodb_id, coalesce(NULLIF({{label}},''), 'No Data') as label, r.the_geom, r.the_geom_webmercator, (CASE WHEN {{label}} = 'Insignificant Trend' THEN -1 ELSE coalesce({{indicator}}, -9999)END) as water_risk FROM water_risk_indicators_annual s LEFT JOIN y2018m12d06_rh_master_shape_v01 r on s.aq30_id=r.aq30_id WHERE s.pfaf_id != -9999 and s.gid_1 != '-9999' and r.aqid != -9999 and s.pfaf_id in {{watershed_ids}} ORDER BY s.aq30_id`
                                     }
                                   }
                                 ]
@@ -276,6 +274,7 @@ class Map extends PureComponent {
                     return [...acc, layer]
                   }, [])
                   .map((layer, i) => {
+                    console.log({ mapView, layer })
                     let l = { ...layer }
                     // if (filters.scope === 'supply_chain' && filters.subscope === 'analyzer' && l.id === 'ffc878aa-efb1-4258-bd40-2cf9fbfb6ddd') {
                     //   l = {
