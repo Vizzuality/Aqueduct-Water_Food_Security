@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
   SegmentedUi,
   RadioGroup,
 } from 'aqueduct-components';
-import isEmpty from 'lodash/isEmpty'
 import CustomTable from 'components/ui/Table/Table';
-import { ExportToCsv } from 'export-to-csv';
 import {
   ID_LOOKUP,
   WATER_INDICATORS,
@@ -21,6 +19,7 @@ import CropFilter from 'components/filters/filter-items/crops/crop-select'
 import BtnMenu from 'components/ui/BtnMenu';
 import { APP_DEFINITIONS } from 'constants/definitions';
 import AnalyzerUploadModal from './upload-modal'
+import { downloadCSV } from 'utils/data'
 
 // TODO: Remove this file once the analyzer is connected
 
@@ -28,50 +27,41 @@ import AnalyzerUploadModal from './upload-modal'
 import { DownloadableTable } from 'components/ui/analyzer';
 
 const Analyzer = ({ filters, analysis, setFilters, toggleModal, setAnalysis }) => {
-  // const [mapView, setMapView] = useState('all')
-  const [modalOpen, setModalOpen] = useState(false)
-  const [locations, setLocations] = useState()
-  const indicatorKey = filters.indicator ? ID_LOOKUP[filters.indicator] : undefined
-
-  const mapView = analysis.mapView
+  const { locations, mapView = 'all' } = analysis
+  const setLocations = vals => setAnalysis({ locations: vals })
   const setMapView = val => setAnalysis({ mapView: val })
+  const indicatorKey = filters.indicator ? ID_LOOKUP[filters.indicator] : undefined
 
   if (!ALLOWED_WATER_INDICATOR_KEYS_BY_SCOPE.supply_chain.includes(indicatorKey)) return null
   
   const indicatorSpec = WATER_INDICATORS[indicatorKey]
-
   const tab = filters.subscope
-
   const tableHeaders = getHeadersForIndicator(LOCATION_RESULT_HEADERS, indicatorKey)
 
-  const downloadCSV = (event) => {
+  const downloadLocationsCSV = (event) => {
     if (event) event.preventDefault();
-    const csvExporter = new ExportToCsv({
+    downloadCSV({
+      data: transformLocations(locations, indicatorKey),
       showLabels: true,
-      filename: `Prioritize Basins Analyzer - ${filters.indicator.name}`,
+      filename: `Prioritize Basins Analyzer - ${indicatorSpec ? indicatorSpec.name : indicatorKey}`,
       headers: tableHeaders.map(c => c.label)
-    });
-    csvExporter.generateCsv(locations);
+    })
   };
-
-  // console.log({ mapView })
 
   const openUploadModal = () => {
     const { props, ...info } = APP_DEFINITIONS['desired-condition-thresholds']
     toggleModal(true, {
       children: AnalyzerUploadModal,
-      size: 'analyzer', // Actually just using this to inject a classname. I don't love this method.
+      size: 'analyzer', // Actually just using this to inject a classname. I don't love it.
       childrenProps: {
         filters,
         onDone: locations => {
           toggleModal(false)
-          setModalOpen(false)
           setLocations(locations)
           setAnalysis({ locations })
         }
       }
     });
-    setModalOpen(true)
   }
 
   return (
@@ -128,16 +118,15 @@ const Analyzer = ({ filters, analysis, setFilters, toggleModal, setAnalysis }) =
                   <DownloadableTable
                     onExpandTable={() => {}}
                     hideInstructions
-                    noExpand // Should expand eventually
+                    noExpand // Should probably expand eventually
                     downloadOptions={[
-                      { name: 'CSV', action: () => downloadCSV() }
+                      { name: 'CSV', action: () => downloadLocationsCSV() }
                     ]}
                   >
                     <CustomTable
                       columns={tableHeaders}
                       data={transformLocations(locations, indicatorKey)}
                       pagination={{
-                        // enabled: data.length > 10,
                         enabled: true,
                         pageSize: 10,
                         page: 0
@@ -162,10 +151,7 @@ const Analyzer = ({ filters, analysis, setFilters, toggleModal, setAnalysis }) =
                     items={[
                       {
                         label: 'Import File',
-                        cb: () => {
-                          openUploadModal()
-                          // setImported(true)
-                        }
+                        cb: openUploadModal,
                       }
                     ]}
                   />

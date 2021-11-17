@@ -1,5 +1,4 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
-import axios from 'axios'
 import PropTypes from 'prop-types';
 import isNil from 'lodash/isNil'
 import isEmpty from 'lodash/isEmpty'
@@ -7,7 +6,6 @@ import {
   SegmentedUi,
 } from 'aqueduct-components';
 import CustomTable from 'components/ui/Table/Table';
-import { ExportToCsv } from 'export-to-csv';
 import {
   ID_LOOKUP,
   WATER_INDICATORS,
@@ -15,11 +13,11 @@ import {
 } from 'constants/water-indicators';
 import classNames from 'classnames';
 import {
-  RESULT_LOOKUP,
   ERROR_RESULT_HEADERS,
-  transformResults,
   transformErrors,
 } from 'constants/analyzer'
+import { downloadCSV, toBase64 } from 'utils/data'
+import { sleep } from 'utils/general'
 import { DownloadableTable } from 'components/ui/analyzer';
 import RESULT_DATA from './TEMP_DATA.json'
 
@@ -30,11 +28,8 @@ const LOADING_STATE_TEXT = {
   downloading: 'Downloading results',
 }
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
-
 const AnalyzerUploadModal = ({ filters, onDone }) => {
   const [modalState, setModalState] = useState({ stage: 'initial' })
-  // const [modalState, setModalState] = useState({ stage: 'uploading', progress: 0.5 })
   const [filename, setFilename] = useState()
   const inputRef = useRef(null)
   const formRef = useRef(null)
@@ -55,24 +50,15 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
     }
   }, [modalState])
 
-  const downloadCSV = (event, data) => {
+  const downloadErrorCSV = (event, data) => {
     if (event) event.preventDefault();
-    const csvExporter = new ExportToCsv({
+    downloadCSV({
+      data,
       showLabels: true,
-      filename: `Prioritize Basins Analyzer - ${filters.indicator.name} - Rows with errors`,
+      filename: `Prioritize Basins Analyzer - ${indicatorSpec ? indicatorSpec.name : indicatorKey} - Rows with errors`,
       headers: ERROR_RESULT_HEADERS.map(e => e.label)
-    });
-    csvExporter.generateCsv(data.map(d => Object.entries(d).reduce((acc, [k, v]) => ({ ...acc, [k]: v || '' }), {})));
+    })
   };
-
-  const toBase64 = file => new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    // reject(new Error('Unexpected error while analyzing data'))
-    reader.readAsBinaryString(file);
-    reader.onload = () => resolve(btoa(reader.result));
-    reader.onerror = error => reject(error);
-    
-  });
 
   const fakeSubmit = async ({ includeErrors = true, includeLocations = true } = {}) => {
     let progress = 0
@@ -164,13 +150,6 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
   }
 
   const hasProgressValue = !isNil(modalState.progress)
-
-  // if (modalState.errors) {
-  //   console.log({
-  //     columns: Object.keys(extractErrorValues({ errors: modalState.errors })[0]).map(k => ({ label: k, value: k })),
-  //     data: extractErrorValues({ errors: modalState.errors }),
-  //   })
-  // }
 
   return (
     <div>
@@ -264,16 +243,15 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
             <div className="downloadable-table">
               <DownloadableTable
                 hideInstructions
-                noExpand // Should expand eventually
+                noExpand
                 downloadOptions={[
-                  { name: 'CSV', action: (e) => downloadCSV(e, modalState.errors) }
+                  { name: 'CSV', action: (e) => downloadErrorCSV(e, transformErrors(modalState.errors)) }
                 ]}
               >
                 <CustomTable
                   columns={ERROR_RESULT_HEADERS}
                   data={transformErrors(modalState.errors)}
                   pagination={{
-                    // enabled: data.length > 10,
                     enabled: true,
                     pageSize: 10,
                     page: 0
