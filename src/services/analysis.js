@@ -1,5 +1,5 @@
 import axios from 'axios';
-import RESULT_DATA from './TEMP_DATA.json'
+// import RESULT_DATA from './TEMP_DATA.json'
 import { sleep } from 'utils/general'
 
 export const fetchAnalysis = (
@@ -67,7 +67,8 @@ export const fakeAnalysis = async (
     onDownloadProgress({ loaded: progress, total: 1 })
   }
 
-  const { locations, errors } = RESULT_DATA
+  // const { locations, errors } = RESULT_DATA
+  const { locations, errors } = { locations: [], errors: [] }
 
   return {
     locations: includeLocations ? locations : [],
