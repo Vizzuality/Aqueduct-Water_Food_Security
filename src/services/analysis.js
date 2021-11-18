@@ -13,8 +13,7 @@ export const fetchAnalysis = (
 ) => (
   axios({
     method: "post",
-    url: `https://staging-api.resourcewatch.org/aqueduct/analysis/food-supply-chain/${indicator}/${threshold}`,
-    // url: `http://localhost:5100/api/v1/aqueduct/analysis/food-supply-chain/${indicator}/${threshold}`,
+    url: `${config.ANALYSIS_API_URL}/aqueduct/analysis/food-supply-chain/${indicator}/${threshold}`,
     data: formData,
     headers: { "Content-Type": "multipart/form-data" },
     onDownloadProgress,
