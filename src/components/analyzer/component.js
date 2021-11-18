@@ -21,8 +21,6 @@ import { APP_DEFINITIONS } from 'constants/definitions';
 import AnalyzerUploadModal from './upload-modal'
 import { downloadCSV } from 'utils/data'
 
-// TODO: Remove this file once the analyzer is connected
-
 // components
 import { DownloadableTable } from 'components/ui/analyzer';
 
