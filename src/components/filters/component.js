@@ -433,9 +433,6 @@ class Filters extends PureComponent {
                           <p>
                             <strong>{indicator.name} Desired Condition </strong>{' '}
                             <TooltipIcon handleClick={() => this.openModal('desired-condition-thresholds')} />
-                            {/* <span className="title-icon">
-                              <Icon name="icon-question" handleClick={() => this.openModal('desired-condition-thresholds')} />
-                            </span> */}
                           </p>
                           <p style={{ fontSize: 16 }}>(Adjust slider to set a desired condition threshold)</p>
                         </div>
