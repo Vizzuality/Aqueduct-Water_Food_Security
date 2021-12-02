@@ -130,14 +130,22 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
         {/* Setting display to none here because we need the form element to stay mounted */}
         <div style={{ display: modalState.stage === 'initial' ? undefined : 'none' }}>
           <h3>Import Sourcing Locations</h3>
-          <p>This functionality is in beta and under development.  Please help us improve and report bugs <a href="#">here</a>.  Thank you for your patience.</p>
-          <p>Please use the templates below to structure your data.</p>
-          <p>Replace with your own location names and coordinates. Do not add additional columns. There is a 500 addresses per file limit.</p>
-          <p>More <a href="#">info</a></p>
-          <p>List of supported file formats <em>(click on any format to download the template)</em>:</p>
+          <p>
+            This functionality is in beta and under development.  Please help us improve and report bugs{' '}
+            <a href="https://form.asana.com/?k=QWAlk9irSkhMNvxJqyFyEw&d=25496124013636" target="_blank">here</a>{' '}
+            Thank you for your patience.
+          </p>
+          <p>Please use the excel template below to structure your data.</p>
+          <p>
+            Follow the instructions in the template to add your own supply chain
+            locations and materials. Do not change the structure of the templates,
+            such as adding, deleting, or changing column names.
+          </p>
+          <p>More information can be found <a href="#">here</a></p>
+          <p>Template found here:</p>
           <ul>
               <li>
-                <a href="#">Spreadsheet (.xlsx)</a>
+                <a href="#">Templates_supply_chain.xlsx</a>
               </li>
           </ul>
           <form
