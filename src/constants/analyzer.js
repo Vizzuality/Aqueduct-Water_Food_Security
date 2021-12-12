@@ -5,6 +5,9 @@ import { WATER_INDICATORS } from 'constants/water-indicators'
 export const SET_ANALYSIS = 'SET_ANALYSIS'
 export const RESET_ANALYSIS = 'RESET_ANALYSIS'
 
+// TODO: Update to non-blob based URL once merged into the main branch
+export const ANALYSIS_URL = "https://rawcdn.githack.com/greenriver/aqueduct-food/5f8afafbe8d923a75bef8c902ff98ee3bc439baa/doc/analyzer/template_supply_chain.xlsx"
+
 export const RESULT_LOOKUP = {
   as: 'Annual Spend',
   pcr: '* % Change Required',

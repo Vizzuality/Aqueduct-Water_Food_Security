@@ -15,6 +15,7 @@ import classNames from 'classnames';
 import {
   ERROR_RESULT_HEADERS,
   transformErrors,
+  ANALYSIS_URL,
 } from 'constants/analyzer'
 import { downloadCSV, toBase64 } from 'utils/data'
 import { DownloadableTable } from 'components/ui/analyzer';
@@ -142,11 +143,12 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
             locations and materials. Do not change the structure of the templates,
             such as adding, deleting, or changing column names.
           </p>
-          <p>More information can be found <a href="#">here</a></p>
+          {/* TODO: Add this line back when we have a documentation page */}
+          {/* <p>More information can be found <a href="#">here</a></p> */}
           <p>Template found here:</p>
           <ul>
               <li>
-                <a href="#">Templates_supply_chain.xlsx</a>
+                <a href={ANALYSIS_URL || ''} download>Templates_supply_chain.xlsx</a>
               </li>
           </ul>
           <form

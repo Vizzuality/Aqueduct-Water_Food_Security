@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   SegmentedUi,
@@ -20,6 +20,7 @@ import BtnMenu from 'components/ui/BtnMenu';
 import { APP_DEFINITIONS } from 'constants/definitions';
 import AnalyzerUploadModal from './upload-modal'
 import { downloadCSV } from 'utils/data'
+import AnalyzerOverlay from './overlay'
 
 // components
 import { DownloadableTable } from 'components/ui/analyzer';
@@ -29,6 +30,12 @@ const Analyzer = ({ filters, analysis, setFilters, toggleModal, setAnalysis }) =
   const setLocations = vals => setAnalysis({ locations: vals })
   const setMapView = val => setAnalysis({ mapView: val })
   const indicatorKey = filters.indicator ? ID_LOOKUP[filters.indicator] : undefined
+  const [currentIndicatorKey, setCurrentIndicatorKey] = useState(indicatorKey)
+  const [currentThreshold, setCurrentThreshold] = useState(filters.threshold)
+
+  const indicatorKeyChanged = useMemo(() => currentIndicatorKey !== indicatorKey, [currentIndicatorKey, indicatorKey])
+  const thresholdChanged = useMemo(() => parseFloat(currentThreshold) !== parseFloat(filters.threshold), [currentThreshold, filters.threshold])
+  const hasChanged = useMemo(() => indicatorKeyChanged || thresholdChanged, [indicatorKeyChanged, thresholdChanged])
 
   if (!ALLOWED_WATER_INDICATOR_KEYS_BY_SCOPE.supply_chain.includes(indicatorKey)) return null
   
@@ -55,6 +62,8 @@ const Analyzer = ({ filters, analysis, setFilters, toggleModal, setAnalysis }) =
         filters,
         onDone: locations => {
           toggleModal(false)
+          setCurrentIndicatorKey(indicatorKey)
+          setCurrentThreshold(filters.threshold)
           setLocations(locations)
           setAnalysis({ locations })
         }
@@ -94,7 +103,11 @@ const Analyzer = ({ filters, analysis, setFilters, toggleModal, setAnalysis }) =
         {tab === 'analyzer' && (
           <React.Fragment>
             {locations ? (
-              <React.Fragment>
+              <AnalyzerOverlay
+                show={hasChanged}
+                onUploadNew={openUploadModal}
+                content="Analyzer parameters have changed. Reupload the file to update the results"
+              >
                 <h4 className="title">Select Map View</h4>
                 <div className="my-1">
                   <RadioGroup
@@ -137,7 +150,7 @@ const Analyzer = ({ filters, analysis, setFilters, toggleModal, setAnalysis }) =
                     Upload a new file
                   </button>
                 </div>
-              </React.Fragment>
+              </AnalyzerOverlay>
             ) : (
               <React.Fragment>
                 <p>

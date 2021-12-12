@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import RESULT_DATA from './TEMP_DATA.json' // Comment out when not needed for dev due to bundle size
+import RESULT_DATA from './TEMP_DATA.json' // Comment out when not needed for dev due to bundle size
 import { sleep } from 'utils/general'
 
 export const fetchAnalysis = (
@@ -44,6 +44,7 @@ export const fetchAnalysis = (
 )
 
 // Do a fake request
+// export const fetchAnalysis = async (
 export const fakeAnalysis = async (
   formData,
   indicator,
@@ -81,8 +82,8 @@ export const fakeAnalysis = async (
     onDownloadProgress({ loaded: progress, total: 1 })
   }
 
-  // const { locations, errors } = RESULT_DATA
-  const { locations, errors } = { locations: [], errors: [] }
+  const { locations, errors } = RESULT_DATA
+  // const { locations, errors } = { locations: [], errors: [] }
 
   return {
     locations: includeLocations ? locations : [],
