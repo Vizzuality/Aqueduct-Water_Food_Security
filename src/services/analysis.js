@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import RESULT_DATA from './TEMP_DATA.json'
+// import RESULT_DATA from './TEMP_DATA.json' // Comment out when not needed for dev due to bundle size
 import { sleep } from 'utils/general'
 
 export const fetchAnalysis = (
@@ -9,6 +9,7 @@ export const fetchAnalysis = (
   {
     onDownloadProgress = () => {},
     onUploadProgress = () => {},
+    onProcessing = () => {},
   }
 ) => (
   axios({
@@ -20,11 +21,24 @@ export const fetchAnalysis = (
     onUploadProgress,
   })
     .then((response) => {
-      const { status, statusText, data } = response;
-  
+      const { status, statusText, data: { job_token: jobToken } = {} } = response || {};
+      
       if (status >= 300) throw new Error(statusText);
-  
-      return data;
+      if (!jobToken) throw new Error('Request did not return a job token, please try again')
+      
+      return new Promise((resolve, reject) => {
+        const makeRequest = () => (
+          axios.get(`${config.ANALYSIS_API_URL}/aqueduct/analysis/food-supply-chain/${jobToken}`)
+          .then(({ data: { results, percent_complete = 0, status } = {} } = {}) => {
+            onProcessing(percent_complete / 100)
+            if (status === 'ready') return resolve(results)
+            if (status === 'failed') return reject(new Error('Analyzer processing failed. Please try again'))
+            makeRequest()
+          })
+        )
+        makeRequest()
+        .catch(reject)
+      })
     })
     .catch((error) => { console.error(error.message); })
 )

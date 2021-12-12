@@ -81,6 +81,7 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
               setModalState({ stage: 'uploading', progress })
             }
           },
+          onProcessing: progress => setModalState({ stage: 'processing', progress })
         })
         // UNCOMMENT TO MOCK
         // fakeAnalysis(null, indicatorKey, null, {
