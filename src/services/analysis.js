@@ -29,11 +29,21 @@ export const fetchAnalysis = (
       return new Promise((resolve, reject) => {
         const makeRequest = () => (
           axios.get(`${config.ANALYSIS_API_URL}/aqueduct/analysis/food-supply-chain/${jobToken}`)
-          .then(({ data: { results, percent_complete = 0, status } = {} } = {}) => {
+          .then(({ data = {} } = {}) => {
+            const { results, percent_complete = 0, status } = data
             onProcessing(percent_complete / 100)
-            if (status === 'ready') return resolve(results)
+            if (status === 'ready') {
+              const s3Url = results.s3_url
+              if (s3Url) {
+                axios.get(s3Url)
+                .then(({ data }) => resolve(data))
+                .catch(reject)
+              } else {
+                reject(new Error('Analyzer processing failed. Please try again'))
+              }
+            }
             if (status === 'failed') return reject(new Error('Analyzer processing failed. Please try again'))
-            makeRequest()
+            setTimeout(() => makeRequest(), 5000)
           })
         )
         makeRequest()
