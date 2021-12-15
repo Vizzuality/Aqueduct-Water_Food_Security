@@ -212,8 +212,7 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
             <h3>Import entries error</h3>
             <p>
               {isEmpty(modalState.locations) ? 'All' : `The following ${modalState.errors.length}`}{' '}
-              entries out of {modalState.errors.length + modalState.locations.length} failed to match watersheds.{' '}
-              Try updating the country or province name using <a href="#">this guide</a>
+              entries out of {modalState.errors.length + modalState.locations.length} failed to match watersheds.
             </p>
             <div className="downloadable-table">
               <DownloadableTable
