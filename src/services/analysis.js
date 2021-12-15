@@ -41,9 +41,10 @@ export const fetchAnalysis = (
               } else {
                 reject(new Error('Analyzer processing failed. Please try again'))
               }
+              return
             }
             if (status === 'failed') return reject(new Error('Analyzer processing failed. Please try again'))
-            setTimeout(() => makeRequest(), 5000)
+            setTimeout(() => makeRequest(), 1000)
           })
         )
         makeRequest()
