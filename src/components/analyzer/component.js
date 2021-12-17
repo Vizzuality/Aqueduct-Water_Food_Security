@@ -42,7 +42,7 @@ const Analyzer = ({ filters, analysis, setFilters, toggleModal, setAnalysis }) =
   const indicatorSpec = WATER_INDICATORS[indicatorKey]
   const tab = filters.subscope
   const tableHeaders = getHeadersForIndicator(LOCATION_RESULT_HEADERS, indicatorKey)
-
+  
   const downloadLocationsCSV = (event) => {
     if (event) event.preventDefault();
     downloadCSV({

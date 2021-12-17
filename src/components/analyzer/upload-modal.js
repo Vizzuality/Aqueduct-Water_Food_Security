@@ -63,7 +63,7 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
   };
 
   const submitFile = (file) => {
-    if (file && filters.threshold && indicatorSpec) {
+    if (file && !isNil(filters.threshold) && indicatorSpec) {
       setModalState({ stage: 'transforming' })
       toBase64(file)
       .then(value => {

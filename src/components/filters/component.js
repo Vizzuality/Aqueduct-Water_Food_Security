@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import isNil from 'lodash/isNil';
 import {
   IRRIGATION_OPTIONS,
   SegmentedUi,
@@ -99,7 +100,7 @@ class Filters extends PureComponent {
 
     if (selected && (indicator || selected.value === 'none')) {
       this.updateFilters(selected.value, 'indicator');
-      this.updateFilters(indicator?.defaultValue || null, 'threshold');
+      this.updateFilters(isNil(indicator?.defaultValue) ? null : indicator?.defaultValue, 'threshold');
       if (selected.value === 'none') this.updateFilters('baseline', 'year');
     }
 
@@ -440,7 +441,10 @@ class Filters extends PureComponent {
                     </div>
                     <ThresholdSlider
                       threshold={parseFloat(filters.threshold) || 0}
-                      onChange={threshold => this.updateFilters(threshold, 'threshold')}
+                      onChange={threshold => {
+                        console.log({ threshold })
+                        this.updateFilters(threshold, 'threshold')
+                      }}
                       values={indicator.rangeValues}
                       defaultValue={indicator.defaultValue}
                       unit={indicator.unit}
