@@ -134,21 +134,21 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
           <h3>Import Sourcing Locations</h3>
           <p>
             This functionality is in beta and under development.  Please help us improve and report bugs{' '}
-            <a href="https://form.asana.com/?k=QWAlk9irSkhMNvxJqyFyEw&d=25496124013636" target="_blank">here</a>{' '}
+            <a href="https://form.asana.com/?k=QWAlk9irSkhMNvxJqyFyEw&d=25496124013636" target="_blank">here</a>.{' '}
             Thank you for your patience.
           </p>
           <p>Please use the excel template below to structure your data.</p>
           <p>
             Follow the instructions in the template to add your own supply chain
-            locations and materials. Do not change the structure of the templates,
-            such as adding, deleting, or changing column names.
+            locations and materials. Do not change the structure of the template,
+            such as by adding, deleting, or changing column names.
           </p>
           {/* TODO: Add this line back when we have a documentation page */}
           {/* <p>More information can be found <a href="#">here</a></p> */}
-          <p>Template found here:</p>
+          <p>Click this link to download the template:</p>
           <ul>
               <li>
-                <a href={ANALYSIS_URL || ''} download>Templates_supply_chain.xlsx</a>
+                <a href={ANALYSIS_URL || ''} download>template_supply_chain.xlsx</a>
               </li>
           </ul>
           <form
