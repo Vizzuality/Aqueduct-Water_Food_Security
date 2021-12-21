@@ -223,22 +223,33 @@ class Map extends PureComponent {
                       // console.log({ resultRanges, locations, filters })
 
                       const filteredLocations = mapView === 'priority' ? locations.filter(l => l.pcr > 0) : locations
-                      const data = uniq(compact(filteredLocations.map(d => parseFloat(d.wid).toFixed(0))))
+
+                      // TODO: Clean up the duplication here
+                      const aidData = uniq(compact(filteredLocations.map(d => parseFloat(d.aid).toFixed(0))))
+                      const widData = uniq(compact(filteredLocations.map(d => parseFloat(d.wid).toFixed(0))))
                       const step = 500
-                      const resultRanges = !isEmpty(locations) ? (
+
+                      const widResultRanges = !isEmpty(locations) ? (
                         (
-                          Array(Math.ceil(data.length / step)).fill()
-                          .map((_n, i) => data.filter((_d, j) => j >= i * step && j < (i +1) * step))
+                          Array(Math.ceil(widData.length / step)).fill()
+                          .map((_n, i) => widData.filter((_d, j) => j >= i * step && j < (i +1) * step))
+                        )
+                        .filter(range => !isEmpty(range))
+                      ) : [['null']] // This will return nothing, but will make the loading indicator go away :)
+                      const aidResultRanges = !isEmpty(locations) ? (
+                        (
+                          Array(Math.ceil(aidData.length / step)).fill()
+                          .map((_n, i) => aidData.filter((_d, j) => j >= i * step && j < (i +1) * step))
                         )
                         .filter(range => !isEmpty(range))
                       ) : [['null']] // This will return nothing, but will make the loading indicator go away :)
 
                       return [
                         ...acc,
-                        ...resultRanges.map((range, index) => {
+                        ...widResultRanges.map((range, index) => {
                           return {
                             ...layer,
-                            id: layer.id + index.toString(),
+                            id: layer.id + 'wid' + index.toString(),
                             layerConfig: {
                               ...layer.layerConfig,
                               body: {
@@ -262,6 +273,36 @@ class Map extends PureComponent {
                             params: {
                               ...layer.params,
                               watershed_ids: `(${range.join(',')})`
+                            }
+                          }
+                        }),
+                        ...aidResultRanges.map((range, index) => {
+                          return {
+                            ...layer,
+                            id: layer.id + 'aid' +  index.toString(),
+                            layerConfig: {
+                              ...layer.layerConfig,
+                              body: {
+                                ...layer.layerConfig.body,
+                                layers: [
+                                  {
+                                    ...layer.layerConfig.body.layers[0],
+                                    options: {
+                                      ...layer.layerConfig.body.layers[0].options,
+                                      sql: `SELECT s.aq30_id as cartodb_id, coalesce(NULLIF({{label}},''), 'No Data') as label, r.the_geom, r.the_geom_webmercator, (CASE WHEN {{label}} = 'Insignificant Trend' THEN -1 ELSE coalesce({{indicator}}, -9999)END) as water_risk FROM water_risk_indicators_annual s LEFT JOIN y2018m12d06_rh_master_shape_v01 r on s.aq30_id=r.aq30_id WHERE s.pfaf_id != -9999 and s.gid_1 != '-9999' and r.aqid != -9999 and s.aq30_id in {{aquifer_ids}} ORDER BY s.aq30_id`
+                                    }
+                                  }
+                                ]
+                              },
+                              params_config: [
+                                ...layer.layerConfig.params_config,
+                                { key: 'aquifer_ids', required: true },
+                              ],
+                              sql_config: []
+                            },
+                            params: {
+                              ...layer.params,
+                              aquifer_ids: `(${range.join(',')})`
                             }
                           }
                         })

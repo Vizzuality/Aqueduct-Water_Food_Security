@@ -27,7 +27,8 @@ export const RESULT_LOOKUP = {
   ru: 'Radius Unit',
   rn: 'row',
   st: 'State/Province',
-  wid: 'Watershed ID'
+  wid: 'Watershed ID',
+  aid: 'Aquifer ID'
 }
 
 const arrayToLookup = arr => arr.reduce((acc, k) => ({ ...acc, [k]: RESULT_LOOKUP[k] }), {})
@@ -35,6 +36,7 @@ const arrayToLookup = arr => arr.reduce((acc, k) => ({ ...acc, [k]: RESULT_LOOKU
 export const LOCATION_RESULT_FIELD_ORDER = [
   'rn',
   'wid',
+  'aid',
   'lid',
   'ip',
   'cn',
@@ -87,10 +89,14 @@ export const getShortNameForIndicator = indicator => {
 }
 
 export const getHeadersForIndicator = (headers = [], indicator) => {
-  return compact(headers).map(h => {
-    const replaced = h.label.replace(/^(\*)/, getShortNameForIndicator(indicator))
-    return { value: replaced, label: replaced }
-  })
+  return (
+    compact(headers)
+    .filter(e => e.value !== (indicator === 'gtd' ? RESULT_LOOKUP.wid : RESULT_LOOKUP.aid))
+    .map(h => {
+      const replaced = h.label.replace(/^(\*)/, getShortNameForIndicator(indicator))
+      return { value: replaced, label: replaced }
+    })
+  )
 }
 
 export const transformValues = (items, { indicator, orderArr = [] } = {}) => {
@@ -103,7 +109,15 @@ export const transformValues = (items, { indicator, orderArr = [] } = {}) => {
   ))
 }
 
-export const transformLocations = (locations = [], indicator) => transformValues(locations, { orderArr: LOCATION_RESULT_FIELD_ORDER, indicator })
+export const transformLocations = (locations = [], indicator) => {
+  return transformValues(
+    locations,
+    {
+      orderArr: LOCATION_RESULT_FIELD_ORDER.filter(e => e !== (indicator === 'gtd' ? 'wid' : 'aid')),
+      indicator,
+    }
+  )
+}
 export const transformErrors = (errors = []) => transformValues(errors, { orderArr: ERROR_RESULT_FIELD_ORDER })
 
 export const transformResults = ({ errors = [], locations = [], indicator = '' } = {}) => ({

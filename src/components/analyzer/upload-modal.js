@@ -119,14 +119,6 @@ const AnalyzerUploadModal = ({ filters, onDone }) => {
 
   return (
     <div>
-      <SegmentedUi
-        className="-tabs-light"
-        items={[
-          { value: 'addresses', label: 'Addresses' },
-        ]}
-        selected="addresses"
-        onChange={nullFn}
-      />
       <div className="analyzer-import-modal">
         {/* IF IN INITIAL STATE */}
         {/* Setting display to none here because we need the form element to stay mounted */}
