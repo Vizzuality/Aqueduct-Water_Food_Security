@@ -4,6 +4,7 @@ const initialState = {
   page: '',
   crop: 'all',
   scope: 'global',
+  subscope: null,
   country: undefined,
   countryName: undefined,
   period: 'year',
@@ -25,7 +26,7 @@ export default function (state = initialState, action) {
       return newState;
     }
     case RESET_FILTERS: {
-      return initialState;
+      return { ...initialState, scope: state.scope };
     }
     default:
       return state;

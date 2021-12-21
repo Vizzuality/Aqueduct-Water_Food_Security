@@ -99,6 +99,7 @@ const config = {
       // 'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       config: {
         API_URL: JSON.stringify(process.env.API_URL),
+        ANALYSIS_API_URL: JSON.stringify(process.env.ANALYSIS_API_URL || process.env.API_URL),
         BITLY_LOGIN: JSON.stringify(process.env.BITLY_LOGIN),
         BITLY_KEY: JSON.stringify(process.env.BITLY_KEY),
         GOOGLE_ANALYTICS: JSON.stringify(process.env.GOOGLE_ANALYTICS)

@@ -1,0 +1,76 @@
+
+.c-table {
+  // padding: $space-1 * 3 $space-1 0;
+  height: 100%;
+  background-color: palette(white);
+  color: palette(gray, dark);
+
+  .table-content {
+    position: relative;
+    height: 100%;
+
+    > .table-overflow {
+      position: relative;
+      overflow: auto;
+      height: 100%;
+    }
+  }
+
+  .table {
+    width: 100%;
+    padding: $space-1;
+
+    th {
+      font-weight: bold;
+      letter-spacing: .9px;
+      line-height: 1;
+      vertical-align: bottom;
+      padding: $space-1;
+    }
+
+    tbody {
+      tr {
+        &:nth-child(odd) {
+          background-color: rgba(palette(gray), .1);
+        }
+
+        &.-selected {
+          background-color: palette(blue, light);
+        }
+      }
+
+      td {
+        padding: $space-1;
+        cursor: pointer;
+
+        button {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
+  }
+
+  .paginator {
+    display: flex;
+
+    button {
+      padding: $space-1 ($space-1 * 2);
+    }
+  }
+
+  .th-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .table-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $space-1;
+    border-top: 1px solid $border-color-1;
+  }
+}
